@@ -1,0 +1,21 @@
+# Slug-only ignore — these dirs are kept in the GitHub repo but excluded
+# from the Heroku slug (smaller deploy, faster boot).
+# The site only needs _site/ and _zips/ at runtime.
+
+seFr*/
+_deploy/
+_deck/
+_build/
+_doc/
+_agent/
+_shared_apex/
+_tools/
+
+# Source files that are not consumed by the runtime
+README.md
+*.md
+
+# macOS / IDE
+.DS_Store
+.vscode/
+.idea/
