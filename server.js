@@ -20,11 +20,21 @@ const ZIPS_DIR = path.join(__dirname, '_zips');
 const SF_CLIENT_ID = process.env.SF_CLIENT_ID || '';
 const SF_CLIENT_SECRET = process.env.SF_CLIENT_SECRET || '';
 
-// Showcase Connected App — client_credentials flow, runs as the Showcase Visitor bot user
-// on the SE FR showcase org. The host is the org's My Domain (NOT login.salesforce.com).
+// Showcase Connected App — JWT Bearer Token Flow, runs as the Showcase Visitor bot
+// user on the SE FR showcase org. We need a UI-capable session (web scope) so
+// frontdoor.jsp accepts it; client_credentials only mints api-only tokens which
+// frontdoor refuses, hence the JWT path.
+//
+// Required env vars:
+//   SF_SHOWCASE_CLIENT_ID    — Connected App Consumer Key
+//   SF_SHOWCASE_LOGIN_HOST   — org My Domain (e.g. storm-xxx.my.salesforce.com)
+//   SF_SHOWCASE_USERNAME     — bot user's Username (e.g. showcase-visitor@...)
+//   SF_SHOWCASE_PRIVATE_KEY  — RSA private key PEM (the matching .crt is uploaded
+//                              to the Connected App as the digital signature cert)
 const SF_SHOWCASE_CLIENT_ID = process.env.SF_SHOWCASE_CLIENT_ID || '';
-const SF_SHOWCASE_CLIENT_SECRET = process.env.SF_SHOWCASE_CLIENT_SECRET || '';
 const SF_SHOWCASE_LOGIN_HOST = (process.env.SF_SHOWCASE_LOGIN_HOST || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+const SF_SHOWCASE_USERNAME = process.env.SF_SHOWCASE_USERNAME || '';
+const SF_SHOWCASE_PRIVATE_KEY = (process.env.SF_SHOWCASE_PRIVATE_KEY || '').replace(/\\n/g, '\n');
 // Where on the showcase org we drop the SE after frontdoor (default = LEX home).
 const SF_SHOWCASE_LANDING = process.env.SF_SHOWCASE_LANDING || '/lightning/page/home';
 
@@ -227,8 +237,18 @@ app.post('/api/oauth/identity', async (req, reply) => {
 // Showcase — client_credentials grant on the showcase org, then frontdoor.jsp
 // to drop the SE in LEX as the Showcase Visitor bot user. No SE login required.
 
+// Lazy-loaded CryptoKey (jose imports the PEM once, reuses across requests).
+let _showcasePrivateKey = null;
+async function loadShowcasePrivateKey() {
+  if (_showcasePrivateKey) return _showcasePrivateKey;
+  if (!SF_SHOWCASE_PRIVATE_KEY) throw new Error('private_key_missing');
+  const { importPKCS8 } = await import('jose');
+  _showcasePrivateKey = await importPKCS8(SF_SHOWCASE_PRIVATE_KEY, 'RS256');
+  return _showcasePrivateKey;
+}
+
 app.get('/api/showcase/url', async (req, reply) => {
-  if (!SF_SHOWCASE_CLIENT_ID || !SF_SHOWCASE_CLIENT_SECRET || !SF_SHOWCASE_LOGIN_HOST) {
+  if (!SF_SHOWCASE_CLIENT_ID || !SF_SHOWCASE_LOGIN_HOST || !SF_SHOWCASE_USERNAME || !SF_SHOWCASE_PRIVATE_KEY) {
     return reply.code(503).send({ error: 'showcase_not_configured' });
   }
   if (!isAllowedSalesforceHost(SF_SHOWCASE_LOGIN_HOST)) {
@@ -238,12 +258,32 @@ app.get('/api/showcase/url', async (req, reply) => {
   const today = new Date().toISOString().slice(0, 10);
   SHOWCASE_CLICKS.set(today, (SHOWCASE_CLICKS.get(today) || 0) + 1);
 
-  const params = new URLSearchParams({
-    grant_type: 'client_credentials',
-    client_id: SF_SHOWCASE_CLIENT_ID,
-    client_secret: SF_SHOWCASE_CLIENT_SECRET,
-  });
+  // Build the JWT assertion. Audience is login.salesforce.com (or test.* for
+  // sandboxes) — NOT the My Domain — per Salesforce JWT spec.
+  let assertion;
+  try {
+    const { SignJWT } = await import('jose');
+    const key = await loadShowcasePrivateKey();
+    const audience = /\.sandbox\.|--/.test(SF_SHOWCASE_LOGIN_HOST) || SF_SHOWCASE_LOGIN_HOST === 'test.salesforce.com'
+      ? 'https://test.salesforce.com'
+      : 'https://login.salesforce.com';
+    assertion = await new SignJWT({})
+      .setProtectedHeader({ alg: 'RS256' })
+      .setIssuer(SF_SHOWCASE_CLIENT_ID)
+      .setSubject(SF_SHOWCASE_USERNAME)
+      .setAudience(audience)
+      .setExpirationTime('3m')
+      .sign(key);
+  } catch (err) {
+    req.log.error({ err: String(err) }, 'jwt sign failed');
+    return reply.code(500).send({ error: 'jwt_sign_failed', message: String(err.message || err) });
+  }
+
   const tokenUrl = `https://${SF_SHOWCASE_LOGIN_HOST}/services/oauth2/token`;
+  const params = new URLSearchParams({
+    grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+    assertion,
+  });
   const resp = await fetch(tokenUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -256,7 +296,7 @@ app.get('/api/showcase/url', async (req, reply) => {
   }
   const instance = (data.instance_url || '').replace(/\/+$/, '');
   if (!instance) return reply.code(502).send({ error: 'no_instance_url' });
-  // frontdoor.jsp: drops the user directly into the org with a valid session
+  // frontdoor.jsp: drops the user directly into the org with a valid UI session
   const url = `${instance}/secur/frontdoor.jsp?sid=${encodeURIComponent(data.access_token)}&retURL=${encodeURIComponent(SF_SHOWCASE_LANDING)}`;
   return reply.send({ url });
 });
