@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Order Summary</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Case</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls every visible string (header buttons, field labels, modals, toasts)." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:orders" label="Card icon" />
+            <property name="showBottomSeparator" type="Boolean" default="true" label="Show bottom separator" />
+            <property name="separatorLabel" type="String" label="Separator label (override)" description="Leave empty to use the language default ('OR' / 'OU')." />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
+            <property name="successMessage" type="String" label="Submit success toast message (override)" />
+            <property name="deleteConfirmMessage" type="String" label="Delete confirm message (override)" />
+            <property name="emptyStateMessage" type="String" label="Empty-state message (override)" />
+            <property name="productImageFieldApiName" type="String" default="Image_URL__c" label="Product image field API name" description="Field on Product2 holding an image URL. Schema-safe: skipped if absent." />
+            <property name="productImageFallbackUrl" type="String" label="Product image fallback URL" description="Used when the product field is empty or absent." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

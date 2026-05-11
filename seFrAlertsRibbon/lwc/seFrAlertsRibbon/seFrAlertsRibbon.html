@@ -1,0 +1,52 @@
+<template>
+    <template if:true={hasAlerts}>
+
+        <!-- Card-wrapped variant: optional chrome with title + count pill -->
+        <template if:true={showCardWrapper}>
+            <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+                <div slot="actions" class="ar-count-pill">{countDisplay}</div>
+                <div class="slds-p-horizontal_small slds-p-bottom_small">
+                    <div class={ribbonClass}>
+                        <template for:each={matchedAlerts} for:item="a">
+                            <div key={a.id} class={a.alertClass} style={a.style}>
+                                <lightning-icon icon-name={a.icon} size="x-small" class="alert-icon"></lightning-icon>
+                                <span class="alert-severity">{a.severityLabel}</span>
+                                <span class="alert-message">{a.message}</span>
+                                <template if:true={a.hasCta}>
+                                    <a class="alert-cta" data-url={a.ctaUrl} onclick={handleCta}>{a.ctaLabel} →</a>
+                                </template>
+                                <template if:true={showDismiss}>
+                                    <button class="alert-dismiss" data-id={a.id} title={labels.dismiss} onclick={handleDismiss}>
+                                        <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                                    </button>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+
+        <!-- Inline variant (default): no card chrome, ribbon stacked above the page content -->
+        <template if:false={showCardWrapper}>
+            <div class={ribbonClass}>
+                <template for:each={matchedAlerts} for:item="a">
+                    <div key={a.id} class={a.alertClass} style={a.style}>
+                        <lightning-icon icon-name={a.icon} size="x-small" class="alert-icon"></lightning-icon>
+                        <span class="alert-severity">{a.severityLabel}</span>
+                        <span class="alert-message">{a.message}</span>
+                        <template if:true={a.hasCta}>
+                            <a class="alert-cta" data-url={a.ctaUrl} onclick={handleCta}>{a.ctaLabel} →</a>
+                        </template>
+                        <template if:true={showDismiss}>
+                            <button class="alert-dismiss" data-id={a.id} title={labels.dismiss} onclick={handleDismiss}>
+                                <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                            </button>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+    </template>
+</template>

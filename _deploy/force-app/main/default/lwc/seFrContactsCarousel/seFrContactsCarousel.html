@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button-icon icon-name="utility:chevronleft" alternative-text={labels.prev} variant="border-filled" size="small" disabled={prevDisabled} onclick={handlePrev} class="slds-m-right_xx-small"></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:chevronright" alternative-text={labels.next} variant="border-filled" size="small" disabled={nextDisabled} onclick={handleNext} class="slds-m-right_xx-small"></lightning-button-icon>
+            <template if:false={hideNewContactButton}>
+                <lightning-button label={labels.newContact} icon-name="utility:new" variant="neutral" onclick={handleNewContact}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={hasContacts}>
+                <div class="carousel-grid">
+                    <template for:each={visibleContacts} for:item="c">
+                        <div key={c.id} class="contact-card" data-id={c.id} onclick={handleCardClick}>
+                            <div class="avatar">
+                                <template if:true={c.hasPhoto}>
+                                    <img src={c.photoUrl} alt={c.name} />
+                                </template>
+                                <template if:false={c.hasPhoto}>
+                                    <span class="initials">{c.initials}</span>
+                                </template>
+                            </div>
+                            <div class="contact-name slds-truncate" title={c.name}><strong>{c.name}</strong></div>
+                            <div class="contact-title slds-truncate" title={c.title}>{c.title}</div>
+                            <template if:true={c.badgeLabel}>
+                                <div class="contact-badge" style={c.badgeStyle}>{c.badgeLabel}</div>
+                            </template>
+                            <div class="contact-actions">
+                                <lightning-button-icon icon-name="utility:email" alternative-text={labels.email} size="small" variant="border-filled" data-id={c.id} onclick={handleEmail}></lightning-button-icon>
+                                <lightning-button-icon icon-name="utility:call" alternative-text={labels.call} size="small" variant="border-filled" data-id={c.id} onclick={handleCall}></lightning-button-icon>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:false={hasContacts}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

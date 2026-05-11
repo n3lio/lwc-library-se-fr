@@ -1,0 +1,77 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div class="slds-p-around_medium" style={accentStyle}>
+
+            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="kpi-tile kpi-tile_primary">
+                        <div class="kpi-label">{resolvedKpi1Label}</div>
+                        <div class="kpi-value">{kpi1Display}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="kpi-tile kpi-tile_success">
+                        <div class="kpi-label">{resolvedKpi2Label}</div>
+                        <div class="kpi-value">
+                            <lightning-icon icon-name="utility:trending" size="small" variant="success" class="slds-m-right_xx-small"></lightning-icon>
+                            {kpi2Value}
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="kpi-tile kpi-tile_neutral">
+                        <div class="kpi-label">{resolvedKpi3Label}</div>
+                        <div class="kpi-value">{kpi3Display}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="legend-color bg-24"></span> {year1Label}</div>
+                    <div class="legend-item"><span class="legend-color bg-25"></span> {year2Label}</div>
+                    <div class="legend-item"><span class="legend-color bg-26"></span> {year3Label}</div>
+                </div>
+
+                <div class="chart-layout">
+                    <div class="y-axis">
+                        <template for:each={yAxisLabels} for:item="label">
+                            <span key={label}>{label}</span>
+                        </template>
+                    </div>
+
+                    <div class="chart-main">
+                        <div class="chart-container">
+                            <div class="grid-lines">
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line"></div>
+                                <div class="grid-line bottom-line"></div>
+                            </div>
+
+                            <div class="chart-bars">
+                                <template for:each={chartData} for:item="m">
+                                    <div key={m.id} class="bars-wrapper">
+                                        <div class="bar bar-24" style={m.h1} title={m.t1}></div>
+                                        <div class="bar bar-25" style={m.h2} title={m.t2}></div>
+                                        <template if:true={m.show3}>
+                                            <div class="bar bar-26" style={m.h3} title={m.t3}></div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="x-axis">
+                            <template for:each={chartData} for:item="m">
+                                <div key={m.id} class="month-label">{m.month}</div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </lightning-card>
+</template>

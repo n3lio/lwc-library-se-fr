@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Revenue Dashboard</masterLabel>
+    <description>B2B - Account-level 3-year revenue mini-dashboard. Bilingual EN / FR via the language property.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls card title, KPI labels, and the default month labels in the sample chart." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for dictionary default." />
+            <property name="cardIcon" type="String" default="standard:performance" label="Card icon" />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+
+            <property name="year1Label" type="String" default="2024" label="Year 1 label (oldest)" />
+            <property name="year2Label" type="String" default="2025" label="Year 2 label" />
+            <property name="year3Label" type="String" default="2026" label="Year 3 label (current)" />
+
+            <property name="kpi1Label" type="String" label="KPI 1 - Label (override)" />
+            <property name="kpi1Value" type="Integer" default="38550" label="KPI 1 - Value (currency)" />
+            <property name="kpi2Label" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpi2Value" type="String" default="+14.2%" label="KPI 2 - Value (raw text)" />
+            <property name="kpi3Label" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpi3Value" type="Integer" default="114200" label="KPI 3 - Value (currency)" />
+
+            <property name="chartMaxScale" type="Integer" default="15000" label="Chart max scale (Y-axis top)" />
+            <property name="chartDataJson" type="String" label="Chart data JSON (override)" description="Leave empty for the language-appropriate default (12 months with EN or FR labels). Each item: { month:'Jan', y1: 8200, y2: 8900, y3: 9500 }." />
+            <property name="currentYearColor" type="String" default="var(--slds-g-color-accent-base-50, #0176d3)" label="Current-year accent color" description="CSS color used for the current-year bars, legend chip and primary KPI tile. Defaults to the theme accent color." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

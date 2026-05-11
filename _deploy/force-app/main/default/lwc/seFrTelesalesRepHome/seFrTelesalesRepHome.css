@@ -1,0 +1,213 @@
+:host {
+    display: block;
+    --se-fr-brand: #0176d3;
+    --se-fr-success: #2e844a;
+    --se-fr-warning: #fe9339;
+    --se-fr-error: #ba0517;
+    --se-fr-info: #0176d3;
+    --se-fr-neutral: #747474;
+    --se-fr-border: #e5e5e5;
+    --se-fr-track: #ecebea;
+    --se-fr-text-weak: #747474;
+    --se-fr-text-strong: #181818;
+}
+
+/* Explicit spacing between stacked lightning-card blocks. `margin-bottom !important` so this wins
+   over lightning-card's own reset; display is kept out on purpose so other wrappers (e.g. the
+   2-col row below) can still apply their own display rule. */
+.card-spacing { margin-bottom: 1rem !important; }
+/* Apply `display: block` only to direct lightning-cards that use this class, so our grid rows
+   aren't forced back to `block`. */
+lightning-card.card-spacing { display: block; }
+
+/* Two-column row for Appels + Actualités — CSS grid that always holds both cards side by side,
+   regardless of viewport width. Each cell shrinks (min-width: 0) so its card respects the grid
+   column instead of overflowing. */
+.two-col-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+.two-col-cell { min-width: 0; }
+.two-col-cell > lightning-card { display: block; height: 100%; }
+
+/* KPI row — consistent bottom gap before the first body card, no negative side margins. */
+.kpi-row { margin-bottom: 1rem; }
+
+/* Body cards stack — each direct child card sits flush inside the component box with a consistent
+   1rem bottom margin. Using flex + gap to avoid additive / collapsing margin surprises. */
+.body-stack { display: flex; flex-direction: column; gap: 1rem; }
+.body-stack > lightning-card,
+.body-stack > lightning-layout,
+.body-stack > .card-spacing { display: block; margin-bottom: 0 !important; }
+/* Inside the 2-card row (Appels/Actualités), the cards stretch to the tallest sibling. */
+.body-stack > lightning-layout lightning-card { display: block; height: 100%; }
+
+/* --- Greeting banner --- */
+.greeting-banner {
+    background: linear-gradient(90deg, #f3f3f3 0%, #ffffff 100%);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+.greeting-text { font-weight: 500; }
+
+/* --- KPI tiles (rounded, labels anchor to the top, value anchors to the bottom so tiles align
+   across the row regardless of label length) --- */
+.kpi-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--se-fr-border);
+    border-top: 3px solid var(--kpi-accent, var(--se-fr-brand));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.kpi-card lightning-icon {
+    --sds-c-icon-color-foreground-default: var(--kpi-accent, var(--se-fr-brand));
+}
+.kpi-label {
+    font-size: 0.75rem;
+    color: var(--se-fr-text-weak);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+    min-height: 2.4em; /* reserves space for a 2-line label so rows align even when labels differ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    color: var(--kpi-accent, var(--se-fr-text-strong));
+    line-height: 1.1;
+}
+.kpi-calls   { --kpi-accent: var(--se-fr-brand); }
+.kpi-urgent  { --kpi-accent: var(--se-fr-error); }
+.kpi-revenue { --kpi-accent: var(--se-fr-success); }
+.kpi-dmt     { --kpi-accent: var(--se-fr-warning); }
+
+/* --- Theme links --- */
+.theme-link {
+    color: var(--lwc-brandTextLink, var(--lwc-colorTextLink, var(--se-fr-brand)));
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.theme-link:hover {
+    text-decoration: underline;
+    color: var(--lwc-brandTextLinkActive, var(--lwc-colorTextLinkActive, var(--se-fr-brand)));
+}
+
+/* --- Call list --- */
+.call-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--se-fr-border);
+}
+.call-item:last-child { border-bottom: none; }
+.call-time {
+    background-color: #f3f3f3;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--se-fr-text-strong);
+    text-align: center;
+    white-space: nowrap;
+}
+.call-main { min-width: 0; overflow: hidden; }
+.call-account { font-size: 0.9rem; line-height: 1.2; min-width: 0; }
+.call-contact { font-size: 0.8rem; color: var(--se-fr-text-weak); line-height: 1.2; min-width: 0; }
+.call-phone {
+    font-size: 0.8rem;
+    color: var(--se-fr-text-weak);
+    line-height: 1.2;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    min-width: 0;
+}
+.call-subject { font-size: 0.75rem; color: var(--se-fr-text-weak); line-height: 1.2; margin-top: 2px; min-width: 0; }
+
+/* --- Mini horizontal bar charts --- */
+.chart-container { padding-top: 0.25rem; }
+.bar-row { margin-bottom: 0.6rem; }
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--se-fr-text-strong);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.bar-track {
+    width: 100%;
+    height: 8px;
+    background-color: var(--se-fr-track);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+/* --- Column chart --- */
+.col-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 130px;
+    padding-top: 10px;
+    border-bottom: 1px solid var(--se-fr-border);
+}
+.col-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20%;
+    height: 100%;
+}
+.col-bar {
+    width: 60%;
+    background-color: var(--se-fr-neutral);
+    border-radius: 3px 3px 0 0;
+    min-height: 2px;
+    transition: height 0.4s ease;
+}
+.col-bar_highlight { background-color: var(--se-fr-brand); }
+.col-label { font-size: 0.7rem; color: var(--se-fr-text-weak); margin-top: 4px; }
+.col-label_highlight { color: var(--se-fr-brand); font-weight: 700; }
+.col-val { font-size: 0.75rem; font-weight: 700; color: var(--se-fr-text-strong); margin-bottom: 2px; }
+.col-val_highlight { color: var(--se-fr-brand); }
+
+/* --- News cards (accent via border-left + matching tint) --- */
+.news-card {
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    background-color: #fafaf9;
+    border: 1px solid var(--se-fr-border);
+    border-left: 3px solid var(--news-accent, var(--se-fr-brand));
+}
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+.news-success { --news-accent: var(--se-fr-success); }
+.news-info    { --news-accent: var(--se-fr-info); }
+.news-warning { --news-accent: var(--se-fr-warning); }
+.news-error   { --news-accent: var(--se-fr-error); }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - KPI Launcher</masterLabel>
+    <description>B2B / B2C - Configurable grid of 3 to 6 clickable KPI tiles. Pick a preset (Standard / Field Sales / Telesales / Custom) or override any tile individually. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage, lightning__AppPage, lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="preset" type="String" datasource="Standard,FieldSales,Telesales,Custom" default="Standard" label="KPI preset" description="Seeds tiles 1-3 with a pre-configured set. Standard = Leads / Opportunities / Accounts. FieldSales = Route / Prospecting / Goals. Telesales = Calls / Open Cases / Orders. Custom = no seed - fill every tile manually below." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the default (‘Cockpit’). The grid is wrapped in a lightning-card when a title is set." />
+            <property name="cardIcon" type="String" default="standard:metrics" label="Card icon" />
+
+            <property name="kpi1Label" type="String" label="KPI 1 - Label (override)" description="Leave empty to use the preset value." />
+            <property name="kpi1Value" type="String" label="KPI 1 - Value (override)" />
+            <property name="kpi1Sublabel" type="String" label="KPI 1 - Sublabel (override)" />
+            <property name="kpi1Icon" type="String" label="KPI 1 - Icon (override, SLDS e.g. standard:account)" />
+            <property name="kpi1Color" type="String" label="KPI 1 - Color hex (override)" />
+            <property name="kpi1Link" type="String" label="KPI 1 - Link (override)" />
+
+            <property name="kpi2Label" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpi2Value" type="String" label="KPI 2 - Value (override)" />
+            <property name="kpi2Sublabel" type="String" label="KPI 2 - Sublabel (override)" />
+            <property name="kpi2Icon" type="String" label="KPI 2 - Icon (override)" />
+            <property name="kpi2Color" type="String" label="KPI 2 - Color hex (override)" />
+            <property name="kpi2Link" type="String" label="KPI 2 - Link (override)" />
+
+            <property name="kpi3Label" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpi3Value" type="String" label="KPI 3 - Value (override)" />
+            <property name="kpi3Sublabel" type="String" label="KPI 3 - Sublabel (override)" />
+            <property name="kpi3Icon" type="String" label="KPI 3 - Icon (override)" />
+            <property name="kpi3Color" type="String" label="KPI 3 - Color hex (override)" />
+            <property name="kpi3Link" type="String" label="KPI 3 - Link (override)" />
+
+            <property name="kpi4Label" type="String" label="KPI 4 - Label (empty = hidden)" />
+            <property name="kpi4Value" type="String" label="KPI 4 - Value" />
+            <property name="kpi4Sublabel" type="String" label="KPI 4 - Sublabel" />
+            <property name="kpi4Icon" type="String" label="KPI 4 - Icon" />
+            <property name="kpi4Color" type="String" label="KPI 4 - Color hex" />
+            <property name="kpi4Link" type="String" label="KPI 4 - Link" />
+
+            <property name="kpi5Label" type="String" label="KPI 5 - Label (empty = hidden)" />
+            <property name="kpi5Value" type="String" label="KPI 5 - Value" />
+            <property name="kpi5Sublabel" type="String" label="KPI 5 - Sublabel" />
+            <property name="kpi5Icon" type="String" label="KPI 5 - Icon" />
+            <property name="kpi5Color" type="String" label="KPI 5 - Color hex" />
+            <property name="kpi5Link" type="String" label="KPI 5 - Link" />
+
+            <property name="kpi6Label" type="String" label="KPI 6 - Label (empty = hidden)" />
+            <property name="kpi6Value" type="String" label="KPI 6 - Value" />
+            <property name="kpi6Sublabel" type="String" label="KPI 6 - Sublabel" />
+            <property name="kpi6Icon" type="String" label="KPI 6 - Icon" />
+            <property name="kpi6Color" type="String" label="KPI 6 - Color hex" />
+            <property name="kpi6Link" type="String" label="KPI 6 - Link" />
+
+            <!-- Legacy properties kept for backwards compatibility with v1 pages. Not used. -->
+            <property name="userType" type="String" label="(deprecated) User type" />
+            <property name="fieldTile1Label" type="String" label="(deprecated)" />
+            <property name="fieldTile1Sub" type="String" label="(deprecated)" />
+            <property name="fieldTile1Value" type="Integer" label="(deprecated)" />
+            <property name="fieldTile2Label" type="String" label="(deprecated)" />
+            <property name="fieldTile2Sub" type="String" label="(deprecated)" />
+            <property name="fieldTile2Value" type="Integer" label="(deprecated)" />
+            <property name="insideTile1Label" type="String" label="(deprecated)" />
+            <property name="insideTile1Sub" type="String" label="(deprecated)" />
+            <property name="insideTile1Value" type="Integer" label="(deprecated)" />
+            <property name="insideTile2Label" type="String" label="(deprecated)" />
+            <property name="insideTile2Sub" type="String" label="(deprecated)" />
+            <property name="insideTile2Value" type="Integer" label="(deprecated)" />
+            <property name="perfTileLabel" type="String" label="(deprecated)" />
+            <property name="perfTileSub" type="String" label="(deprecated)" />
+            <property name="perfTileValue" type="String" label="(deprecated)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

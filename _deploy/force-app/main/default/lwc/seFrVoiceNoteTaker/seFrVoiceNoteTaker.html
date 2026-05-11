@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div class="slds-p-around_medium">
+
+            <template if:true={notSupported}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <h2>{resolvedUnsupported}</h2>
+                </div>
+            </template>
+
+            <template if:false={notSupported}>
+
+                <div class="slds-grid slds-grid_align-center slds-m-bottom_medium">
+                    <lightning-button
+                        icon-name={recordButtonIcon}
+                        label={recordButtonLabel}
+                        variant={recordButtonVariant}
+                        onclick={toggleRecording}>
+                    </lightning-button>
+                </div>
+
+                <template if:true={isRecording}>
+                    <div class="slds-text-align_center slds-text-color_error slds-m-bottom_small">
+                        <lightning-icon icon-name="utility:record" size="xx-small" variant="error" class="slds-m-right_xx-small"></lightning-icon>
+                        <i>{resolvedRecordingHint}</i>
+                    </div>
+                </template>
+
+                <lightning-textarea
+                    label={resolvedTextareaLabel}
+                    value={transcript}
+                    onchange={handleTextChange}
+                    placeholder={resolvedTextareaPlaceholder}
+                    disabled={isRecording}>
+                </lightning-textarea>
+
+                <div class="slds-m-top_medium slds-text-align_right">
+                    <lightning-button
+                        label={resolvedSaveButton}
+                        variant="brand"
+                        onclick={handleSave}
+                        disabled={isSaveDisabled}>
+                    </lightning-button>
+                </div>
+
+                <template if:true={isSaving}>
+                    <lightning-spinner alternative-text={savingText} size="small"></lightning-spinner>
+                </template>
+
+            </template>
+        </div>
+    </lightning-card>
+</template>

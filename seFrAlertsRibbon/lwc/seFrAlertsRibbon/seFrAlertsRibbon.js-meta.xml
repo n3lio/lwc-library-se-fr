@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Alerts Ribbon</masterLabel>
+    <description>Configurable alerts ribbon. Two sources: rule-driven alerts evaluated against the current record (Record Page), and static alerts always shown (Home / App Page friendly). 4 severities, 3 visual variants, 2 densities, optional sticky-on-scroll behavior.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+                <object>Contact</object>
+                <object>Case</object>
+                <object>Opportunity</object>
+                <object>Lead</object>
+                <object>Order</object>
+                <object>Contract</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="rulesCsv" type="String" label="Rule-driven alerts (one per line)" description="Format: '&lt;field&gt;&lt;op&gt;&lt;value&gt;|&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'. Operators: = | != | &gt; | &lt; | &gt;= | &lt;= | contains | startsWith | endsWith | isBlank | isNotBlank. Severity: info | success | warning | error. Icon and CTA fields are optional." />
+            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" description="Always shown. Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
+            <property name="visualStyle" type="String" datasource="inline,card" default="inline" label="Visual style" description="'inline' (default) renders alerts directly above the page content. 'card' wraps them in a lightning-card chrome with a title and a count pill." />
+            <property name="alertVariant" type="String" datasource="banner,solid,minimal" default="banner" label="Alert variant" description="'banner' (soft pastel + accent border-left), 'solid' (saturated background), 'minimal' (white background, accent bar only)." />
+            <property name="density" type="String" datasource="comfortable,compact" default="comfortable" label="Layout density" description="'comfortable' allows wrap. 'compact' truncates the message with ellipsis." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Used only when visualStyle = card. Leave empty for the dictionary default." />
+            <property name="cardIcon" type="String" default="standard:announcement" label="Card icon" description="SLDS icon name. Used only when visualStyle = card." />
+            <property name="hideDismissButton" type="Boolean" default="false" label="Hide dismiss button" />
+            <property name="maxAlerts" type="Integer" default="0" label="Maximum alerts shown (0 = unlimited)" />
+            <property name="stickyOnScroll" type="Boolean" default="false" label="Sticky on scroll" description="When ON, the ribbon stays pinned to the top of the page on scroll." />
+        </targetConfig>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" description="Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
+            <property name="visualStyle" type="String" datasource="inline,card" default="inline" label="Visual style" />
+            <property name="alertVariant" type="String" datasource="banner,solid,minimal" default="banner" label="Alert variant" />
+            <property name="density" type="String" datasource="comfortable,compact" default="comfortable" label="Layout density" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:announcement" label="Card icon" />
+            <property name="hideDismissButton" type="Boolean" default="false" label="Hide dismiss button" />
+            <property name="maxAlerts" type="Integer" default="0" label="Maximum alerts shown (0 = unlimited)" />
+            <property name="stickyOnScroll" type="Boolean" default="false" label="Sticky on scroll" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

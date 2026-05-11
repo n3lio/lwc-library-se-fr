@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name="standard:bot">
+        <div class="slds-p-horizontal_small">
+
+            <template if:true={hasRecommendations}>
+                <div class="slds-text-color_weak slds-m-bottom_medium slds-text-body_small">
+                    {subtitle}
+                </div>
+
+                <template for:each={recosToDisplay} for:item="reco">
+                    <div key={reco.id} class="slds-box slds-box_x-small slds-m-bottom_small slds-theme_default" style="border-left: 4px solid #00a1e0; box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
+
+                        <div class="slds-m-bottom_x-small">
+                            <lightning-badge label={reco.scoreLabel} icon-name="utility:magicwand" class="slds-theme_success"></lightning-badge>
+                        </div>
+
+                        <div class="slds-text-heading_small slds-m-bottom_xx-small"><strong>{reco.title}</strong></div>
+                        <div class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                            {reco.description}
+                        </div>
+
+                        <div class="slds-grid slds-gutters slds-grid_align-end">
+                            <div class="slds-col">
+                                <lightning-button label={dismissLabel} variant="base" data-id={reco.id} onclick={handleReject} class="slds-text-color_weak"></lightning-button>
+                            </div>
+                            <div class="slds-col">
+                                <lightning-button label={reco.buttonLabel} variant="brand" data-id={reco.id} onclick={handleAccept}></lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template if:false={hasRecommendations}>
+                <div class="slds-illustration slds-illustration_small">
+                    <div class="slds-text-longform slds-text-color_weak slds-m-top_medium slds-text-align_center">
+                        <p>{emptyMessage}</p>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name="standard:location">
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <span class={geoStatusClass}>{geoStatusLabel}</span>
+            <template if:true={showRefreshButton}>
+                <lightning-button-icon icon-name="utility:location" alternative-text={labels.useMyLocation} title={labels.useMyLocation} variant="border-filled" size="small" class="slds-m-left_xx-small" onclick={refreshGeolocation}></lightning-button-icon>
+            </template>
+        </div>
+        <div class="map-container slds-p-horizontal_small slds-p-bottom_small">
+            <lightning-map
+                map-markers={mapMarkers}
+                center={mapCenter}
+                zoom-level={zoomLevel}
+                list-view="visible"
+                markers-title={markersTitle}>
+            </lightning-map>
+        </div>
+    </lightning-card>
+</template>

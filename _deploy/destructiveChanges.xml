@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>seFrMetricSparkline</members>
+        <members>seFrAgentChat</members>
+        <members>seFrFieldSalesDashboard</members>
+        <members>seFrRetailSalesDashboard</members>
+        <members>seFrTelesalesDashboard</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>SE_FR_AgentChatController</members>
+        <members>SE_FR_AccountMapController</members>
+        <members>SE_FR_RecommendationController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>SE_FR_Showcase_AgentChat</members>
+        <members>SE_FR_Account_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>SE_FR_Showcase_AgentChat</members>
+        <name>CustomTab</name>
+    </types>
+    <version>59.0</version>
+</Package>

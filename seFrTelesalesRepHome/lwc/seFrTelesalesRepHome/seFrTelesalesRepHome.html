@@ -1,0 +1,161 @@
+<template>
+    <div class="greeting-banner">
+        <h1 class="slds-text-heading_medium greeting-text">
+            <template for:each={greetingSegments} for:item="seg">
+                <template if:true={seg.highlight}>
+                    <span key={seg.id} style={highlightStyle}>{seg.text}</span>
+                </template>
+                <template if:false={seg.highlight}>
+                    <span key={seg.id}>{seg.text}</span>
+                </template>
+            </template>
+        </h1>
+    </div>
+
+    <lightning-layout multiple-rows class="kpi-row">
+        <lightning-layout-item size="12" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-calls">
+                <lightning-icon icon-name="utility:call" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi1Label}</div>
+                <div class="kpi-value">{kpi1Value}</div>
+                <div class={kpi1FooterClass}>{resolvedKpi1Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-urgent">
+                <lightning-icon icon-name="utility:warning" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi2Label}</div>
+                <div class="kpi-value">{kpi2Value}</div>
+                <div class={kpi2FooterClass}>{resolvedKpi2Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-revenue">
+                <lightning-icon icon-name="utility:money" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi3Label}</div>
+                <div class="kpi-value">{kpi3Value}</div>
+                <div class={kpi3FooterClass}>{resolvedKpi3Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-dmt">
+                <lightning-icon icon-name="utility:clock" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi4Label}</div>
+                <div class="kpi-value">{kpi4Value}</div>
+                <div class={kpi4FooterClass}>{resolvedKpi4Footer}</div>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <div class="body-stack">
+        <lightning-card title={labels.incomingCases} icon-name="standard:case" class="card-spacing">
+            <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToCasesList}></lightning-button>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <lightning-datatable key-field="id" data={caseRows} columns={caseColumns} hide-checkbox-column="true"></lightning-datatable>
+            </div>
+        </lightning-card>
+
+        <lightning-card title={labels.ordersToValidate} icon-name="standard:orders" class="card-spacing">
+            <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToOrdersList}></lightning-button>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <lightning-datatable key-field="id" data={orderRows} columns={orderColumns} hide-checkbox-column="true"></lightning-datatable>
+            </div>
+        </lightning-card>
+
+        <div class="two-col-row card-spacing">
+            <div class="two-col-cell">
+                <lightning-card title={labels.callsToMake} icon-name="standard:log_a_call">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <ul>
+                            <template for:each={mockCalls} for:item="call">
+                                <li class="call-item" key={call.id}>
+                                    <lightning-layout vertical-align="center">
+                                        <lightning-layout-item class="slds-p-right_small">
+                                            <div class="call-time">{call.time}</div>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item flexibility="grow" class="call-main">
+                                            <div class="call-account slds-truncate" title={call.account}><strong><a href="javascript:void(0);" data-id={call.accountId} onclick={navigateToRecord} class="theme-link">{call.account}</a></strong></div>
+                                            <div class="call-contact slds-truncate" title={call.contact}>
+                                                <a href="javascript:void(0);" data-id={call.contactId} onclick={navigateToRecord} class="theme-link">{call.contact}</a>
+                                            </div>
+                                            <div class="call-phone slds-truncate" title={call.phone}>{call.phone}</div>
+                                            <template if:true={call.subject}>
+                                                <div class="call-subject slds-truncate" title={call.subject}><em>{call.subject}</em></div>
+                                            </template>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item><lightning-button-icon icon-name="utility:call" variant="border-filled"></lightning-button-icon></lightning-layout-item>
+                                    </lightning-layout>
+                                </li>
+                            </template>
+                        </ul>
+                        <div class="slds-text-align_center slds-m-top_medium">
+                            <lightning-button label={labels.viewAll} variant="neutral" onclick={navigateToVoiceCallsList} class="slds-button_stretch"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+            <div class="two-col-cell">
+                <lightning-card title={labels.trainingNews} icon-name="standard:trailhead">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <template if:false={hasNews}>
+                            <p class="slds-text-align_center slds-text-color_weak slds-m-vertical_medium">{labels.newsEmpty}</p>
+                        </template>
+                        <template for:each={mockNews} for:item="news">
+                            <div class={news.cssClass} key={news.id}>
+                                <div class="news-header">
+                                    <h3 class="slds-text-heading_small slds-m-bottom_xx-small"><strong>{news.title}</strong></h3>
+                                    <lightning-button-icon icon-name="utility:close" variant="bare" size="small" data-id={news.id} onclick={handleCloseNews} alternative-text={labels.close}></lightning-button-icon>
+                                </div>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">{news.desc}</p>
+                                <lightning-button label={news.btnLabel} variant="neutral" data-url={news.url} onclick={navigateToUrl}></lightning-button>
+                            </div>
+                        </template>
+                    </div>
+                </lightning-card>
+            </div>
+        </div>
+
+        <lightning-card title={labels.activityAnalysis} icon-name="standard:dashboard" class="card-spacing">
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" medium-device-size="4" padding="horizontal-small">
+                        <h3 class="slds-text-title_caps slds-m-bottom_small"><strong>{labels.volumeByChannel}</strong></h3>
+                        <div class="chart-container">
+                            <template for:each={channelVolume} for:item="row">
+                                <div key={row.id} class="bar-row">
+                                    <div class="bar-labels"><span>{row.label}</span><strong>{row.percentDisplay}</strong></div>
+                                    <div class="bar-track"><div class="bar-fill" style={row.fillStyle}></div></div>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" medium-device-size="4" padding="horizontal-small">
+                        <h3 class="slds-text-title_caps slds-m-bottom_small"><strong>{labels.volumeBySubject}</strong></h3>
+                        <div class="chart-container">
+                            <template for:each={subjectVolume} for:item="row">
+                                <div key={row.id} class="bar-row">
+                                    <div class="bar-labels"><span>{row.label}</span><strong>{row.percentDisplay}</strong></div>
+                                    <div class="bar-track"><div class="bar-fill" style={row.fillStyle}></div></div>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" medium-device-size="4" padding="horizontal-small">
+                        <h3 class="slds-text-title_caps slds-m-bottom_small"><strong>{labels.casesClosed}</strong></h3>
+                        <div class="col-chart">
+                            <template for:each={monthlyClosed} for:item="m">
+                                <div key={m.id} class="col-bar-wrapper">
+                                    <div class={m.valueClass}>{m.value}</div>
+                                    <div class={m.barClass} style={m.barStyle}></div>
+                                    <div class={m.labelClass}>{m.month}</div>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-card>
+    </div>
+</template>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Customer Sales Summary</masterLabel>
+    <description>B2C - Customer-level sales summary for a Contact / Person Account / Account record page. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contact</object>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' or 'fr'. Controls the default card title, KPI labels, column titles, the stores suffix and the default CSV content for categories / brands / stores." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:performance" label="Card icon" />
+
+            <property name="kpi1Label" type="String" label="KPI 1 - Label (override)" />
+            <property name="kpi1Value" type="String" label="KPI 1 - Value (override)" description="Leave empty for the language default ('38 550 €' / '$38,550')." />
+            <property name="kpi2Label" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpi2Value" type="String" label="KPI 2 - Value (override)" description="Leave empty for the language default ('285 €' / '$285')." />
+            <property name="kpi3Label" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpi3Value" type="String" label="KPI 3 - Value (override)" description="Leave empty for the language default ('18')." />
+
+            <property name="categoriesTitle" type="String" label="Categories column - title (override)" />
+            <property name="categoriesIcon" type="String" default="standard:product" label="Categories column - icon" />
+            <property name="categoriesCsv" type="String" label="Categories rows (label|percent|color) (override)" />
+
+            <property name="brandsTitle" type="String" label="Brands column - title (override)" />
+            <property name="brandsIcon" type="String" default="standard:brand" label="Brands column - icon" />
+            <property name="brandsCsv" type="String" label="Brands rows (label|percent|color) (override)" />
+
+            <property name="storesTitle" type="String" label="Stores column - title (override)" />
+            <property name="storesIcon" type="String" default="standard:store" label="Stores column - icon" />
+            <property name="storesCsv" type="String" label="Stores rows (label|visits|barWidthPercent|color) (override)" />
+            <property name="storeVisitsSuffix" type="String" label="Store visits suffix (override)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

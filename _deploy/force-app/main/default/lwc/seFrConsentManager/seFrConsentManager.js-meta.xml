@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Consent Manager</masterLabel>
+    <description>B2B / B2C - GDPR / contact-preferences toggle panel. Reads/writes opt-in/opt-out fields on the record. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contact</object>
+                <object>Lead</object>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' or 'fr'. Controls card title, toggle labels, toast messages, and default channel labels (E-mail / Téléphone / WhatsApp)." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:task2" label="Card icon" />
+            <property name="channelsCsv" type="String" label="Channels CSV (override)" description="One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty for the language dictionary default (maps Email / Phone / WhatsApp onto Contact standard opt-out fields)." />
+            <property name="toggleActiveLabel" type="String" label="Toggle active label (override)" />
+            <property name="toggleInactiveLabel" type="String" label="Toggle inactive label (override)" />
+            <property name="successMessage" type="String" label="Success toast message (override)" />
+            <property name="errorMessage" type="String" label="Error toast message (override)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

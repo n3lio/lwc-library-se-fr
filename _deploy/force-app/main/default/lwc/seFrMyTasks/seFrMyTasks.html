@@ -1,0 +1,80 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button-icon icon-name="utility:add" alternative-text={labels.newTask} variant="border-filled" size="small" class="slds-m-right_xx-small" onclick={handleNewTask}></lightning-button-icon>
+            <lightning-button-menu alternative-text={labels.filter} variant="border-filled" icon-size="x-small" menu-alignment="right" onselect={handleFilterSelect} label={currentFilterLabel}>
+                <template for:each={filterOptions} for:item="opt">
+                    <lightning-menu-item key={opt.key} value={opt.key} label={opt.label}></lightning-menu-item>
+                </template>
+            </lightning-button-menu>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:false={hasTasks}>
+                <p class="slds-text-align_center slds-text-color_weak slds-m-vertical_medium">{resolvedEmptyState}</p>
+            </template>
+
+            <template for:each={groups} for:item="group">
+                <div key={group.key} class="group-block slds-m-bottom_small">
+                    <div class="group-header slds-p-horizontal_small slds-p-vertical_xx-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center" style={group.headerStyle}>
+                        <span class="slds-text-title_caps"><strong>{group.label}</strong></span>
+                        <span class="slds-text-body_small slds-text-color_weak">{group.count}</span>
+                    </div>
+                    <ul>
+                        <template for:each={group.items} for:item="task">
+                            <li class="task-item" key={task.id}>
+                                <lightning-layout vertical-align="start">
+                                    <lightning-layout-item class="slds-p-right_x-small slds-p-top_xx-small">
+                                        <lightning-input
+                                            type="checkbox"
+                                            variant="label-hidden"
+                                            label={labels.toggleCompletion}
+                                            data-id={task.id}
+                                            checked={task.isClosed}
+                                            onchange={handleToggleComplete}>
+                                        </lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item flexibility="grow" class="slds-truncate">
+                                        <div class="slds-truncate">
+                                            <strong>
+                                                <a href="javascript:void(0);" data-id={task.id} onclick={navigateToRecord} class="theme-link">{task.subject}</a>
+                                            </strong>
+                                        </div>
+                                        <div class="task-meta slds-m-top_xxx-small slds-truncate">
+                                            <template if:true={task.whoName}>
+                                                <a href="javascript:void(0);" data-id={task.whoId} onclick={navigateToRecord} class="theme-link">{task.whoName}</a>
+                                            </template>
+                                            <template if:true={task.whatName}>
+                                                <template if:true={task.whoName}> &bull; </template>
+                                                <a href="javascript:void(0);" data-id={task.whatId} onclick={navigateToRecord} class="theme-link">{task.whatName}</a>
+                                            </template>
+                                        </div>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item class="slds-text-align_right slds-p-left_x-small">
+                                        <template if:true={showQuickActions}>
+                                            <span class="quick-actions">
+                                                <template if:true={task.whoId}>
+                                                    <lightning-button-icon icon-name="utility:email" alternative-text={labels.email} size="x-small" variant="bare" data-who={task.whoId} onclick={handleEmail}></lightning-button-icon>
+                                                </template>
+                                                <lightning-button-icon icon-name="utility:call" alternative-text={labels.logACall} size="x-small" variant="bare" data-who={task.whoId} data-what={task.whatId} onclick={handleLogCall}></lightning-button-icon>
+                                            </span>
+                                        </template>
+                                        <template if:true={task.isUrgent}>
+                                            <lightning-icon icon-name="utility:flag" size="xx-small" class="slds-m-right_xx-small" style="--sds-c-icon-color-foreground-default: #d00000;"></lightning-icon>
+                                        </template>
+                                        <span class={task.dateClass}>{task.dateLabel}</span>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+            <div class="slds-text-align_center slds-m-top_small">
+                <lightning-button label={labels.viewAll} variant="neutral" onclick={navigateToTaskHome} class="slds-button_stretch"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

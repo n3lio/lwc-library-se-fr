@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Account Strategy Plan</masterLabel>
+    <description>B2B - Narrative Account plan: KPIs, target progress, SWOT 2x2, action plan, strategic notes. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls card title, section headings, SWOT labels, status pills (Not started / En cours…), buttons, toasts, and the default KPI labels / SWOT bullets / action plan / strategic notes." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:goals" label="Card icon" />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+
+            <property name="kpiPreviousYearLabel" type="String" label="KPI 1 - Label (override)" />
+            <property name="kpiPreviousYearValue" type="Integer" default="33800" label="KPI 1 - Value" />
+            <property name="kpiRunRateLabel" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpiRunRateValue" type="Integer" default="3200" label="KPI 2 - Monthly value" />
+            <property name="kpiPotentialLabel" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpiPotentialValue" type="Integer" default="75000" label="KPI 3 - Annual value" />
+            <property name="kpiShareLabel" type="String" label="KPI 4 - Label (override)" />
+            <property name="kpiShareValue" type="String" default="56%" label="KPI 4 - Value (raw text)" />
+
+            <property name="annualTargetLabel" type="String" label="Target - label (override)" />
+            <property name="annualTargetDefault" type="Integer" default="55000" label="Target - default value" />
+            <property name="ytdRevenueLabel" type="String" label="YTD revenue - label (override)" />
+            <property name="ytdRevenueDefault" type="Integer" default="38550" label="YTD revenue - default value" />
+
+            <property name="strengthsCsv" type="String" label="Strengths - default bullets (override)" description="Comma- or newline-separated. Leave empty for the language dictionary default." />
+            <property name="weaknessesCsv" type="String" label="Weaknesses - default bullets (override)" />
+            <property name="opportunitiesCsv" type="String" label="Opportunities - default bullets (override)" />
+            <property name="threatsCsv" type="String" label="Threats - default bullets (override)" />
+
+            <property name="actionPlanCsv" type="String" label="Action plan (override)" description="Quarter|Action|Owner|Status, comma-separated. Status accepts English keys ('not started', 'in progress', 'on track', 'at risk', 'done') or French ('non commencé', 'en cours', 'dans les temps', 'à risque', 'terminé'). Leave empty for the language dictionary default." />
+
+            <property name="strategyNotesDefault" type="String" label="Strategic notes - default text (override)" />
+
+            <!-- Deprecated - kept for backwards compatibility with pages that still reference them. No longer used by the new UI. -->
+            <property name="logisticOptionsCsv" type="String" label="(deprecated - unused)" />
+            <property name="competitorOptionsCsv" type="String" label="(deprecated - unused)" />
+            <property name="riskOptionsCsv" type="String" label="(deprecated - unused)" />
+            <property name="leversOptionsCsv" type="String" label="(deprecated - unused)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

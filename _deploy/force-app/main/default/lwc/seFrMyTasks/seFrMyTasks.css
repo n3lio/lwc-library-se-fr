@@ -1,0 +1,26 @@
+.group-block {
+    background-color: #fff;
+}
+.group-header {
+    background-color: #fafafa;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    color: #444;
+}
+ul { list-style: none; padding: 0; margin: 0; }
+.task-item {
+    padding: 8px 4px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.task-item:last-child { border-bottom: none; }
+.task-item a.theme-link { color: #0176d3; text-decoration: none; }
+.task-item a.theme-link:hover { text-decoration: underline; }
+.task-meta { color: #747474; font-size: 0.8rem; }
+.task-date { font-size: 0.8rem; color: #747474; white-space: nowrap; }
+.task-date_alert { color: #d00000; font-weight: bold; }
+.quick-actions {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+    margin-right: 6px;
+}
+.task-item:hover .quick-actions { opacity: 1; }

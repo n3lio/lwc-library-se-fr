@@ -1,0 +1,164 @@
+:host { display: block; }
+
+.metric-tile {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 120px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.metric-tile:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+.metric-tile_carded {
+    border: none;
+    padding: 8px 14px 12px;
+    min-height: 0;
+    box-shadow: none;
+    transform: none;
+}
+.metric-tile_carded:hover {
+    box-shadow: none;
+    transform: none;
+}
+
+.metric-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.metric-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #747474;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.metric-target-chip {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--spark-target, #FE9339);
+    background: color-mix(in srgb, var(--spark-target, #FE9339) 12%, transparent);
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.metric-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+.metric-value {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: #181818;
+    margin-top: 2px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+/* ====================================================================
+   Sparkline (line / area / bar)
+==================================================================== */
+.spark {
+    width: 100%;
+    height: 64px;
+    margin-top: 8px;
+    display: block;
+    overflow: visible;
+}
+.spark-bar {
+    transition: opacity 0.12s ease;
+    transform-origin: bottom;
+    animation: barGrow 0.55s cubic-bezier(.2,.8,.2,1) backwards;
+}
+.spark-bar:hover { opacity: 0.7; }
+@keyframes barGrow {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+/* Line / area: subtle path-draw animation on first render */
+.spark path {
+    animation: pathFade 0.5s ease-out;
+}
+@keyframes pathFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ====================================================================
+   Mini-donut variant
+==================================================================== */
+.metric-donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 6px;
+}
+.metric-donut {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    overflow: visible;
+}
+.metric-donut-fill {
+    transition: stroke-dashoffset 0.7s cubic-bezier(.2,.8,.2,1);
+}
+.metric-donut-pct {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    fill: var(--spark-color, #0176d3);
+}
+.metric-donut-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+/* ====================================================================
+   Trend badge — auto-colored from string prefix
+==================================================================== */
+.trend {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    align-self: flex-start;
+    padding: 2px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+}
+.trend_pos {
+    color: #1f6b3a;
+    background: #E5F5EA;
+    border: 1px solid #B6E0C4;
+}
+.trend_neg {
+    color: #8a1f11;
+    background: #FCEBEB;
+    border: 1px solid #F4C2C7;
+}
+.trend_neutral {
+    color: #444;
+    background: #f0f0f0;
+    border: 1px solid #d9d9d9;
+}
+.trend-suffix {
+    color: #747474;
+    font-weight: 500;
+    margin-left: 2px;
+}

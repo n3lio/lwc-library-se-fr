@@ -1,0 +1,173 @@
+:host {
+    display: block;
+}
+
+.agentforce-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    min-height: 100px;
+    border-radius: 16px;
+    padding: 12px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* --- ASTRO --- */
+.astro-wrapper {
+    position: relative;
+    width: 90px;
+    min-width: 90px;
+    height: 100px;
+    align-self: center;
+    margin-right: 15px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* C'est la div qui flotte */
+.astro-float {
+    position: absolute;
+    bottom: 0px;
+    left: -5px;
+    z-index: 2;
+    animation: microFloat 3s infinite ease-in-out;
+}
+
+/* C'est l'image qui tourne */
+.astro-img {
+    width: 100px;
+    height: auto;
+    display: block;
+    transform-origin: center center;
+}
+
+.astro-glow {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(52, 57, 191, 0.2) 0%, transparent 70%);
+    z-index: 1;
+}
+
+/* --- TITRE --- */
+.content-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.greeting-title {
+    font-size: 1.15rem;
+    color: #181818;
+    margin: 0 0 0 8px;
+    font-weight: 400;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.name-highlight {
+    color: #3439BF;
+    font-weight: 700;
+}
+
+/* --- BARRE DE SAISIE --- */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.chat-input {
+    width: 100%;
+    height: 48px;
+    padding-left: 50px !important; 
+    padding-right: 50px !important;
+    border: 2px solid #3439BF;
+    border-radius: 24px;
+    font-size: 0.95rem;
+    background: white;
+    color: #181818;
+    transition: all 0.2s ease;
+}
+
+.chat-input:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(52, 57, 191, 0.3);
+}
+
+/* --- ZONES CLIQUABLES INVISIBLES --- */
+.icon-click-area {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.2s ease;
+}
+
+.icon-click-area:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mic-area { left: 2px; }
+.send-area { right: 2px; }
+
+/* COULEUR PAR DÉFAUT DES ICÔNES (Violet) */
+.custom-color-icon {
+    --sds-c-icon-color-foreground-default: #3439BF !important;
+    --sds-c-icon-color-foreground: #3439BF !important;
+}
+
+/* --- MODE ENREGISTREMENT --- */
+.input-wrapper.is-dictating .chat-input {
+    border-color: #A42128 !important;
+    background: #FFF5F5 !important;
+    animation: pulse-red 1.5s infinite;
+}
+
+/* Le petit point devient ROUGE et pulse pendant l'écoute */
+.input-wrapper.is-dictating .mic-icon {
+    --sds-c-icon-color-foreground-default: #A42128 !important;
+    --sds-c-icon-color-foreground: #A42128 !important;
+    animation: pulse-dot 1s infinite alternate;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(164, 33, 40, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(164, 33, 40, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(164, 33, 40, 0); }
+}
+
+@keyframes pulse-dot {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.6; transform: scale(1.15); }
+}
+
+@keyframes microFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.spin {
+    animation: quickSpin 0.8s ease-in-out !important;
+}
+
+@keyframes quickSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,100 @@
+.health-card {
+    background: linear-gradient(135deg, var(--se-accent-soft, #eef4fb) 0%, #ffffff 70%);
+    border: 1px solid #e5e5e5;
+    border-left: 4px solid var(--se-accent, #0176d3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 0.75rem;
+}
+
+.health-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.health-gauge {
+    position: relative;
+    flex-shrink: 0;
+}
+.gauge-label {
+    position: absolute;
+    top: 0; left: 0;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+.gauge-score {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--se-accent, #0176d3);
+    line-height: 1;
+}
+.gauge-suffix {
+    font-size: 0.7rem;
+    color: #747474;
+    margin-top: 2px;
+}
+
+.health-level {
+    flex-grow: 1;
+    min-width: 0;
+}
+.level-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #747474;
+    font-weight: 700;
+}
+.level-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--se-accent, #0176d3);
+}
+
+.signals-block {
+    margin-top: 10px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 8px;
+}
+.signals-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #747474;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+.signals-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+.signal-sign {
+    font-weight: 800;
+}
+.signal_pos {
+    background: #e6f4ea;
+    color: #1f6b3a;
+    border-color: #bde4c7;
+}
+.signal_neg {
+    background: #fde2e4;
+    color: #8a1f11;
+    border-color: #f0b4b4;
+}

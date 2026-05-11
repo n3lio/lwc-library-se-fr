@@ -1,0 +1,77 @@
+# Cookbook recipes — curated bundles of components for typical demo scenarios.
+# Each recipe references components by apiName. The site cross-validates that
+# each apiName exists in the manifest at build time.
+#
+# Format:
+# - id: short-slug
+#   emoji: <emoji>
+#   title: <name>
+#   description: <one-line desc>
+#   primaryPersona: <one of the manifest's ALLOWED_PERSONAS>
+#   components: [list of seFr* apiNames]
+
+- id: account-360
+  emoji: 🏢
+  title: Account 360°
+  description: Drop-in record page for B2B Sales — highlights, health gauge, pipeline, activity timeline, and AI recommendations.
+  primaryPersona: Sales
+  components:
+    - seFrRecordHighlights
+    - seFrAccountHealth
+    - seFrPipelineSnapshot
+    - seFrActivityFeed
+    - seFrSmartRecommendations
+
+- id: field-sales-cockpit
+  emoji: 🚗
+  title: Field Sales cockpit
+  description: Mobile-first Home page for reps in the field — map, agenda, voice notes and KPIs.
+  primaryPersona: FieldSales
+  components:
+    - seFrFieldRepHome
+    - seFrNearbyAccountsMap
+    - seFrTerritoryMap
+    - seFrMyEvents
+    - seFrVoiceNoteTaker
+    - seFrKpiLauncher
+
+- id: service-desk
+  emoji: 📞
+  title: Service desk
+  description: Case-centric record page with order history, kanban, alerts and smart actions.
+  primaryPersona: Service
+  components:
+    - seFrAlertsRibbon
+    - seFrCustomerOrders
+    - seFrOrderSummary
+    - seFrKanbanBoard
+    - seFrSmartRecommendations
+
+- id: agentforce-demo
+  emoji: 🤖
+  title: Agentforce demo
+  description: Showcase page tuned for AI-driven scenarios — hero banner, prompt launcher, and recommendations.
+  primaryPersona: Agents
+  components:
+    - seFrAgentforceHeader
+    - seFrPromptLauncher
+    - seFrSmartRecommendations
+    - seFrSplashBanner
+
+- id: marketing-360
+  emoji: 🎯
+  title: Marketing 360°
+  description: Contact-centric page with consent management, segment membership and engagement signals.
+  primaryPersona: Marketing
+  components:
+    - seFrActiveSegments
+    - seFrConsentManager
+    - seFrActivityFeed
+    - seFrCustomerSalesSummary
+
+- id: full-pack
+  emoji: 📦
+  title: Full pack
+  description: All components in one go — for when you want everything pre-loaded.
+  primaryPersona: All
+  components: ALL

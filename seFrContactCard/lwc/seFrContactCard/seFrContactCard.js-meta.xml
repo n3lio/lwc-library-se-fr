@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Contact Card</masterLabel>
+    <description>B2B / B2C - Visual Contact card (avatar, details, up to 3 gauges) with animated waves + optional Einstein prompt summary. Original author: Charly Ansel.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contact</object>
+                <object>Account</object>
+                <object>Case</object>
+                <object>Opportunity</object>
+                <object>Order</object>
+                <object>Lead</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls every visible label." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default ('Contact')." />
+            <property name="hideHeaderOnContact" type="Boolean" default="false" label="Hide card header on Contact page" description="Off by default. Turn ON to remove the card title + icon when the component is placed on a Contact record page (the page already tells the user it is a contact)." />
+
+            <property name="imageFieldApiName" type="String" default="SDO_Cust360_Contact_Picture_URL__c" label="Image URL field API name (optional)" description="Schema-safe: skipped if absent. When the contact has a value in this URL field, it wins over any uploaded file. Leave empty to rely solely on the click-to-upload File storage." />
+            <property name="disableImageReplace" type="Boolean" default="false" label="Disable click-to-replace image" description="Off by default - clicking the avatar opens a file picker and uploads the new image as a File on the linked Contact (works on Contact, Case, Account etc. record pages). Turn ON to lock the avatar." />
+            <!-- Deprecated: replacement is now click-to-upload by default everywhere. -->
+            <property name="imageMode" type="String" label="(deprecated)" />
+
+            <property name="showCustomerId" type="Boolean" default="false" label="Show customer ID line" />
+            <property name="customerIdFieldApiName" type="String" default="SDO_Cust360_Id__c" label="Customer ID field API name" description="Schema-safe: the line is skipped if the field is absent or empty." />
+
+            <property name="gauge1Label" type="String" default="Churn risk" label="Gauge 1 - label" description="Leave empty to hide the first gauge." />
+            <property name="gauge1FieldApiName" type="String" default="SDO_Cust360_ChurnRisk__c" label="Gauge 1 - field API name (optional)" description="Numeric Contact field (0-100). When set and the record has a numeric value, it wins over the static value below. Schema-safe: skipped if absent." />
+            <property name="gauge1Value" type="String" label="Gauge 1 - static value (optional)" description="Type a number directly (0-100) to display it without needing a field. Useful for demos. Used as a fallback when the field above is empty." />
+            <property name="gauge1Icon" type="String" default="utility:warning" label="Gauge 1 - icon (SLDS)" />
+            <property name="gauge1Direction" type="String" datasource="lower-better,higher-better" default="lower-better" label="Gauge 1 - semantics" description="'lower-better' (0=green, 100=red) for risk-style metrics. 'higher-better' (0=red, 100=green) for health / satisfaction." />
+
+            <property name="gauge2Label" type="String" label="Gauge 2 - label (optional)" />
+            <property name="gauge2FieldApiName" type="String" label="Gauge 2 - field API name (optional)" />
+            <property name="gauge2Value" type="String" label="Gauge 2 - static value (optional)" />
+            <property name="gauge2Icon" type="String" default="utility:trending" label="Gauge 2 - icon (SLDS)" />
+            <property name="gauge2Direction" type="String" datasource="lower-better,higher-better" default="higher-better" label="Gauge 2 - semantics" />
+
+            <property name="gauge3Label" type="String" label="Gauge 3 - label (optional)" />
+            <property name="gauge3FieldApiName" type="String" label="Gauge 3 - field API name (optional)" />
+            <property name="gauge3Value" type="String" label="Gauge 3 - static value (optional)" />
+            <property name="gauge3Icon" type="String" default="utility:dashboard" label="Gauge 3 - icon (SLDS)" />
+            <property name="gauge3Direction" type="String" datasource="lower-better,higher-better" default="higher-better" label="Gauge 3 - semantics" />
+
+            <property name="hideWaves" type="Boolean" default="false" label="Hide animated waves" description="Off by default - the card shows soft animated wave shapes tinted with the active Lightning theme accent. Turn ON to hide them." />
+            <!-- Kept for backwards compatibility with existing FlexiPages. The new control is `hideWaves`. -->
+            <property name="showWaves" type="Boolean" default="false" label="(deprecated) Show animated waves" description="No longer used. Use 'Hide animated waves' above." />
+            <property name="isDarkBackground" type="Boolean" default="false" label="Dark background" description="Switches text color to white. Use in tandem with a dark background color / image." />
+            <property name="backgroundColor" type="String" label="Background color (CSS)" description="Optional. Example: '#fff', 'rgb(30,30,60)'." />
+            <property name="backgroundImageUrl" type="String" label="Background image URL" description="Optional. Add the external domain to Trusted Sites if needed." />
+            <property name="waveColorOne" type="String" label="Wave 1 color (override)" description="Optional CSS color. Leave empty to use a tinted version of the Lightning theme accent." />
+            <property name="waveColorTwo" type="String" label="Wave 2 color (override)" description="Optional CSS color. Leave empty to use a lighter tint of the theme accent." />
+
+            <property name="disablePromptSummary" type="Boolean" default="false" label="Disable prompt summary (Einstein)" description="Off by default - the 'Résumer / Summarize' button is displayed and uses the prompt template below. Turn ON to hide the button entirely." />
+            <!-- Legacy property kept for backwards compatibility with FlexiPages built before
+                 the default flipped to ON. No longer drives rendering. -->
+            <property name="enablePromptSummary" type="Boolean" default="false" label="(deprecated)" description="Use 'Disable prompt summary' above. This property is kept for backwards compatibility only." />
+            <property name="promptButtonLabel" type="String" label="Prompt button label (override)" description="Leave empty for the dictionary default ('Résumer' / 'Summarize')." />
+            <property name="promptTemplateApiName" type="String" default="einstein_gpt__summarizeContact" label="Prompt template API name" description="Developer name of the Einstein Prompt Template to run. Defaults to the SDO-standard contact summary template ('einstein_gpt__summarizeContact')." />
+            <property name="promptInputApiName" type="String" default="Input:Contact" label="Prompt template input API name" description="Typically 'Input:Contact'." />
+            <property name="autoPromptOnLoad" type="Boolean" default="false" label="Run prompt automatically on load" description="When on and the prompt is enabled, the summary fires as soon as the component loads - no button click required." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

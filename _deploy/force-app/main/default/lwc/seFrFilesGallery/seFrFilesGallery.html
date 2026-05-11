@@ -1,0 +1,74 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div slot="actions" class="actions-bar">
+            <lightning-button-icon icon-name="utility:chevronleft" alternative-text={labels.prev} variant="border-filled" size="small" disabled={prevDisabled} onclick={handlePrev}></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:chevronright" alternative-text={labels.next} variant="border-filled" size="small" disabled={nextDisabled} onclick={handleNext}></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:refresh" alternative-text={labels.refresh} variant="border-filled" size="small" onclick={handleRefresh}></lightning-button-icon>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={hasFiles}>
+                <div class="files-row">
+                    <template for:each={visibleFiles} for:item="f">
+                        <div key={f.documentId} class="file-tile" data-id={f.documentId} onclick={handlePreview}>
+                            <template if:false={hideDeleteButton}>
+                                <button type="button"
+                                        class="file-delete-btn"
+                                        data-id={f.documentId}
+                                        data-title={f.title}
+                                        title={labels.delete}
+                                        onclick={handleDelete}>
+                                    <lightning-icon icon-name="utility:delete" size="xx-small" class="delete-icon"></lightning-icon>
+                                </button>
+                            </template>
+                            <div class="thumb">
+                                <template if:true={f.isImage}>
+                                    <img src={f.thumbUrl} alt={f.title} />
+                                </template>
+                                <template if:false={f.isImage}>
+                                    <lightning-icon icon-name={f.icon} size="large"></lightning-icon>
+                                </template>
+                            </div>
+                            <div class="file-meta">
+                                <div class="file-title slds-truncate" title={f.title}>{f.title}</div>
+                                <div class="file-subtle">{f.sizeDisplay} · {f.fileExtension}</div>
+                                <template if:true={f.ownerLine}>
+                                    <div class="file-subtle slds-truncate">{f.ownerLine}</div>
+                                </template>
+                                <div class="file-actions">
+                                    <a href={f.downloadUrl} target="_blank" onclick={stopPropagation}>
+                                        <lightning-icon icon-name="utility:download" size="xx-small"></lightning-icon> {labels.download}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:false={hasFiles}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+
+            <template if:false={hideUploadButton}>
+                <div class="upload-zone">
+                    <div class={dropzoneClass}
+                         ondragenter={handleDragEnter}
+                         ondragover={handleDragOver}
+                         ondragleave={handleDragLeave}
+                         ondrop={handleDrop}>
+                        <lightning-button label={labels.uploadButton}
+                                          icon-name="utility:upload"
+                                          variant="neutral"
+                                          onclick={handleUploadClick}
+                                          disabled={isUploading}></lightning-button>
+                        <div class="upload-helper">{labels.uploadHelper}</div>
+                        <template if:true={isUploading}>
+                            <lightning-spinner alternative-text={labels.uploading} size="small"></lightning-spinner>
+                        </template>
+                    </div>
+                    <input type="file" multiple class="hidden-file-input" lwc:ref="fileInput" onchange={handleFileChange} />
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

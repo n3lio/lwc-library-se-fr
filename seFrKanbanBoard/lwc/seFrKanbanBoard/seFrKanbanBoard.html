@@ -1,0 +1,53 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div slot="actions">
+            <lightning-button-icon icon-name="utility:refresh" alternative-text={labels.refresh} variant="border-filled" size="small" onclick={handleRefresh}></lightning-button-icon>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={hasRecords}>
+                <div class="kanban-grid">
+                    <template for:each={columns} for:item="col">
+                        <div key={col.key} class="kanban-col" data-col={col.key} style={col.accentStyle}
+                             ondragover={handleDragOver}
+                             ondrop={handleDrop}>
+                            <div class="col-header">
+                                <strong class="col-title slds-truncate" title={col.label}>{col.label}</strong>
+                                <span class="col-count">{col.count}</span>
+                            </div>
+                            <template if:true={col.sumDisplay}>
+                                <div class="col-sum slds-text-body_small">{labels.sum}: {col.sumDisplay}</div>
+                            </template>
+                            <ul class="col-items">
+                                <template for:each={col.items} for:item="r">
+                                    <li key={r.id}
+                                        class="kanban-card"
+                                        draggable={dragAttr}
+                                        data-id={r.id}
+                                        ondragstart={handleDragStart}
+                                        onclick={handleCardClick}>
+                                        <div class="card-title" title={r.title}>{r.title}</div>
+                                        <template if:true={r.secondary}>
+                                            <div class="card-secondary slds-truncate">{r.secondary}</div>
+                                        </template>
+                                        <template if:true={r.amountDisplay}>
+                                            <div class="card-amount">{r.amountDisplay}</div>
+                                        </template>
+                                    </li>
+                                </template>
+                            </ul>
+                            <template if:true={col.canShowAll}>
+                                <button type="button" class="col-toggle" data-col={col.key} onclick={handleToggleShowAll}>
+                                    {col.toggleLabel}
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:false={hasRecords}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

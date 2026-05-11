@@ -1,0 +1,5524 @@
+{
+  "generatedAt": "2026-05-09",
+  "componentCount": 32,
+  "components": [
+    {
+      "apiName": "seFrAccountHealth",
+      "masterLabel": "SE FR - Account Health",
+      "description": "B2B - Jauge quantitative de santé du compte (0-100) avec donut SVG, niveau de verdict (Excellent / Healthy / Watch / At risk / Critical) et la liste des signaux pondérés utilisés dans le calcul.",
+      "tagline": "Score quantitatif de santé du compte (0-100) avec verdict et signaux pondérés positifs / négatifs.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "Jauge donut SVG",
+        "Signaux pondérés +/-",
+        "Drill-down explicatif"
+      ],
+      "keyProps": [
+        "Champ score, champs signaux (CSV)",
+        "Seuils de couleur",
+        "Override du titre de carte"
+      ],
+      "seBenefit": "Lit les champs Cust360 standards de la SDO par défaut (churn risk, sentiment, NPS). Sur les orgs sans ces champs, bascule sur des signaux mockés — jamais de crash, toujours prêt pour la démo.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 7,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_AccountHealthController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:goals",
+          "description": null
+        },
+        {
+          "name": "revenueThreshold",
+          "type": "Integer",
+          "label": "Revenue threshold",
+          "default": "500000",
+          "description": "AnnualRevenue below this counts as a negative signal."
+        },
+        {
+          "name": "inactivityThresholdDays",
+          "type": "Integer",
+          "label": "Inactivity threshold (days)",
+          "default": "45",
+          "description": null
+        },
+        {
+          "name": "staleVisitThresholdDays",
+          "type": "Integer",
+          "label": "Stale-visit threshold (days)",
+          "default": "60",
+          "description": "Uses Account.SDO_MAPS_Days_Since_Last_Visit__c - skipped if the field is absent."
+        }
+      ],
+      "_sourceHash": "c7446f20f1e94cff"
+    },
+    {
+      "apiName": "seFrAccountStrategyPlan",
+      "masterLabel": "SE FR - Account Strategy Plan",
+      "description": "B2B - Plan de compte narratif : KPIs, progression vers l'objectif, SWOT 2x2, plan d'actions, notes stratégiques. Bilingue EN / FR.",
+      "tagline": "Plan de compte narratif avec KPIs éditables, jauge d'objectif, SWOT 2x2 et plan d'actions trimestriel.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "Édition inline de chaque bloc",
+        "SWOT 2x2 narratif",
+        "Plan d'actions trimestriel"
+      ],
+      "keyProps": [
+        "Labels de section et contenu par défaut",
+        "Override de l'avatar owner"
+      ],
+      "seBenefit": "Éditable inline depuis la page — sans écriture record. Visuel idéal pour les moments « compte stratégique » en démo, même sur des orgs vides.",
+      "dataMode": "mock",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls card title, section headings, SWOT labels, status pills (Not started / En cours…), buttons, toasts, and the default KPI labels / SWOT bullets / action plan / strategic notes."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:goals",
+          "description": null
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "kpiPreviousYearLabel",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpiPreviousYearValue",
+          "type": "Integer",
+          "label": "KPI 1 - Value",
+          "default": "33800",
+          "description": null
+        },
+        {
+          "name": "kpiRunRateLabel",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpiRunRateValue",
+          "type": "Integer",
+          "label": "KPI 2 - Monthly value",
+          "default": "3200",
+          "description": null
+        },
+        {
+          "name": "kpiPotentialLabel",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpiPotentialValue",
+          "type": "Integer",
+          "label": "KPI 3 - Annual value",
+          "default": "75000",
+          "description": null
+        },
+        {
+          "name": "kpiShareLabel",
+          "type": "String",
+          "label": "KPI 4 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpiShareValue",
+          "type": "String",
+          "label": "KPI 4 - Value (raw text)",
+          "default": "56%",
+          "description": null
+        },
+        {
+          "name": "annualTargetLabel",
+          "type": "String",
+          "label": "Target - label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "annualTargetDefault",
+          "type": "Integer",
+          "label": "Target - default value",
+          "default": "55000",
+          "description": null
+        },
+        {
+          "name": "ytdRevenueLabel",
+          "type": "String",
+          "label": "YTD revenue - label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "ytdRevenueDefault",
+          "type": "Integer",
+          "label": "YTD revenue - default value",
+          "default": "38550",
+          "description": null
+        },
+        {
+          "name": "strengthsCsv",
+          "type": "String",
+          "label": "Strengths - default bullets (override)",
+          "default": null,
+          "description": "Comma- or newline-separated. Leave empty for the language dictionary default."
+        },
+        {
+          "name": "weaknessesCsv",
+          "type": "String",
+          "label": "Weaknesses - default bullets (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "opportunitiesCsv",
+          "type": "String",
+          "label": "Opportunities - default bullets (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "threatsCsv",
+          "type": "String",
+          "label": "Threats - default bullets (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "actionPlanCsv",
+          "type": "String",
+          "label": "Action plan (override)",
+          "default": null,
+          "description": "Quarter|Action|Owner|Status, comma-separated. Status accepts English keys ('not started', 'in progress', 'on track', 'at risk', 'done') or French ('non commencé', 'en cours', 'dans les temps', 'à risque', 'terminé'). Leave empty for the language dictionary default."
+        },
+        {
+          "name": "strategyNotesDefault",
+          "type": "String",
+          "label": "Strategic notes - default text (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "logisticOptionsCsv",
+          "type": "String",
+          "label": "(deprecated - unused)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "competitorOptionsCsv",
+          "type": "String",
+          "label": "(deprecated - unused)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "riskOptionsCsv",
+          "type": "String",
+          "label": "(deprecated - unused)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "leversOptionsCsv",
+          "type": "String",
+          "label": "(deprecated - unused)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "9e0899d933bd1e98"
+    },
+    {
+      "apiName": "seFrActiveSegments",
+      "masterLabel": "SE FR - Active Segments",
+      "description": "B2B / B2C - Liste configurable de segments Data Cloud / Marketing, rendus en badges. Le titre de la carte affiche automatiquement le compteur de segments.",
+      "tagline": "Panneau compact affichant les segments Marketing / Data Cloud auxquels appartient le record, sous forme de badges colorés.",
+      "categories": [
+        "Marketing & Data"
+      ],
+      "personas": [
+        "Marketing"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Compteur de segments dans le titre",
+        "Badges colorés",
+        "Record / App / Home page"
+      ],
+      "keyProps": [
+        "Jusqu'à 6 slots de segments (label, taille de l'audience, dernière mise à jour)"
+      ],
+      "seBenefit": "Pose un ton « marketing-aware » sur une page Contact sans nécessiter de connexion Data Cloud — storytelling piloté par les props.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 3,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Controls the default card title and default segment list. Explicit values on cardTitle / segmentsCsv still override the dictionary."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default (‘Active Segments’ / ‘Segments actifs’). Shown as '<title> (N)'."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:groups",
+          "description": null
+        },
+        {
+          "name": "segmentsCsv",
+          "type": "String",
+          "label": "Segments (comma-separated) (override)",
+          "default": null,
+          "description": "Leave empty for the language-appropriate default list. Each item becomes a badge."
+        },
+        {
+          "name": "colorMode",
+          "type": "String",
+          "label": "Color mode",
+          "default": "random",
+          "description": "'random' (default) = each tag gets a soft pastel from a curated palette. 'custom' = use the customColorsCsv list. 'single' = every tag uses the singleColor value."
+        },
+        {
+          "name": "customColorsCsv",
+          "type": "String",
+          "label": "Custom colors (hex CSV, for 'custom' mode)",
+          "default": null,
+          "description": "Comma-separated hex colors, one per segment. Shorter lists cycle. Ignored unless colorMode = custom."
+        },
+        {
+          "name": "singleColor",
+          "type": "String",
+          "label": "Single color (hex, for 'single' mode)",
+          "default": "#ecebea",
+          "description": "Applied to every tag when colorMode = single. Defaults to the SLDS-style light grey."
+        }
+      ],
+      "_sourceHash": "38bade4d715af407"
+    },
+    {
+      "apiName": "seFrActivityFeed",
+      "masterLabel": "SE FR - Activity Feed",
+      "description": "Timeline d'activité agrégée affichant Tasks, Events, emails, SMS/Web, appels, sessions de messaging, chats, Orders, Cases, Opportunities, Quotes, Contracts, Visits, fichiers, posts Chatter et réponses Survey pour un Account ou Contact.",
+      "tagline": "Timeline d'activité unifiée agrégeant 16+ types de records Salesforce dans un seul flux avec filtrage avancé.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales",
+        "Service"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact"
+      ],
+      "chips": [
+        "16+ types de records unifiés",
+        "Filtres riches + expand",
+        "Isolation d'erreur par source"
+      ],
+      "keyProps": [
+        "Fenêtre jours en arrière / en avant",
+        "Inclure les Contacts liés",
+        "Types d'objets affichés"
+      ],
+      "seBenefit": "Tire depuis `Task`, `Event`, `EmailMessage`, `VoiceCall`, `MessagingSession`, `LiveChatTranscript`, `Order`, `Case`, `Opportunity`, `Quote`, `Contract`, `Visit`, `ContentDocumentLink`, `FeedItem`, `SurveyResponse` — et utilise les dates métier (CloseDate, EffectiveDate, StartDate) plutôt que CreatedDate.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 8,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ActivityFeedController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls card title, filter panel, type/date labels, empty state, action buttons and group headings. Uses Intl for date formatting."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:activations",
+          "description": null
+        },
+        {
+          "name": "excludeRelatedContacts",
+          "type": "Boolean",
+          "label": "Exclude related-contact activities",
+          "default": "false",
+          "description": "Default: unchecked (related contacts included). Check to scope strictly to the current record."
+        },
+        {
+          "name": "defaultDaysBack",
+          "type": "Integer",
+          "label": "Days of history to load",
+          "default": "365",
+          "description": null
+        },
+        {
+          "name": "defaultDaysForward",
+          "type": "Integer",
+          "label": "Days ahead to load",
+          "default": "90",
+          "description": null
+        },
+        {
+          "name": "sortOldestFirst",
+          "type": "Boolean",
+          "label": "Sort oldest first",
+          "default": "false",
+          "description": "Default: unchecked (newest first)."
+        },
+        {
+          "name": "expandedByDefault",
+          "type": "Boolean",
+          "label": "Expand all items by default",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "enabledActionsCsv",
+          "type": "String",
+          "label": "Quick actions (CSV of API names)",
+          "default": "LogACall,Email,NewTask,NewEvent,NewVisit",
+          "description": "Standard quick-action API names triggered from the toolbar. Adjust to match actions available on the object's page layout."
+        },
+        {
+          "name": "initialLimit",
+          "type": "Integer",
+          "label": "Initial items to display",
+          "default": "10",
+          "description": "Max total items shown (upcoming + past combined) before the 'Show more' button appears."
+        },
+        {
+          "name": "defaultEnabledTypesCsv",
+          "type": "String",
+          "label": "Default enabled activity types (CSV of keys)",
+          "default": null,
+          "description": "Comma-separated list of type keys enabled by default. Empty = all. Keys: Task, Event, Email, EmailMessage, ListEmail, Call, VoiceCall, MessagingSession, LiveChatTranscript, Cadence, Order, Case, Opportunity, Quote, Contract, Visit, File, FeedItem, SurveyResponse."
+        }
+      ],
+      "_sourceHash": "2e0ea56ca5a7028d"
+    },
+    {
+      "apiName": "seFrAgentforceHeader",
+      "masterLabel": "SE FR - Agentforce Header",
+      "description": "Bannière de salutation Home page avec mascotte Astro, champ de dictée vocale et bouton d'envoi. {name} est remplacé par le prénom de l'utilisateur courant. Bilingue FR / EN.",
+      "tagline": "Header de Home page avec Astro et une barre de recherche / dictée qui transmet les questions au panneau Agentforce.",
+      "categories": [
+        "Agentforce & AI"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "HomePage"
+      ],
+      "objects": [],
+      "chips": [
+        "Header flottant avec Astro",
+        "Dictée vocale",
+        "Déclenche le panneau Agentforce"
+      ],
+      "keyProps": [
+        "Titre / sous-titre",
+        "Label CTA + URL",
+        "Toggle d'animation Astro"
+      ],
+      "seBenefit": "Speech-to-text via l'API navigateur — dictez une question, cliquez « Send », le texte transcrit atterrit dans votre presse-papiers. Collez-le dans le panneau Agentforce standard pour une entrée fluide en démo IA. (Pas de vraie intégration Agentforce — l'UI mime le geste.)",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 5,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls the default greeting, placeholders and speech locale."
+        },
+        {
+          "name": "greetingTemplate",
+          "type": "String",
+          "label": "Greeting text (override)",
+          "default": null,
+          "description": "Use {name} to inject the running user's first name. Wrap any word with double asterisks for the highlighted colour, e.g. 'Bonjour **{name}**, comment puis-je vous aider ?'. Leave empty to use the language default."
+        },
+        {
+          "name": "highlightColor",
+          "type": "String",
+          "label": "Highlight color (hex)",
+          "default": "#0176d3",
+          "description": "Applied to the **bold** segment of the greeting. Defaults to the SE FR brand blue."
+        },
+        {
+          "name": "idlePlaceholder",
+          "type": "String",
+          "label": "Input placeholder - idle (override)",
+          "default": null,
+          "description": "Leave empty to use the language default ('Posez-moi une question…' / 'Ask me a question…')."
+        },
+        {
+          "name": "listeningPlaceholder",
+          "type": "String",
+          "label": "Input placeholder - listening (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "speechLocale",
+          "type": "String",
+          "label": "Speech recognition locale (override)",
+          "default": null,
+          "description": "BCP 47 tag (e.g. fr-FR, en-US). Leave empty to use the language default."
+        }
+      ],
+      "_sourceHash": "6381541e4fe34e7c"
+    },
+    {
+      "apiName": "seFrAlertsRibbon",
+      "masterLabel": "SE FR - Alerts Ribbon",
+      "description": "Bandeau d'alertes configurable. Deux sources : alertes basées sur des règles évaluées contre le record courant (Record Page), et alertes statiques toujours affichées (Home / App Page). 4 sévérités, 3 variantes visuelles, 2 densités, comportement sticky-on-scroll optionnel.",
+      "tagline": "Bandeau d'alertes configurable combinant règles déclaratives basées sur le record et bannières statiques toujours visibles.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales",
+        "Service"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Case",
+        "Opportunity",
+        "Lead",
+        "Order",
+        "Contract"
+      ],
+      "chips": [
+        "Rule-driven + statiques",
+        "3 variantes visuelles",
+        "Sticky-on-scroll"
+      ],
+      "keyProps": [
+        "`rulesCsv` · règles basées sur les champs (Record Page uniquement)",
+        "`staticAlertsCsv` · alertes toujours visibles (toutes pages)",
+        "`visualStyle` · inline / card",
+        "`alertVariant` · banner / solid / minimal",
+        "`density` · comfortable / compact",
+        "`stickyOnScroll`"
+      ],
+      "seBenefit": "Le mode rule-driven évalue un mini-DSL contre les champs du record courant (« AnnualRevenue<500000|warning|… ») — posez sur n'importe quelle record page, la bonne alerte apparaît sur le bon compte, sans code.",
+      "dataMode": "mock",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "rulesCsv",
+          "type": "String",
+          "label": "Rule-driven alerts (one per line)",
+          "default": null,
+          "description": "Format: '<field><op><value>|<severity>|<icon>|<message>|<ctaLabel>|<ctaUrl>'. Operators: = | != | > | < | >= | <= | contains | startsWith | endsWith | isBlank | isNotBlank. Severity: info | success | warning | error. Icon and CTA fields are optional."
+        },
+        {
+          "name": "staticAlertsCsv",
+          "type": "String",
+          "label": "Static alerts (one per line)",
+          "default": null,
+          "description": "Always shown. Format: '<severity>|<icon>|<message>|<ctaLabel>|<ctaUrl>'."
+        },
+        {
+          "name": "visualStyle",
+          "type": "String",
+          "label": "Visual style",
+          "default": "inline",
+          "description": "'inline' (default) renders alerts directly above the page content. 'card' wraps them in a lightning-card chrome with a title and a count pill."
+        },
+        {
+          "name": "alertVariant",
+          "type": "String",
+          "label": "Alert variant",
+          "default": "banner",
+          "description": "'banner' (soft pastel + accent border-left), 'solid' (saturated background), 'minimal' (white background, accent bar only)."
+        },
+        {
+          "name": "density",
+          "type": "String",
+          "label": "Layout density",
+          "default": "comfortable",
+          "description": "'comfortable' allows wrap. 'compact' truncates the message with ellipsis."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Used only when visualStyle = card. Leave empty for the dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:announcement",
+          "description": "SLDS icon name. Used only when visualStyle = card."
+        },
+        {
+          "name": "hideDismissButton",
+          "type": "Boolean",
+          "label": "Hide dismiss button",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "maxAlerts",
+          "type": "Integer",
+          "label": "Maximum alerts shown (0 = unlimited)",
+          "default": "0",
+          "description": null
+        },
+        {
+          "name": "stickyOnScroll",
+          "type": "Boolean",
+          "label": "Sticky on scroll",
+          "default": "false",
+          "description": "When ON, the ribbon stays pinned to the top of the page on scroll."
+        }
+      ],
+      "_sourceHash": "f61f62aae452be04"
+    },
+    {
+      "apiName": "seFrConsentManager",
+      "masterLabel": "SE FR - Consent Manager",
+      "description": "B2B / B2C - Panneau de toggles RGPD / préférences de contact. Lit/écrit les champs opt-in/opt-out sur le record. Bilingue EN / FR.",
+      "tagline": "Panneau de consentement RGPD par canal qui lie chaque canal à un champ booléen sur le record courant.",
+      "categories": [
+        "Marketing & Data"
+      ],
+      "personas": [
+        "Marketing",
+        "Service"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Contact",
+        "Lead",
+        "Account"
+      ],
+      "chips": [
+        "Toggles par canal",
+        "Persistance LDS",
+        "Champs opt-out inversés"
+      ],
+      "keyProps": [
+        "Channels CSV (override) · format `label|fieldApiName|inverted`",
+        "Override des labels toggle / success / error",
+        "Override du titre / icône de carte"
+      ],
+      "seBenefit": "Les canaux par défaut sont mappés sur des champs Salesforce standards : `HasOptedOutOfEmail`, `DoNotCall`, `HasOptedOutOfFax` (utilisé comme placeholder pour le opt-out WhatsApp). Posez sur Contact / Lead / Account → ça marche, aucun champ custom requis.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' or 'fr'. Controls card title, toggle labels, toast messages, and default channel labels (E-mail / Téléphone / WhatsApp)."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:task2",
+          "description": null
+        },
+        {
+          "name": "channelsCsv",
+          "type": "String",
+          "label": "Channels CSV (override)",
+          "default": null,
+          "description": "One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty for the language dictionary default (maps Email / Phone / WhatsApp onto Contact standard opt-out fields)."
+        },
+        {
+          "name": "toggleActiveLabel",
+          "type": "String",
+          "label": "Toggle active label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "toggleInactiveLabel",
+          "type": "String",
+          "label": "Toggle inactive label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "successMessage",
+          "type": "String",
+          "label": "Success toast message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "errorMessage",
+          "type": "String",
+          "label": "Error toast message (override)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "3ef794337f705911"
+    },
+    {
+      "apiName": "seFrContactCard",
+      "masterLabel": "SE FR - Contact Card",
+      "description": "B2B / B2C - Carte Contact visuelle (avatar, détails, jusqu'à 3 jauges) avec vagues animées + résumé Einstein optionnel. Auteur original : Charly Ansel.",
+      "tagline": "Carte Contact visuelle avec vagues animées, avatar, adresse, jauges configurables et résumé Einstein optionnel.",
+      "categories": [
+        "Account 360°",
+        "Agentforce & AI"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Contact",
+        "Account",
+        "Case",
+        "Opportunity",
+        "Order",
+        "Lead"
+      ],
+      "chips": [
+        "Vagues animées effet Waouh",
+        "Résumé Einstein optionnel",
+        "Jusqu'à 3 jauges",
+        "Upload d'avatar inline"
+      ],
+      "keyProps": [
+        "Jusqu'à 3 jauges (label, champ, icône, sémantique lower/higher-better)",
+        "Image · champ URL OU upload de fichier au clic",
+        "Ligne ID client (toggle + champ)",
+        "Couleurs des vagues animées / accent thématique",
+        "Résumé Einstein via prompt · `einstein_gpt__summarizeContact` par défaut (le template livré avec la SDO, pas un vrai standard Salesforce)"
+      ],
+      "seBenefit": "Bouton « Summarize » intégré utilisant le prompt de résumé Contact livré avec la SDO — posez sur une page Contact / Case / Account et obtenez un résumé IA inline prêt à l'emploi. Cliquez sur l'avatar pour uploader une photo de contact (sans setup de schéma).",
+      "dataMode": "hybrid",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 0,
+      "releaseStatus": "new",
+      "originalAuthor": "Charly Ansel",
+      "originalAuthorEmail": "REDACTED",
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-05",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ContactCardController",
+        "SE_FR_ImageFileController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_ImageFileController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls every visible label."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default ('Contact')."
+        },
+        {
+          "name": "hideHeaderOnContact",
+          "type": "Boolean",
+          "label": "Hide card header on Contact page",
+          "default": "false",
+          "description": "Off by default. Turn ON to remove the card title + icon when the component is placed on a Contact record page (the page already tells the user it is a contact)."
+        },
+        {
+          "name": "imageFieldApiName",
+          "type": "String",
+          "label": "Image URL field API name (optional)",
+          "default": "SDO_Cust360_Contact_Picture_URL__c",
+          "description": "Schema-safe: skipped if absent. When the contact has a value in this URL field, it wins over any uploaded file. Leave empty to rely solely on the click-to-upload File storage."
+        },
+        {
+          "name": "disableImageReplace",
+          "type": "Boolean",
+          "label": "Disable click-to-replace image",
+          "default": "false",
+          "description": "Off by default - clicking the avatar opens a file picker and uploads the new image as a File on the linked Contact (works on Contact, Case, Account etc. record pages). Turn ON to lock the avatar."
+        },
+        {
+          "name": "imageMode",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "showCustomerId",
+          "type": "Boolean",
+          "label": "Show customer ID line",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "customerIdFieldApiName",
+          "type": "String",
+          "label": "Customer ID field API name",
+          "default": "SDO_Cust360_Id__c",
+          "description": "Schema-safe: the line is skipped if the field is absent or empty."
+        },
+        {
+          "name": "gauge1Label",
+          "type": "String",
+          "label": "Gauge 1 - label",
+          "default": "Churn risk",
+          "description": "Leave empty to hide the first gauge."
+        },
+        {
+          "name": "gauge1FieldApiName",
+          "type": "String",
+          "label": "Gauge 1 - field API name (optional)",
+          "default": "SDO_Cust360_ChurnRisk__c",
+          "description": "Numeric Contact field (0-100). When set and the record has a numeric value, it wins over the static value below. Schema-safe: skipped if absent."
+        },
+        {
+          "name": "gauge1Value",
+          "type": "String",
+          "label": "Gauge 1 - static value (optional)",
+          "default": null,
+          "description": "Type a number directly (0-100) to display it without needing a field. Useful for demos. Used as a fallback when the field above is empty."
+        },
+        {
+          "name": "gauge1Icon",
+          "type": "String",
+          "label": "Gauge 1 - icon (SLDS)",
+          "default": "utility:warning",
+          "description": null
+        },
+        {
+          "name": "gauge1Direction",
+          "type": "String",
+          "label": "Gauge 1 - semantics",
+          "default": "lower-better",
+          "description": "'lower-better' (0=green, 100=red) for risk-style metrics. 'higher-better' (0=red, 100=green) for health / satisfaction."
+        },
+        {
+          "name": "gauge2Label",
+          "type": "String",
+          "label": "Gauge 2 - label (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge2FieldApiName",
+          "type": "String",
+          "label": "Gauge 2 - field API name (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge2Value",
+          "type": "String",
+          "label": "Gauge 2 - static value (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge2Icon",
+          "type": "String",
+          "label": "Gauge 2 - icon (SLDS)",
+          "default": "utility:trending",
+          "description": null
+        },
+        {
+          "name": "gauge2Direction",
+          "type": "String",
+          "label": "Gauge 2 - semantics",
+          "default": "higher-better",
+          "description": null
+        },
+        {
+          "name": "gauge3Label",
+          "type": "String",
+          "label": "Gauge 3 - label (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge3FieldApiName",
+          "type": "String",
+          "label": "Gauge 3 - field API name (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge3Value",
+          "type": "String",
+          "label": "Gauge 3 - static value (optional)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "gauge3Icon",
+          "type": "String",
+          "label": "Gauge 3 - icon (SLDS)",
+          "default": "utility:dashboard",
+          "description": null
+        },
+        {
+          "name": "gauge3Direction",
+          "type": "String",
+          "label": "Gauge 3 - semantics",
+          "default": "higher-better",
+          "description": null
+        },
+        {
+          "name": "hideWaves",
+          "type": "Boolean",
+          "label": "Hide animated waves",
+          "default": "false",
+          "description": "Off by default - the card shows soft animated wave shapes tinted with the active Lightning theme accent. Turn ON to hide them."
+        },
+        {
+          "name": "showWaves",
+          "type": "Boolean",
+          "label": "(deprecated) Show animated waves",
+          "default": "false",
+          "description": "No longer used. Use 'Hide animated waves' above."
+        },
+        {
+          "name": "isDarkBackground",
+          "type": "Boolean",
+          "label": "Dark background",
+          "default": "false",
+          "description": "Switches text color to white. Use in tandem with a dark background color / image."
+        },
+        {
+          "name": "backgroundColor",
+          "type": "String",
+          "label": "Background color (CSS)",
+          "default": null,
+          "description": "Optional. Example: '#fff', 'rgb(30,30,60)'."
+        },
+        {
+          "name": "backgroundImageUrl",
+          "type": "String",
+          "label": "Background image URL",
+          "default": null,
+          "description": "Optional. Add the external domain to Trusted Sites if needed."
+        },
+        {
+          "name": "waveColorOne",
+          "type": "String",
+          "label": "Wave 1 color (override)",
+          "default": null,
+          "description": "Optional CSS color. Leave empty to use a tinted version of the Lightning theme accent."
+        },
+        {
+          "name": "waveColorTwo",
+          "type": "String",
+          "label": "Wave 2 color (override)",
+          "default": null,
+          "description": "Optional CSS color. Leave empty to use a lighter tint of the theme accent."
+        },
+        {
+          "name": "disablePromptSummary",
+          "type": "Boolean",
+          "label": "Disable prompt summary (Einstein)",
+          "default": "false",
+          "description": "Off by default - the 'Résumer / Summarize' button is displayed and uses the prompt template below. Turn ON to hide the button entirely."
+        },
+        {
+          "name": "enablePromptSummary",
+          "type": "Boolean",
+          "label": "(deprecated)",
+          "default": "false",
+          "description": "Use 'Disable prompt summary' above. This property is kept for backwards compatibility only."
+        },
+        {
+          "name": "promptButtonLabel",
+          "type": "String",
+          "label": "Prompt button label (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default ('Résumer' / 'Summarize')."
+        },
+        {
+          "name": "promptTemplateApiName",
+          "type": "String",
+          "label": "Prompt template API name",
+          "default": "einstein_gpt__summarizeContact",
+          "description": "Developer name of the Einstein Prompt Template to run. Defaults to the SDO-standard contact summary template ('einstein_gpt__summarizeContact')."
+        },
+        {
+          "name": "promptInputApiName",
+          "type": "String",
+          "label": "Prompt template input API name",
+          "default": "Input:Contact",
+          "description": "Typically 'Input:Contact'."
+        },
+        {
+          "name": "autoPromptOnLoad",
+          "type": "Boolean",
+          "label": "Run prompt automatically on load",
+          "default": "false",
+          "description": "When on and the prompt is enabled, the summary fires as soon as the component loads - no button click required."
+        }
+      ],
+      "_sourceHash": "b37b064a3333b6c7"
+    },
+    {
+      "apiName": "seFrContactsCarousel",
+      "masterLabel": "SE FR - Contacts Carousel",
+      "description": "B2B - Carousel visuel des Contacts liés à un Account. Photo (ou fallback initiales), titre, badge de rôle optionnel et raccourcis Email/Call. Flèches de navigation quand il y en a plus que le nombre visible.",
+      "tagline": "Carousel horizontal des Contacts d'un Account avec avatars, badges de rôle et raccourcis Email / Call.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "Badges de rôle Champion / DMU",
+        "Avatar fallback initiales",
+        "Raccourcis Email & Call"
+      ],
+      "keyProps": [
+        "Nombre de contacts visibles",
+        "Liste des champs de carte",
+        "Quick actions"
+      ],
+      "seBenefit": "Remplacement visuel de la related list Contacts standard — bien plus parlant en démo qu'un tableau plat.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ContactsCarouselController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:contact",
+          "description": null
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max contacts fetched",
+          "default": "24",
+          "description": "Server-side LIMIT (1-100)."
+        },
+        {
+          "name": "orderBy",
+          "type": "String",
+          "label": "Sort",
+          "default": "LastActivityDate DESC NULLS LAST",
+          "description": "Whitelisted: LastActivityDate DESC NULLS LAST | Name ASC | CreatedDate DESC | Title ASC NULLS LAST."
+        },
+        {
+          "name": "visibleCount",
+          "type": "Integer",
+          "label": "Cards visible at once",
+          "default": "4",
+          "description": "Number of cards shown per page in the carousel. Arrows paginate by this amount."
+        },
+        {
+          "name": "badgesCsv",
+          "type": "String",
+          "label": "Role badges (name=label|color, CSV)",
+          "default": null,
+          "description": "Per-contact badge overlay. Format: 'Eliott Mercier=Champion|#2e844a,Mathieu Bernard=Detractor|#ba0517'. Match is case-insensitive on Contact.Name."
+        },
+        {
+          "name": "hideNewContactButton",
+          "type": "Boolean",
+          "label": "Hide 'New contact' button",
+          "default": "false",
+          "description": null
+        }
+      ],
+      "_sourceHash": "e07d90097653d42f"
+    },
+    {
+      "apiName": "seFrCustomerOrders",
+      "masterLabel": "SE FR - Customer Orders",
+      "description": "B2B / B2C - Liste les orders liés à un Account ou Contact. Le bloc du haut affiche le dernier order avec ses lignes ; le bloc du bas est un historique compact avec recherche / tri / filtre statut / Voir tout. Bilingue EN / FR.",
+      "tagline": "Carte détail du dernier order plus historique des commandes recherchable, triable et filtrable pour un Account ou Contact.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales",
+        "Telesales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact"
+      ],
+      "chips": [
+        "Carte détail dernier order",
+        "Recherchable + triable",
+        "Filtre statut + 'Voir tout'"
+      ],
+      "keyProps": [
+        "Nombre max de lignes",
+        "Filtre par statut / plage de dates",
+        "`productImageFieldApiName` · `Image_URL__c` par défaut"
+      ],
+      "seBenefit": "Affiche les images produit par ligne — transforme une liste plate en catalogue visuel qui rappelle un historique e-commerce. Compatible avec les champs image produit de la SDO prêt à l'emploi.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_CustomerOrdersController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls every built-in string (headers, buttons, sort labels, empty states)."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default ('Orders' / 'Commandes')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:orders",
+          "description": null
+        },
+        {
+          "name": "historyLimit",
+          "type": "Integer",
+          "label": "Max orders in history",
+          "default": "10",
+          "description": "Server-side LIMIT (1-50)."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag (date formatting)",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "statusFilter",
+          "type": "String",
+          "label": "Status whitelist (CSV, optional)",
+          "default": null,
+          "description": "Comma-separated list of Order.Status values. When set, only orders matching these statuses are shown, and a status picker appears above the history list. Leave empty to allow every status."
+        },
+        {
+          "name": "defaultSort",
+          "type": "String",
+          "label": "Default sort",
+          "default": "EffectiveDate DESC",
+          "description": "One of: EffectiveDate DESC | EffectiveDate ASC | TotalAmount DESC | TotalAmount ASC | OrderNumber ASC | OrderNumber DESC."
+        },
+        {
+          "name": "productImageFieldApiName",
+          "type": "String",
+          "label": "Product image field API name",
+          "default": "Image_URL__c",
+          "description": "Field on Product2 holding the image URL. Schema-safe - skipped if absent."
+        },
+        {
+          "name": "productImageFallbackUrl",
+          "type": "String",
+          "label": "Product image fallback URL",
+          "default": null,
+          "description": "Used when the product image field is empty or absent."
+        },
+        {
+          "name": "hideNewOrderButton",
+          "type": "Boolean",
+          "label": "Hide 'New order' button",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "hideViewAllLink",
+          "type": "Boolean",
+          "label": "Hide 'View all' button",
+          "default": "false",
+          "description": null
+        }
+      ],
+      "_sourceHash": "c8f64c0aefaba2a8"
+    },
+    {
+      "apiName": "seFrCustomerSalesSummary",
+      "masterLabel": "SE FR - Customer Sales Summary",
+      "description": "B2C - Synthèse des ventes au niveau client pour une page Contact / Person Account / Account. Bilingue EN / FR.",
+      "tagline": "Synthèse des ventes orientée B2C avec tuiles KPI et répartitions par Catégorie, Marque et Magasin.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Retail",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Contact",
+        "Account"
+      ],
+      "chips": [
+        "3 KPI + 3 graphes de répartition",
+        "Catégorie / Marque / Magasin",
+        "Compatible Person Account"
+      ],
+      "keyProps": [
+        "Fenêtre temporelle",
+        "Catégories affichées"
+      ],
+      "seBenefit": "Le même composant couvre les scénarios B2B et B2C — détecte automatiquement Person Account vs business Account et adapte le layout.",
+      "dataMode": "mock",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' or 'fr'. Controls the default card title, KPI labels, column titles, the stores suffix and the default CSV content for categories / brands / stores."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:performance",
+          "description": null
+        },
+        {
+          "name": "kpi1Label",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Value",
+          "type": "String",
+          "label": "KPI 1 - Value (override)",
+          "default": null,
+          "description": "Leave empty for the language default ('38 550 €' / '$38,550')."
+        },
+        {
+          "name": "kpi2Label",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Value",
+          "type": "String",
+          "label": "KPI 2 - Value (override)",
+          "default": null,
+          "description": "Leave empty for the language default ('285 €' / '$285')."
+        },
+        {
+          "name": "kpi3Label",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Value",
+          "type": "String",
+          "label": "KPI 3 - Value (override)",
+          "default": null,
+          "description": "Leave empty for the language default ('18')."
+        },
+        {
+          "name": "categoriesTitle",
+          "type": "String",
+          "label": "Categories column - title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "categoriesIcon",
+          "type": "String",
+          "label": "Categories column - icon",
+          "default": "standard:product",
+          "description": null
+        },
+        {
+          "name": "categoriesCsv",
+          "type": "String",
+          "label": "Categories rows (label|percent|color) (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "brandsTitle",
+          "type": "String",
+          "label": "Brands column - title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "brandsIcon",
+          "type": "String",
+          "label": "Brands column - icon",
+          "default": "standard:brand",
+          "description": null
+        },
+        {
+          "name": "brandsCsv",
+          "type": "String",
+          "label": "Brands rows (label|percent|color) (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "storesTitle",
+          "type": "String",
+          "label": "Stores column - title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "storesIcon",
+          "type": "String",
+          "label": "Stores column - icon",
+          "default": "standard:store",
+          "description": null
+        },
+        {
+          "name": "storesCsv",
+          "type": "String",
+          "label": "Stores rows (label|visits|barWidthPercent|color) (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "storeVisitsSuffix",
+          "type": "String",
+          "label": "Store visits suffix (override)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "81544a71d2913db4"
+    },
+    {
+      "apiName": "seFrFieldRepHome",
+      "masterLabel": "SE FR - Field Sales - Rep Home",
+      "description": "B2B - Home / App page pour un commercial terrain. Salutation, 4 tuiles KPI, comptes prioritaires (dynamiques, filtres configurables), hot leads, barres de pénétration produit et calendrier de campagnes. Bilingue EN / FR via la propriété language.",
+      "tagline": "Home page Field Sales avec salutation, KPIs, comptes prioritaires, hot leads, pénétration produit et calendrier de campagnes.",
+      "categories": [
+        "Dashboards & KPIs"
+      ],
+      "personas": [
+        "FieldSales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage"
+      ],
+      "objects": [],
+      "chips": [
+        "Comptes prioritaires dynamiques",
+        "Table de hot leads",
+        "Barres de pénétration produit",
+        "Calendrier de campagnes"
+      ],
+      "keyProps": [
+        "Nombre de tasks / events affichés",
+        "Tuiles KPI (label, valeur, target)",
+        "Liens d'actions rapides"
+      ],
+      "seBenefit": "Une Home page avec tout le contexte field-sales préchargé — pas besoin d'assembler 5 composants sur une App Page custom.",
+      "dataMode": "hybrid",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_FieldSalesController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Every label below without an explicit value falls back to the language dictionary. Setting any label explicitly overrides the dictionary for that one string."
+        },
+        {
+          "name": "greetingTemplate",
+          "type": "String",
+          "label": "Greeting template (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default. Use {name} placeholder. Wrap any word with **…** to render it in the highlight color."
+        },
+        {
+          "name": "defaultUserName",
+          "type": "String",
+          "label": "Fallback user name (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default ('Rep' / 'Commercial')."
+        },
+        {
+          "name": "highlightColor",
+          "type": "String",
+          "label": "Greeting highlight color (hex)",
+          "default": "#0176d3",
+          "description": "Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue."
+        },
+        {
+          "name": "accountRecordType",
+          "type": "String",
+          "label": "Accounts - RecordType.DeveloperName filter",
+          "default": "SDO_Account_Simple",
+          "description": "Leave empty for all record types. SDO default: 'SDO_Account_Simple' (B2B)."
+        },
+        {
+          "name": "accountOwnerScope",
+          "type": "String",
+          "label": "Accounts - owner scope",
+          "default": "mine",
+          "description": "'mine' | 'all'"
+        },
+        {
+          "name": "accountOrderBy",
+          "type": "String",
+          "label": "Accounts - sort",
+          "default": "Name",
+          "description": "Name | LastActivityDate DESC NULLS LAST | AnnualRevenue DESC NULLS LAST | CreatedDate DESC"
+        },
+        {
+          "name": "accountLimit",
+          "type": "Integer",
+          "label": "Accounts - max rows",
+          "default": "6",
+          "description": null
+        },
+        {
+          "name": "leadRating",
+          "type": "String",
+          "label": "Leads - rating filter",
+          "default": "Hot",
+          "description": "'Hot' | 'Warm' | 'Cool' | 'Any'"
+        },
+        {
+          "name": "leadOwnerScope",
+          "type": "String",
+          "label": "Leads - owner scope",
+          "default": "mine",
+          "description": "'mine' | 'all'"
+        },
+        {
+          "name": "leadLimit",
+          "type": "Integer",
+          "label": "Leads - max rows",
+          "default": "6",
+          "description": null
+        },
+        {
+          "name": "kpi1Label",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Value",
+          "type": "String",
+          "label": "KPI 1 - Value",
+          "default": "4 / 10",
+          "description": null
+        },
+        {
+          "name": "kpi1Footer",
+          "type": "String",
+          "label": "KPI 1 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1FooterClass",
+          "type": "String",
+          "label": "KPI 1 - Footer CSS class",
+          "default": "slds-text-color_error",
+          "description": null
+        },
+        {
+          "name": "kpi2Label",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Value",
+          "type": "String",
+          "label": "KPI 2 - Value",
+          "default": "10",
+          "description": null
+        },
+        {
+          "name": "kpi2Footer",
+          "type": "String",
+          "label": "KPI 2 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2FooterClass",
+          "type": "String",
+          "label": "KPI 2 - Footer CSS class",
+          "default": "slds-text-color_weak",
+          "description": null
+        },
+        {
+          "name": "kpi3Label",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Value",
+          "type": "String",
+          "label": "KPI 3 - Value",
+          "default": "22.4k",
+          "description": null
+        },
+        {
+          "name": "kpi3Footer",
+          "type": "String",
+          "label": "KPI 3 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3FooterClass",
+          "type": "String",
+          "label": "KPI 3 - Footer CSS class",
+          "default": "slds-text-color_success",
+          "description": null
+        },
+        {
+          "name": "kpi4Label",
+          "type": "String",
+          "label": "KPI 4 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Value",
+          "type": "String",
+          "label": "KPI 4 - Value",
+          "default": "84",
+          "description": null
+        },
+        {
+          "name": "kpi4Footer",
+          "type": "String",
+          "label": "KPI 4 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4FooterClass",
+          "type": "String",
+          "label": "KPI 4 - Footer CSS class",
+          "default": "slds-text-color_success",
+          "description": null
+        },
+        {
+          "name": "visitMotivesCsv",
+          "type": "String",
+          "label": "Visit motives (text|cssClass, CSV) (override)",
+          "default": null,
+          "description": "Leave empty for language dictionary default."
+        },
+        {
+          "name": "penetrationRowsCsv",
+          "type": "String",
+          "label": "Product penetration rows (label|percent) (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "penetrationTip",
+          "type": "String",
+          "label": "Product penetration tip (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "eventsCsv",
+          "type": "String",
+          "label": "Calendar events (title|description) (override)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "4bb683488c6b3c3f"
+    },
+    {
+      "apiName": "seFrFilesGallery",
+      "masterLabel": "SE FR - Files Gallery",
+      "description": "B2B / B2C - Galerie visuelle des fichiers liés au record courant. Miniatures d'images via le rendition endpoint, icônes par type pour les autres, click pour ouvrir la preview, lien Download et upload drag-drop.",
+      "tagline": "Galerie visuelle des fichiers attachés à un record avec thumbnails d'images, icônes par type et upload drag-and-drop.",
+      "categories": [
+        "Transverse"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Miniatures + icônes par type",
+        "Upload drag & drop",
+        "Click-to-preview"
+      ],
+      "keyProps": [
+        "Nombre max de fichiers, nombre visible dans le carousel",
+        "Afficher / cacher les boutons upload + delete"
+      ],
+      "seBenefit": "Vraies miniatures d'images (pas juste des icônes génériques par type) — affichez photos produit, assets de marque, contrats. La zone d'upload drag-drop est custom (pas le `lightning-file-upload` natif), pour un layout propre dans les colonnes sidebar étroites.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 2,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_FilesGalleryController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": null
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:file",
+          "description": null
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max files",
+          "default": "20",
+          "description": "Server-side LIMIT (1-100)."
+        },
+        {
+          "name": "visibleCount",
+          "type": "Integer",
+          "label": "Files visible in the carousel",
+          "default": "4",
+          "description": "Number of tiles shown on one row. Chevrons in the header page through the rest."
+        },
+        {
+          "name": "hideUploadButton",
+          "type": "Boolean",
+          "label": "Hide upload button",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "hideDeleteButton",
+          "type": "Boolean",
+          "label": "Hide delete button on tiles",
+          "default": "false",
+          "description": "Off by default - each tile shows a delete icon on hover. The user must have delete permission on the file."
+        }
+      ],
+      "_sourceHash": "d2caa2b5b5ddd01f"
+    },
+    {
+      "apiName": "seFrKanbanBoard",
+      "masterLabel": "SE FR - Kanban Board",
+      "description": "Kanban générique. N'importe quel SObject + picklist de groupement + champ d'affichage. Drag-and-drop optionnel qui met à jour le champ de groupement sur le record. Objets whitelistés : Case, Opportunity, Lead, Order, Task, Account.",
+      "tagline": "Kanban générique avec drag-and-drop natif sur n'importe quel SObject whitelisté (Case, Opp, Lead, Order, Task, Account).",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "Service",
+        "Telesales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Drag & drop des statuts",
+        "Auto-scope sur Record Page",
+        "Swim lanes par statut"
+      ],
+      "keyProps": [
+        "Type d'objet, champ statut",
+        "Colonnes visibles",
+        "Liste des champs de carte"
+      ],
+      "seBenefit": "Le même composant supporte 6 SObjects — posez sur une Home Page (tous mes Cases ouverts), une App Page (kanban d'équipe) ou une Record Page (Cases scopés à l'Account). Le drag-drop met à jour instantanément le champ statut.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_KanbanBoardController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": null
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:kanban",
+          "description": null
+        },
+        {
+          "name": "sobjectApiName",
+          "type": "String",
+          "label": "SObject to query",
+          "default": "Case",
+          "description": "Whitelisted: Case | Opportunity | Lead | Order | Task | Account. On a Record Page this drives which object's records are listed (it does NOT follow the host page's object)."
+        },
+        {
+          "name": "objectApiName",
+          "type": "String",
+          "label": "(deprecated) Object API name",
+          "default": null,
+          "description": "Legacy alias - use 'SObject to query' above. Kept to avoid breaking existing FlexiPages."
+        },
+        {
+          "name": "groupByField",
+          "type": "String",
+          "label": "Group-by field API name",
+          "default": "Status",
+          "description": "Picklist field used to form the columns."
+        },
+        {
+          "name": "displayField",
+          "type": "String",
+          "label": "Display field API name",
+          "default": "Subject",
+          "description": "Field shown as the card title."
+        },
+        {
+          "name": "secondaryField",
+          "type": "String",
+          "label": "Secondary field (optional)",
+          "default": "Priority",
+          "description": null
+        },
+        {
+          "name": "amountField",
+          "type": "String",
+          "label": "Amount field (optional)",
+          "default": null,
+          "description": "Currency / decimal field summed per column, e.g. 'Amount' on Opportunity."
+        },
+        {
+          "name": "filterClause",
+          "type": "String",
+          "label": "SOQL WHERE clause (optional)",
+          "default": "IsClosed = false",
+          "description": "Raw SOQL fragment. Leave empty for no filter. Be cautious - injected as-is."
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max records",
+          "default": "100",
+          "description": "Server-side LIMIT (1-500)."
+        },
+        {
+          "name": "maxPerColumn",
+          "type": "Integer",
+          "label": "Max cards visible per column",
+          "default": "6",
+          "description": "Beyond this cap, a 'Show all (N)' link unfolds the column."
+        },
+        {
+          "name": "disableDragDrop",
+          "type": "Boolean",
+          "label": "Disable drag & drop",
+          "default": "false",
+          "description": "Off by default - cards are draggable between columns; dropping updates the group-by field."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "recordScopeField",
+          "type": "String",
+          "label": "Record-scope field API name",
+          "default": "AccountId",
+          "description": "Lookup field on the queried object pointing at the current Record Id. Examples: 'AccountId' for Case / Opportunity / Order on an Account page. Leave empty to disable scoping."
+        }
+      ],
+      "_sourceHash": "15b8212bce443897"
+    },
+    {
+      "apiName": "seFrKpiLauncher",
+      "masterLabel": "SE FR - KPI Launcher",
+      "description": "B2B / B2C - Grille configurable de 3 à 6 tuiles KPI cliquables. Choisissez un preset (Standard / Field Sales / Telesales / Custom) ou overridez chaque tuile individuellement. Bilingue EN / FR.",
+      "tagline": "Grille configurable de 3-6 tuiles KPI cliquables avec icône, valeur, couleur et lien, prête à l'emploi.",
+      "categories": [
+        "Dashboards & KPIs"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "3 à 6 tuiles",
+        "Hover color-invert",
+        "Liens internes & externes"
+      ],
+      "keyProps": [
+        "Jusqu'à 8 tuiles (label, valeur, tendance %, URL cible)",
+        "Accent couleur par tuile",
+        "Layout (grid / horizontal)"
+      ],
+      "seBenefit": "Le composant le plus tunable de la lib (40+ propriétés). Les targets cliquables vous permettent de scénariser une navigation pendant la démo sans écrire de Flow ni d'action App Builder.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "preset",
+          "type": "String",
+          "label": "KPI preset",
+          "default": "Standard",
+          "description": "Seeds tiles 1-3 with a pre-configured set. Standard = Leads / Opportunities / Accounts. FieldSales = Route / Prospecting / Goals. Telesales = Calls / Open Cases / Orders. Custom = no seed - fill every tile manually below."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the default (‘Cockpit’). The grid is wrapped in a lightning-card when a title is set."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:metrics",
+          "description": null
+        },
+        {
+          "name": "kpi1Label",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": "Leave empty to use the preset value."
+        },
+        {
+          "name": "kpi1Value",
+          "type": "String",
+          "label": "KPI 1 - Value (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Sublabel",
+          "type": "String",
+          "label": "KPI 1 - Sublabel (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Icon",
+          "type": "String",
+          "label": "KPI 1 - Icon (override, SLDS e.g. standard:account)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Color",
+          "type": "String",
+          "label": "KPI 1 - Color hex (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Link",
+          "type": "String",
+          "label": "KPI 1 - Link (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Label",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Value",
+          "type": "String",
+          "label": "KPI 2 - Value (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Sublabel",
+          "type": "String",
+          "label": "KPI 2 - Sublabel (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Icon",
+          "type": "String",
+          "label": "KPI 2 - Icon (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Color",
+          "type": "String",
+          "label": "KPI 2 - Color hex (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Link",
+          "type": "String",
+          "label": "KPI 2 - Link (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Label",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Value",
+          "type": "String",
+          "label": "KPI 3 - Value (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Sublabel",
+          "type": "String",
+          "label": "KPI 3 - Sublabel (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Icon",
+          "type": "String",
+          "label": "KPI 3 - Icon (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Color",
+          "type": "String",
+          "label": "KPI 3 - Color hex (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Link",
+          "type": "String",
+          "label": "KPI 3 - Link (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Label",
+          "type": "String",
+          "label": "KPI 4 - Label (empty = hidden)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Value",
+          "type": "String",
+          "label": "KPI 4 - Value",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Sublabel",
+          "type": "String",
+          "label": "KPI 4 - Sublabel",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Icon",
+          "type": "String",
+          "label": "KPI 4 - Icon",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Color",
+          "type": "String",
+          "label": "KPI 4 - Color hex",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Link",
+          "type": "String",
+          "label": "KPI 4 - Link",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Label",
+          "type": "String",
+          "label": "KPI 5 - Label (empty = hidden)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Value",
+          "type": "String",
+          "label": "KPI 5 - Value",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Sublabel",
+          "type": "String",
+          "label": "KPI 5 - Sublabel",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Icon",
+          "type": "String",
+          "label": "KPI 5 - Icon",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Color",
+          "type": "String",
+          "label": "KPI 5 - Color hex",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi5Link",
+          "type": "String",
+          "label": "KPI 5 - Link",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Label",
+          "type": "String",
+          "label": "KPI 6 - Label (empty = hidden)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Value",
+          "type": "String",
+          "label": "KPI 6 - Value",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Sublabel",
+          "type": "String",
+          "label": "KPI 6 - Sublabel",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Icon",
+          "type": "String",
+          "label": "KPI 6 - Icon",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Color",
+          "type": "String",
+          "label": "KPI 6 - Color hex",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi6Link",
+          "type": "String",
+          "label": "KPI 6 - Link",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "userType",
+          "type": "String",
+          "label": "(deprecated) User type",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile1Label",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile1Sub",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile1Value",
+          "type": "Integer",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile2Label",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile2Sub",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldTile2Value",
+          "type": "Integer",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile1Label",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile1Sub",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile1Value",
+          "type": "Integer",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile2Label",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile2Sub",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "insideTile2Value",
+          "type": "Integer",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "perfTileLabel",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "perfTileSub",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "perfTileValue",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "c47e933f328f54f8"
+    },
+    {
+      "apiName": "seFrMetricTile",
+      "masterLabel": "SE FR - Metric Tile",
+      "description": "B2B / B2C - Tuile KPI avec chart de tendance inline. 4 styles (line, area, bar, mini-donut), série de comparaison optionnelle, ligne d'objectif, formatage devise. Bilingue FR / EN.",
+      "tagline": "Tuile mono-métrique avec 4 styles de chart (line / area / bar / mini-donut), série de comparaison, ligne d'objectif et formatage devise.",
+      "categories": [
+        "Dashboards & KPIs",
+        "Marketing & Data"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "4 styles de chart",
+        "Forecast vs réel en pointillés",
+        "Ligne d'objectif + donut goal",
+        "SVG pur ~3 KB"
+      ],
+      "keyProps": [
+        "`chartStyle` · line / area / bar / mini-donut",
+        "`seriesJson`, `secondarySeriesJson` (forecast vs réel)",
+        "`targetValue` + ligne d'objectif en pointillés + chip",
+        "`currentValue` + `currencyCode` · format Intl auto",
+        "`scalingMode` · auto / from-zero / fixed"
+      ],
+      "seBenefit": "Tuile compacte, prête pour les dashboards — passez `hideCardTitle = true` pour empiler 4 tuiles alignées dans une rangée. La variante mini-donut est le moment qui claque « 85% de l'objectif » sans configurer un vrai Performance Goal.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default ('Indicateur' / 'Metric')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:metrics",
+          "description": null
+        },
+        {
+          "name": "hideCardTitle",
+          "type": "Boolean",
+          "label": "Hide the card wrapper",
+          "default": "false",
+          "description": "Off by default - the tile is wrapped in a lightning-card with a title. Turn on to render the bare tile (no card header) for dense dashboards."
+        },
+        {
+          "name": "metricLabel",
+          "type": "String",
+          "label": "Metric label (override)",
+          "default": null,
+          "description": "Leave empty for the language default ('CA (12 mois)' / 'Revenue (12 mo.)')."
+        },
+        {
+          "name": "currentValueDisplay",
+          "type": "String",
+          "label": "Headline value (text override)",
+          "default": null,
+          "description": "Large value shown at the top of the tile. Wins over the numeric currentValue when set. Leave empty for the language default."
+        },
+        {
+          "name": "currentValue",
+          "type": "String",
+          "label": "Headline value (numeric, optional)",
+          "default": null,
+          "description": "Numeric value used to auto-format the headline via Intl.NumberFormat (compact currency). Ignored when 'Headline value (text override)' is set."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency ISO code",
+          "default": "EUR",
+          "description": "Used by the numeric formatter. ISO 4217 code (EUR, USD, GBP...)."
+        },
+        {
+          "name": "chartStyle",
+          "type": "String",
+          "label": "Chart style",
+          "default": "line",
+          "description": "'line' (curve only), 'area' (curve + filled area below), 'bar' (vertical bars), 'mini-donut' (radial gauge from currentValue / targetValue)."
+        },
+        {
+          "name": "seriesJson",
+          "type": "String",
+          "label": "Series points - JSON array",
+          "default": null,
+          "description": "Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style."
+        },
+        {
+          "name": "secondarySeriesJson",
+          "type": "String",
+          "label": "Secondary series - JSON array (optional)",
+          "default": null,
+          "description": "Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style."
+        },
+        {
+          "name": "secondarySeriesColor",
+          "type": "String",
+          "label": "Secondary series color (hex)",
+          "default": "#747474",
+          "description": null
+        },
+        {
+          "name": "targetValue",
+          "type": "String",
+          "label": "Target value (optional)",
+          "default": null,
+          "description": "When set, draws a horizontal dashed line at this Y on line/area/bar charts. Used as the denominator for the mini-donut variant."
+        },
+        {
+          "name": "targetLineColor",
+          "type": "String",
+          "label": "Target line color (hex)",
+          "default": "#FE9339",
+          "description": null
+        },
+        {
+          "name": "showTargetLabel",
+          "type": "Boolean",
+          "label": "Show target label chip",
+          "default": "false",
+          "description": "Off by default. Turn ON to display a 'Target XX €' chip next to the metric label."
+        },
+        {
+          "name": "scalingMode",
+          "type": "String",
+          "label": "Y-axis scaling",
+          "default": "auto",
+          "description": "'auto' (data min/max), 'from-zero' (forces Y origin to 0), 'fixed' (uses yMin / yMax below)."
+        },
+        {
+          "name": "yMin",
+          "type": "String",
+          "label": "Y min (when scaling = fixed)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "yMax",
+          "type": "String",
+          "label": "Y max (when scaling = fixed)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "accentColor",
+          "type": "String",
+          "label": "Accent color (hex)",
+          "default": "#0176d3",
+          "description": "Color of the primary chart series. Defaults to SE FR brand blue."
+        },
+        {
+          "name": "donutTrack",
+          "type": "String",
+          "label": "Mini-donut track color (hex)",
+          "default": "#E5E5E5",
+          "description": "Background ring color. Used only when chartStyle = mini-donut."
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "label": "Chart height (px)",
+          "default": "70",
+          "description": "Internal viewBox height. CSS scales the SVG to fit the column width."
+        },
+        {
+          "name": "width",
+          "type": "Integer",
+          "label": "Chart width override (px)",
+          "default": "0",
+          "description": "0 = auto (default ~600px viewBox). Set a fixed value for very narrow tiles."
+        },
+        {
+          "name": "trendDisplay",
+          "type": "String",
+          "label": "Trend badge text",
+          "default": "+14,2%",
+          "description": "Sign drives the color: a leading '+' (or no sign on a non-zero number) is green, '-' is red, '0%' is grey."
+        },
+        {
+          "name": "enableTooltip",
+          "type": "Boolean",
+          "label": "Enable hover tooltip",
+          "default": "false",
+          "description": "Off by default. Turn ON to show value-on-point on hover (line / area / bar)."
+        },
+        {
+          "name": "trendPositive",
+          "type": "Boolean",
+          "label": "(deprecated) Trend is positive",
+          "default": "false",
+          "description": "No longer used - the color is auto-derived from the sign of trendDisplay."
+        }
+      ],
+      "_sourceHash": "9d6ba447510e0b96"
+    },
+    {
+      "apiName": "seFrMyEvents",
+      "masterLabel": "SE FR - My Events",
+      "description": "B2B / B2C - Vue timeline du jour pour une colonne sidebar. Auto-trim des heures vides, gestion des events qui se chevauchent côte à côte, ligne « now » en live, badge in-N-min, bouton Join pour les URLs de visio classiques, et liste Upcoming courte.",
+      "tagline": "Calendrier du jour en timeline verticale compacte qui tient dans une colonne sidebar, avec gestion des chevauchements style Google Calendar.",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Chevauchement côte à côte",
+        "Auto-trim des heures vides",
+        "Vue compacte du jour"
+      ],
+      "keyProps": [
+        "Days forward",
+        "Afficher / cacher participants, lieu",
+        "Override du titre de carte"
+      ],
+      "seBenefit": "Utile à la fois en Field Sales (rendez-vous du jour) et comme widget « agenda » transversal sur la Home Page de n'importe quel persona.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_AgendaController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_AgendaController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings (headings, buttons, badges). Explicit values set on cardTitle / emptyStateMessage still override the dictionary."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default (‘My Day’ / ‘Ma journée’)."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:event",
+          "description": null
+        },
+        {
+          "name": "startHour",
+          "type": "Integer",
+          "label": "Start hour (0-23)",
+          "default": "8",
+          "description": "Earliest hour shown when auto-trim is off or when auto-trim can't narrow further."
+        },
+        {
+          "name": "endHour",
+          "type": "Integer",
+          "label": "End hour (0-23)",
+          "default": "20",
+          "description": "Latest hour shown (same rule as start hour)."
+        },
+        {
+          "name": "disableAutoTrim",
+          "type": "Boolean",
+          "label": "Disable auto-trim",
+          "default": "false",
+          "description": "Auto-trim is ON by default - the timeline is bounded to [first event − padding, last event + padding] (clamped between Start and End hour). Turn this on to always render the full Start→End hour window."
+        },
+        {
+          "name": "autoTrimPaddingMin",
+          "type": "Integer",
+          "label": "Auto-trim padding (minutes)",
+          "default": "30",
+          "description": "Empty-hour margin kept before the first event and after the last event when auto-trim is on. Set to 0 to crop exactly to the events."
+        },
+        {
+          "name": "daysAhead",
+          "type": "Integer",
+          "label": "Days ahead to query",
+          "default": "2",
+          "description": "Today counts as 1. Used to populate the Upcoming list."
+        },
+        {
+          "name": "maxEvents",
+          "type": "Integer",
+          "label": "Max events (server-side)",
+          "default": "10",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag (time formatting)",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "typeColorsCsv",
+          "type": "String",
+          "label": "Type colors (Type|#hex, comma-separated)",
+          "default": "Call|#0176d3,Meeting|#4bca81,Demo|#c13975,Training|#f2a900,Other|#747474",
+          "description": "Matched against Event.Type (case-insensitive). 'Other' is the fallback."
+        },
+        {
+          "name": "typesFilterCsv",
+          "type": "String",
+          "label": "Event types to keep (comma-separated, optional)",
+          "default": null,
+          "description": "Whitelist of Event.Type values to show. Leave empty to include every type. Acts as a static filter - the in-UI toggles mute types on top of this."
+        },
+        {
+          "name": "hideTypeToggles",
+          "type": "Boolean",
+          "label": "Hide clickable type toggles",
+          "default": "false",
+          "description": "Off by default - chips are shown. Turn on to hide the one-chip-per-Event.Type filter strip that lets the user mute/unmute each 'calendar' in the timeline."
+        },
+        {
+          "name": "hideNowLine",
+          "type": "Boolean",
+          "label": "Hide the 'now' line",
+          "default": "false",
+          "description": "Off by default - the red line is shown."
+        },
+        {
+          "name": "hideJoinButton",
+          "type": "Boolean",
+          "label": "Hide the auto-detected Join button",
+          "default": "false",
+          "description": "Off by default - scans Event Location and Description for a Zoom / Teams / Meet / WebEx URL and shows a Join button when found."
+        },
+        {
+          "name": "emptyStateMessage",
+          "type": "String",
+          "label": "Empty-state message (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default."
+        }
+      ],
+      "_sourceHash": "4e20a56becd6b1d8"
+    },
+    {
+      "apiName": "seFrMyTasks",
+      "masterLabel": "SE FR - My Tasks",
+      "description": "B2B / B2C - Panneau « My Tasks » compact pour une colonne sidebar. Checkbox de complétion interactive, dropdown de filtre, regroupement automatique par En retard / Aujourd'hui / Demain / Cette semaine / Plus tard, quick actions optionnelles, et raccourci « Nouvelle tâche ».",
+      "tagline": "Panneau « My Tasks » sidebar compact groupé par date d'échéance avec complétion en un clic.",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Groupé par échéance",
+        "Complétion en un clic",
+        "Mise en évidence des en retard"
+      ],
+      "keyProps": [
+        "Days back / forward",
+        "Afficher / cacher la chip de priorité",
+        "Override du titre de carte"
+      ],
+      "seBenefit": "Même contrôleur que My Events (une seule classe Apex pour les deux) — garantit une logique de date cohérente et une maintenance partagée.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_AgendaController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_AgendaController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings (headings, buttons, groups, filters). Explicit values set on cardTitle / emptyStateMessage still override the dictionary."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default (‘My Tasks’ / ‘Mes tâches’)."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:task",
+          "description": null
+        },
+        {
+          "name": "defaultFilter",
+          "type": "String",
+          "label": "Default filter",
+          "default": "Upcoming",
+          "description": "One of the values in 'Filter options' - use the English key (Today / Mine / Overdue / Upcoming / Completed). The UI translates the key to the active language's label."
+        },
+        {
+          "name": "filterOptionsCsv",
+          "type": "String",
+          "label": "Filter options (comma-separated keys)",
+          "default": "Today,Mine,Overdue,Upcoming,Completed",
+          "description": "Built-in keys get translated automatically. Any other value is shown verbatim."
+        },
+        {
+          "name": "maxTasks",
+          "type": "Integer",
+          "label": "Max tasks to show",
+          "default": "10",
+          "description": "Server-side LIMIT (max 50)."
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag (date formatting)",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "showQuickActions",
+          "type": "Boolean",
+          "label": "Show quick actions on hover",
+          "default": "false",
+          "description": "Reveals Log-a-Call / Email buttons when hovering a row."
+        },
+        {
+          "name": "emptyStateMessage",
+          "type": "String",
+          "label": "Empty-state message (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default."
+        }
+      ],
+      "_sourceHash": "365bc610b82ba505"
+    },
+    {
+      "apiName": "seFrNearbyAccountsMap",
+      "masterLabel": "SE FR - Nearby Accounts Map",
+      "description": "Carte interactive affichant les comptes à proximité depuis un point d'origine configurable.",
+      "tagline": "Carte interactive des comptes à proximité qui utilise la géolocalisation du navigateur avec tri par distance Haversine.",
+      "categories": [
+        "Geo & Field"
+      ],
+      "personas": [
+        "FieldSales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage"
+      ],
+      "objects": [],
+      "chips": [
+        "Géolocalisation navigateur",
+        "Tri par distance Haversine",
+        "Style de pin custom"
+      ],
+      "keyProps": [
+        "Mode d'origine · géolocalisation auto / lat-lng manuelle",
+        "Nombre max de comptes affichés, filtre RecordType",
+        "Mettre en avant le premier compte comme prioritaire"
+      ],
+      "seBenefit": "Demande de géolocalisation navigateur pour un effet Waouh en démo terrain. Fallback sur une origine fixe (Place de la Bastille) en cas de refus — la démo ne casse jamais.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_NearbyAccountsController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_NearbyAccountsController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Controls the default card title, list subtitle, origin marker label, and the 'Open account' link in pin popups. Explicit values override."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default (‘Nearby Accounts’ / ‘Comptes à proximité’)."
+        },
+        {
+          "name": "listSubtitle",
+          "type": "String",
+          "label": "List subtitle (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max accounts to display",
+          "default": "10",
+          "description": null
+        },
+        {
+          "name": "recordTypeName",
+          "type": "String",
+          "label": "Account RecordType DeveloperName (filter)",
+          "default": null,
+          "description": "Leave empty to include all record types."
+        },
+        {
+          "name": "originMode",
+          "type": "String",
+          "label": "Origin mode",
+          "default": "auto",
+          "description": "'auto' = use the browser's geolocation (HTTPS required; user is prompted once). Falls back to the lat/lng below if denied or unavailable. 'manual' = always use the lat/lng below."
+        },
+        {
+          "name": "originLatitude",
+          "type": "String",
+          "label": "Origin latitude (fallback)",
+          "default": "48.859215",
+          "description": "Decimal degrees. Used when 'manual' is selected or when geolocation is denied. Defaults to central Paris (11e)."
+        },
+        {
+          "name": "originLongitude",
+          "type": "String",
+          "label": "Origin longitude (fallback)",
+          "default": "2.379175",
+          "description": "Decimal degrees."
+        },
+        {
+          "name": "originLabel",
+          "type": "String",
+          "label": "Origin marker label (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default (‘My location’ / ‘Ma position’)."
+        },
+        {
+          "name": "priorityFirstMarker",
+          "type": "Boolean",
+          "label": "Highlight the first account as priority (red pin)",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "zoomLevel",
+          "type": "Integer",
+          "label": "Initial zoom level",
+          "default": "13",
+          "description": null
+        }
+      ],
+      "_sourceHash": "64851b86b70b24e4"
+    },
+    {
+      "apiName": "seFrOrderEntry",
+      "masterLabel": "SE FR - Order Entry",
+      "description": "",
+      "tagline": "Saisie de commande pleine grille sur un Account ou Case avec stock, quantités et remises recommandées par IA, persistées comme vrais Orders.",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "Telesales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Case"
+      ],
+      "chips": [
+        "Quantité + remise recommandées par IA",
+        "Total live",
+        "Persiste un vrai Order"
+      ],
+      "keyProps": [
+        "Colonnes produit (code, catégorie, dernier order, stock, prix)",
+        "Code et symbole de devise",
+        "Valeurs par défaut du type d'order"
+      ],
+      "seBenefit": "Vraies images produit dans chaque ligne (lues depuis `Product2.Image_URL__c` par défaut — fonctionne prêt à l'emploi sur SDO). Le raccourci de réassort et la visibilité du stock sont des moments visuellement forts en démo.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 11,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_OrderEntryController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls every visible string (toolbar, grid headers, status filters, modal)."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:orders",
+          "description": null
+        },
+        {
+          "name": "recordLimit",
+          "type": "Integer",
+          "label": "Max products displayed",
+          "default": "25",
+          "description": null
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "currencySymbol",
+          "type": "String",
+          "label": "Currency symbol (displayed in grid)",
+          "default": "€",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "fullScreenTitleTemplate",
+          "type": "String",
+          "label": "Full-screen title (override, {account} placeholder)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "noAccountMessage",
+          "type": "String",
+          "label": "Empty-state message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "erpCheckboxLabel",
+          "type": "String",
+          "label": "(deprecated) ERP checkbox label",
+          "default": null,
+          "description": "No longer rendered - kept to avoid breaking existing page layouts."
+        },
+        {
+          "name": "salesChannelId",
+          "type": "String",
+          "label": "Default SalesChannel Id (optional)",
+          "default": null,
+          "description": "18-char Id of a SalesChannel record. Set on Order.SalesChannelId when an order is created. Leave empty to skip."
+        },
+        {
+          "name": "productImageFieldApiName",
+          "type": "String",
+          "label": "Product image field API name",
+          "default": "Image_URL__c",
+          "description": "Field on Product2 holding an image URL. Schema-safe: skipped if absent."
+        },
+        {
+          "name": "productImageFallbackUrl",
+          "type": "String",
+          "label": "Product image fallback URL",
+          "default": null,
+          "description": "Used when no image is found on Product2 or ProductMedia."
+        },
+        {
+          "name": "filter1",
+          "type": "String",
+          "label": "Dynamic filter 1 (SOQL fragment)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "filter2",
+          "type": "String",
+          "label": "Dynamic filter 2",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "filter3",
+          "type": "String",
+          "label": "Dynamic filter 3",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "filter4",
+          "type": "String",
+          "label": "Dynamic filter 4",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "filter5",
+          "type": "String",
+          "label": "Dynamic filter 5",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "aiReasonsCsv",
+          "type": "String",
+          "label": "AI recommendation tooltips (override)",
+          "default": null,
+          "description": "Optional. CSV of '<rowStatus>|<message>' entries. rowStatus: recent | old | promo | clearance | oos. Each row picks deterministically from the matching messages. Leave empty for the bilingual built-in pool that follows the language property."
+        }
+      ],
+      "_sourceHash": "3392fed05cee0038"
+    },
+    {
+      "apiName": "seFrOrderSummary",
+      "masterLabel": "SE FR - Order Summary",
+      "description": "",
+      "tagline": "Order le plus récent lié à un Case avec produits, total, infos de livraison et actions edit / delete / submit.",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "Service"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Case"
+      ],
+      "chips": [
+        "Auto-résolution de l'Account",
+        "Edit / delete / submit",
+        "Active l'Order au submit"
+      ],
+      "keyProps": [
+        "Afficher / cacher les détails des lignes",
+        "Affichage de la devise",
+        "Label de séparateur"
+      ],
+      "seBenefit": "Récap visuel propre qu'un commercial peut lire à voix haute pendant un appel sans scroller — parfait pour le moment « je vous relis votre commande ».",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 10,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_OrderSummaryController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls every visible string (header buttons, field labels, modals, toasts)."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:orders",
+          "description": null
+        },
+        {
+          "name": "showBottomSeparator",
+          "type": "Boolean",
+          "label": "Show bottom separator",
+          "default": "true",
+          "description": null
+        },
+        {
+          "name": "separatorLabel",
+          "type": "String",
+          "label": "Separator label (override)",
+          "default": null,
+          "description": "Leave empty to use the language default ('OR' / 'OU')."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "successMessage",
+          "type": "String",
+          "label": "Submit success toast message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "deleteConfirmMessage",
+          "type": "String",
+          "label": "Delete confirm message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "emptyStateMessage",
+          "type": "String",
+          "label": "Empty-state message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "productImageFieldApiName",
+          "type": "String",
+          "label": "Product image field API name",
+          "default": "Image_URL__c",
+          "description": "Field on Product2 holding an image URL. Schema-safe: skipped if absent."
+        },
+        {
+          "name": "productImageFallbackUrl",
+          "type": "String",
+          "label": "Product image fallback URL",
+          "default": null,
+          "description": "Used when the product field is empty or absent."
+        }
+      ],
+      "_sourceHash": "25e5895ddf6bbca7"
+    },
+    {
+      "apiName": "seFrPipelineSnapshot",
+      "masterLabel": "SE FR - Pipeline Snapshot",
+      "description": "B2B - Visualisation du pipeline client : Opportunities ouvertes groupées par Stage avec totaux par colonne, totaux pondérés et non-pondérés en haut.",
+      "tagline": "Visualisation du pipeline au niveau Account avec tuiles de synthèse et une colonne par stage Opportunity.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Opportunity"
+      ],
+      "chips": [
+        "Colonne par stage",
+        "Tuile total pondéré",
+        "Auto-derive depuis l'Opp"
+      ],
+      "keyProps": [
+        "Nombre max d'opportunities, filtre statut",
+        "Afficher / cacher le total",
+        "Affichage de la devise"
+      ],
+      "seBenefit": "Largeur sidebar-friendly — tient dans la colonne droite étroite sans casser. Aucun setup nécessaire : lit toutes les Opportunities ouvertes du compte.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_PipelineSnapshotController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls card title, tile labels, stage column names. Raw StageName values flow through unchanged."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:opportunity",
+          "description": null
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max opportunities",
+          "default": "40",
+          "description": "Server-side LIMIT (1-200)."
+        },
+        {
+          "name": "includeClosed",
+          "type": "Boolean",
+          "label": "Include closed opportunities",
+          "default": "false",
+          "description": "Off by default - only open Opps are shown."
+        },
+        {
+          "name": "hideNewOppButton",
+          "type": "Boolean",
+          "label": "Hide 'New opportunity' button",
+          "default": "false",
+          "description": null
+        }
+      ],
+      "_sourceHash": "55a9bd775e081693"
+    },
+    {
+      "apiName": "seFrPromptLauncher",
+      "masterLabel": "SE FR - Prompt Launcher",
+      "description": "Panneau IA configurable qui exécute des Salesforce Prompt Templates via Invocable Actions. Posez sur n'importe quelle page, le SE choisit les prompts à exposer. Le contexte record est auto-injecté, les prompts qui demandent des inputs affichent un petit formulaire. Les réponses HTML sont rendues avec le formatage.",
+      "tagline": "Panneau IA configurable qui exécute des Salesforce Prompt Templates via Invocable Actions, avec contexte record auto-injecté.",
+      "categories": [
+        "Agentforce & AI"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Pill switcher par prompt",
+        "Contexte record auto-injecté",
+        "Save as Note",
+        "Output formaté HTML"
+      ],
+      "keyProps": [
+        "`promptsJson` · catalogue (apiName, label, icon, objects[], userInputs[], extraInputs)",
+        "Filtrage automatique par type de record (Account → résumé Account, Home → free-text)",
+        "Détection auto HTML / Markdown · hauteur dynamique",
+        "`autoRunFirstPrompt` · déclenche l'IA au chargement",
+        "`resultAccent` · blue / purple / green · `maxHeight` · cap optionnel",
+        "`namedCredential` · `Agentforce_API` par défaut"
+      ],
+      "seBenefit": "Le catalogue par défaut couvre les résumés Account / Contact / Opportunity / Lead / Case + free-text Summarize/Refine — posez sur n'importe quelle record page, le bon prompt apparaît automatiquement. Save as Note attache la sortie IA au record en un clic.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 4,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_PromptLauncherController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default ('Assistant IA' / 'AI Assistant')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:bot",
+          "description": null
+        },
+        {
+          "name": "namedCredential",
+          "type": "String",
+          "label": "Named Credential",
+          "default": "Agentforce_API",
+          "description": "Named Credential routing the Apex callout to the org's REST API. Default 'Agentforce_API'. Despite the legacy name, it's used for any /services/data/... callout — Prompt Templates, Agent API, etc. Setup → Named Credentials in your org."
+        },
+        {
+          "name": "promptsJson",
+          "type": "String",
+          "label": "Prompts catalogue (JSON)",
+          "default": null,
+          "description": "JSON array. Each entry: { apiName, label, icon, objects:['Account',...], recordInputName:'Input:Account', userInputs:[{name,label,type,required,options}] }. 'objects' filters by host record type — empty list = always show. Leave the prop empty to use the default catalogue (Account/Contact/Deal/Lead/Case summaries + free-text Summarize/Refine)."
+        },
+        {
+          "name": "autoRunFirstPrompt",
+          "type": "Boolean",
+          "label": "Auto-run first prompt on load",
+          "default": "false",
+          "description": "When ON, the first applicable prompt runs automatically as soon as the page loads. Skips silently if any required user input is empty."
+        },
+        {
+          "name": "resultAccent",
+          "type": "String",
+          "label": "Result panel accent color",
+          "default": "blue",
+          "description": null
+        },
+        {
+          "name": "maxHeight",
+          "type": "Integer",
+          "label": "Maximum component height (px)",
+          "default": "0",
+          "description": "0 (default) = no cap, the component grows with the AI response. Set a number (e.g. 600) to cap the vertical footprint and enable scroll inside the component when the response is very long."
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "mode",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "agentRef",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "agentDisplayName",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "scriptedRepliesJson",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "flowRulesCsv",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "quickFlowsCsv",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "inputPlaceholder",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "ae331973b7e34e0d"
+    },
+    {
+      "apiName": "seFrRecordHighlights",
+      "masterLabel": "SE FR - Record Highlights",
+      "description": "B2B / B2C - Panneau highlights custom avec image ronde et champs / actions configurables. Fonctionne sur Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote — peut afficher le record courant ou son parent Account (propriété recordSource).",
+      "tagline": "Panneau highlights custom avec image ronde, champs clés et boutons d'action, fonctionnel sur 8 objets standards.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Opportunity",
+        "Case",
+        "Lead",
+        "Order",
+        "Contract",
+        "Quote"
+      ],
+      "chips": [
+        "Upload d'image inline",
+        "Fonctionne sur 8 objets",
+        "Bandeau de champs configurable"
+      ],
+      "keyProps": [
+        "`language` · en / fr",
+        "`recordSource` · current / parent",
+        "`accountFieldsList`, `contactFieldsList`",
+        "`imageFieldApiName` · champ URL sur le record",
+        "`maxQuickActions` · chargées depuis le layout"
+      ],
+      "seBenefit": "Cliquez sur l'avatar pour uploader / remplacer l'image instantanément — sans static resource, sans hosting public d'URL, sans champ custom. L'image est sauvegardée comme un File sur le record.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 1,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_RecordHighlightsController",
+        "SE_FR_ImageFileController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_ImageFileController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls button labels (Edit / Modifier, View Account Hierarchy / Voir la hiérarchie) and empty-state messages."
+        },
+        {
+          "name": "recordSource",
+          "type": "String",
+          "label": "Record source",
+          "default": "current",
+          "description": "current = show the record on the current page. parent = show the linked Account (Contact/Opportunity/Case/Order/Contract/Quote/Lead) or the Parent Account (when on an Account page)."
+        },
+        {
+          "name": "accountFieldsList",
+          "type": "String",
+          "label": "Account - fields to display (comma-separated)",
+          "default": "AccountNumber, Industry, Type, Phone",
+          "description": "Used when the displayed record is an Account."
+        },
+        {
+          "name": "contactFieldsList",
+          "type": "String",
+          "label": "Contact - fields to display (comma-separated)",
+          "default": "Title, Email, Phone, Department",
+          "description": "Used when the displayed record is a Contact."
+        },
+        {
+          "name": "customImageUrl",
+          "type": "String",
+          "label": "Image URL (overrides the record image)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "imageFieldApiName",
+          "type": "String",
+          "label": "Image URL field API name (optional)",
+          "default": null,
+          "description": "Optional. API name of a text/URL field on the current object holding an image URL (e.g. a custom ImageURL__c). If present, takes priority over the File-based image. Leave empty to rely on the built-in File storage - the component uploads the replacement as a standard File on the record, no custom schema required."
+        },
+        {
+          "name": "imageSize",
+          "type": "Integer",
+          "label": "Image size (px)",
+          "default": "90",
+          "description": "Diameter of the round image in pixels. Also sets the fallback icon circle size."
+        },
+        {
+          "name": "disableImageReplace",
+          "type": "Boolean",
+          "label": "Disable click-to-replace image",
+          "default": "false",
+          "description": "Off by default - clicking the image opens a file picker and uploads the new image as a standard File on the record. Turn ON to restore the legacy 'open image full size' behavior."
+        },
+        {
+          "name": "maxQuickActions",
+          "type": "Integer",
+          "label": "Max quick actions",
+          "default": "2",
+          "description": "Number of buttons displayed in the header. Picked from the active page layout's actions list (same source as the standard Highlights Panel)."
+        },
+        {
+          "name": "quickActionsCsv",
+          "type": "String",
+          "label": "Quick actions override (API names, comma-separated)",
+          "default": null,
+          "description": "Optional. Forces a specific list instead of the page-layout default. Example: 'Edit,SendEmail'. Leave empty to use the layout."
+        },
+        {
+          "name": "disableRealButtons",
+          "type": "Boolean",
+          "label": "(deprecated)",
+          "default": "false",
+          "description": null
+        },
+        {
+          "name": "fakeButtonLabels",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "fieldsList",
+          "type": "String",
+          "label": "(deprecated - use accountFieldsList / contactFieldsList)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "4e5135bdfe68bb0c"
+    },
+    {
+      "apiName": "seFrRelatedRecordCard",
+      "masterLabel": "SE FR - Related Record Card",
+      "description": "B2B / B2C - Carte verticale qui affiche un record lié (l'Account d'un Contact/Case/Opp, ou le Contact principal d'un Account). Choisit la contrepartie automatiquement à partir du type de record courant. Bilingue EN / FR. Valeurs par défaut industry-agnostic.",
+      "tagline": "Carte sidebar verticale affichant le record contrepartie (Contact / Account) avec champs clés et avatar.",
+      "categories": [
+        "Account 360°"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Case",
+        "Opportunity",
+        "Order"
+      ],
+      "chips": [
+        "Pick auto de la contrepartie",
+        "Compatible Person Account",
+        "Fallback empty-state"
+      ],
+      "keyProps": [
+        "`target` · auto / account / contact",
+        "`fieldsCsv` par target",
+        "Champ image par target (Contact + Account)"
+      ],
+      "seBenefit": "Cliquez sur l'avatar pour uploader une image pour le record lié — pratique pour mettre un logo Account ou une photo Contact sans quitter la page. Le champ image Contact par défaut `SDO_Cust360_Contact_Picture_URL__c` fonctionne prêt à l'emploi sur SDO.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_RelatedRecordCardController",
+        "SE_FR_ImageFileController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_ImageFileController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' or 'fr' (default). Controls card title, button labels and empty state."
+        },
+        {
+          "name": "target",
+          "type": "String",
+          "label": "What to display",
+          "default": "auto",
+          "description": "'auto' (default) picks the natural counterpart: on Account → primary Contact; on Contact/Case/Opportunity/Order → the linked Account. 'account' and 'contact' force a specific target."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the target default ('Account'/'Compte' or 'Primary Contact'/'Contact principal')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon (override)",
+          "default": null,
+          "description": "SLDS icon name. Leave empty for the target default (standard:account or standard:contact)."
+        },
+        {
+          "name": "fieldsCsv",
+          "type": "String",
+          "label": "Fields to display (API names, comma-separated)",
+          "default": null,
+          "description": "Leave empty for sensible defaults. Contact default: 'Title,Department,Email,Phone,MobilePhone'. Account default: 'Industry,Type,Phone,Website,AnnualRevenue,NumberOfEmployees'. Fields unknown to the target are silently skipped."
+        },
+        {
+          "name": "contactImageFieldApiName",
+          "type": "String",
+          "label": "Contact image field API name",
+          "default": "SDO_Cust360_Contact_Picture_URL__c",
+          "description": "URL field on Contact used as the image source when the displayed target is Contact. Schema-safe: skipped if the field is absent. Falls back to a File attached to the contact when empty."
+        },
+        {
+          "name": "accountImageFieldApiName",
+          "type": "String",
+          "label": "Account image field API name",
+          "default": "",
+          "description": "Optional URL field on Account. Empty by default - the card uses the File attached to the account as the image source."
+        },
+        {
+          "name": "disableImageReplace",
+          "type": "Boolean",
+          "label": "Disable click-to-replace image",
+          "default": "false",
+          "description": "Off by default - clicking the avatar opens a file picker and uploads the new image as a File on the target (same convention as Record Highlights). Turn ON to lock the avatar."
+        },
+        {
+          "name": "imageFieldApiName",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "imageMode",
+          "type": "String",
+          "label": "(deprecated)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "f14a7d267138ccbb"
+    },
+    {
+      "apiName": "seFrRevenueDashboard",
+      "masterLabel": "SE FR - Revenue Dashboard",
+      "description": "B2B - Mini-dashboard revenue 3 ans au niveau Account. Bilingue EN / FR via la propriété language.",
+      "tagline": "Mini-dashboard de revenue sur 3 ans avec tuiles KPI et un bar chart mensuel côte à côte.",
+      "categories": [
+        "Account 360°",
+        "Dashboards & KPIs"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "3 ans côte à côte",
+        "3 tuiles KPI",
+        "Devise & échelle configurables"
+      ],
+      "keyProps": [
+        "Mois en arrière, année de comparaison",
+        "Champ source du bucket, code devise"
+      ],
+      "seBenefit": "Overlay YoY intégré — raconte visuellement l'histoire de croissance ou de décroissance, sans configurer un vrai dashboard Salesforce.",
+      "dataMode": "mock",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls card title, KPI labels, and the default month labels in the sample chart."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:performance",
+          "description": null
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "year1Label",
+          "type": "String",
+          "label": "Year 1 label (oldest)",
+          "default": "2024",
+          "description": null
+        },
+        {
+          "name": "year2Label",
+          "type": "String",
+          "label": "Year 2 label",
+          "default": "2025",
+          "description": null
+        },
+        {
+          "name": "year3Label",
+          "type": "String",
+          "label": "Year 3 label (current)",
+          "default": "2026",
+          "description": null
+        },
+        {
+          "name": "kpi1Label",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Value",
+          "type": "Integer",
+          "label": "KPI 1 - Value (currency)",
+          "default": "38550",
+          "description": null
+        },
+        {
+          "name": "kpi2Label",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Value",
+          "type": "String",
+          "label": "KPI 2 - Value (raw text)",
+          "default": "+14.2%",
+          "description": null
+        },
+        {
+          "name": "kpi3Label",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Value",
+          "type": "Integer",
+          "label": "KPI 3 - Value (currency)",
+          "default": "114200",
+          "description": null
+        },
+        {
+          "name": "chartMaxScale",
+          "type": "Integer",
+          "label": "Chart max scale (Y-axis top)",
+          "default": "15000",
+          "description": null
+        },
+        {
+          "name": "chartDataJson",
+          "type": "String",
+          "label": "Chart data JSON (override)",
+          "default": null,
+          "description": "Leave empty for the language-appropriate default (12 months with EN or FR labels). Each item: { month:'Jan', y1: 8200, y2: 8900, y3: 9500 }."
+        },
+        {
+          "name": "currentYearColor",
+          "type": "String",
+          "label": "Current-year accent color",
+          "default": "var(--slds-g-color-accent-base-50, #0176d3)",
+          "description": "CSS color used for the current-year bars, legend chip and primary KPI tile. Defaults to the theme accent color."
+        }
+      ],
+      "_sourceHash": "0c56362056ca61ad"
+    },
+    {
+      "apiName": "seFrSmartRecommendations",
+      "masterLabel": "SE FR - Smart Recommendations",
+      "description": "Actions recommandées context-aware (Next Best Action).",
+      "tagline": "Panneau Next Best Action context-aware avec 1-6 recommandations, score de pertinence et override par carte.",
+      "categories": [
+        "Agentforce & AI"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service",
+        "Marketing"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Case",
+        "Order"
+      ],
+      "chips": [
+        "Context-aware par objet",
+        "Badge de score de pertinence",
+        "Override inline du titre & motif"
+      ],
+      "keyProps": [
+        "Recommendations CSV (label + motif + icône)",
+        "Prompt Template Einstein (optionnel)"
+      ],
+      "seBenefit": "Les narrations par défaut sont calibrées pour les scénarios sales façon SDO. Branchez un Prompt Template Einstein pour transformer la même UI en vraie démo IA sans toucher au layout.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 6,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls card title, subtitle, empty state, Dismiss button, relevance badge prefix, toast messages and the per-object default recommendations (Case, Account, Order, Contact)."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "displayMode",
+          "type": "String",
+          "label": "Display mode",
+          "default": "Global",
+          "description": "Global = show on every record. Targeted = only on the record IDs specified below."
+        },
+        {
+          "name": "targetId1",
+          "type": "String",
+          "label": "[Target 1] Record ID",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "targetRecos1",
+          "type": "String",
+          "label": "[Target 1] Recommendations to show (e.g. 1,3,4)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "targetId2",
+          "type": "String",
+          "label": "[Target 2] Record ID",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "targetRecos2",
+          "type": "String",
+          "label": "[Target 2] Recommendations to show (e.g. 2,5)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "targetId3",
+          "type": "String",
+          "label": "[Target 3] Record ID",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "targetRecos3",
+          "type": "String",
+          "label": "[Target 3] Recommendations to show",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle1",
+          "type": "String",
+          "label": "Reco 1 - Title (action)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc1",
+          "type": "String",
+          "label": "Reco 1 - Reason (description)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle2",
+          "type": "String",
+          "label": "Reco 2 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc2",
+          "type": "String",
+          "label": "Reco 2 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle3",
+          "type": "String",
+          "label": "Reco 3 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc3",
+          "type": "String",
+          "label": "Reco 3 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle4",
+          "type": "String",
+          "label": "Reco 4 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc4",
+          "type": "String",
+          "label": "Reco 4 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle5",
+          "type": "String",
+          "label": "Reco 5 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc5",
+          "type": "String",
+          "label": "Reco 5 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customTitle6",
+          "type": "String",
+          "label": "Reco 6 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "customDesc6",
+          "type": "String",
+          "label": "Reco 6 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle1",
+          "type": "String",
+          "label": "[Global] Reco 1 - Title",
+          "default": null,
+          "description": "Shown on every record of this object when set. Overrides the built-in per-object default."
+        },
+        {
+          "name": "globalDesc1",
+          "type": "String",
+          "label": "[Global] Reco 1 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn1",
+          "type": "String",
+          "label": "[Global] Reco 1 - Button label",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle2",
+          "type": "String",
+          "label": "[Global] Reco 2 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalDesc2",
+          "type": "String",
+          "label": "[Global] Reco 2 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn2",
+          "type": "String",
+          "label": "[Global] Reco 2 - Button label",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle3",
+          "type": "String",
+          "label": "[Global] Reco 3 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalDesc3",
+          "type": "String",
+          "label": "[Global] Reco 3 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn3",
+          "type": "String",
+          "label": "[Global] Reco 3 - Button label",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle4",
+          "type": "String",
+          "label": "[Global] Reco 4 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalDesc4",
+          "type": "String",
+          "label": "[Global] Reco 4 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn4",
+          "type": "String",
+          "label": "[Global] Reco 4 - Button label",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle5",
+          "type": "String",
+          "label": "[Global] Reco 5 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalDesc5",
+          "type": "String",
+          "label": "[Global] Reco 5 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn5",
+          "type": "String",
+          "label": "[Global] Reco 5 - Button label",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalTitle6",
+          "type": "String",
+          "label": "[Global] Reco 6 - Title",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalDesc6",
+          "type": "String",
+          "label": "[Global] Reco 6 - Reason",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "globalBtn6",
+          "type": "String",
+          "label": "[Global] Reco 6 - Button label",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "9d3da6587b4659c1"
+    },
+    {
+      "apiName": "seFrSplashBanner",
+      "masterLabel": "SE FR - Splash Banner",
+      "description": "Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).",
+      "tagline": "Bannière d'accueil avec 8 styles de fond animés (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) en pur CSS / SVG.",
+      "categories": [
+        "Transverse"
+      ],
+      "personas": [
+        "All"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "8 styles animés",
+        "Pur CSS / SVG",
+        "Respecte reduced-motion"
+      ],
+      "keyProps": [
+        "Titre, sous-titre, taille de texte, alignement",
+        "Style de fond (8 options)",
+        "3 couleurs (primary / secondary / tertiary)",
+        "Hauteur, vitesse d'animation",
+        "Bouton CTA optionnel"
+      ],
+      "seBenefit": "8 ambiances visuelles distinctes — choisissez « Constellation » ou « Conic » pour les démos IA, « Waves » pour un ton customer-success sobre, « Aurora » pour le premium / luxe. Aucune image / static resource à uploader.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "title",
+          "type": "String",
+          "label": "Titre",
+          "default": "Bonjour 👋",
+          "description": "Le grand texte affiché au centre. Émojis acceptés."
+        },
+        {
+          "name": "subtitle",
+          "type": "String",
+          "label": "Sous-titre (optionnel)",
+          "default": null,
+          "description": "Texte plus petit affiché sous le titre."
+        },
+        {
+          "name": "textSize",
+          "type": "String",
+          "label": "Taille du texte",
+          "default": "l",
+          "description": "s = petit, m = moyen, l = grand (défaut), xl = très grand."
+        },
+        {
+          "name": "bgStyle",
+          "type": "String",
+          "label": "Style de fond",
+          "default": "waves",
+          "description": "waves (vagues animées de Charly) | aurora (aurores boréales) | mesh (mesh gradient Stripe-like) | orbs (sphères flottantes) | conic (rotation conique Vercel-like) | geometric (low-poly animé) | constellation (étoiles reliées) | grid (blueprint scan-line)."
+        },
+        {
+          "name": "colorPrimary",
+          "type": "String",
+          "label": "Couleur principale",
+          "default": "#0176d3",
+          "description": "Couleur CSS (hex, rgb, named). Utilisée par tous les fonds."
+        },
+        {
+          "name": "colorSecondary",
+          "type": "String",
+          "label": "Couleur secondaire",
+          "default": "#a445ff",
+          "description": "Couleur CSS. Utilisée par aurora / mesh / orbs / conic / geometric."
+        },
+        {
+          "name": "colorTertiary",
+          "type": "String",
+          "label": "Couleur tertiaire",
+          "default": "#ff6ec7",
+          "description": "Couleur CSS. Utilisée par aurora / mesh / orbs / conic / geometric (sinon ignorée)."
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "label": "Hauteur (px)",
+          "default": "220",
+          "description": "Hauteur du composant en pixels. 180-300 conviennent à la plupart des bannières."
+        },
+        {
+          "name": "darkText",
+          "type": "Boolean",
+          "label": "Texte sombre",
+          "default": "false",
+          "description": "Off par défaut (texte blanc, idéal sur fond foncé). On = texte noir."
+        },
+        {
+          "name": "animationSpeed",
+          "type": "String",
+          "label": "Vitesse d'animation",
+          "default": "normal",
+          "description": null
+        },
+        {
+          "name": "alignment",
+          "type": "String",
+          "label": "Alignement du texte",
+          "default": "center",
+          "description": null
+        },
+        {
+          "name": "ctaLabel",
+          "type": "String",
+          "label": "Label du bouton (optionnel)",
+          "default": null,
+          "description": "Si renseigné, ajoute un bouton sous le texte."
+        },
+        {
+          "name": "ctaUrl",
+          "type": "String",
+          "label": "URL du bouton (optionnel)",
+          "default": null,
+          "description": "Lien activé par le bouton. URL relative Salesforce ('/lightning/...') ou absolue ('https://...')."
+        }
+      ],
+      "_sourceHash": "ade57c75cd73d2e8"
+    },
+    {
+      "apiName": "seFrTelesalesRepHome",
+      "masterLabel": "SE FR - Telesales - Rep Home",
+      "description": "B2B - Home page Telesales. Tuiles KPI, Cases entrants, Orders à valider, mini-charts, calls, news. Bilingue EN/FR via la propriété language.",
+      "tagline": "Home page Telesales avec KPIs, tables Cases et Orders en live, calls à passer et 3 mini-charts.",
+      "categories": [
+        "Dashboards & KPIs"
+      ],
+      "personas": [
+        "Telesales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage"
+      ],
+      "objects": [],
+      "chips": [
+        "Cases & Orders en live",
+        "Queue de calls à passer",
+        "3 mini-charts analytiques"
+      ],
+      "keyProps": [
+        "Nombre de calls affichés",
+        "Tuiles KPI",
+        "Liens d'actions rapides"
+      ],
+      "seBenefit": "Un template tout-en-un pour la Home Inside Sales — pré-composé, pas besoin de câbler 5 composants manuellement dans App Builder.",
+      "dataMode": "hybrid",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_TelesalesController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings including datatable column headers and the default demo JSON for calls / news / mini-charts. Explicit values on any *Json / kpi*Label property override the dictionary."
+        },
+        {
+          "name": "greetingTemplate",
+          "type": "String",
+          "label": "Greeting template (override)",
+          "default": null,
+          "description": "Use {name} placeholder. Wrap any word with **…** to render it in the highlight color. Leave empty for dictionary default."
+        },
+        {
+          "name": "defaultUserName",
+          "type": "String",
+          "label": "Fallback user name (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "highlightColor",
+          "type": "String",
+          "label": "Greeting highlight color (hex)",
+          "default": "#0176d3",
+          "description": "Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue."
+        },
+        {
+          "name": "caseStatusesCsv",
+          "type": "String",
+          "label": "Cases - statuses (comma-separated)",
+          "default": "New,Working,Waiting on Customer,Escalated",
+          "description": null
+        },
+        {
+          "name": "caseOwnerScope",
+          "type": "String",
+          "label": "Cases - owner scope",
+          "default": "all",
+          "description": "'mine' | 'all'"
+        },
+        {
+          "name": "caseLimit",
+          "type": "Integer",
+          "label": "Cases - max rows",
+          "default": "6",
+          "description": null
+        },
+        {
+          "name": "caseListView",
+          "type": "String",
+          "label": "Case list view API name",
+          "default": "Recent",
+          "description": null
+        },
+        {
+          "name": "orderStatusesCsv",
+          "type": "String",
+          "label": "Orders - statuses (comma-separated)",
+          "default": "Draft",
+          "description": null
+        },
+        {
+          "name": "orderOwnerScope",
+          "type": "String",
+          "label": "Orders - owner scope",
+          "default": "all",
+          "description": null
+        },
+        {
+          "name": "orderLimit",
+          "type": "Integer",
+          "label": "Orders - max rows",
+          "default": "6",
+          "description": null
+        },
+        {
+          "name": "orderListView",
+          "type": "String",
+          "label": "Order list view API name",
+          "default": "Recent",
+          "description": null
+        },
+        {
+          "name": "callsRecordType",
+          "type": "String",
+          "label": "Calls - Account.RecordType.DeveloperName filter",
+          "default": null,
+          "description": "Empty = all record types. Example: 'SDO_Account_Simple'."
+        },
+        {
+          "name": "callsOwnerScope",
+          "type": "String",
+          "label": "Calls - owner scope",
+          "default": "all",
+          "description": "'mine' restricts to Accounts owned by the running user. 'all' (default) widens."
+        },
+        {
+          "name": "callsLimit",
+          "type": "Integer",
+          "label": "Calls - max rows",
+          "default": "5",
+          "description": "Max number of Contacts shown. Contacts from Accounts with an open Case or a Draft Order bubble up first."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency code (ISO 4217)",
+          "default": "EUR",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "kpi1Label",
+          "type": "String",
+          "label": "KPI 1 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1Value",
+          "type": "String",
+          "label": "KPI 1 - Value",
+          "default": "18 / 25",
+          "description": null
+        },
+        {
+          "name": "kpi1Footer",
+          "type": "String",
+          "label": "KPI 1 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi1FooterClass",
+          "type": "String",
+          "label": "KPI 1 - Footer CSS class",
+          "default": "slds-text-color_success",
+          "description": null
+        },
+        {
+          "name": "kpi2Label",
+          "type": "String",
+          "label": "KPI 2 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2Value",
+          "type": "String",
+          "label": "KPI 2 - Value",
+          "default": "8",
+          "description": null
+        },
+        {
+          "name": "kpi2Footer",
+          "type": "String",
+          "label": "KPI 2 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi2FooterClass",
+          "type": "String",
+          "label": "KPI 2 - Footer CSS class",
+          "default": "slds-text-color_weak",
+          "description": null
+        },
+        {
+          "name": "kpi3Label",
+          "type": "String",
+          "label": "KPI 3 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3Value",
+          "type": "String",
+          "label": "KPI 3 - Value",
+          "default": "38.4k",
+          "description": null
+        },
+        {
+          "name": "kpi3Footer",
+          "type": "String",
+          "label": "KPI 3 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi3FooterClass",
+          "type": "String",
+          "label": "KPI 3 - Footer CSS class",
+          "default": "slds-text-color_weak",
+          "description": null
+        },
+        {
+          "name": "kpi4Label",
+          "type": "String",
+          "label": "KPI 4 - Label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4Value",
+          "type": "String",
+          "label": "KPI 4 - Value",
+          "default": "3m 15s",
+          "description": null
+        },
+        {
+          "name": "kpi4Footer",
+          "type": "String",
+          "label": "KPI 4 - Footer (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "kpi4FooterClass",
+          "type": "String",
+          "label": "KPI 4 - Footer CSS class",
+          "default": "slds-text-color_success",
+          "description": null
+        },
+        {
+          "name": "callsJson",
+          "type": "String",
+          "label": "Calls - JSON array (override)",
+          "default": null,
+          "description": "Leave empty to use real Contacts (see Calls filters above). Any non-empty value overrides the live data. Fields: id, time, account, accountId, contact, contactId, phone, subject."
+        },
+        {
+          "name": "newsJson",
+          "type": "String",
+          "label": "News / training - JSON array (override)",
+          "default": null,
+          "description": "Fields: id, accent ('success' | 'info' | 'warning' | 'error'), title, desc, btnLabel, url."
+        },
+        {
+          "name": "channelVolumeJson",
+          "type": "String",
+          "label": "Channel volume - JSON array (override)",
+          "default": null,
+          "description": "Fields: label, percent."
+        },
+        {
+          "name": "subjectVolumeJson",
+          "type": "String",
+          "label": "Subject volume - JSON array (override)",
+          "default": null,
+          "description": "Fields: label, percent."
+        },
+        {
+          "name": "monthlyClosedJson",
+          "type": "String",
+          "label": "Monthly closed - JSON array (override)",
+          "default": null,
+          "description": "Fields: month, value, heightPct, highlight."
+        }
+      ],
+      "_sourceHash": "742bf065f8ad8cdc"
+    },
+    {
+      "apiName": "seFrTerritoryMap",
+      "masterLabel": "SE FR - Territory Map",
+      "description": "Sales / Field Sales - Vue carte du territoire : Accounts géolocalisés via leur Billing Address, code couleur par pipeline ouvert, filtres latéraux (Owner, RecordType, fourchette de montant ouvert, Stages, statut Case, Type, Industry + recherche par nom), tuiles KPI et export CSV.",
+      "tagline": "Carte de territoire interactive avec Accounts géolocalisés, code couleur par pipeline, filtres latéraux et export CSV.",
+      "categories": [
+        "Geo & Field"
+      ],
+      "personas": [
+        "FieldSales",
+        "Sales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage"
+      ],
+      "objects": [],
+      "chips": [
+        "Code couleur par tranche de pipeline",
+        "Filtres latéraux",
+        "Export CSV de la vue"
+      ],
+      "keyProps": [
+        "Owner / RecordType / fourchette de montant / stages / statut Case",
+        "2 picklists configurables (Type, Industry par défaut)",
+        "Hauteur de carte, ratio carte / liste, centre par défaut (France)"
+      ],
+      "seBenefit": "Les pins sont colorés par tranche de pipeline ouvert (rouge top 20% / orange / vert / gris) — visualise instantanément la santé du territoire. L'export CSV permet de récupérer la liste filtrée pour des reports de suivi.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": true,
+      "featuredRank": 9,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_TerritoryMapController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default."
+        },
+        {
+          "name": "limitCount",
+          "type": "Integer",
+          "label": "Max accounts",
+          "default": "100",
+          "description": "Server-side LIMIT (1-200)."
+        },
+        {
+          "name": "defaultOwnerScope",
+          "type": "String",
+          "label": "Default owner scope",
+          "default": "mine",
+          "description": "'mine' = accounts owned by the running user (with auto-fallback to all when empty). 'all' = every owner."
+        },
+        {
+          "name": "defaultRecordType",
+          "type": "String",
+          "label": "Default RecordType (developer name)",
+          "default": null,
+          "description": "Optional. Pre-selects an Account RecordType filter (developer name). Leave empty to show all types."
+        },
+        {
+          "name": "defaultStagesCsv",
+          "type": "String",
+          "label": "Default opportunity stages (CSV)",
+          "default": null,
+          "description": "Optional. Pre-selects opportunity stages used to compute open-amount KPIs. Empty = all open opportunities."
+        },
+        {
+          "name": "filterFieldAApiName",
+          "type": "String",
+          "label": "Filter field A (API name)",
+          "default": "Type",
+          "description": "API name of an Account picklist used as a filter and shown in the side list (default: Type). Set to a custom field if useful."
+        },
+        {
+          "name": "filterFieldBApiName",
+          "type": "String",
+          "label": "Filter field B (API name)",
+          "default": "Industry",
+          "description": "API name of an Account picklist used as a filter and shown in the side list (default: Industry). Set to a custom field if useful."
+        },
+        {
+          "name": "currencyCode",
+          "type": "String",
+          "label": "Currency ISO code",
+          "default": "EUR",
+          "description": "ISO 4217 code (EUR, USD, GBP...)."
+        },
+        {
+          "name": "zoomLevel",
+          "type": "Integer",
+          "label": "Default zoom level",
+          "default": "6",
+          "description": "lightning-map zoom level (1=world, 13=neighborhood)."
+        },
+        {
+          "name": "defaultCenterLatitude",
+          "type": "String",
+          "label": "Default center - latitude",
+          "default": "46.7",
+          "description": "Initial map center latitude. Defaults to France (46.7). Override for other regions."
+        },
+        {
+          "name": "defaultCenterLongitude",
+          "type": "String",
+          "label": "Default center - longitude",
+          "default": "2.5",
+          "description": "Initial map center longitude. Defaults to France (2.5)."
+        },
+        {
+          "name": "mapHeight",
+          "type": "Integer",
+          "label": "Map height (px)",
+          "default": "480",
+          "description": "Fixed height of the map + list area. The list scrolls independently inside this height."
+        },
+        {
+          "name": "mapWidthRatio",
+          "type": "String",
+          "label": "Map / list ratio",
+          "default": "0.66",
+          "description": "Horizontal split ratio between the map (left) and the account list (right). Range 0.4 - 0.85. Default 0.66 = map ~ 2/3, list ~ 1/3."
+        },
+        {
+          "name": "filtersOpenByDefault",
+          "type": "Boolean",
+          "label": "Open filters panel by default",
+          "default": "false",
+          "description": null
+        }
+      ],
+      "_sourceHash": "89795e677113f2a6"
+    },
+    {
+      "apiName": "seFrTimelinePhases",
+      "masterLabel": "SE FR - Timeline Phases",
+      "description": "B2B / B2C - Timeline horizontale multi-phases (parcours client / étapes projet). Les phases sont configurées en JSON avec labels, dates cibles et flags done. Un marqueur vertical « Today » indique la position actuelle.",
+      "tagline": "Timeline horizontale multi-phases avec axe de dates, marqueur « Today » et état done / pending par phase.",
+      "categories": [
+        "Sales Productivity"
+      ],
+      "personas": [
+        "Sales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Layout sur axe de dates",
+        "Marqueur « Today »",
+        "État done / pending"
+      ],
+      "keyProps": [
+        "Jusqu'à 6 phases (label, date, statut)",
+        "Thème couleur"
+      ],
+      "seBenefit": "Visualise un parcours ou un état de processus sans nécessiter d'objets custom ni de flows — saisissez les phases directement dans App Builder.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title and the default phases when Phases JSON is empty."
+        },
+        {
+          "name": "scope",
+          "type": "String",
+          "label": "Default phases scope",
+          "default": "record",
+          "description": "Seeds the default phases depending on where the component is used. 'record' = customer / deal cycle (Prospection → Découverte → Démo → Proposition → Closing). 'home' = global fiscal milestones (Q1/Q2/Q3/Q4 kick-off / ramp-up / expansion / year-end). Override with Phases JSON below to customise fully."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language default ('Parcours' / 'Journey')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:timesheet",
+          "description": null
+        },
+        {
+          "name": "phasesJson",
+          "type": "String",
+          "label": "Phases - JSON array (override)",
+          "default": null,
+          "description": "Array of objects. Each item: { label, date (YYYY-MM-DD), done (boolean) }. Leave empty for the scope + language default."
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag (date formatting)",
+          "default": "fr-FR",
+          "description": null
+        },
+        {
+          "name": "hideTodayMarker",
+          "type": "Boolean",
+          "label": "Hide 'Today' marker",
+          "default": "false",
+          "description": "Off by default - the vertical dotted line showing today's position is displayed."
+        }
+      ],
+      "_sourceHash": "8174352aa9b99682"
+    },
+    {
+      "apiName": "seFrVoiceNoteTaker",
+      "masterLabel": "SE FR - Voice Note Taker",
+      "description": "Dictez une note vocale et sauvegardez-la comme Task complétée liée au record courant. Bilingue EN / FR.",
+      "tagline": "Dictez une note vocale via la Web Speech API et sauvegardez-la comme Task complétée liée au record courant.",
+      "categories": [
+        "Geo & Field"
+      ],
+      "personas": [
+        "FieldSales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Lead",
+        "Opportunity"
+      ],
+      "chips": [
+        "Dictée native navigateur",
+        "Sauvegarde en Task",
+        "Routing auto WhoId / WhatId"
+      ],
+      "keyProps": [
+        "Auto-save vs review-first",
+        "Langue de transcription"
+      ],
+      "seBenefit": "Speech-to-text via l'API navigateur `SpeechRecognition` — aucune dépendance Einstein ni service externe. Démontrable sur n'importe quelle org tant que le navigateur est Chrome.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_VoiceNoteController"
+      ],
+      "sharedApexDeps": [
+        "SE_FR_VoiceNoteController"
+      ],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'. Controls every visible string. Explicit values override per-field."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:voice_call",
+          "description": null
+        },
+        {
+          "name": "speechLocale",
+          "type": "String",
+          "label": "Speech recognition locale",
+          "default": "fr-FR",
+          "description": "BCP 47 tag (e.g. en-US, fr-FR). Independent of the UI language - set it to the language the user will actually speak."
+        },
+        {
+          "name": "taskSubject",
+          "type": "String",
+          "label": "Task subject (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "recordingHint",
+          "type": "String",
+          "label": "Recording hint text (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "textareaLabel",
+          "type": "String",
+          "label": "Textarea label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "textareaPlaceholder",
+          "type": "String",
+          "label": "Textarea placeholder (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "startButtonLabel",
+          "type": "String",
+          "label": "Start button label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "stopButtonLabel",
+          "type": "String",
+          "label": "Stop button label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "saveButtonLabel",
+          "type": "String",
+          "label": "Save button label (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "unsupportedBrowserMessage",
+          "type": "String",
+          "label": "Unsupported-browser message (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "successMessage",
+          "type": "String",
+          "label": "Success toast message (override)",
+          "default": null,
+          "description": null
+        }
+      ],
+      "_sourceHash": "5a94c3270684a22c"
+    }
+  ]
+}

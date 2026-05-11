@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Metric Tile</masterLabel>
+    <description>B2B / B2C - Single KPI tile with inline trend chart. 4 chart styles (line, area, bar, mini-donut), optional comparison series, target line, currency formatting. Bilingual FR / EN.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default ('Indicateur' / 'Metric')." />
+            <property name="cardIcon" type="String" default="standard:metrics" label="Card icon" />
+            <property name="hideCardTitle" type="Boolean" default="false" label="Hide the card wrapper" description="Off by default - the tile is wrapped in a lightning-card with a title. Turn on to render the bare tile (no card header) for dense dashboards." />
+
+            <!-- Headline -->
+            <property name="metricLabel" type="String" label="Metric label (override)" description="Leave empty for the language default ('CA (12 mois)' / 'Revenue (12 mo.)')." />
+            <property name="currentValueDisplay" type="String" label="Headline value (text override)" description="Large value shown at the top of the tile. Wins over the numeric currentValue when set. Leave empty for the language default." />
+            <property name="currentValue" type="String" label="Headline value (numeric, optional)" description="Numeric value used to auto-format the headline via Intl.NumberFormat (compact currency). Ignored when 'Headline value (text override)' is set." />
+            <property name="currencyCode" type="String" default="EUR" label="Currency ISO code" description="Used by the numeric formatter. ISO 4217 code (EUR, USD, GBP...)." />
+
+            <!-- Chart -->
+            <property name="chartStyle" type="String" datasource="line,area,bar,mini-donut" default="line" label="Chart style" description="'line' (curve only), 'area' (curve + filled area below), 'bar' (vertical bars), 'mini-donut' (radial gauge from currentValue / targetValue)." />
+            <property name="seriesJson" type="String" label="Series points - JSON array" description="Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style." />
+            <property name="secondarySeriesJson" type="String" label="Secondary series - JSON array (optional)" description="Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style." />
+            <property name="secondarySeriesColor" type="String" default="#747474" label="Secondary series color (hex)" />
+
+            <!-- Target line -->
+            <property name="targetValue" type="String" label="Target value (optional)" description="When set, draws a horizontal dashed line at this Y on line/area/bar charts. Used as the denominator for the mini-donut variant." />
+            <property name="targetLineColor" type="String" default="#FE9339" label="Target line color (hex)" />
+            <property name="showTargetLabel" type="Boolean" default="false" label="Show target label chip" description="Off by default. Turn ON to display a 'Target XX €' chip next to the metric label." />
+
+            <!-- Y-axis scaling -->
+            <property name="scalingMode" type="String" datasource="auto,from-zero,fixed" default="auto" label="Y-axis scaling" description="'auto' (data min/max), 'from-zero' (forces Y origin to 0), 'fixed' (uses yMin / yMax below)." />
+            <property name="yMin" type="String" label="Y min (when scaling = fixed)" />
+            <property name="yMax" type="String" label="Y max (when scaling = fixed)" />
+
+            <!-- Visual -->
+            <property name="accentColor" type="String" default="#0176d3" label="Accent color (hex)" description="Color of the primary chart series. Defaults to SE FR brand blue." />
+            <property name="donutTrack" type="String" default="#E5E5E5" label="Mini-donut track color (hex)" description="Background ring color. Used only when chartStyle = mini-donut." />
+            <property name="height" type="Integer" default="70" label="Chart height (px)" description="Internal viewBox height. CSS scales the SVG to fit the column width." />
+            <property name="width" type="Integer" default="0" label="Chart width override (px)" description="0 = auto (default ~600px viewBox). Set a fixed value for very narrow tiles." />
+
+            <!-- Trend badge -->
+            <property name="trendDisplay" type="String" default="+14,2%" label="Trend badge text" description="Sign drives the color: a leading '+' (or no sign on a non-zero number) is green, '-' is red, '0%' is grey." />
+
+            <property name="enableTooltip" type="Boolean" default="false" label="Enable hover tooltip" description="Off by default. Turn ON to show value-on-point on hover (line / area / bar)." />
+
+            <!-- Deprecated: kept so existing FlexiPages don't break on upgrade. -->
+            <property name="trendPositive" type="Boolean" default="false" label="(deprecated) Trend is positive" description="No longer used - the color is auto-derived from the sign of trendDisplay." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

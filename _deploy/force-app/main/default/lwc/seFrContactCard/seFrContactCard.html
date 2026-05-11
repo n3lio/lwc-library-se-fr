@@ -1,0 +1,267 @@
+<template>
+    <!-- Two branches: headerless (on a Contact Record Page, when hideHeaderOnContact=true) vs.
+         carded with title + actions slot (default). -->
+    <template lwc:if={headerless}>
+        <!-- Headerless rendering: same body, no lightning-card wrapper. -->
+        <template lwc:if={hasContact}>
+            <div class={cardRootClass} style={cardBackgroundStyle}>
+                <template lwc:if={wavesVisible}>
+                    <div class="can-waves-wrapper">
+                        <div class="can-wave_1" style={waveStyleOne}></div>
+                        <div class="can-wave_2" style={waveStyleTwo}></div>
+                    </div>
+                </template>
+
+                <div class="card-inner">
+                    <!-- Header: avatar + name + email + phone -->
+                    <div class="can-card-header">
+                        <div class="can-avatar" title={imageTitle} onclick={openFilePicker}>
+                            <template lwc:if={hasImage}>
+                                <img src={displayedImageUrl} alt={fullName} />
+                            </template>
+                            <template lwc:else>
+                                <span class="can-initials">{initials}</span>
+                            </template>
+                            <template lwc:if={isFileMode}>
+                                <div class="can-avatar-overlay">
+                                    <template lwc:if={isUploading}>
+                                        <lightning-spinner alternative-text="Uploading" size="small" variant="inverse"></lightning-spinner>
+                                    </template>
+                                    <template lwc:else>
+                                        <lightning-icon icon-name="utility:upload" size="x-small"></lightning-icon>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="can-contact-name">
+                            <div class="can-name can-strong">{fullName}</div>
+                            <template lwc:if={hasEmail}>
+                                <a href={emailHref} class="can-meta-link">{email}</a>
+                            </template>
+                            <template lwc:if={hasPhone}>
+                                <a href={phoneHref} class="can-meta-link">{phone}</a>
+                            </template>
+                        </div>
+                    </div>
+
+                    <template lwc:if={isFileMode}>
+                        <input type="file" accept="image/*" class="can-hidden-file" onchange={handleNativeFileChange} lwc:ref="fileInput" />
+                    </template>
+
+                    <div class="can-field-list">
+                        <template lwc:if={showCustomerIdLine}>
+                            <div class="can-field-line">
+                                <lightning-icon icon-name="utility:identity" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <span class="can-field-name">{labels.customerIdLabel}</span>
+                                <span class="can-field-value">{customerIdValue}</span>
+                            </div>
+                        </template>
+                        <template lwc:if={hasAddress}>
+                            <div class="can-field-line">
+                                <lightning-icon icon-name="utility:checkin" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <div class="can-field-value">
+                                    <div>{addressLine1}</div>
+                                    <div>{addressLine2}</div>
+                                </div>
+                            </div>
+                        </template>
+                        <template lwc:if={hasTitle}>
+                            <div class="can-field-line">
+                                <lightning-icon icon-name="utility:user_role" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <span class="can-field-name">{labels.titleLabel}</span>
+                                <span class="can-field-value">{title}</span>
+                            </div>
+                        </template>
+                        <template lwc:if={hasDepartment}>
+                            <div class="can-field-line">
+                                <lightning-icon icon-name="utility:builder" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <span class="can-field-name">{labels.departmentLabel}</span>
+                                <span class="can-field-value">{department}</span>
+                            </div>
+                        </template>
+
+                        <template for:each={gauges} for:item="g">
+                            <div key={g.id} class="can-gauge" style={g.barStyle}>
+                                <div class="can-gauge-line">
+                                    <lightning-icon icon-name={g.icon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    <span class="can-field-name">{g.label}</span>
+                                    <span class="can-gauge-value" style={g.valueStyle}>{g.display}</span>
+                                </div>
+                                <lightning-progress-bar value={g.clamped} size="large" variant="circular"></lightning-progress-bar>
+                            </div>
+                        </template>
+                    </div>
+
+                    <template lwc:if={isPromptSummaryEnabled}>
+                        <template lwc:if={showPromptSeparator}>
+                            <hr class="can-prompt-separator" />
+                        </template>
+                        <template lwc:if={showPromptButton}>
+                            <div class="can-prompt-button slds-align_absolute-center slds-m-vertical_small">
+                                <lightning-button
+                                    label={resolvedPromptButtonLabel}
+                                    title={labels.summarizeTitle}
+                                    icon-name="utility:sparkles"
+                                    onclick={handleSummarizeClick}>
+                                </lightning-button>
+                            </div>
+                        </template>
+                        <template lwc:if={showPromptPanel}>
+                            <div class="can-prompt-panel">
+                                <template lwc:if={isPromptRunning}>
+                                    <div class="can-placeholder-line can-placeholder-line-1"></div>
+                                    <div class="can-placeholder-line can-placeholder-line-2"></div>
+                                    <div class="can-placeholder-line can-placeholder-line-3"></div>
+                                </template>
+                                <template lwc:else>
+                                    <div class="can-prompt-text" lwc:dom="manual" lwc:ref="promptHtmlHeaderless"></div>
+                                </template>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <template lwc:else>
+            <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+        </template>
+    </template>
+
+    <!-- Carded rendering (default) — we render our own card chrome instead of <lightning-card>
+         so the wave-filled .can-root IS the visible card edge-to-edge (no nested rectangle that
+         would clip the waves). -->
+    <template lwc:else>
+        <div class={cardRootClass} style={cardBackgroundStyle}>
+            <template lwc:if={wavesVisible}>
+                <div class="can-waves-wrapper">
+                    <div class="can-wave_1" style={waveStyleOne}></div>
+                    <div class="can-wave_2" style={waveStyleTwo}></div>
+                </div>
+            </template>
+
+            <!-- Header: title + icon + open-record button (mimicking lightning-card chrome) -->
+            <div class="can-card-chrome">
+                <div class="can-card-chrome-title">
+                    <lightning-icon icon-name="standard:contact" size="small" class="slds-m-right_x-small"></lightning-icon>
+                    <span>{resolvedCardTitle}</span>
+                </div>
+                <template lwc:if={showOpenButton}>
+                    <lightning-button-icon icon-name="utility:new_window" alternative-text={labels.openContact} variant="border-filled" size="small" onclick={openContactRecord}></lightning-button-icon>
+                </template>
+            </div>
+
+            <template lwc:if={hasContact}>
+                <div class="card-inner">
+                    <div class="can-card-header">
+                            <div class="can-avatar" title={imageTitle} onclick={openFilePicker}>
+                                <template lwc:if={hasImage}>
+                                    <img src={displayedImageUrl} alt={fullName} />
+                                </template>
+                                <template lwc:else>
+                                    <span class="can-initials">{initials}</span>
+                                </template>
+                                <template lwc:if={isFileMode}>
+                                    <div class="can-avatar-overlay">
+                                        <template lwc:if={isUploading}>
+                                            <lightning-spinner alternative-text="Uploading" size="small" variant="inverse"></lightning-spinner>
+                                        </template>
+                                        <template lwc:else>
+                                            <lightning-icon icon-name="utility:upload" size="x-small"></lightning-icon>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="can-contact-name">
+                                <div class="can-name can-strong">{fullName}</div>
+                                <template lwc:if={hasEmail}>
+                                    <a href={emailHref} class="can-meta-link">{email}</a>
+                                </template>
+                                <template lwc:if={hasPhone}>
+                                    <a href={phoneHref} class="can-meta-link">{phone}</a>
+                                </template>
+                            </div>
+                        </div>
+
+                        <template lwc:if={isFileMode}>
+                            <input type="file" accept="image/*" class="can-hidden-file" onchange={handleNativeFileChange} lwc:ref="fileInput" />
+                        </template>
+
+                        <div class="can-field-list">
+                            <template lwc:if={showCustomerIdLine}>
+                                <div class="can-field-line">
+                                    <lightning-icon icon-name="utility:identity" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    <span class="can-field-name">{labels.customerIdLabel}</span>
+                                    <span class="can-field-value">{customerIdValue}</span>
+                                </div>
+                            </template>
+                            <template lwc:if={hasAddress}>
+                                <div class="can-field-line">
+                                    <lightning-icon icon-name="utility:checkin" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    <div class="can-field-value">
+                                        <div>{addressLine1}</div>
+                                        <div>{addressLine2}</div>
+                                    </div>
+                                </div>
+                            </template>
+                            <template lwc:if={hasTitle}>
+                                <div class="can-field-line">
+                                    <lightning-icon icon-name="utility:user_role" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    <span class="can-field-name">{labels.titleLabel}</span>
+                                    <span class="can-field-value">{title}</span>
+                                </div>
+                            </template>
+                            <template lwc:if={hasDepartment}>
+                                <div class="can-field-line">
+                                    <lightning-icon icon-name="utility:builder" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                    <span class="can-field-name">{labels.departmentLabel}</span>
+                                    <span class="can-field-value">{department}</span>
+                                </div>
+                            </template>
+
+                            <template for:each={gauges} for:item="g">
+                                <div key={g.id} class="can-gauge" style={g.barStyle}>
+                                    <div class="can-gauge-line">
+                                        <lightning-icon icon-name={g.icon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                        <span class="can-field-name">{g.label}</span>
+                                        <span class="can-gauge-value" style={g.valueStyle}>{g.display}</span>
+                                    </div>
+                                    <lightning-progress-bar value={g.clamped} size="large" variant="circular"></lightning-progress-bar>
+                                </div>
+                            </template>
+                        </div>
+
+                        <template lwc:if={isPromptSummaryEnabled}>
+                            <template lwc:if={showPromptSeparator}>
+                                <hr class="can-prompt-separator" />
+                            </template>
+                            <template lwc:if={showPromptButton}>
+                                <div class="can-prompt-button slds-align_absolute-center slds-m-vertical_small">
+                                    <lightning-button
+                                        label={resolvedPromptButtonLabel}
+                                        title={labels.summarizeTitle}
+                                        icon-name="utility:sparkles"
+                                        onclick={handleSummarizeClick}>
+                                    </lightning-button>
+                                </div>
+                            </template>
+                            <template lwc:if={showPromptPanel}>
+                                <div class="can-prompt-panel">
+                                    <template lwc:if={isPromptRunning}>
+                                        <div class="can-placeholder-line can-placeholder-line-1"></div>
+                                        <div class="can-placeholder-line can-placeholder-line-2"></div>
+                                        <div class="can-placeholder-line can-placeholder-line-3"></div>
+                                    </template>
+                                    <template lwc:else>
+                                        <div class="can-prompt-text" lwc:dom="manual" lwc:ref="promptHtml"></div>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+        </div>
+    </template>
+</template>

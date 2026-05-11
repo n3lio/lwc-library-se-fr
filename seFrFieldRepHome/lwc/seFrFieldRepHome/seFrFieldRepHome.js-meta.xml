@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Field Sales - Rep Home</masterLabel>
+    <description>B2B - Home / App page for a field sales rep. Greeting, 4 KPI tiles, priority accounts (dynamic, filter-configurable), hot leads, product-penetration bars and campaign calendar. Bilingual EN / FR via the language property.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
+            <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Every label below without an explicit value falls back to the language dictionary. Setting any label explicitly overrides the dictionary for that one string." />
+
+            <property name="greetingTemplate" type="String" label="Greeting template (override)" description="Leave empty for the dictionary default. Use {name} placeholder. Wrap any word with **…** to render it in the highlight color." />
+            <property name="defaultUserName" type="String" label="Fallback user name (override)" description="Leave empty for dictionary default ('Rep' / 'Commercial')." />
+            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue." />
+
+            <property name="accountRecordType" type="String" default="SDO_Account_Simple" label="Accounts - RecordType.DeveloperName filter" description="Leave empty for all record types. SDO default: 'SDO_Account_Simple' (B2B)." />
+            <property name="accountOwnerScope" type="String" default="mine" label="Accounts - owner scope" description="'mine' | 'all'" />
+            <property name="accountOrderBy" type="String" default="Name" label="Accounts - sort" description="Name | LastActivityDate DESC NULLS LAST | AnnualRevenue DESC NULLS LAST | CreatedDate DESC" />
+            <property name="accountLimit" type="Integer" default="6" label="Accounts - max rows" />
+
+            <property name="leadRating" type="String" default="Hot" label="Leads - rating filter" description="'Hot' | 'Warm' | 'Cool' | 'Any'" />
+            <property name="leadOwnerScope" type="String" default="mine" label="Leads - owner scope" description="'mine' | 'all'" />
+            <property name="leadLimit" type="Integer" default="6" label="Leads - max rows" />
+
+            <property name="kpi1Label" type="String" label="KPI 1 - Label (override)" />
+            <property name="kpi1Value" type="String" default="4 / 10" label="KPI 1 - Value" />
+            <property name="kpi1Footer" type="String" label="KPI 1 - Footer (override)" />
+            <property name="kpi1FooterClass" type="String" default="slds-text-color_error" label="KPI 1 - Footer CSS class" />
+
+            <property name="kpi2Label" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpi2Value" type="String" default="10" label="KPI 2 - Value" />
+            <property name="kpi2Footer" type="String" label="KPI 2 - Footer (override)" />
+            <property name="kpi2FooterClass" type="String" default="slds-text-color_weak" label="KPI 2 - Footer CSS class" />
+
+            <property name="kpi3Label" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpi3Value" type="String" default="22.4k" label="KPI 3 - Value" />
+            <property name="kpi3Footer" type="String" label="KPI 3 - Footer (override)" />
+            <property name="kpi3FooterClass" type="String" default="slds-text-color_success" label="KPI 3 - Footer CSS class" />
+
+            <property name="kpi4Label" type="String" label="KPI 4 - Label (override)" />
+            <property name="kpi4Value" type="String" default="84" label="KPI 4 - Value" />
+            <property name="kpi4Footer" type="String" label="KPI 4 - Footer (override)" />
+            <property name="kpi4FooterClass" type="String" default="slds-text-color_success" label="KPI 4 - Footer CSS class" />
+
+            <property name="visitMotivesCsv" type="String" label="Visit motives (text|cssClass, CSV) (override)" description="Leave empty for language dictionary default." />
+            <property name="penetrationRowsCsv" type="String" label="Product penetration rows (label|percent) (override)" />
+            <property name="penetrationTip" type="String" label="Product penetration tip (override)" />
+            <property name="eventsCsv" type="String" label="Calendar events (title|description) (override)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

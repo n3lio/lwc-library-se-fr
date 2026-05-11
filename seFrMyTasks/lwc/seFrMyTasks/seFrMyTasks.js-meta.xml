@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - My Tasks</masterLabel>
+    <description>B2B / B2C - Compact "My Tasks" panel for a sidebar column. Interactive completion checkbox, filter dropdown, auto-grouping by Overdue / Today / Tomorrow / This week / Later, optional quick actions, and "New task" shortcut.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings (headings, buttons, groups, filters). Explicit values set on cardTitle / emptyStateMessage still override the dictionary." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default (‘My Tasks’ / ‘Mes tâches’)." />
+            <property name="cardIcon" type="String" default="standard:task" label="Card icon" />
+            <property name="defaultFilter" type="String" default="Upcoming" label="Default filter" description="One of the values in 'Filter options' - use the English key (Today / Mine / Overdue / Upcoming / Completed). The UI translates the key to the active language's label." />
+            <property name="filterOptionsCsv" type="String" default="Today,Mine,Overdue,Upcoming,Completed" label="Filter options (comma-separated keys)" description="Built-in keys get translated automatically. Any other value is shown verbatim." />
+            <property name="maxTasks" type="Integer" default="10" label="Max tasks to show" description="Server-side LIMIT (max 50)." />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag (date formatting)" />
+            <property name="showQuickActions" type="Boolean" default="false" label="Show quick actions on hover" description="Reveals Log-a-Call / Email buttons when hovering a row." />
+            <property name="emptyStateMessage" type="String" label="Empty-state message (override)" description="Leave empty to use the dictionary default." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

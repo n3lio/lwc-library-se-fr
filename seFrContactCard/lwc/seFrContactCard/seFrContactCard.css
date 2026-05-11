@@ -1,0 +1,284 @@
+:host {
+    display: block;
+    /* Default wave colors tint the active Lightning theme accent with transparency so the waves
+       feel part of the theme out-of-the-box. The SE can override via waveColorOne / waveColorTwo. */
+    --can-wave-default-one: color-mix(in srgb, var(--lwc-brandAccessible, #0176d3) 18%, transparent);
+    --can-wave-default-two: color-mix(in srgb, var(--lwc-brandAccessible, #0176d3) 10%, transparent);
+    --lwc-progressBarColorBackgroundFill: var(--lwc-brandAccessible, rgba(92, 52, 234, 1));
+    --slds-g-color-brand-base-50: var(--lwc-brandAccessible);
+    --slds-g-color-accent-container-1: var(--lwc-brandAccessible);
+}
+
+/* Card root with overflow hidden so the waves stay clipped inside the rounded corners. */
+.can-root {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+}
+.can-overflow-hidden { overflow: hidden; }
+
+/* Both modes share the same edge-to-edge wave coverage now: the .can-root IS the visible
+   card. In carded mode we add our own header chrome (title + open-record button) just under
+   the rounded top so the waves still fill behind everything. */
+.can-root_carded,
+.can-root_headerless {
+    /* Same chrome for both modes — keeps the rounded corners + light shadow. */
+    margin: 0;
+}
+
+/* Custom card chrome (replaces <lightning-card> header in carded mode) */
+.can-card-chrome {
+    position: relative;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 8px 14px;
+    gap: 8px;
+}
+.can-card-chrome-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #181818;
+    min-width: 0;
+}
+.can-card-chrome-title span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-inner {
+    position: relative;
+    z-index: 10;
+    padding: 1rem;
+}
+
+/* --- Animated waves — signature visual from Charly's original card ----------------------- */
+.can-waves-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+.can-waves-wrapper > div {
+    position: absolute;
+    border-bottom-left-radius: 75%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 60%;
+    border-top-right-radius: 55%;
+    height: 200%;
+    width: 200%;
+}
+.can-wave_1 {
+    top: 10%;
+    left: 60%;
+    animation: can-waves 50s linear infinite;
+}
+.can-wave_2 {
+    top: 15%;
+    left: 50%;
+    animation: can-waves 60s linear infinite;
+}
+@keyframes can-waves {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(1turn); }
+}
+
+/* --- Header: avatar + name block ---------------------------------------------------------- */
+.can-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.can-avatar {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0176d3 0%, #4a4aff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+.can-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.can-initials {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.can-avatar[title]:not([title=""]) { cursor: pointer; }
+.can-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+.can-avatar-overlay lightning-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+}
+.can-avatar[title]:not([title=""]):hover .can-avatar-overlay { opacity: 1; }
+
+.can-contact-name {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 2px;
+}
+.can-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #181818;
+    line-height: 1.25;
+}
+.can-strong {
+    color: #181818;
+    font-weight: 700;
+}
+.can-meta-link {
+    font-size: 0.85rem;
+    color: #0070d2;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.can-meta-link:hover { text-decoration: underline; }
+
+.can-hidden-file { display: none; }
+
+/* --- Field list --------------------------------------------------------------------------- */
+.can-field-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #181818;
+}
+.can-field-line {
+    display: flex;
+    /* Center the icon vertically against the value block (correct even when the value spans
+       multiple lines, e.g. a multi-line address). */
+    align-items: center;
+}
+.can-field-name {
+    font-weight: 600;
+    color: #555;
+    margin-right: 6px;
+}
+.can-field-value {
+    color: #181818;
+    overflow-wrap: anywhere;
+}
+
+/* --- Gauges ------------------------------------------------------------------------------- */
+.can-gauge {
+    margin-top: 10px;
+    /* No separator between gauges per Lionel's spec — only the prompt section gets a separator. */
+    /* `--gauge-color` is set inline per gauge (red → amber → green ramp). Feed it into the SLDS
+       progress-bar styling hook + the LWC brand tokens so the filled portion follows the color. */
+    --slds-c-progress-bar-color-background-fill: var(--gauge-color);
+    --lwc-brandAccessible: var(--gauge-color);
+    --slds-g-color-brand-base-50: var(--gauge-color);
+    --slds-g-color-accent-container-1: var(--gauge-color);
+}
+.can-gauge-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.can-gauge-value {
+    margin-left: auto;
+    font-weight: 700;
+}
+
+/* --- Dark mode ---------------------------------------------------------------------------- */
+.can-dark .can-name,
+.can-dark .can-strong,
+.can-dark .can-card-chrome-title { color: #ffffff; }
+.can-dark .can-field-name { color: rgba(255, 255, 255, 0.7); }
+.can-dark .can-field-value,
+.can-dark .can-gauge-value { color: #ffffff; }
+.can-dark { --sds-c-icon-color-foreground-default: #ffffff; }
+.can-dark .can-meta-link { color: #bfe0ff; }
+.can-dark .can-gauge { border-top-color: rgba(255, 255, 255, 0.15); }
+
+/* Separator between gauges section and the prompt-summary block. */
+.can-prompt-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 12px 0 4px 0;
+}
+.can-dark .can-prompt-separator { border-top-color: rgba(255, 255, 255, 0.18); }
+
+/* --- Optional AI prompt summary ----------------------------------------------------------- */
+.can-prompt-panel {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    border-left: 3px solid #7f8ceb;
+}
+.can-dark .can-prompt-panel {
+    background: rgba(0, 0, 0, 0.25);
+    border-left-color: #bfc6ff;
+}
+.can-prompt-text {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0;
+}
+.can-prompt-text p { margin: 0 0 6px 0; }
+.can-prompt-text p:last-child { margin-bottom: 0; }
+.can-prompt-text ul,
+.can-prompt-text ol { margin: 4px 0 6px 1.2em; padding: 0; }
+.can-prompt-text li { margin: 2px 0; }
+.can-prompt-text strong { font-weight: 700; }
+.can-placeholder-line {
+    height: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    background-size: 400% 400%;
+    animation: can-gradient 4s ease infinite;
+}
+.can-placeholder-line-1 {
+    width: 100%;
+    background-image: linear-gradient(-45deg, #c0c6ff, #7f8ceb, #4a4aff, #c0c6ff);
+}
+.can-placeholder-line-2 {
+    width: 90%;
+    background-image: linear-gradient(-45deg, #7f8ceb, #4a4aff, #c0c6ff, #7f8ceb);
+}
+.can-placeholder-line-3 {
+    width: 45%;
+    background-image: linear-gradient(-45deg, #4a4aff, #c0c6ff, #7f8ceb, #4a4aff);
+}
+@keyframes can-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

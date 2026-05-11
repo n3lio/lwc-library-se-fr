@@ -1,0 +1,203 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <!-- ============ Quick action toolbar ============ -->
+            <div class="toolbar slds-m-bottom_small">
+                <div class="toolbar-actions">
+                    <template for:each={actionButtons} for:item="btn">
+                        <lightning-button
+                            key={btn.key}
+                            label={btn.label}
+                            icon-name={btn.icon}
+                            variant="neutral"
+                            data-key={btn.key}
+                            onclick={launchAction}
+                            class="toolbar-action">
+                        </lightning-button>
+                    </template>
+                </div>
+                <div class="toolbar-icons">
+                    <lightning-button-icon icon-name="utility:filterList" alternative-text={labels.filtersButton} variant="border-filled" size="small" onclick={toggleFilters} class="slds-m-right_xx-small"></lightning-button-icon>
+                    <lightning-button-icon icon-name="utility:refresh" alternative-text={labels.refresh} variant="border-filled" size="small" onclick={handleRefresh} class="slds-m-right_xx-small"></lightning-button-icon>
+                    <lightning-button-icon icon-name="utility:expand_all" alternative-text={labels.expandAll} variant="border-filled" size="small" onclick={expandAll} class="slds-m-right_xx-small"></lightning-button-icon>
+                    <lightning-button-icon icon-name="utility:collapse_all" alternative-text={labels.collapseAll} variant="border-filled" size="small" onclick={collapseAll}></lightning-button-icon>
+                </div>
+            </div>
+
+            <div class="filter-summary slds-text-body_small slds-text-color_weak slds-m-bottom_small">
+                {labels.filtersSummary}: {filterSummary} — {totalCount} {labels.itemsSuffix}
+            </div>
+
+            <!-- ============ Filters panel ============ -->
+            <template lwc:if={filtersOpen}>
+                <div class="filter-panel slds-box slds-box_x-small slds-m-bottom_medium">
+                    <h3 class="slds-text-title_caps slds-m-bottom_x-small">{labels.dateRange}</h3>
+                    <div class="slds-m-bottom_small">
+                        <lightning-button-group>
+                            <template for:each={dateRangeOptions} for:item="opt">
+                                <lightning-button
+                                    key={opt.key}
+                                    label={opt.label}
+                                    variant={opt.variant}
+                                    data-key={opt.key}
+                                    onclick={handleDateRangeChange}>
+                                </lightning-button>
+                            </template>
+                        </lightning-button-group>
+                    </div>
+
+                    <div class="slds-grid slds-grid_align-spread slds-m-top_small slds-m-bottom_x-small">
+                        <h3 class="slds-text-title_caps">{labels.activityTypes}</h3>
+                        <div>
+                            <lightning-button label={labels.selectAll} variant="base" onclick={handleSelectAllTypes} class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button label={labels.clear} variant="base" onclick={handleClearTypes}></lightning-button>
+                        </div>
+                    </div>
+                    <div class="type-grid">
+                        <template for:each={typeOptions} for:item="t">
+                            <lightning-input
+                                key={t.key}
+                                type="checkbox"
+                                label={t.label}
+                                checked={t.checked}
+                                data-key={t.key}
+                                onchange={handleTypeToggle}>
+                            </lightning-input>
+                        </template>
+                    </div>
+
+                    <div class="slds-m-top_small">
+                        <lightning-button
+                            label={labels.sort}
+                            icon-name="utility:arrowdown"
+                            onclick={toggleSort}>
+                        </lightning-button>
+                        <span class="slds-m-left_small slds-text-body_small slds-text-color_weak">
+                            <template lwc:if={sortDesc}>{labels.newestFirst}</template>
+                            <template lwc:else>{labels.oldestFirst}</template>
+                        </span>
+                    </div>
+                </div>
+            </template>
+
+            <!-- ============ Empty state ============ -->
+            <template lwc:if={isEmpty}>
+                <div class="slds-illustration slds-illustration_small slds-p-around_medium slds-text-align_center slds-text-color_weak">
+                    <lightning-icon icon-name="utility:info" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                    <p>{labels.emptyState}</p>
+                </div>
+            </template>
+
+            <!-- ============ Upcoming group ============ -->
+            <template lwc:if={hasUpcoming}>
+                <div class="group-header slds-p-around_xx-small slds-theme_shade slds-m-bottom_x-small">
+                    <strong>{labels.upcomingGroup}</strong>
+                </div>
+                <template for:each={upcomingEntries} for:item="e">
+                    <div key={e.id} class="feed-item slds-p-around_x-small">
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                            <lightning-button-icon
+                                icon-name={e.chevronIcon}
+                                alternative-text={labels.toggle}
+                                variant="bare"
+                                size="small"
+                                data-id={e.id}
+                                onclick={toggleItem}
+                                class="chevron-btn slds-m-right_xx-small">
+                            </lightning-button-icon>
+                            <div class="slds-grid slds-grid_vertical-align-start slds-grow">
+                                <lightning-icon icon-name={e.icon} size="small" style={e.iconStyle} class="slds-m-right_small"></lightning-icon>
+                                <div class={e.bodyClass}>
+                                    <div class="slds-text-heading_small item-title-line">
+                                        <a data-url={e.url} onclick={handleNavigate}><strong>{e.title}</strong></a>
+                                    </div>
+                                    <template lwc:if={e.subtitle}>
+                                        <div class="item-subtitle-line">{e.subtitle}</div>
+                                    </template>
+                                    <template lwc:if={e.isExpanded}>
+                                        <template lwc:if={e.displayDescription}>
+                                            <div class="slds-text-body_small slds-m-top_xx-small description-block">{e.displayDescription}</div>
+                                        </template>
+                                        <div class="item-meta-line slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                            <template lwc:if={e.ownerName}>{labels.owner}: {e.ownerName} • </template>
+                                            <template lwc:if={e.relatedName}>{labels.related}: {e.relatedName}</template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="slds-text-body_small slds-text-color_weak slds-m-left_small">{e.formattedDate}</div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <!-- ============ Past groups (by month), capped at initialLimit ============ -->
+            <template for:each={groupedPast} for:item="g">
+                <div key={g.id}>
+                    <div class="group-header slds-p-around_xx-small slds-theme_shade slds-m-top_small slds-m-bottom_x-small">
+                        <strong>{g.label}</strong>
+                    </div>
+                    <template for:each={g.items} for:item="e">
+                        <div key={e.id} class="feed-item slds-p-around_x-small">
+                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+                                <lightning-button-icon
+                                    icon-name={e.chevronIcon}
+                                    alternative-text={labels.toggle}
+                                    variant="bare"
+                                    size="small"
+                                    data-id={e.id}
+                                    onclick={toggleItem}
+                                    class="chevron-btn slds-m-right_xx-small">
+                                </lightning-button-icon>
+                                <div class="slds-grid slds-grid_vertical-align-start slds-grow">
+                                    <lightning-icon icon-name={e.icon} size="small" style={e.iconStyle} class="slds-m-right_small"></lightning-icon>
+                                    <div class={e.bodyClass}>
+                                        <div class="slds-text-heading_small item-title-line">
+                                            <a data-url={e.url} onclick={handleNavigate}><strong>{e.title}</strong></a>
+                                        </div>
+                                        <template lwc:if={e.subtitle}>
+                                            <div class="item-subtitle-line">{e.subtitle}</div>
+                                        </template>
+                                        <template lwc:if={e.isExpanded}>
+                                            <template lwc:if={e.displayDescription}>
+                                                <div class="slds-text-body_small slds-m-top_xx-small description-block">{e.displayDescription}</div>
+                                            </template>
+                                            <div class="item-meta-line slds-text-body_small slds-text-color_weak slds-m-top_xx-small">
+                                                <template lwc:if={e.ownerName}>{labels.owner}: {e.ownerName} • </template>
+                                                <template lwc:if={e.relatedName}>{labels.related}: {e.relatedName}</template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-text-body_small slds-text-color_weak slds-m-left_small">{e.formattedDate}</div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template lwc:if={hasMoreThanCap}>
+                <div class="slds-text-align_center slds-m-top_medium">
+                    <lightning-button
+                        label={showAllLabel}
+                        variant="neutral"
+                        onclick={showAllEntries}
+                        icon-name="utility:down">
+                    </lightning-button>
+                </div>
+            </template>
+            <template lwc:if={canShowLess}>
+                <div class="slds-text-align_center slds-m-top_medium">
+                    <lightning-button
+                        label={showLessLabel}
+                        variant="neutral"
+                        onclick={showLessEntries}
+                        icon-name="utility:up">
+                    </lightning-button>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

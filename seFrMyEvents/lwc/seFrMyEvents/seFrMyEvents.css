@@ -1,0 +1,171 @@
+.allday-band {
+    background-color: #fafafa;
+    border-radius: 4px;
+    padding: 6px 8px;
+}
+.allday-label {
+    font-size: 0.7rem;
+    color: #747474;
+    margin-bottom: 4px;
+}
+.allday-pill {
+    display: inline-block;
+    max-width: 100%;
+    padding: 4px 8px;
+    margin: 2px 4px 2px 0;
+    font-size: 0.8rem;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 44px;
+    border-top: 1px solid #f1f1f1;
+    margin-top: 4px;
+}
+
+.hour-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px dashed #e5e5e5;
+}
+.hour-label {
+    position: absolute;
+    left: 0;
+    top: -8px;
+    width: 40px;
+    font-size: 0.7rem;
+    color: #999;
+    background: #fff;
+    padding-right: 4px;
+    text-align: right;
+}
+
+.now-line {
+    position: absolute;
+    left: 44px;
+    right: 4px;
+    border-top: 2px solid #d00000;
+    z-index: 3;
+    pointer-events: none;
+}
+.now-label {
+    position: absolute;
+    left: -44px;
+    top: -9px;
+    font-size: 0.7rem;
+    color: #d00000;
+    background: #fff;
+    padding: 0 4px;
+    font-weight: bold;
+}
+
+/* Layer containing the absolutely-positioned events. Uses the full area to the right of the
+   hour labels so event top/height/left/width percentages map to this box. */
+.events-layer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 48px;
+    right: 4px;
+}
+
+.event-block {
+    position: absolute;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
+}
+.event-block:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+    z-index: 2;
+}
+.event-title {
+    font-size: 0.85rem;
+    color: #1a1a1a;
+}
+.event-time {
+    font-size: 0.75rem;
+    color: #555;
+}
+.event-meta {
+    font-size: 0.72rem;
+    color: #747474;
+}
+.event-footer {
+    margin-top: 4px;
+}
+.next-badge {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    z-index: 2;
+    padding: 1px 8px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #fff;
+    background: #d00000;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+}
+
+.upcoming-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.upcoming-item {
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    background: #fafafa;
+    cursor: pointer;
+}
+.upcoming-item:hover {
+    background: #f3f3f3;
+}
+
+/* Type toggles — clickable chips that mute/unmute an Event.Type value in the timeline */
+.type-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.type-chip {
+    --chip-color: #0176d3;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    font-size: 0.72rem;
+    border-radius: 10px;
+    border: 1px solid var(--chip-color);
+    background: #fff;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: opacity 0.15s ease-in-out;
+}
+.type-chip-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--chip-color);
+}
+.type-chip_muted {
+    opacity: 0.45;
+    text-decoration: line-through;
+    background: #f3f3f3;
+}
+.type-chip_active:hover {
+    background: #f9fbfe;
+}

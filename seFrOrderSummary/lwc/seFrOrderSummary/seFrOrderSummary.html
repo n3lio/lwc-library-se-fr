@@ -1,0 +1,145 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+
+        <div slot="actions">
+            <template if:true={orderData}>
+                <lightning-button-icon icon-name="utility:delete" variant="border-filled" onclick={handleDeleteOrder} class="slds-m-right_xx-small"></lightning-button-icon>
+                <lightning-button label={labels.replace} icon-name="utility:sync" variant="neutral" onclick={toggleEditOrderLink} class="slds-m-right_xx-small"></lightning-button>
+                <lightning-button label={labels.delivery} icon-name="utility:location" variant="neutral" onclick={toggleEditDelivery} class="slds-m-right_xx-small"></lightning-button>
+                <lightning-button label={labels.submitOrder} variant="brand" icon-name="utility:success" onclick={handleValidateOrder}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+
+            <template if:true={isEditingOrderLink}>
+                <div class="slds-box slds-theme_shade slds-m-bottom_medium slds-border_left" style="border-left-color: #0070d2; border-left-width: 4px;">
+                    <p class="slds-m-bottom_small slds-text-heading_small"><strong>{labels.searchAnotherOrder}</strong></p>
+                    <lightning-record-picker label={labels.orderLabel} placeholder={labels.orderPlaceholder} object-api-name="Order" onchange={handleOrderPicked}></lightning-record-picker>
+                    <div class="slds-m-top_small slds-text-align_right">
+                        <template if:true={hasOverride}>
+                            <lightning-button label={labels.backToDefault} variant="base" onclick={handleResetOverride} class="slds-m-right_small"></lightning-button>
+                        </template>
+                        <lightning-button label={labels.close} variant="neutral" onclick={toggleEditOrderLink}></lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <template if:false={orderData}>
+                <template if:false={isEditingOrderLink}>
+                    <div class="slds-illustration slds-illustration_small slds-p-around_medium">
+                        <div class="slds-text-color_weak slds-text-align_center slds-m-bottom_medium">
+                            <p>{resolvedEmptyState}</p>
+                        </div>
+                        <div class="slds-text-align_center">
+                            <lightning-button label={labels.linkAnOrder} variant="brand" icon-name="utility:link" onclick={toggleEditOrderLink}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={orderData}>
+                <template if:true={hasOverride}>
+                    <div class="slds-notify slds-notify_alert slds-alert_info slds-m-bottom_small" role="alert">
+                        <lightning-icon icon-name="utility:info" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                        <span>{labels.overrideNotice} <a onclick={handleResetOverride} class="slds-m-left_x-small">{labels.resetToDefault}</a></span>
+                    </div>
+                </template>
+                <template if:false={isEditingDelivery}>
+                    <lightning-layout multiple-rows class="slds-m-bottom_small slds-p-bottom_small">
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-text-color_weak slds-text-body_small">{labels.orderNumber}</div>
+                            <div class="slds-text-heading_small">
+                                <a onclick={navigateToOrder}><strong>{orderData.orderNumber}</strong> <lightning-icon icon-name="utility:new_window" size="xx-small" class="slds-m-left_xxx-small"></lightning-icon></a>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-text-color_weak slds-text-body_small">{labels.status}</div>
+                            <div class="slds-m-top_xxx-small"><strong><lightning-badge label={orderData.status} class="slds-theme_info"></lightning-badge></strong></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-text-color_weak slds-text-body_small">{labels.orderName}</div>
+                            <div class="slds-text-body_regular"><strong>{orderData.orderName}</strong></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-text-color_weak slds-text-body_small">{labels.totalAmount}</div>
+                            <div style="color: #038d36; font-size: 1.15rem; font-weight: 700;"><lightning-formatted-number value={orderData.totalAmount} format-style="currency" currency-code={currencyCode}></lightning-formatted-number></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-text-color_weak slds-text-body_small">{labels.estimatedDelivery}</div>
+                            <div class="slds-text-body_regular"><strong><lightning-formatted-date-time value={orderData.deliveryDate} year="numeric" month="2-digit" day="2-digit"></lightning-formatted-date-time></strong></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <lightning-input type="checkbox" label={labels.freeShipping} checked={isFreeShipping} onchange={handleFreeShippingToggle}></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <template if:true={isEditingDelivery}>
+                    <div class="slds-box slds-m-bottom_medium slds-theme_default" style="border-left: 4px solid #f4a261; background-color: #fffaf0;">
+                        <h3 class="slds-text-heading_small slds-m-bottom_small"><strong>{labels.deliveryDetailsTitle}</strong></h3>
+                        <lightning-layout multiple-rows>
+                            <lightning-layout-item size="6" padding="horizontal-small">
+                                <lightning-input type="date" label={labels.estimatedDelivery} value={editFormDate} onchange={handleFormDateChange}></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" padding="horizontal-small" class="slds-p-top_large">
+                                <lightning-input type="checkbox" label={labels.freeShipping} checked={isFreeShipping} onchange={handleFreeShippingToggle}></lightning-input>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" padding="around-small">
+                                <div class="slds-text-color_weak slds-text-body_small">{labels.deliveryAddress}</div>
+                                <div class="slds-text-body_regular"><strong>{orderData.accountAddress}</strong></div>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" padding="around-small" class="slds-p-top_none">
+                                <lightning-textarea label={labels.noteForCarrier} value={editFormNote} onchange={handleFormNoteChange} max-length="4000"></lightning-textarea>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-text-align_right slds-p-top_small">
+                            <lightning-button label={labels.cancel} variant="base" onclick={toggleEditDelivery} class="slds-m-right_small"></lightning-button>
+                            <lightning-button label={labels.save} variant="brand" onclick={handleSaveDelivery}></lightning-button>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                    <div class="slds-text-heading_small slds-text-color_weak"><strong>{orderedProductsLabel}</strong></div>
+                </div>
+
+                <ul class="slds-has-dividers_bottom-space">
+                    <template for:each={processedProducts} for:item="prod">
+                        <li class="slds-item slds-m-bottom_x-small" key={prod.Id} style="border: none; padding-left: 0; padding-right: 0;">
+                            <lightning-layout vertical-align="center">
+                                <lightning-layout-item class="slds-p-right_small">
+                                    <template if:true={prod.hasImage}>
+                                        <img src={prod.imageUrl} style="width: 56px; height: 56px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e5e5; display: block;" />
+                                    </template>
+                                    <template if:false={prod.hasImage}>
+                                        <div class="slds-align_absolute-center" style="width: 56px; height: 56px; background-color: #f3f3f3; border-radius: 8px; border: 1px solid #e5e5e5;"><lightning-icon icon-name="utility:image" size="small"></lightning-icon></div>
+                                    </template>
+                                </lightning-layout-item>
+                                <lightning-layout-item flexibility="grow">
+                                    <div class="slds-text-heading_small slds-truncate"><strong>{prod.name}</strong></div>
+                                    <div class="slds-text-color_weak slds-text-body_small">{labels.ref}: {prod.code} &bull; {labels.qty}: {prod.Quantity}</div>
+                                </lightning-layout-item>
+                                <lightning-layout-item class="slds-text-align_right">
+                                    <div class="slds-text-heading_small"><lightning-formatted-number value={prod.TotalPrice} format-style="currency" currency-code={currencyCode}></lightning-formatted-number></div>
+                                    <div class="slds-text-color_weak slds-text-body_small"><lightning-formatted-number value={prod.UnitPrice} format-style="currency" currency-code={currencyCode}></lightning-formatted-number> {labels.perUnit}</div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+
+        <template if:true={showBottomSeparator}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-grid slds-grid_vertical-align-center">
+                <div class="slds-col slds-border_bottom" style="border-bottom-color: #e5e5e5;"></div>
+                <div class="slds-col slds-grow-none slds-p-horizontal_small slds-text-color_weak slds-text-body_small" style="font-weight: bold;">{resolvedSeparatorLabel}</div>
+                <div class="slds-col slds-border_bottom" style="border-bottom-color: #e5e5e5;"></div>
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

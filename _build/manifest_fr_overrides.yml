@@ -1,0 +1,21 @@
+# Manual French overrides for translated component fields.
+# Applied AFTER `_build/translate_manifest.py` runs the API translation.
+#
+# Format:
+#   <apiName>:
+#     tagline: "Texte FR à utiliser à la place de la traduction auto."
+#     seBenefit: "..."
+#     chips:
+#       - "Item 1"
+#       - "Item 2"
+#     keyProps:
+#       - "Item 1 (avec `code`)"
+#
+# Use this file to:
+#   - fix a translation that doesn't read well in FR
+#   - localize a phrase the API got wrong
+#   - drop in domain-specific French terminology
+#
+# Anything not listed here keeps the API translation.
+
+# (no manual overrides yet — fill in after first translation pass)

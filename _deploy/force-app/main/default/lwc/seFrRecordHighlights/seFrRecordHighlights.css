@@ -1,0 +1,98 @@
+.custom-highlights-panel {
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+    padding: 0;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-image {
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid #ffffff;
+    box-shadow: 0 0 0 1px #dddbda, 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a .account-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 1px #c9c7c5, 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Image slot (clickable to replace) ---
+   Stacks the image, an upload-icon overlay (visible on hover) and a transparent lightning-file-
+   upload on top that receives the click. */
+.image-slot {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+.image-slot:hover .account-image {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 1px #c9c7c5, 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+.image-overlay lightning-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+}
+.image-slot:hover .image-overlay { opacity: 1; }
+
+/* Native file input, hidden — triggered programmatically on image click. */
+.hidden-file-input {
+    display: none;
+}
+
+.fallback-image {
+    background-color: #ecebea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-container {
+    flex-grow: 1;
+}
+
+.fields-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-top: 6px;
+}
+
+.field-item {
+    white-space: nowrap;
+}
+
+.custom-field {
+    font-weight: 600;
+    color: #181818;
+
+    --sds-c-form-element-label-color: #444444;
+    --sds-c-form-element-label-font-size: 0.75rem;
+    --sds-c-form-element-label-font-weight: 400;
+}
+
+.actions-container {
+    padding-top: 0;
+}

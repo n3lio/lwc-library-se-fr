@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Record Highlights</masterLabel>
+    <description>B2B / B2C - Custom highlights panel with round image and configurable fields/actions. Works on Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote - can display the current record or its parent Account (recordSource property).</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+                <object>Contact</object>
+                <object>Opportunity</object>
+                <object>Case</object>
+                <object>Lead</object>
+                <object>Order</object>
+                <object>Contract</object>
+                <object>Quote</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls button labels (Edit / Modifier, View Account Hierarchy / Voir la hiérarchie) and empty-state messages." />
+            <property name="recordSource" type="String" datasource="current,parent" default="current" label="Record source" description="current = show the record on the current page. parent = show the linked Account (Contact/Opportunity/Case/Order/Contract/Quote/Lead) or the Parent Account (when on an Account page)." />
+            <property name="accountFieldsList" type="String" default="AccountNumber, Industry, Type, Phone" label="Account - fields to display (comma-separated)" description="Used when the displayed record is an Account." />
+            <property name="contactFieldsList" type="String" default="Title, Email, Phone, Department" label="Contact - fields to display (comma-separated)" description="Used when the displayed record is a Contact." />
+            <property name="customImageUrl" type="String" label="Image URL (overrides the record image)" />
+            <property name="imageFieldApiName" type="String" label="Image URL field API name (optional)" description="Optional. API name of a text/URL field on the current object holding an image URL (e.g. a custom ImageURL__c). If present, takes priority over the File-based image. Leave empty to rely on the built-in File storage - the component uploads the replacement as a standard File on the record, no custom schema required." />
+            <property name="imageSize" type="Integer" default="90" label="Image size (px)" description="Diameter of the round image in pixels. Also sets the fallback icon circle size." />
+            <property name="disableImageReplace" type="Boolean" default="false" label="Disable click-to-replace image" description="Off by default - clicking the image opens a file picker and uploads the new image as a standard File on the record. Turn ON to restore the legacy 'open image full size' behavior." />
+            <property name="maxQuickActions" type="Integer" default="2" label="Max quick actions" description="Number of buttons displayed in the header. Picked from the active page layout's actions list (same source as the standard Highlights Panel)." />
+            <property name="quickActionsCsv" type="String" label="Quick actions override (API names, comma-separated)" description="Optional. Forces a specific list instead of the page-layout default. Example: 'Edit,SendEmail'. Leave empty to use the layout." />
+
+            <!-- Deprecated: kept so existing FlexiPages don't break on upgrade. No effect. -->
+            <property name="disableRealButtons" type="Boolean" default="false" label="(deprecated)" />
+            <property name="fakeButtonLabels" type="String" label="(deprecated)" />
+
+            <!-- Legacy property kept for backwards compatibility with v1 pages. Not used by the new logic. -->
+            <property name="fieldsList" type="String" label="(deprecated - use accountFieldsList / contactFieldsList)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,36 @@
+<template>
+    <template lwc:if={hasSnapshot}>
+        <div class="health-card" style={cardAccentStyle}>
+            <div class="health-header">
+                <div class="health-gauge">
+                    <svg width="110" height="110" viewBox="0 0 110 110">
+                        <circle cx="55" cy="55" r="42" stroke="#e5e5e5" stroke-width="8" fill="none"></circle>
+                        <circle cx="55" cy="55" r="42" stroke={gaugeStrokeColor} stroke-width="8" fill="none"
+                            stroke-dasharray={gaugeCircumference} stroke-dashoffset={gaugeOffset}
+                            stroke-linecap="round"
+                            transform="rotate(-90 55 55)"></circle>
+                    </svg>
+                    <div class="gauge-label">
+                        <div class="gauge-score">{score}</div>
+                        <div class="gauge-suffix">{labels.scoreSuffix}</div>
+                    </div>
+                </div>
+                <div class="health-level">
+                    <div class="level-title">{resolvedCardTitle}</div>
+                    <div class="level-value">{levelInfo.label}</div>
+                </div>
+            </div>
+
+            <div class="signals-block">
+                <div class="signals-title">{labels.signalsTitle}</div>
+                <div class="signals-list">
+                    <template for:each={signals} for:item="s">
+                        <span key={s.key} class={s.chipClass}>
+                            <span class="signal-sign">{s.sign}</span>{s.label}
+                        </span>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

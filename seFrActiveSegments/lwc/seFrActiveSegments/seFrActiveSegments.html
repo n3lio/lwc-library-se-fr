@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title={displayTitle} icon-name={cardIcon}>
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <div class="segment-tags">
+                <template for:each={segments} for:item="segment">
+                    <span key={segment.id} class="segment-tag" style={segment.style}>{segment.name}</span>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

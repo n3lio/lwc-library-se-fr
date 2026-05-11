@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Account Health</masterLabel>
+    <description>B2B - Quantitative account-health gauge (0-100) with a SVG donut, verdict level (Excellent / Healthy / Watch / At risk / Critical) and the list of weighted signals used in the computation.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:goals" label="Card icon" />
+            <property name="revenueThreshold" type="Integer" default="500000" label="Revenue threshold" description="AnnualRevenue below this counts as a negative signal." />
+            <property name="inactivityThresholdDays" type="Integer" default="45" label="Inactivity threshold (days)" />
+            <property name="staleVisitThresholdDays" type="Integer" default="60" label="Stale-visit threshold (days)" description="Uses Account.SDO_MAPS_Days_Since_Last_Visit__c - skipped if the field is absent." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

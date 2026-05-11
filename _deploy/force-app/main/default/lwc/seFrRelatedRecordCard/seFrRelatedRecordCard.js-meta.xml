@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Related Record Card</masterLabel>
+    <description>B2B / B2C - Vertical card that displays a related record (the Account of a Contact/Case/Opp, or the primary Contact of an Account). Picks the counterpart automatically from the record's object type. Bilingual EN / FR. Industry-agnostic defaults.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+                <object>Contact</object>
+                <object>Case</object>
+                <object>Opportunity</object>
+                <object>Order</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' or 'fr' (default). Controls card title, button labels and empty state." />
+            <property name="target" type="String" datasource="auto,account,contact" default="auto" label="What to display" description="'auto' (default) picks the natural counterpart: on Account → primary Contact; on Contact/Case/Opportunity/Order → the linked Account. 'account' and 'contact' force a specific target." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the target default ('Account'/'Compte' or 'Primary Contact'/'Contact principal')." />
+            <property name="cardIcon" type="String" label="Card icon (override)" description="SLDS icon name. Leave empty for the target default (standard:account or standard:contact)." />
+            <property name="fieldsCsv" type="String" label="Fields to display (API names, comma-separated)" description="Leave empty for sensible defaults. Contact default: 'Title,Department,Email,Phone,MobilePhone'. Account default: 'Industry,Type,Phone,Website,AnnualRevenue,NumberOfEmployees'. Fields unknown to the target are silently skipped." />
+            <property name="contactImageFieldApiName" type="String" default="SDO_Cust360_Contact_Picture_URL__c" label="Contact image field API name" description="URL field on Contact used as the image source when the displayed target is Contact. Schema-safe: skipped if the field is absent. Falls back to a File attached to the contact when empty." />
+            <property name="accountImageFieldApiName" type="String" default="" label="Account image field API name" description="Optional URL field on Account. Empty by default - the card uses the File attached to the account as the image source." />
+            <property name="disableImageReplace" type="Boolean" default="false" label="Disable click-to-replace image" description="Off by default - clicking the avatar opens a file picker and uploads the new image as a File on the target (same convention as Record Highlights). Turn ON to lock the avatar." />
+            <!-- Deprecated: replaced by the per-target image fields above. Kept so existing
+                 FlexiPages don't break on upgrade. -->
+            <property name="imageFieldApiName" type="String" label="(deprecated)" />
+            <property name="imageMode" type="String" label="(deprecated)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

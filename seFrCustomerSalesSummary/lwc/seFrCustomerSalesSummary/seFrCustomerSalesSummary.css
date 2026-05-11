@@ -1,0 +1,38 @@
+.kpi-label {
+    font-size: 0.8rem;
+    color: #444444;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #005fb2;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.bar-label {
+    font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.bar-container {
+    width: 100%;
+    background-color: #e5e5e5;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
+}

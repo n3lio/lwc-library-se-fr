@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Order Entry</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+                <object>Case</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls every visible string (toolbar, grid headers, status filters, modal)." />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:orders" label="Card icon" />
+            <property name="recordLimit" type="Integer" default="25" label="Max products displayed" />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
+            <property name="currencySymbol" type="String" default="€" label="Currency symbol (displayed in grid)" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+            <property name="fullScreenTitleTemplate" type="String" label="Full-screen title (override, {account} placeholder)" />
+            <property name="noAccountMessage" type="String" label="Empty-state message (override)" />
+            <!-- Kept for backwards compatibility with existing FlexiPages; the ERP checkbox was removed. -->
+            <property name="erpCheckboxLabel" type="String" label="(deprecated) ERP checkbox label" description="No longer rendered - kept to avoid breaking existing page layouts." />
+            <property name="salesChannelId" type="String" label="Default SalesChannel Id (optional)" description="18-char Id of a SalesChannel record. Set on Order.SalesChannelId when an order is created. Leave empty to skip." />
+            <property name="productImageFieldApiName" type="String" default="Image_URL__c" label="Product image field API name" description="Field on Product2 holding an image URL. Schema-safe: skipped if absent." />
+            <property name="productImageFallbackUrl" type="String" label="Product image fallback URL" description="Used when no image is found on Product2 or ProductMedia." />
+            <property name="filter1" type="String" label="Dynamic filter 1 (SOQL fragment)" />
+            <property name="filter2" type="String" label="Dynamic filter 2" />
+            <property name="filter3" type="String" label="Dynamic filter 3" />
+            <property name="filter4" type="String" label="Dynamic filter 4" />
+            <property name="filter5" type="String" label="Dynamic filter 5" />
+            <property name="aiReasonsCsv" type="String" label="AI recommendation tooltips (override)" description="Optional. CSV of '&lt;rowStatus&gt;|&lt;message&gt;' entries. rowStatus: recent | old | promo | clearance | oos. Each row picks deterministically from the matching messages. Leave empty for the bilingual built-in pool that follows the language property." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

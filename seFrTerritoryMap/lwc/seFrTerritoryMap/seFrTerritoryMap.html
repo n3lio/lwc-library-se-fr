@@ -1,0 +1,194 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name="standard:account">
+        <div slot="actions" class="header-actions">
+            <lightning-button-icon icon-name="utility:filterList"
+                                   variant={filterButtonVariant}
+                                   size="small"
+                                   alternative-text={labels.toggleFilters}
+                                   title={labels.toggleFilters}
+                                   onclick={toggleFilters}></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:download"
+                                   variant="border-filled"
+                                   size="small"
+                                   alternative-text={labels.exportCsv}
+                                   title={labels.exportCsv}
+                                   onclick={handleExport}
+                                   disabled={exportDisabled}></lightning-button-icon>
+            <lightning-button-icon icon-name="utility:refresh"
+                                   variant="border-filled"
+                                   size="small"
+                                   alternative-text={labels.refresh}
+                                   title={labels.refresh}
+                                   onclick={handleRefresh}></lightning-button-icon>
+        </div>
+
+        <div class="tm-body" style={bodyStyle}>
+
+            <!-- KPI strip -->
+            <div class="kpi-row">
+                <div class="kpi-tile kpi-tile_accounts">
+                    <lightning-icon icon-name="utility:company" size="small" class="kpi-icon"></lightning-icon>
+                    <div class="kpi-text">
+                        <div class="kpi-value">{kpiAccountCount}</div>
+                        <div class="kpi-label">{labels.kpiAccounts}</div>
+                    </div>
+                </div>
+                <div class="kpi-tile kpi-tile_amount">
+                    <lightning-icon icon-name="utility:currency" size="small" class="kpi-icon"></lightning-icon>
+                    <div class="kpi-text">
+                        <div class="kpi-value">{kpiAmountDisplay}</div>
+                        <div class="kpi-label">{labels.kpiAmount}</div>
+                    </div>
+                </div>
+                <div class="kpi-tile kpi-tile_opps">
+                    <lightning-icon icon-name="utility:opportunity" size="small" class="kpi-icon"></lightning-icon>
+                    <div class="kpi-text">
+                        <div class="kpi-value">{kpiOpenOpps}</div>
+                        <div class="kpi-label">{labels.kpiOpenOpps}</div>
+                    </div>
+                </div>
+                <div class="kpi-tile kpi-tile_cases">
+                    <lightning-icon icon-name="utility:case" size="small" class="kpi-icon"></lightning-icon>
+                    <div class="kpi-text">
+                        <div class="kpi-value">{kpiOpenCases}</div>
+                        <div class="kpi-label">{labels.kpiOpenCases}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters panel (collapsible) -->
+            <template if:true={showFilters}>
+                <div class="filters-panel">
+                    <div class="filter-grid">
+                        <lightning-input type="search"
+                                         label={labels.nameSearchLabel}
+                                         placeholder={labels.nameSearchPlaceholder}
+                                         value={pendingNameSearch}
+                                         onchange={handleNameSearchChange}
+                                         variant="label-stacked"></lightning-input>
+                        <lightning-combobox label={labels.ownerScopeLabel}
+                                            value={pendingOwnerScope}
+                                            options={ownerScopeOptions}
+                                            onchange={handleOwnerScopeChange}
+                                            variant="label-stacked"></lightning-combobox>
+                        <lightning-combobox label={labels.recordTypeLabel}
+                                            value={pendingRecordType}
+                                            options={recordTypeOptions}
+                                            onchange={handleRecordTypeChange}
+                                            variant="label-stacked"></lightning-combobox>
+                        <lightning-input type="number"
+                                         label={labels.amountMinLabel}
+                                         value={pendingAmountMin}
+                                         onchange={handleAmountMinChange}
+                                         variant="label-stacked"></lightning-input>
+                        <lightning-input type="number"
+                                         label={labels.amountMaxLabel}
+                                         value={pendingAmountMax}
+                                         onchange={handleAmountMaxChange}
+                                         variant="label-stacked"></lightning-input>
+                    </div>
+
+                    <div class="filter-listboxes">
+                        <lightning-dual-listbox label={labels.stageLabel}
+                                                source-label={labels.stageAvailable}
+                                                selected-label={labels.stageSelected}
+                                                options={stageOptions}
+                                                value={pendingStages}
+                                                onchange={handleStageChange}
+                                                size="3"
+                                                variant="label-stacked"></lightning-dual-listbox>
+                        <lightning-dual-listbox label={labels.caseStatusLabel}
+                                                source-label={labels.stageAvailable}
+                                                selected-label={labels.stageSelected}
+                                                options={caseStatusOptions}
+                                                value={pendingCaseStatuses}
+                                                onchange={handleCaseStatusChange}
+                                                size="3"
+                                                variant="label-stacked"></lightning-dual-listbox>
+                        <template if:true={hasFilterA}>
+                            <lightning-dual-listbox label={filterALabel}
+                                                    source-label={labels.stageAvailable}
+                                                    selected-label={labels.stageSelected}
+                                                    options={filterAOptions}
+                                                    value={pendingFilterAValues}
+                                                    onchange={handleFilterAChange}
+                                                    size="3"
+                                                    variant="label-stacked"></lightning-dual-listbox>
+                        </template>
+                        <template if:true={hasFilterB}>
+                            <lightning-dual-listbox label={filterBLabel}
+                                                    source-label={labels.stageAvailable}
+                                                    selected-label={labels.stageSelected}
+                                                    options={filterBOptions}
+                                                    value={pendingFilterBValues}
+                                                    onchange={handleFilterBChange}
+                                                    size="3"
+                                                    variant="label-stacked"></lightning-dual-listbox>
+                        </template>
+                    </div>
+
+                    <div class="filter-actions">
+                        <lightning-button label={labels.resetFilters}
+                                          variant="neutral"
+                                          onclick={handleResetFilters}></lightning-button>
+                        <lightning-button label={labels.applyFilters}
+                                          variant="brand"
+                                          onclick={handleApplyFilters}
+                                          class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Body: side-by-side map + scrollable account list -->
+            <div class="tm-split">
+                <div class="tm-map-pane">
+                    <template if:true={loading}>
+                        <div class="tm-loading"><lightning-spinner alternative-text={labels.loading} size="medium"></lightning-spinner></div>
+                    </template>
+                    <template if:true={hasAccounts}>
+                        <lightning-map map-markers={mapMarkers}
+                                       center={mapCenter}
+                                       zoom-level={zoomLevel}
+                                       list-view="hidden"
+                                       markers-title={labels.markersTitle}
+                                       selected-marker-value={selectedMarkerValue}
+                                       onmarkerselect={handleMarkerSelect}>
+                        </lightning-map>
+                    </template>
+                    <template if:false={hasAccounts}>
+                        <div class="empty-state">
+                            <lightning-icon icon-name="utility:location" size="medium" class="slds-m-bottom_x-small"></lightning-icon>
+                            <p>{labels.noAccounts}</p>
+                        </div>
+                    </template>
+                </div>
+                <div class="tm-list-pane">
+                    <div class="tm-list-header">
+                        <span class="tm-list-title">{labels.accountsList}</span>
+                        <span class="tm-list-count">{kpiAccountCount}</span>
+                    </div>
+                    <div class="tm-list-scroll">
+                        <template for:each={accountsForList} for:item="a">
+                            <div key={a.id} class={a.itemClass} data-id={a.id} onclick={handleListClick}>
+                                <span class="tm-dot" style={a.dotStyle}></span>
+                                <div class="tm-list-item-body">
+                                    <div class="tm-list-item-name">{a.name}</div>
+                                    <div class="tm-list-item-meta">{a.amountDisplay} · {a.location}</div>
+                                </div>
+                                <lightning-button-icon icon-name="utility:new_window"
+                                                       size="x-small"
+                                                       variant="bare"
+                                                       alternative-text="Open"
+                                                       data-id={a.id}
+                                                       onclick={handleListOpen}></lightning-button-icon>
+                            </div>
+                        </template>
+                        <template if:false={hasAccounts}>
+                            <div class="tm-list-empty">{labels.noAccounts}</div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={resolvedCardIcon}>
+        <div slot="actions">
+            <template if:true={hasRelated}>
+                <lightning-button-icon icon-name="utility:new_window" alternative-text={labels.openRecord} variant="border-filled" size="small" onclick={openRelatedRecord}></lightning-button-icon>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={hasRelated}>
+                <!-- Header: avatar (image or initials) on the left, name on the right. -->
+                <div class="rrc-header">
+                    <div class="rrc-avatar" title={imageTitle} onclick={openFilePicker}>
+                        <template if:true={hasImage}>
+                            <img src={displayedImageUrl} alt={related.name} />
+                        </template>
+                        <template if:false={hasImage}>
+                            <span class="rrc-initials">{related.initials}</span>
+                        </template>
+                        <template if:true={isFileMode}>
+                            <div class="rrc-avatar-overlay">
+                                <template if:true={isUploading}>
+                                    <lightning-spinner alternative-text="Uploading" size="small" variant="inverse"></lightning-spinner>
+                                </template>
+                                <template if:false={isUploading}>
+                                    <lightning-icon icon-name="utility:upload" size="x-small"></lightning-icon>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="rrc-name-block" onclick={openRelatedRecord}>
+                        <div class="rrc-name">{related.name}</div>
+                    </div>
+                </div>
+
+                <template if:true={isFileMode}>
+                    <input type="file" accept="image/*" class="rrc-hidden-file" onchange={handleNativeFileChange} lwc:ref="fileInput" />
+                </template>
+
+                <!-- Field rows: label on the left (compact), value on the right (dominant). -->
+                <dl class="rrc-fields">
+                    <template for:each={related.fields} for:item="f">
+                        <div key={f.apiName} class="rrc-field">
+                            <dt class="rrc-field-label" title={f.label}>{f.label}</dt>
+                            <dd class="rrc-field-value">
+                                <template if:true={f.isPhone}>
+                                    <a href={f.phoneHref} title={f.value}>{f.value}</a>
+                                </template>
+                                <template if:true={f.isEmail}>
+                                    <a href={f.emailHref} title={f.value}>{f.value}</a>
+                                </template>
+                                <template if:true={f.isUrl}>
+                                    <a href={f.urlHref} target="_blank" title={f.value}>{f.value}</a>
+                                </template>
+                                <template if:true={f.isText}>
+                                    <span title={f.value}>{f.value}</span>
+                                </template>
+                            </dd>
+                        </div>
+                    </template>
+                </dl>
+            </template>
+            <template if:false={hasRelated}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

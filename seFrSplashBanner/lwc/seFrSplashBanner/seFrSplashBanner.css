@@ -1,0 +1,374 @@
+:host {
+    display: block;
+}
+
+.sb-root {
+    position: relative;
+    width: 100%;
+    height: var(--sb-height, 220px);
+    overflow: hidden;
+    border-radius: 8px;
+    background: #0c1421;
+    color: #ffffff;
+    isolation: isolate;
+}
+
+.sb-text_dark { color: #181818; }
+.sb-text_light { color: #ffffff; }
+
+/* --- Foreground content -------------------------------------------------------------------- */
+.sb-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+.sb-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 24px;
+    gap: 6px;
+}
+.sb-align_center .sb-content { align-items: center; text-align: center; }
+.sb-align_left   .sb-content { align-items: flex-start; text-align: left; }
+.sb-align_right  .sb-content { align-items: flex-end; text-align: right; }
+
+.sb-title {
+    font-size: var(--sb-title-size, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+.sb-sub {
+    font-size: var(--sb-sub-size, 1.15rem);
+    line-height: 1.4;
+    opacity: 0.92;
+    max-width: 60ch;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+}
+.sb-cta {
+    margin-top: 14px;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(6px);
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+.sb-cta:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+.sb-text_dark .sb-cta {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================================================================
+   1. WAVES — Charly's signature animated blobs
+   ============================================================================================ */
+.sb-waves {
+    background: linear-gradient(135deg, var(--sb-color-primary) 0%, #051d3b 100%);
+}
+.sb-wave {
+    position: absolute;
+    height: 200%;
+    width: 200%;
+    border-bottom-left-radius: 75%;
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 60%;
+    border-top-right-radius: 55%;
+}
+.sb-wave_1 {
+    top: 10%;
+    left: 60%;
+    background: color-mix(in srgb, var(--sb-color-secondary) 50%, transparent);
+    animation: sb-waves-rotate calc(50s * var(--sb-speed)) linear infinite;
+}
+.sb-wave_2 {
+    top: 15%;
+    left: 50%;
+    background: color-mix(in srgb, var(--sb-color-primary) 60%, transparent);
+    animation: sb-waves-rotate calc(60s * var(--sb-speed)) linear infinite reverse;
+}
+@keyframes sb-waves-rotate {
+    0%   { transform: rotate(0); }
+    100% { transform: rotate(1turn); }
+}
+
+/* ============================================================================================
+   2. AURORA — 3 floating colored bands with screen blend mode
+   ============================================================================================ */
+.sb-aurora {
+    background: radial-gradient(120% 100% at 30% 100%, #1a103a 0%, #050817 70%);
+}
+.sb-aurora-band {
+    position: absolute;
+    width: 140%;
+    height: 60%;
+    border-radius: 50%;
+    filter: blur(60px);
+    mix-blend-mode: screen;
+    opacity: 0.85;
+}
+.sb-aurora-band_1 {
+    top: -20%;
+    left: -20%;
+    background: var(--sb-color-primary);
+    animation: sb-aurora-float-1 calc(18s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-aurora-band_2 {
+    top: 20%;
+    left: 20%;
+    background: var(--sb-color-secondary);
+    animation: sb-aurora-float-2 calc(22s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-aurora-band_3 {
+    top: 30%;
+    left: 50%;
+    background: var(--sb-color-tertiary);
+    animation: sb-aurora-float-3 calc(26s * var(--sb-speed)) ease-in-out infinite;
+}
+@keyframes sb-aurora-float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(20%, 10%) scale(1.15); }
+}
+@keyframes sb-aurora-float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-15%, 15%) scale(0.9); }
+}
+@keyframes sb-aurora-float-3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(-25%, -10%) scale(1.1); }
+}
+
+/* ============================================================================================
+   3. MESH GRADIENT — 4 radial blobs drifting (Stripe homepage vibe)
+   ============================================================================================ */
+.sb-mesh {
+    background: #0a0e1c;
+}
+.sb-mesh-blob {
+    position: absolute;
+    width: 70%;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.85;
+}
+.sb-mesh-blob_1 {
+    top: -30%; left: -10%;
+    background: var(--sb-color-primary);
+    animation: sb-mesh-drift-a calc(20s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-mesh-blob_2 {
+    top: -10%; left: 30%;
+    background: var(--sb-color-secondary);
+    animation: sb-mesh-drift-b calc(24s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-mesh-blob_3 {
+    top: 10%; left: 60%;
+    background: var(--sb-color-tertiary);
+    animation: sb-mesh-drift-c calc(28s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-mesh-blob_4 {
+    top: 30%; left: 10%;
+    background: color-mix(in srgb, var(--sb-color-primary) 50%, var(--sb-color-tertiary));
+    animation: sb-mesh-drift-d calc(32s * var(--sb-speed)) ease-in-out infinite;
+}
+@keyframes sb-mesh-drift-a { 0%,100% { transform: translate(0,0); } 50% { transform: translate(15%, 8%); } }
+@keyframes sb-mesh-drift-b { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-10%, 12%); } }
+@keyframes sb-mesh-drift-c { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-20%, -8%); } }
+@keyframes sb-mesh-drift-d { 0%,100% { transform: translate(0,0); } 50% { transform: translate(12%, -10%); } }
+
+/* ============================================================================================
+   4. ORBS — 5 blurred floating circles
+   ============================================================================================ */
+.sb-orbs {
+    background: linear-gradient(135deg, #1c1142 0%, #050817 60%);
+}
+.sb-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(35px);
+    opacity: 0.75;
+}
+.sb-orb_1 { width: 180px; height: 180px; top: -40px;  left: 10%; background: var(--sb-color-primary);
+            animation: sb-orb-float-1 calc(14s * var(--sb-speed)) ease-in-out infinite; }
+.sb-orb_2 { width: 140px; height: 140px; top: 30%;    left: 35%; background: var(--sb-color-secondary);
+            animation: sb-orb-float-2 calc(18s * var(--sb-speed)) ease-in-out infinite; }
+.sb-orb_3 { width: 220px; height: 220px; top: -60px;  left: 60%; background: var(--sb-color-tertiary);
+            animation: sb-orb-float-3 calc(22s * var(--sb-speed)) ease-in-out infinite; }
+.sb-orb_4 { width: 100px; height: 100px; top: 50%;    left: 75%; background: var(--sb-color-primary);
+            animation: sb-orb-float-1 calc(20s * var(--sb-speed)) ease-in-out infinite reverse; }
+.sb-orb_5 { width: 160px; height: 160px; top: 60%;    left: 20%; background: var(--sb-color-secondary);
+            animation: sb-orb-float-2 calc(26s * var(--sb-speed)) ease-in-out infinite reverse; }
+@keyframes sb-orb-float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(40px, -20px); }
+}
+@keyframes sb-orb-float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(-30px, 25px); }
+}
+@keyframes sb-orb-float-3 {
+    0%, 100% { transform: translate(0, 0); }
+    50%      { transform: translate(-20px, 30px); }
+}
+
+/* ============================================================================================
+   5. CONIC SPIN — Vercel-style rotating multicolor disc
+   ============================================================================================ */
+.sb-conic {
+    background: #050817;
+}
+.sb-conic-disc {
+    position: absolute;
+    width: 200%;
+    height: 400%;
+    top: -150%;
+    left: -50%;
+    background: conic-gradient(
+        from 0deg,
+        var(--sb-color-primary),
+        var(--sb-color-secondary),
+        var(--sb-color-tertiary),
+        var(--sb-color-primary)
+    );
+    filter: blur(60px);
+    opacity: 0.85;
+    animation: sb-conic-spin calc(20s * var(--sb-speed)) linear infinite;
+}
+.sb-conic-mask {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 80% at 50% 50%, transparent 0%, rgba(5, 8, 23, 0.65) 100%);
+}
+@keyframes sb-conic-spin {
+    0%   { transform: rotate(0); }
+    100% { transform: rotate(1turn); }
+}
+
+/* ============================================================================================
+   6. GEOMETRIC MESH — low-poly SVG with subtle pulse
+   ============================================================================================ */
+.sb-geometric {
+    background: linear-gradient(135deg, #0d1635 0%, #050817 100%);
+}
+.sb-geometric svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.sb-geo-tris polygon {
+    transform-origin: center;
+    animation: sb-geo-pulse calc(8s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-geo-tris polygon:nth-child(odd)  { animation-delay: -2s; }
+.sb-geo-tris polygon:nth-child(3n)   { animation-delay: -4s; }
+.sb-geo-tris polygon:nth-child(5n)   { animation-delay: -6s; }
+@keyframes sb-geo-pulse {
+    0%, 100% { opacity: 0.3; }
+    50%      { opacity: 0.7; }
+}
+
+/* ============================================================================================
+   7. CONSTELLATION — drifting points + connecting lines
+   ============================================================================================ */
+.sb-constellation {
+    background: radial-gradient(120% 100% at 50% 100%, #122046 0%, #050817 70%);
+    color: #ffffff;
+}
+.sb-constellation svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: sb-cons-drift calc(40s * var(--sb-speed)) ease-in-out infinite alternate;
+}
+.sb-cons-pulse {
+    transform-origin: center;
+    transform-box: fill-box;
+}
+.sb-cons-pulse_1 { animation: sb-cons-twinkle calc(3s * var(--sb-speed)) ease-in-out infinite; }
+.sb-cons-pulse_2 { animation: sb-cons-twinkle calc(4s * var(--sb-speed)) ease-in-out infinite; animation-delay: -1s; }
+.sb-cons-pulse_3 { animation: sb-cons-twinkle calc(5s * var(--sb-speed)) ease-in-out infinite; animation-delay: -2s; }
+@keyframes sb-cons-twinkle {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.4); }
+}
+@keyframes sb-cons-drift {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-2%, 1%); }
+}
+
+/* ============================================================================================
+   8. ANIMATED GRID — blueprint with pulse + scan line
+   ============================================================================================ */
+.sb-grid {
+    background:
+        radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--sb-color-primary) 20%, #050817) 0%, #050817 70%);
+    color: #ffffff;
+}
+.sb-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(color-mix(in srgb, var(--sb-color-primary) 30%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--sb-color-primary) 30%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: center center;
+    mask-image: radial-gradient(ellipse at center, #000 50%, transparent 100%);
+    animation: sb-grid-pulse calc(6s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-grid-pulse {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(40% 60% at 50% 50%, color-mix(in srgb, var(--sb-color-secondary) 35%, transparent) 0%, transparent 70%);
+    animation: sb-grid-glow calc(5s * var(--sb-speed)) ease-in-out infinite;
+}
+.sb-grid-scan {
+    position: absolute;
+    left: 0; right: 0;
+    height: 30%;
+    top: -30%;
+    background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--sb-color-primary) 25%, transparent) 50%, transparent 100%);
+    animation: sb-grid-scan-move calc(8s * var(--sb-speed)) linear infinite;
+}
+@keyframes sb-grid-pulse {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+}
+@keyframes sb-grid-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.1); }
+}
+@keyframes sb-grid-scan-move {
+    0%   { top: -30%; }
+    100% { top: 130%; }
+}
+
+/* Reduced motion — respect user accessibility preference: kill the heavy animations. */
+@media (prefers-reduced-motion: reduce) {
+    .sb-wave,
+    .sb-aurora-band,
+    .sb-mesh-blob,
+    .sb-orb,
+    .sb-conic-disc,
+    .sb-geo-tris polygon,
+    .sb-constellation svg,
+    .sb-cons-pulse,
+    .sb-grid-lines,
+    .sb-grid-pulse,
+    .sb-grid-scan {
+        animation: none !important;
+    }
+}

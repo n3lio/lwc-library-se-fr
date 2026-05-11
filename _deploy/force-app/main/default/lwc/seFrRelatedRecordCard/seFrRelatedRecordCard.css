@@ -1,0 +1,121 @@
+:host { display: block; }
+
+/* Header row: avatar left, name right. Clickable on the name side to open the record. */
+.rrc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 0 10px;
+    border-bottom: 1px solid #e5e5e5;
+    min-width: 0;
+}
+
+.rrc-avatar {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0176d3 0%, #4a4aff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #ffffff;
+    cursor: default;
+}
+.rrc-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.rrc-initials {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* File mode — avatar gets a hover overlay to hint clicking replaces the image. */
+.rrc-avatar[title]:not([title=""]) { cursor: pointer; }
+.rrc-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    color: #ffffff;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+.rrc-avatar-overlay lightning-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+}
+.rrc-avatar[title]:not([title=""]):hover .rrc-avatar-overlay { opacity: 1; }
+
+.rrc-name-block {
+    flex: 1 1 auto;
+    min-width: 0;
+    cursor: pointer;
+}
+.rrc-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #181818;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rrc-name-block:hover .rrc-name { text-decoration: underline; }
+
+.rrc-hidden-file { display: none; }
+
+/* Horizontal field rows: label ~25% left (small, weak), value ~75% right (dominant). Each row
+   sits on a single line via flex + truncation; values that match email/phone/url become links. */
+.rrc-fields {
+    margin: 10px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+.rrc-field {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f3f3f3;
+    min-width: 0;
+}
+.rrc-field:last-child { border-bottom: none; }
+
+.rrc-field-label {
+    flex: 0 0 28%;
+    max-width: 28%;
+    font-size: 0.7rem;
+    color: #747474;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rrc-field-value {
+    flex: 1 1 72%;
+    min-width: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #181818;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rrc-field-value a {
+    color: #0070d2;
+    text-decoration: none;
+}
+.rrc-field-value a:hover { text-decoration: underline; }

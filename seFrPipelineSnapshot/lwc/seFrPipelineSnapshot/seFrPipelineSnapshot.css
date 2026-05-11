@@ -1,0 +1,81 @@
+:host {
+    --se-fr-border: #e5e5e5;
+    --se-fr-text-weak: #747474;
+}
+
+.total-tile {
+    background: #fafbfe;
+    border: 1px solid var(--se-fr-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-align: center;
+}
+.total-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--se-fr-text-weak);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+.total-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #181818;
+    line-height: 1.2;
+}
+.total-value_weighted { color: #2e844a; }
+
+/* Horizontal scrollable column layout for the stages — works in wide and narrow layouts. */
+.stage-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+.stage-col {
+    flex: 0 0 190px;
+    background: #ffffff;
+    border: 1px solid var(--se-fr-border);
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+}
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 2px;
+}
+.stage-totals {
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.stage-opps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.opp-card {
+    background: #fafbfe;
+    border: 1px solid var(--se-fr-border);
+    border-radius: 4px;
+    padding: 6px 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+.opp-card:hover {
+    background-color: #eef4fb;
+    transform: translateY(-1px);
+}
+.opp-name {
+    font-size: 0.85rem;
+}
+.opp-meta {
+    margin-top: 2px;
+}

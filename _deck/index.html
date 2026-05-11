@@ -1,0 +1,2997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SE FR Component Library — Internal asset deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sf-navy:        #032D60;
+            --sf-navy-deep:   #021D40;
+            --sf-navy-soft:   #0B5CAB;
+            --sf-blue:        #0176D3;
+            --sf-blue-soft:   #1B96FF;
+            --sf-purple:      #6F46AD;
+            --sf-purple-soft: #B179F4;
+            --sf-text:        #181818;
+            --sf-text-soft:   #5C5C5C;
+            --sf-text-mute:   #8C8C8C;
+            --sf-border:      #E5E5E5;
+            --sf-border-soft: #F0F0F0;
+            --sf-bg:          #FFFFFF;
+            --sf-tint:        #F4F6F9;
+            --sf-tint-blue:   #ECF5FC;
+            --sf-tint-pink:   #FCEBEB;
+            --sf-tint-amber:  #FFF4DB;
+            --sf-tint-green:  #E5F5EA;
+            --sf-amber:       #C28828;
+            --sf-green:       #2E844A;
+            --sf-red:         #BA0517;
+            --slide-w: 1280px;
+            --slide-h: 720px;
+            --sidebar-w: 280px;
+        }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #1E1E22;
+            color: var(--sf-text);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        /* ================================================================ */
+        /* APP CHROME (sidebar + topbar)                                     */
+        /* ================================================================ */
+        .app {
+            display: grid;
+            grid-template-columns: var(--sidebar-w) 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar — table of contents, always visible, current section highlighted */
+        .sidebar {
+            background: linear-gradient(180deg, var(--sf-navy-deep) 0%, var(--sf-navy) 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 28px 0 80px 0;
+            z-index: 10;
+        }
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+        .sb-brand {
+            padding: 0 28px 24px 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 16px;
+        }
+        .sb-brand .sb-brand-logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .sb-brand .sb-brand-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        .sb-section {
+            padding: 6px 0;
+        }
+        .sb-section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 28px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-top: 8px;
+        }
+        .sb-section-title .num {
+            color: var(--sf-blue-soft);
+            font-weight: 800;
+        }
+
+        .sb-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 28px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.78);
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+        }
+        .sb-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+        .sb-link.active {
+            background: rgba(27, 150, 255, 0.12);
+            color: white;
+            border-left-color: var(--sf-blue-soft);
+            font-weight: 600;
+        }
+        .sb-link .sb-num {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            min-width: 22px;
+        }
+        .sb-link.active .sb-num { color: var(--sf-blue-soft); }
+
+        /* Topbar — slide counter + progress bar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 9;
+            background: rgba(30, 30, 34, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.85);
+        }
+        .tb-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sf-blue-soft), var(--sf-purple-soft));
+            transition: width 0.2s ease;
+            width: 0%;
+        }
+        .tb-counter {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+        }
+        .tb-counter strong { color: white; font-weight: 700; }
+        .tb-section {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+        }
+        .tb-section span {
+            color: rgba(255,255,255,0.45);
+            font-weight: 500;
+            margin-right: 6px;
+        }
+        .tb-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .tb-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.85);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.12s ease;
+            font-family: inherit;
+            letter-spacing: 0.03em;
+        }
+        .tb-btn:hover { background: rgba(255,255,255,0.16); }
+
+        /* ================================================================ */
+        /* DECK & SLIDES                                                      */
+        /* ================================================================ */
+        .deck-area {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .deck {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            padding: 32px 0 80px 0;
+            align-items: center;
+        }
+        .slide {
+            width: var(--slide-w);
+            height: var(--slide-h);
+            background: var(--sf-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 28px rgba(0,0,0,.4);
+            position: relative;
+            overflow: hidden;
+            scroll-margin-top: 80px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+        }
+        .slide.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .slide.in-view:hover {
+            box-shadow: 0 12px 36px rgba(0,0,0,.5);
+        }
+
+        /* Slide chrome */
+        .slide-num {
+            position: absolute;
+            bottom: 22px;
+            right: 32px;
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 11px;
+            color: var(--sf-text-mute);
+            letter-spacing: 0.04em;
+        }
+        .slide-brand {
+            position: absolute;
+            bottom: 22px;
+            left: 32px;
+            font-size: 11px;
+            color: var(--sf-text-mute);
+            letter-spacing: 0.04em;
+            font-weight: 500;
+        }
+        .slide-brand strong { color: var(--sf-navy); font-weight: 700; }
+
+        .slide-section-tag {
+            position: absolute;
+            top: 28px;
+            left: 56px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--sf-blue);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            color: var(--sf-navy);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* ============================================================== */
+        /* SLIDE: COVER                                                    */
+        /* ============================================================== */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 96px;
+            position: relative;
+            background: linear-gradient(135deg, #FAFBFD 0%, #FFFFFF 60%);
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(1, 118, 211, 0.18) 0%, transparent 70%);
+        }
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: -240px;
+            left: -160px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(177, 121, 244, 0.15) 0%, transparent 70%);
+        }
+        .cover-tag {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sf-blue);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .cover h1 {
+            font-size: 76px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .cover h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--sf-blue) 0%, var(--sf-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .cover-sub {
+            font-size: 22px;
+            color: var(--sf-text-soft);
+            line-height: 1.4;
+            max-width: 800px;
+            position: relative;
+        }
+        .cover-foot {
+            position: absolute;
+            bottom: 56px;
+            left: 96px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: var(--sf-text-mute);
+            font-size: 13px;
+            letter-spacing: 0.04em;
+        }
+        .cover-foot::before {
+            content: '';
+            width: 40px;
+            height: 4px;
+            background: var(--sf-blue);
+            border-radius: 2px;
+        }
+
+        /* ============================================================== */
+        /* SLIDE: SECTION DIVIDER (DARK background, inverted)              */
+        /* ============================================================== */
+        .divider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 96px;
+            background: linear-gradient(135deg, var(--sf-navy-deep) 0%, var(--sf-navy) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(27, 150, 255, 0.25) 0%, transparent 70%);
+        }
+        .divider::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(177, 121, 244, 0.2) 0%, transparent 70%);
+        }
+        .divider .num {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--sf-blue-soft);
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .divider h2 {
+            font-size: 72px;
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+            margin-bottom: 24px;
+            color: white;
+            position: relative;
+        }
+        .divider .lede {
+            font-size: 22px;
+            color: rgba(255,255,255,0.78);
+            line-height: 1.4;
+            margin-bottom: 32px;
+            max-width: 800px;
+            position: relative;
+        }
+        .divider .pieces {
+            font-size: 14px;
+            color: rgba(255,255,255,0.55);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            max-width: 900px;
+            position: relative;
+        }
+        .divider .pieces span {
+            color: white;
+            font-weight: 700;
+            margin-right: 12px;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+        }
+        .divider .slide-brand strong { color: rgba(255,255,255,0.9); }
+        .divider .slide-brand { color: rgba(255,255,255,0.5); }
+        .divider .slide-num { color: rgba(255,255,255,0.4); }
+
+        /* ============================================================== */
+        /* SLIDE: TEXT-HEAVY (intro, principles, etc.)                     */
+        /* ============================================================== */
+        .text-slide {
+            padding: 80px 96px;
+        }
+        .text-slide h2 {
+            font-size: 44px;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        .text-slide .subhead {
+            font-size: 18px;
+            color: var(--sf-text-soft);
+            margin-bottom: 48px;
+        }
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 56px;
+        }
+        .col h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: var(--sf-navy);
+        }
+        .col .col-rule {
+            width: 32px;
+            height: 3px;
+            background: var(--sf-blue);
+            margin-bottom: 16px;
+            border-radius: 2px;
+        }
+        .col p {
+            font-size: 15px;
+            color: var(--sf-text-soft);
+            line-height: 1.6;
+            margin: 0 0 14px 0;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+        }
+        .lede {
+            font-size: 20px;
+            color: var(--sf-text-soft);
+            line-height: 1.55;
+            max-width: 900px;
+        }
+
+        /* Data mode badges */
+        .mode-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 32px;
+        }
+        .mode-card {
+            border-radius: 12px;
+            padding: 24px 20px;
+            border: 1px solid var(--sf-border);
+        }
+        .mode-card .lab {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            margin-bottom: 6px;
+        }
+        .mode-card .desc {
+            font-size: 13px;
+            color: var(--sf-text-soft);
+            line-height: 1.55;
+        }
+        .mode-live    { background: var(--sf-tint-green);  border-color: #B6E0C4; }
+        .mode-live .lab    { color: var(--sf-green); }
+        .mode-hybrid  { background: var(--sf-tint-amber);  border-color: #F1D88B; }
+        .mode-hybrid .lab  { color: var(--sf-amber); }
+        .mode-mock    { background: var(--sf-tint-blue);   border-color: #BFE0F8; }
+        .mode-mock .lab    { color: var(--sf-blue); }
+
+        /* Catalog grid (clickable rows) */
+        .catalog {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 0 32px;
+            row-gap: 16px;
+            margin-top: 28px;
+        }
+        .cat-row { display: contents; }
+        .cat-pers {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sf-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding-top: 4px;
+            cursor: pointer;
+            transition: color 0.12s ease;
+        }
+        .cat-pers:hover { color: var(--sf-blue); }
+        .cat-pers small {
+            display: block;
+            color: var(--sf-text-mute);
+            font-weight: 500;
+            font-size: 11px;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-top: 2px;
+        }
+        .cat-list {
+            font-size: 13px;
+            color: var(--sf-text);
+            font-weight: 500;
+            line-height: 1.7;
+            border-bottom: 1px solid var(--sf-tint);
+            padding-bottom: 14px;
+        }
+        .cat-list a {
+            color: var(--sf-text);
+            border-bottom: 1px dotted transparent;
+            transition: color 0.12s ease, border-color 0.12s ease;
+        }
+        .cat-list a:hover {
+            color: var(--sf-blue);
+            border-bottom-color: var(--sf-blue);
+        }
+        .cat-list span { color: var(--sf-text-mute); margin: 0 6px; }
+
+        /* Reading-this-deck list */
+        .read-list {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            row-gap: 14px;
+            column-gap: 24px;
+            margin-top: 24px;
+        }
+        .read-list dt {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--sf-navy);
+        }
+        .read-list dd {
+            font-size: 14px;
+            color: var(--sf-text-soft);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ============================================================== */
+        /* SLIDE: COMPONENT                                                */
+        /* ============================================================== */
+        .comp {
+            padding: 60px 64px 56px 64px;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 44px;
+            position: relative;
+        }
+        .comp-head {
+            grid-column: 1 / -1;
+            margin-bottom: 4px;
+        }
+        .comp-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--sf-navy);
+            letter-spacing: -0.018em;
+            line-height: 1.1;
+            margin: 0;
+        }
+        .comp-name code {
+            display: inline-block;
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--sf-blue);
+            background: var(--sf-tint-blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-left: 12px;
+            vertical-align: middle;
+            letter-spacing: 0;
+        }
+        .comp-tag {
+            font-size: 16px;
+            color: var(--sf-text-soft);
+            line-height: 1.45;
+            margin-top: 12px;
+            max-width: 95%;
+        }
+        .comp-shot {
+            border: 1px dashed var(--sf-border);
+            background: var(--sf-tint);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--sf-text-mute);
+            font-size: 14px;
+            min-height: 380px;
+            position: relative;
+        }
+        .comp-shot::before {
+            content: 'Screenshot';
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            color: var(--sf-text-mute);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .comp-shot.beta { background: var(--sf-tint-pink); border-color: #F4C2C7; }
+        .comp-shot.beta::before {
+            content: '⚠ Pending validation';
+            color: var(--sf-red);
+        }
+        .comp-shot .placeholder-name {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 13px;
+            color: var(--sf-text);
+            font-weight: 600;
+        }
+        .comp-meta { display: flex; flex-direction: column; gap: 14px; }
+        .meta-block h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--sf-blue);
+            margin: 0 0 8px 0;
+        }
+        .meta-block ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .meta-block li {
+            font-size: 12.5px;
+            color: var(--sf-text);
+            line-height: 1.45;
+            padding-left: 14px;
+            position: relative;
+        }
+        .meta-block li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--sf-blue);
+        }
+        .meta-block li code {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 11.5px;
+            color: var(--sf-purple);
+        }
+        .meta-row {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            row-gap: 5px;
+            font-size: 12px;
+        }
+        .meta-row dt {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            color: var(--sf-text-mute);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 10px;
+            padding-top: 1px;
+        }
+        .meta-row dd {
+            margin: 0;
+            color: var(--sf-text);
+        }
+        .meta-row dd code {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 11px;
+            color: var(--sf-purple);
+        }
+        .meta-row dd em {
+            font-style: italic;
+            color: var(--sf-text-mute);
+        }
+        .meta-row dd a {
+            color: var(--sf-blue);
+            border-bottom: 1px dotted transparent;
+            transition: border-color 0.12s ease;
+        }
+        .meta-row dd a:hover { border-bottom-color: var(--sf-blue); }
+
+        /* SE benefit callout */
+        .se-benefit {
+            background: var(--sf-tint-blue);
+            border-left: 3px solid var(--sf-blue);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 12.5px;
+            color: var(--sf-text);
+            line-height: 1.5;
+        }
+        .se-benefit strong {
+            display: block;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: var(--sf-blue);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        /* Data mode pill */
+        .data-pill {
+            display: inline-block;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+        .data-pill.live   { background: var(--sf-tint-green);  color: var(--sf-green); }
+        .data-pill.hybrid { background: var(--sf-tint-amber);  color: var(--sf-amber); }
+        .data-pill.mock   { background: var(--sf-tint-blue);   color: var(--sf-blue); }
+        .data-pill.beta   { background: var(--sf-tint-pink);   color: var(--sf-red); }
+
+        .crossref-line {
+            margin-top: 4px;
+            padding: 8px 10px;
+            background: var(--sf-tint);
+            border-left: 3px solid var(--sf-purple);
+            border-radius: 4px;
+            font-size: 11.5px;
+            color: var(--sf-text-soft);
+        }
+        .crossref-line strong {
+            color: var(--sf-purple);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-transform: uppercase;
+            font-size: 9.5px;
+            letter-spacing: 0.16em;
+            margin-right: 6px;
+        }
+        .crossref-line a {
+            color: var(--sf-purple);
+            font-weight: 600;
+            border-bottom: 1px dotted var(--sf-purple);
+        }
+        .author-line {
+            font-size: 11px;
+            color: var(--sf-text-mute);
+            margin-top: 2px;
+        }
+        .author-line strong { color: var(--sf-navy); }
+
+        /* ============================================================== */
+        /* SLIDE: TABLE (cross-ref)                                        */
+        /* ============================================================== */
+        .table-slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        .table-slide th {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--sf-text-mute);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--sf-navy);
+        }
+        .table-slide td {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--sf-border);
+            font-size: 14px;
+            color: var(--sf-text);
+            line-height: 1.5;
+            vertical-align: top;
+        }
+        .table-slide td:first-child {
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sf-purple);
+            white-space: nowrap;
+            width: 280px;
+        }
+        .table-slide td:first-child a { color: var(--sf-purple); border-bottom: 1px dotted; }
+        .table-slide td:last-child { color: var(--sf-text-soft); }
+
+        /* ============================================================== */
+        /* SLIDE: DEPLOY                                                   */
+        /* ============================================================== */
+        .step-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 32px;
+        }
+        .step {
+            background: var(--sf-tint);
+            border-radius: 12px;
+            padding: 24px 22px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .step .num {
+            position: absolute;
+            top: -16px;
+            left: 22px;
+            background: linear-gradient(135deg, var(--sf-blue), var(--sf-purple));
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step h3 {
+            font-size: 18px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+        }
+        .step p {
+            font-size: 13px;
+            color: var(--sf-text-soft);
+            line-height: 1.55;
+            margin: 0 0 12px 0;
+        }
+        .step .step-shot {
+            margin-top: auto;
+            border: 1px dashed var(--sf-border);
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: var(--sf-text-mute);
+            text-transform: uppercase;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step ul {
+            margin: 0;
+            padding: 0 0 0 18px;
+            color: var(--sf-text-soft);
+            line-height: 1.7;
+            font-size: 13px;
+        }
+        .step code {
+            font-family: 'SF Mono', monospace;
+            font-size: 12px;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--sf-purple);
+            border: 1px solid var(--sf-border);
+        }
+
+        /* ============================================================== */
+        /* SLIDE: CLOSING                                                  */
+        /* ============================================================== */
+        .closing {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 96px;
+            position: relative;
+            background: linear-gradient(135deg, #FAFBFD 0%, #FFFFFF 100%);
+        }
+        .closing::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(1,118,211,0.08), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(177,121,244,0.08), transparent 50%);
+        }
+        .closing h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.025em;
+            position: relative;
+        }
+        .closing .lede {
+            font-size: 20px;
+            color: var(--sf-text-soft);
+            line-height: 1.55;
+            margin-bottom: 40px;
+            position: relative;
+            max-width: 700px;
+            text-align: center;
+        }
+        .closing .contribute {
+            background: var(--sf-tint-blue);
+            border-radius: 12px;
+            padding: 20px 28px;
+            font-size: 14px;
+            color: var(--sf-text);
+            line-height: 1.6;
+            position: relative;
+            max-width: 720px;
+        }
+        .closing .contribute strong { color: var(--sf-navy); font-family: 'Plus Jakarta Sans', sans-serif; }
+        .closing .contact {
+            font-size: 13px;
+            color: var(--sf-text-mute);
+            line-height: 1.7;
+            position: relative;
+            margin-top: 32px;
+        }
+        .closing .contact strong { color: var(--sf-navy); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* ================================================================ */
+        /* SPEAKER NOTES (visible inline; hidden when printing/presenting)   */
+        /* ================================================================ */
+        .notes {
+            width: var(--slide-w);
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+            padding: 4px 8px;
+            margin-top: -24px;
+        }
+        .notes strong { color: rgba(255,255,255,0.7); }
+
+        /* ================================================================ */
+        /* PRESENTATION MODE                                                  */
+        /* ================================================================ */
+        body.present-mode {
+            overflow: hidden;
+        }
+        body.present-mode .sidebar,
+        body.present-mode .topbar,
+        body.present-mode .notes {
+            display: none;
+        }
+        body.present-mode .app {
+            grid-template-columns: 1fr;
+        }
+        body.present-mode .deck {
+            padding: 0;
+            gap: 0;
+            height: 100vh;
+            justify-content: center;
+            background: black;
+        }
+        body.present-mode .slide {
+            display: none;
+            border-radius: 0;
+            box-shadow: none;
+            opacity: 1;
+            transform: none;
+            margin: 0;
+        }
+        body.present-mode .slide.present-current {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.35s cubic-bezier(.2,.8,.2,1);
+        }
+        body.present-mode .slide.comp { display: grid; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .present-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+            background: var(--sf-navy);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            transition: transform 0.15s ease;
+        }
+        .present-toggle:hover { transform: translateY(-2px); }
+        body.present-mode .present-toggle {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(6px);
+        }
+
+        /* Print: 1 slide per page, no chrome, no notes */
+        @media print {
+            html, body { background: white; }
+            .sidebar, .topbar, .notes, .present-toggle { display: none; }
+            .app { grid-template-columns: 1fr; }
+            .deck { gap: 0; padding: 0; }
+            .slide {
+                box-shadow: none;
+                border-radius: 0;
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                opacity: 1;
+                transform: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+
+    <!-- ============================================================ -->
+    <!-- SIDEBAR                                                        -->
+    <!-- ============================================================ -->
+    <aside class="sidebar">
+        <div class="sb-brand">
+            <div class="sb-brand-logo">SE FR<br>Component Library</div>
+            <div class="sb-brand-sub">Internal asset · 2026</div>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">00</span>Intro</div>
+            <a class="sb-link" href="#slide-1"><span class="sb-num">01</span>Cover</a>
+            <a class="sb-link" href="#slide-2"><span class="sb-num">02</span>Why this library</a>
+            <a class="sb-link" href="#slide-3"><span class="sb-num">03</span>Design principles</a>
+            <a class="sb-link" href="#slide-4"><span class="sb-num">04</span>Reading the deck</a>
+            <a class="sb-link" href="#slide-5"><span class="sb-num">05</span>Catalog</a>
+            <a class="sb-link" href="#slide-tech"><span class="sb-num">05b</span>Tech prerequisites</a>
+        </div>
+
+<!-- DECK:start nav -->
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">01</span>Account 360°</div>
+            <a class="sb-link" href="#slide-divider-account-360"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrAccountHealth"><span class="sb-num">·</span>Account Health</a>
+            <a class="sb-link" href="#slide-seFrAccountStrategyPlan"><span class="sb-num">·</span>Account Strategy Plan</a>
+            <a class="sb-link" href="#slide-seFrActivityFeed"><span class="sb-num">·</span>Activity Feed</a>
+            <a class="sb-link" href="#slide-seFrAlertsRibbon"><span class="sb-num">·</span>Alerts Ribbon</a>
+            <a class="sb-link" href="#slide-seFrContactCard"><span class="sb-num">·</span>Contact Card</a>
+            <a class="sb-link" href="#slide-seFrContactsCarousel"><span class="sb-num">·</span>Contacts Carousel</a>
+            <a class="sb-link" href="#slide-seFrCustomerOrders"><span class="sb-num">·</span>Customer Orders</a>
+            <a class="sb-link" href="#slide-seFrCustomerSalesSummary"><span class="sb-num">·</span>Customer Sales Summary</a>
+            <a class="sb-link" href="#slide-seFrPipelineSnapshot"><span class="sb-num">·</span>Pipeline Snapshot</a>
+            <a class="sb-link" href="#slide-seFrRecordHighlights"><span class="sb-num">·</span>Record Highlights</a>
+            <a class="sb-link" href="#slide-seFrRelatedRecordCard"><span class="sb-num">·</span>Related Record Card</a>
+            <a class="sb-link" href="#slide-seFrRevenueDashboard"><span class="sb-num">·</span>Revenue Dashboard</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">02</span>Sales Productivity</div>
+            <a class="sb-link" href="#slide-divider-sales-productivity"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrKanbanBoard"><span class="sb-num">·</span>Kanban Board</a>
+            <a class="sb-link" href="#slide-seFrMyEvents"><span class="sb-num">·</span>My Events</a>
+            <a class="sb-link" href="#slide-seFrMyTasks"><span class="sb-num">·</span>My Tasks</a>
+            <a class="sb-link" href="#slide-seFrOrderEntry"><span class="sb-num">·</span>Order Entry</a>
+            <a class="sb-link" href="#slide-seFrOrderSummary"><span class="sb-num">·</span>Order Summary</a>
+            <a class="sb-link" href="#slide-seFrTimelinePhases"><span class="sb-num">·</span>Timeline Phases</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">03</span>Geo & Field</div>
+            <a class="sb-link" href="#slide-divider-geo-field"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrNearbyAccountsMap"><span class="sb-num">·</span>Nearby Accounts Map</a>
+            <a class="sb-link" href="#slide-seFrTerritoryMap"><span class="sb-num">·</span>Territory Map</a>
+            <a class="sb-link" href="#slide-seFrVoiceNoteTaker"><span class="sb-num">·</span>Voice Note Taker</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">04</span>Marketing & Data</div>
+            <a class="sb-link" href="#slide-divider-marketing-data"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrActiveSegments"><span class="sb-num">·</span>Active Segments</a>
+            <a class="sb-link" href="#slide-seFrConsentManager"><span class="sb-num">·</span>Consent Manager</a>
+            <a class="sb-link" href="#slide-seFrMetricTile"><span class="sb-num">·</span>Metric Tile</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">05</span>Agentforce & AI</div>
+            <a class="sb-link" href="#slide-divider-agentforce-ai"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrAgentforceHeader"><span class="sb-num">·</span>Agentforce Header</a>
+            <a class="sb-link" href="#slide-seFrContactCard"><span class="sb-num">·</span>Contact Card</a>
+            <a class="sb-link" href="#slide-seFrPromptLauncher"><span class="sb-num">·</span>Prompt Launcher</a>
+            <a class="sb-link" href="#slide-seFrSmartRecommendations"><span class="sb-num">·</span>Smart Recommendations</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">06</span>Dashboards & KPIs</div>
+            <a class="sb-link" href="#slide-divider-dashboards-kpis"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrFieldRepHome"><span class="sb-num">·</span>Field Sales - Rep Home</a>
+            <a class="sb-link" href="#slide-seFrKpiLauncher"><span class="sb-num">·</span>KPI Launcher</a>
+            <a class="sb-link" href="#slide-seFrMetricTile"><span class="sb-num">·</span>Metric Tile</a>
+            <a class="sb-link" href="#slide-seFrRevenueDashboard"><span class="sb-num">·</span>Revenue Dashboard</a>
+            <a class="sb-link" href="#slide-seFrTelesalesRepHome"><span class="sb-num">·</span>Telesales - Rep Home</a>
+        </div>
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">07</span>Transverse</div>
+            <a class="sb-link" href="#slide-divider-transverse"><span class="sb-num">▸</span>Section opener</a>
+            <a class="sb-link" href="#slide-seFrFilesGallery"><span class="sb-num">·</span>Files Gallery</a>
+            <a class="sb-link" href="#slide-seFrSplashBanner"><span class="sb-num">·</span>Splash Banner</a>
+        </div>
+<!-- DECK:end nav -->
+
+        <div class="sb-section">
+            <div class="sb-section-title"><span class="num">99</span>Closing</div>
+            <a class="sb-link" href="#slide-deploy"><span class="sb-num">DP</span>Get the components</a>
+            <a class="sb-link" href="#slide-closing"><span class="sb-num">CL</span>Contribute &amp; contact</a>
+        </div>
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- DECK                                                           -->
+    <!-- ============================================================ -->
+    <div class="deck-area">
+        <div class="topbar">
+            <div class="tb-progress" id="progress"></div>
+            <div class="tb-section" id="tbSection"><span>Section</span>Intro</div>
+            <div class="tb-counter">slide <strong id="tbNum">01</strong> · <span id="tbTotal">…</span></div>
+            <div class="tb-actions">
+                <button class="tb-btn" onclick="document.body.classList.toggle('present-mode'); if(document.body.classList.contains('present-mode')) startPresent();">Present (P)</button>
+                <button class="tb-btn" onclick="window.print()">Print PDF</button>
+            </div>
+        </div>
+
+        <div class="deck">
+
+<!-- ================================================================ -->
+<!-- SLIDE 1 — COVER                                                    -->
+<!-- ================================================================ -->
+<div class="slide cover" id="slide-1" data-section="Intro">
+    <div class="cover-tag">Solution Engineering · France</div>
+    <h1>SE FR<br><em>Component Library</em></h1>
+    <div class="cover-sub">A reusable Lightning Web Components kit shared across the SE France team to speed up Salesforce demos.</div>
+    <div class="cover-foot">Internal asset · SE FR · 2026</div>
+    <div class="slide-num">01 · 47</div>
+</div>
+<div class="notes"><strong>Speaker:</strong> internal SE-to-SE asset, demo accelerator.</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 2 — WHY THIS LIBRARY                                         -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-2" data-section="Intro">
+    <h2>Why this library</h2>
+    <div class="subhead">Three reasons to reach for it before building from scratch.</div>
+    <div class="three-col">
+        <div class="col">
+            <h3>Lightning is still where most demos happen</h3>
+            <div class="col-rule"></div>
+            <p>Headless 360 is the future direction, but our customers run on Lightning today — most demos still happen on Account, Contact, Case &amp; Opportunity record pages.</p>
+            <p>This kit makes those Lightning demos look great without rebuilding common components every time.</p>
+        </div>
+        <div class="col">
+            <h3>Polish you don't have to (re)build</h3>
+            <div class="col-rule"></div>
+            <p>Each component is already designed, themed, bilingual and configurable.</p>
+            <p>You drop the zip, tune App Builder properties, demo. No CSS to write, no Apex to bend, no boilerplate to copy from previous demos.</p>
+        </div>
+        <div class="col">
+            <h3>One catalog, every SE</h3>
+            <div class="col-rule"></div>
+            <p>Components share the same SLDS theme, the same conventions, the same defaults.</p>
+            <p>Drops cleanly into any SE demo org (SDO, IDO, custom scratch) without new custom fields — schema-safe by design.</p>
+        </div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">02 · 47</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 3 — DESIGN PRINCIPLES                                        -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-3" data-section="Intro">
+    <h2>Design principles applied to every component</h2>
+    <div class="subhead">Visual consistency. Configurable behavior. Zero friction.</div>
+    <div class="two-col" style="margin-top: 40px;">
+        <div>
+            <h3 style="font-size: 18px; color: var(--sf-blue); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em;">Look &amp; feel</h3>
+            <ul style="margin: 0; padding-left: 18px; color: var(--sf-text-soft); line-height: 1.9; font-size: 15px;">
+                <li>Homogeneous SLDS theme across the catalog</li>
+                <li>Same border-radius, spacing and typography rhythm</li>
+                <li>Lightning theme accent auto-applied (works on Spring/Summer/Winter themes)</li>
+                <li>French defaults out of the box (configurable to EN)</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="font-size: 18px; color: var(--sf-blue); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em;">Behavior</h3>
+            <ul style="margin: 0; padding-left: 18px; color: var(--sf-text-soft); line-height: 1.9; font-size: 15px;">
+                <li>Demo-ready, no setup needed</li>
+                <li>Configurable in App Builder (no code change)</li>
+                <li>Bilingual EN / FR built-in</li>
+                <li>Industry-agnostic defaults</li>
+                <li>Schema-safe — works on any demo org without new custom fields</li>
+                <li>Plays nicely with standard Lightning page layouts</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">03 · 47</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 4 — READING THE DECK + DATA MODES (merged)                   -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-4" data-section="Intro">
+    <h2>Reading this deck</h2>
+    <div class="subhead">Each component slide follows the same anatomy. The data-mode pill in the bottom-right corner tells you what to expect.</div>
+    <div class="two-col" style="margin-top: 24px; gap: 40px;">
+        <div>
+            <h3 style="font-size: 14px; color: var(--sf-blue); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.10em;">Slide anatomy</h3>
+            <dl class="read-list" style="grid-template-columns: 160px 1fr; row-gap: 10px;">
+                <dt>Master label</dt><dd>Display name as it appears in App Builder</dd>
+                <dt>Tagline</dt><dd>One-line value proposition</dd>
+                <dt>Screenshot</dt><dd>Visual preview of the component in context</dd>
+                <dt>Configurable settings</dt><dd>Top App Builder properties to know</dd>
+                <dt>SE benefit</dt><dd>The non-obvious detail that makes the component nice in demo</dd>
+                <dt>Targets · Objects · Apex</dt><dd>Where it sits, which SObjects, which Apex backs it</dd>
+                <dt>Data mode</dt><dd>Live / Hybrid / Mock pill</dd>
+            </dl>
+        </div>
+        <div>
+            <h3 style="font-size: 14px; color: var(--sf-blue); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.10em;">Data modes</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="mode-card mode-live" style="padding: 14px 16px;">
+                    <div class="lab">Live</div>
+                    <div class="desc">Reads from real org records. Stays in sync with the org's data.</div>
+                </div>
+                <div class="mode-card mode-hybrid" style="padding: 14px 16px;">
+                    <div class="lab">Hybrid</div>
+                    <div class="desc">Reads from real records when available, falls back to demo data when fields are missing.</div>
+                </div>
+                <div class="mode-card mode-mock" style="padding: 14px 16px;">
+                    <div class="lab">Mock</div>
+                    <div class="desc">Demo data only — hardcoded in props or bundle. Ignores org state.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">04 · 46</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 6 — CATALOG (clickable)                                      -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-6" data-section="Intro" style="padding: 48px 96px;">
+    <h2>30 components, 6 personas</h2>
+    <div class="subhead">Click any name to jump to its slide.</div>
+    <div class="catalog">
+        <div class="cat-row">
+            <div class="cat-pers">Sales B2B<small>Account 360°</small></div>
+            <div class="cat-list">
+                <a href="#slide-8">Record Highlights</a><span>·</span><a href="#slide-9">Contact Card</a><span>·</span><a href="#slide-10">Related Record</a><span>·</span><a href="#slide-11">Account Health</a><span>·</span><a href="#slide-12">Pipeline Snapshot</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Sales B2B<small>Account engagement</small></div>
+            <div class="cat-list">
+                <a href="#slide-13">Activity Feed</a><span>·</span><a href="#slide-14">Files Gallery</a><span>·</span><a href="#slide-15">Alerts Ribbon</a><span>·</span><a href="#slide-16">Account Strategy</a><span>·</span><a href="#slide-17">Timeline Phases</a><span>·</span><a href="#slide-18">Smart Recommendations</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Sales B2B<small>Performance</small></div>
+            <div class="cat-list">
+                <a href="#slide-19">Revenue Dashboard</a><span>·</span><a href="#slide-20">KPI Launcher</a><span>·</span><a href="#slide-21">Metric Tile</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Field Sales</div>
+            <div class="cat-list">
+                <a href="#slide-23">Field Rep Home</a><span>·</span><a href="#slide-24">Nearby Accounts</a><span>·</span><a href="#slide-25">Territory Map</a><span>·</span><a href="#slide-26">My Events</a><span>·</span><a href="#slide-27">Voice Note Taker</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Customer Operations<small>Telesales + Service</small></div>
+            <div class="cat-list">
+                <a href="#slide-29">Telesales Home</a><span>·</span><a href="#slide-30">Order Entry</a><span>·</span><a href="#slide-31">Order Summary</a><span>·</span><a href="#slide-32">Customer Orders</a><span>·</span><a href="#slide-33">Customer Sales Summary</a><span>·</span><a href="#slide-34">Kanban Board</a><span>·</span><a href="#slide-35">Contacts Carousel</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Marketing</div>
+            <div class="cat-list">
+                <a href="#slide-37">Active Segments</a><span>·</span><a href="#slide-38">Consent Manager</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Agentforce / AI</div>
+            <div class="cat-list">
+                <a href="#slide-40">Prompt Launcher</a><span>·</span><a href="#slide-41">Agentforce Header</a><span>·</span><a href="#slide-42">Cross-references</a>
+            </div>
+        </div>
+        <div class="cat-row">
+            <div class="cat-pers">Transversal UX</div>
+            <div class="cat-list">
+                <a href="#slide-44">Splash Banner</a><span>·</span><a href="#slide-45">My Tasks</a><span>·</span><a href="#slide-26">My Events</a> <span style="color:var(--sf-text-mute);font-size:11px;">(× Field Sales)</span>
+            </div>
+        </div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">06 · 46</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE TECH PREREQS — between intro and Sales section               -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-tech" data-section="Intro">
+    <h2>Technical prerequisites by component</h2>
+    <div class="subhead">Most components run with zero setup. A few need a one-time org config — listed here so you know what to expect.</div>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 13.5px;">
+        <thead>
+            <tr style="border-bottom: 2px solid var(--sf-navy);">
+                <th style="text-align: left; padding: 10px 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; color: var(--sf-text-mute); text-transform: uppercase; letter-spacing: 0.12em;">Need</th>
+                <th style="text-align: left; padding: 10px 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; color: var(--sf-text-mute); text-transform: uppercase; letter-spacing: 0.12em;">Components</th>
+                <th style="text-align: left; padding: 10px 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 800; color: var(--sf-text-mute); text-transform: uppercase; letter-spacing: 0.12em;">What to do</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid var(--sf-border);">
+                <td style="padding: 14px 12px; font-weight: 700; color: var(--sf-navy); vertical-align: top;">Nothing</td>
+                <td style="padding: 14px 12px; vertical-align: top;">Splash Banner · Alerts Ribbon · Strategy Plan · Timeline Phases · Smart Recos · KPI Launcher · Metric Tile · Active Segments · Agentforce Header</td>
+                <td style="padding: 14px 12px; color: var(--sf-text-soft); vertical-align: top;">Drop on the page, configure props, demo.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--sf-border);">
+                <td style="padding: 14px 12px; font-weight: 700; color: var(--sf-navy); vertical-align: top;">Standard SObjects</td>
+                <td style="padding: 14px 12px; vertical-align: top;">Record Highlights · Pipeline Snapshot · Activity Feed · Files Gallery · Customer Orders · Order Entry · Kanban · Territory Map · Nearby Accounts · Consent Manager · My Tasks / Events · Voice Note Taker</td>
+                <td style="padding: 14px 12px; color: var(--sf-text-soft); vertical-align: top;">Just real org records (Account, Opp, Case…). No custom fields needed.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--sf-border);">
+                <td style="padding: 14px 12px; font-weight: 700; color: var(--sf-navy); vertical-align: top;">Cust360 fields<br><small style="color:var(--sf-text-mute); font-weight:500;">graceful fallback</small></td>
+                <td style="padding: 14px 12px; vertical-align: top;">Contact Card · Account Health · Related Record Card</td>
+                <td style="padding: 14px 12px; color: var(--sf-text-soft); vertical-align: top;">Default fields point to <code>SDO_Cust360_*</code>. On orgs without those fields, falls back to mock data — never crashes.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--sf-border);">
+                <td style="padding: 14px 12px; font-weight: 700; color: var(--sf-navy); vertical-align: top;">Named Credential<br>+ Einstein</td>
+                <td style="padding: 14px 12px; vertical-align: top;">Prompt Launcher · Contact Card (Summarize button) · Smart Recos (AI mode)</td>
+                <td style="padding: 14px 12px; color: var(--sf-text-soft); vertical-align: top;">~10 min one-time setup: Connected App + Auth Provider + External Credential + Permission Set + Named Credential. Full guide in the User Guide.</td>
+            </tr>
+            <tr>
+                <td style="padding: 14px 12px; font-weight: 700; color: var(--sf-navy); vertical-align: top;">Browser API</td>
+                <td style="padding: 14px 12px; vertical-align: top;">Voice Note Taker (SpeechRecognition) · Agentforce Header (SpeechRecognition + clipboard) · Nearby Accounts (Geolocation)</td>
+                <td style="padding: 14px 12px; color: var(--sf-text-soft); vertical-align: top;">Chrome recommended. HTTPS required for Geolocation.</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">tech</div>
+</div>
+
+<!-- DECK:start components -->
+<!-- ================================================================ -->
+<!-- DIVIDER · ACCOUNT 360° -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-account-360" data-section="Account 360°">
+    <div class="num">SECTION 01</div>
+    <h2>Account 360°</h2>
+    <div class="lede">Everything that gives the account team a synthetic, actionable view of the customer.</div>
+    <div class="pieces"><span>Includes</span>Account Health · Account Strategy Plan · Activity Feed · Alerts Ribbon · Contact Card · Contacts Carousel · Customer Orders · Customer Sales Summary · Pipeline Snapshot · Record Highlights · Related Record Card · Revenue Dashboard</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRACCOUNTHEALTH -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrAccountHealth" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Account Health<code>seFrAccountHealth</code></h2>
+        <div class="comp-tag">Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">SVG donut gauge</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Weighted +/- signals</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Drill-down explainability</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrAccountHealth.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Score field, signal fields (CSV)</li>
+                <li>Color thresholds</li>
+                <li>Card title override</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Reads Cust360 SDO standard fields by default (e.g. churn risk, sentiment, NPS). On orgs without those fields, falls back to mocked signals — never crashes, always demo-ready.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account</dd>
+                <dt>Apex</dt><dd><code>SE_FR_AccountHealthController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrAccountHealth</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRACCOUNTSTRATEGYPLAN -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrAccountStrategyPlan" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Account Strategy Plan<code>seFrAccountStrategyPlan</code></h2>
+        <div class="comp-tag">Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inline edit every block</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Narrative SWOT 2x2</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Quarterly action plan</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrAccountStrategyPlan.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Section labels &amp; default content</li>
+                <li>Owner avatar override</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Inline editable from the page — no record write. Great visual for "strategic-account" demo moments, even on bare orgs.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrAccountStrategyPlan</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRACTIVITYFEED -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrActivityFeed" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Activity Feed<code>seFrActivityFeed</code></h2>
+        <div class="comp-tag">Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">16+ record types unified</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Rich filters + expand</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Per-source error isolation</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrActivityFeed.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Days back / forward window</li>
+                <li>Include related contacts</li>
+                <li>Object types displayed</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Pulls from <code>Task</code>, <code>Event</code>, <code>EmailMessage</code>, <code>VoiceCall</code>, <code>MessagingSession</code>, <code>LiveChatTranscript</code>, <code>Order</code>, <code>Case</code>, <code>Opportunity</code>, <code>Quote</code>, <code>Contract</code>, <code>Visit</code>, <code>ContentDocumentLink</code>, <code>FeedItem</code>, <code>SurveyResponse</code> — and uses business-meaningful dates (CloseDate, EffectiveDate, StartDate) instead of CreatedDate.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact</dd>
+                <dt>Apex</dt><dd><code>SE_FR_ActivityFeedController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrActivityFeed</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRALERTSRIBBON -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrAlertsRibbon" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Alerts Ribbon<code>seFrAlertsRibbon</code></h2>
+        <div class="comp-tag">Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Rule-driven + static</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 visual variants</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Sticky-on-scroll</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrAlertsRibbon.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>rulesCsv</code> · field-based rules (Record Page only)</li>
+                <li><code>staticAlertsCsv</code> · always-on alerts (any page)</li>
+                <li><code>visualStyle</code> · inline / card</li>
+                <li><code>alertVariant</code> · banner / solid / minimal</li>
+                <li><code>density</code> · comfortable / compact</li>
+                <li><code>stickyOnScroll</code></li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Rule-driven mode evaluates a tiny DSL against the current record's fields ("AnnualRevenue&lt;500000|warning|...") — drop on any record page, the right alert pops on the right account, no code.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact · Case · Opportunity · Lead · Order · Contract</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrAlertsRibbon</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCONTACTCARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrContactCard" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Contact Card<code>seFrContactCard</code></h2>
+        <div class="comp-tag">Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Wow-effect animated waves</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Optional Einstein summary</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Up to 3 gauges</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inline avatar upload</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrContactCard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Up to 3 gauges (label, field, icon, lower/higher-better semantics)</li>
+                <li>Image · URL field OR click-to-upload File</li>
+                <li>Customer ID line (toggle + field)</li>
+                <li>Animated wave colors / theme accent</li>
+                <li>Einstein prompt summary · default <code>einstein_gpt__summarizeContact</code> (the SDO-shipped template, not a true Salesforce standard)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Built-in "Summarize" button using the SDO-shipped contact-summary prompt — drop on a Contact / Case / Account page and you get an AI inline summary out of the box. Click the avatar to upload a contact photo (no schema work required).
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Contact · Account · Case · Opportunity · Order · Lead</dd>
+                <dt>Apex</dt><dd><code>SE_FR_ContactCardController</code> + <code>SE_FR_ImageFileController</code> + <code>SE_FR_ImageFileController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill hybrid">Hybrid</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrContactCard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCONTACTSCAROUSEL -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrContactsCarousel" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Contacts Carousel<code>seFrContactsCarousel</code></h2>
+        <div class="comp-tag">Horizontal carousel of an Account&#x27;s Contacts with avatars, role badges and quick Email / Call actions.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Champion / DMU role badges</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Initials avatar fallback</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Email &amp; Call shortcuts</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrContactsCarousel.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Visible contact count</li>
+                <li>Card field list</li>
+                <li>Quick actions</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Visual replacement for the standard Contacts related list — much more demo-friendly than a flat table.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account</dd>
+                <dt>Apex</dt><dd><code>SE_FR_ContactsCarouselController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrContactsCarousel</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCUSTOMERORDERS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrCustomerOrders" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Customer Orders<code>seFrCustomerOrders</code></h2>
+        <div class="comp-tag">Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Last order detail card</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Searchable + sortable</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Status filter + &#x27;View all&#x27;</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrCustomerOrders.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Max rows</li>
+                <li>Filter by status / date range</li>
+                <li><code>productImageFieldApiName</code> · default <code>Image_URL__c</code></li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Renders product images per line — turns a plain list into a visual catalog reminiscent of an e-commerce order history. Compatible with SDO product image fields out of the box.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact</dd>
+                <dt>Apex</dt><dd><code>SE_FR_CustomerOrdersController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrCustomerOrders</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCUSTOMERSALESSUMMARY -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrCustomerSalesSummary" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Customer Sales Summary<code>seFrCustomerSalesSummary</code></h2>
+        <div class="comp-tag">B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 KPI + 3 breakdown charts</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Category / Brand / Store</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Person Account compatible</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrCustomerSalesSummary.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Time window</li>
+                <li>Categories shown</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Same component covers B2B and B2C scenarios — auto-detects Person Account vs. business Account and adapts the layout.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Contact · Account</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrCustomerSalesSummary</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRPIPELINESNAPSHOT -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrPipelineSnapshot" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Pipeline Snapshot<code>seFrPipelineSnapshot</code></h2>
+        <div class="comp-tag">Account-level pipeline visualization with summary tiles and one column per Opportunity stage.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Column per stage</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Weighted total tile</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto-derives from Opp</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrPipelineSnapshot.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Max opportunities, status filter</li>
+                <li>Show / hide total</li>
+                <li>Currency display</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Sidebar-friendly width — fits the narrow right column without breaking. No setup needed: reads any open Opportunity on the Account.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Opportunity</dd>
+                <dt>Apex</dt><dd><code>SE_FR_PipelineSnapshotController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrPipelineSnapshot</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRRECORDHIGHLIGHTS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrRecordHighlights" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Record Highlights<code>seFrRecordHighlights</code></h2>
+        <div class="comp-tag">Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inline image upload</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Works on 8 objects</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Configurable field strip</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrRecordHighlights.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>language</code> · en / fr</li>
+                <li><code>recordSource</code> · current / parent</li>
+                <li><code>accountFieldsList</code>, <code>contactFieldsList</code></li>
+                <li><code>imageFieldApiName</code> · URL field on the record</li>
+                <li><code>maxQuickActions</code> · loaded from layout</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Click the avatar to upload / replace the image instantly — no static resource, no public URL hosting, no custom field. The image is saved as a File on the record.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact · Opportunity · Case · Lead · Order · Contract · Quote</dd>
+                <dt>Apex</dt><dd><code>SE_FR_RecordHighlightsController</code> + <code>SE_FR_ImageFileController</code> + <code>SE_FR_ImageFileController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrRecordHighlights</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRRELATEDRECORDCARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrRelatedRecordCard" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Related Record Card<code>seFrRelatedRecordCard</code></h2>
+        <div class="comp-tag">Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto picks counterpart</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Person Account aware</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Empty-state fallback</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrRelatedRecordCard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>target</code> · auto / account / contact</li>
+                <li><code>fieldsCsv</code> per target</li>
+                <li>Per-target image field (Contact + Account)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Click the avatar to upload an image for the related record — handy for setting an Account logo or a Contact picture without leaving the page. Default Contact image field <code>SDO_Cust360_Contact_Picture_URL__c</code> works out-of-box on SDO.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact · Case · Opportunity · Order</dd>
+                <dt>Apex</dt><dd><code>SE_FR_RelatedRecordCardController</code> + <code>SE_FR_ImageFileController</code> + <code>SE_FR_ImageFileController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrRelatedRecordCard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRREVENUEDASHBOARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrRevenueDashboard" data-section="Account 360°">
+    <div class="slide-section-tag">Account 360°</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Revenue Dashboard<code>seFrRevenueDashboard</code></h2>
+        <div class="comp-tag">3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 years side-by-side</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 KPI tiles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Currency &amp; scale options</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrRevenueDashboard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Months back, comparison year</li>
+                <li>Bucket source field, currency code</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Built-in YoY overlay — gives the "story" of growth or decline visually, without configuring a real Salesforce dashboard.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrRevenueDashboard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · SALES PRODUCTIVITY -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-sales-productivity" data-section="Sales Productivity">
+    <div class="num">SECTION 02</div>
+    <h2>Sales Productivity</h2>
+    <div class="lede">Day-to-day reps&#x27; tooling — tasks, events, kanban, order entry.</div>
+    <div class="pieces"><span>Includes</span>Kanban Board · My Events · My Tasks · Order Entry · Order Summary · Timeline Phases</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRKANBANBOARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrKanbanBoard" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Kanban Board<code>seFrKanbanBoard</code></h2>
+        <div class="comp-tag">Generic kanban board with native drag &amp; drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Drag &amp; drop status updates</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto-scope on Record Page</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Per-status swim lanes</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrKanbanBoard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Object type, status field</li>
+                <li>Visible columns</li>
+                <li>Card field list</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Same component supports 6 SObjects — drop on a Home Page (all my open cases), an App Page (team kanban), or a Record Page (Account-scoped cases). Drag-drop instantly updates the status field.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_KanbanBoardController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrKanbanBoard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRMYEVENTS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrMyEvents" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">My Events<code>seFrMyEvents</code></h2>
+        <div class="comp-tag">Today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Side-by-side overlap</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto-trims empty hours</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Compact today view</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrMyEvents.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Days forward</li>
+                <li>Show / hide attendees, location</li>
+                <li>Card title override</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Useful in both Field Sales (today's appointments) and as a transversal "agenda" widget on any persona's Home Page.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_AgendaController</code> + <code>SE_FR_AgendaController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrMyEvents</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRMYTASKS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrMyTasks" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">My Tasks<code>seFrMyTasks</code></h2>
+        <div class="comp-tag">Compact &#x27;My Tasks&#x27; sidebar panel grouped by due date with one-click completion.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Grouped by due date</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">One-click complete</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Overdue highlighting</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrMyTasks.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Days back / forward</li>
+                <li>Show / hide priority chip</li>
+                <li>Card title override</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Same controller as My Events (single Apex class for both) — guarantees consistent date logic and shared maintenance.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_AgendaController</code> + <code>SE_FR_AgendaController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrMyTasks</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRORDERENTRY -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrOrderEntry" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Order Entry<code>seFrOrderEntry</code></h2>
+        <div class="comp-tag">Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">AI-recommended qty + discount</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Live running total</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Persists real Order</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrOrderEntry.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Product columns (code, category, last order, stock, price)</li>
+                <li>Currency code &amp; symbol</li>
+                <li>Order type defaults</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Real product images appear in each row (read from <code>Product2.Image_URL__c</code> by default — works out-of-box on SDO). Reorder shortcut and stock visibility are visually striking demo moments.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Case</dd>
+                <dt>Apex</dt><dd><code>SE_FR_OrderEntryController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrOrderEntry</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRORDERSUMMARY -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrOrderSummary" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Order Summary<code>seFrOrderSummary</code></h2>
+        <div class="comp-tag">Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto-resolves Account</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Edit / delete / submit</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Activates Order on submit</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrOrderSummary.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Show / hide line item details</li>
+                <li>Currency display</li>
+                <li>Separator label</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Clean visual summary that a rep can read aloud during a call without scrolling — great for the "I'm reading you the order back" moment.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Case</dd>
+                <dt>Apex</dt><dd><code>SE_FR_OrderSummaryController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrOrderSummary</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRTIMELINEPHASES -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrTimelinePhases" data-section="Sales Productivity">
+    <div class="slide-section-tag">Sales Productivity</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Timeline Phases<code>seFrTimelinePhases</code></h2>
+        <div class="comp-tag">Horizontal multi-phase timeline with date axis, &#x27;Today&#x27; marker and done / pending state per phase.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Date-axis layout</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">&#x27;Today&#x27; marker</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Done / pending state</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrTimelinePhases.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Up to 6 phases (label, date, status)</li>
+                <li>Color theme</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Visualizes a journey or process state without needing custom objects or flows — type the phases directly in App Builder.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrTimelinePhases</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · GEO & FIELD -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-geo-field" data-section="Geo &amp; Field">
+    <div class="num">SECTION 03</div>
+    <h2>Geo &amp; Field</h2>
+    <div class="lede">On-the-ground components for field reps — maps, voice notes.</div>
+    <div class="pieces"><span>Includes</span>Nearby Accounts Map · Territory Map · Voice Note Taker</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRNEARBYACCOUNTSMAP -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrNearbyAccountsMap" data-section="Geo &amp; Field">
+    <div class="slide-section-tag">Geo &amp; Field</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Nearby Accounts Map<code>seFrNearbyAccountsMap</code></h2>
+        <div class="comp-tag">Interactive map of nearby accounts using the browser&#x27;s geolocation with Haversine distance sort.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Browser geolocation</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Haversine distance sort</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Custom pin styling</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrNearbyAccountsMap.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Origin mode · auto geolocation / manual lat-lng</li>
+                <li>Max accounts displayed, RecordType filter</li>
+                <li>Highlight first account as priority</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Browser geolocation prompt for a "wow" moment in field demos. Falls back to a fixed origin (Place de la Bastille) when permission is denied — never breaks the demo.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_NearbyAccountsController</code> + <code>SE_FR_NearbyAccountsController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrNearbyAccountsMap</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRTERRITORYMAP -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrTerritoryMap" data-section="Geo &amp; Field">
+    <div class="slide-section-tag">Geo &amp; Field</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Territory Map<code>seFrTerritoryMap</code></h2>
+        <div class="comp-tag">Interactive territory map with geocoded Accounts, pipeline color coding, sidebar filters and CSV export.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Pipeline-tier color code</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Sidebar filters</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">CSV export of view</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrTerritoryMap.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Owner / RecordType / amount range / stages / case status</li>
+                <li>2 configurable picklist filters (Type, Industry by default)</li>
+                <li>Map height, map / list ratio, default center (France)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Pins are color-coded by open-pipeline tier (red top 20% / orange / green / grey) — instantly visualizes territory health. CSV export lets you pull the filtered list for follow-up reports.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_TerritoryMapController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrTerritoryMap</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRVOICENOTETAKER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrVoiceNoteTaker" data-section="Geo &amp; Field">
+    <div class="slide-section-tag">Geo &amp; Field</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Voice Note Taker<code>seFrVoiceNoteTaker</code></h2>
+        <div class="comp-tag">Dictate a voice note via the Web Speech API and save it as a completed Task linked to the current record.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Browser-native dictation</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Saves as Task</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto WhoId / WhatId routing</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrVoiceNoteTaker.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Auto-save vs review-first</li>
+                <li>Transcript language</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Speech-to-text via the browser <code>SpeechRecognition</code> API — no Einstein / external service dependency. Demoable on any org as long as Chrome is the browser.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact · Lead · Opportunity</dd>
+                <dt>Apex</dt><dd><code>SE_FR_VoiceNoteController</code> + <code>SE_FR_VoiceNoteController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrVoiceNoteTaker</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · MARKETING & DATA -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-marketing-data" data-section="Marketing &amp; Data">
+    <div class="num">SECTION 04</div>
+    <h2>Marketing &amp; Data</h2>
+    <div class="lede">Segments, consent, marketing-side metrics.</div>
+    <div class="pieces"><span>Includes</span>Active Segments · Consent Manager · Metric Tile</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRACTIVESEGMENTS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrActiveSegments" data-section="Marketing &amp; Data">
+    <div class="slide-section-tag">Marketing &amp; Data</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Active Segments<code>seFrActiveSegments</code></h2>
+        <div class="comp-tag">Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Segment count in title</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Color-coded badges</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Record / App / Home page</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrActiveSegments.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Up to 6 segment slots (label, audience size, last-updated)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Sets a marketing-aware tone on a Contact page without requiring a Data Cloud connection — props-driven storytelling.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrActiveSegments</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCONSENTMANAGER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrConsentManager" data-section="Marketing &amp; Data">
+    <div class="slide-section-tag">Marketing &amp; Data</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Consent Manager<code>seFrConsentManager</code></h2>
+        <div class="comp-tag">Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Per-channel toggles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">LDS persistence</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inverted opt-out fields</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrConsentManager.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Channels CSV (override) · format <code>label|fieldApiName|inverted</code></li>
+                <li>Toggle / success / error label overrides</li>
+                <li>Card title / icon override</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Default channels map onto Salesforce standard fields: <code>HasOptedOutOfEmail</code>, <code>DoNotCall</code>, <code>HasOptedOutOfFax</code> (used as a stand-in for WhatsApp opt-out). Drop on Contact / Lead / Account → it just works, no custom field required.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Contact · Lead · Account</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrConsentManager</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRMETRICTILE -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrMetricTile" data-section="Marketing &amp; Data">
+    <div class="slide-section-tag">Marketing &amp; Data</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Metric Tile<code>seFrMetricTile</code></h2>
+        <div class="comp-tag">Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">4 chart styles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Forecast-vs-actual dashed</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Target line + goal donut</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Pure SVG ~3 KB</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrMetricTile.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>chartStyle</code> · line / area / bar / mini-donut</li>
+                <li><code>seriesJson</code>, <code>secondarySeriesJson</code> (forecast vs actual)</li>
+                <li><code>targetValue</code> + dashed target line + chip</li>
+                <li><code>currentValue</code> + <code>currencyCode</code> · auto Intl format</li>
+                <li><code>scalingMode</code> · auto / from-zero / fixed</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Compact tile, dashboard-ready — set <code>hideCardTitle = true</code> to stack 4 tiles in a row aligned. Mini-donut variant is the striking "85% to target" demo moment without configuring a real Performance Goal.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrMetricTile</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · AGENTFORCE & AI -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-agentforce-ai" data-section="Agentforce &amp; AI">
+    <div class="num">SECTION 05</div>
+    <h2>Agentforce &amp; AI</h2>
+    <div class="lede">Components that surface or trigger Salesforce AI capabilities.</div>
+    <div class="pieces"><span>Includes</span>Agentforce Header · Contact Card · Prompt Launcher · Smart Recommendations</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRAGENTFORCEHEADER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrAgentforceHeader" data-section="Agentforce &amp; AI">
+    <div class="slide-section-tag">Agentforce &amp; AI</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Agentforce Header<code>seFrAgentforceHeader</code></h2>
+        <div class="comp-tag">Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Astro floating header</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Voice dictation</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Triggers Agentforce panel</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrAgentforceHeader.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Title / subtitle</li>
+                <li>CTA label + URL</li>
+                <li>Astro animation toggle</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Speech-to-text via the browser API — speak a question, click "Send", and the transcribed text lands in your clipboard. Paste it into the standard Agentforce panel for a fluid AI demo entry. (No real Agentforce integration — the UI fakes the gesture.)
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Home Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrAgentforceHeader</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRCONTACTCARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrContactCard" data-section="Agentforce &amp; AI">
+    <div class="slide-section-tag">Agentforce &amp; AI</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Contact Card<code>seFrContactCard</code></h2>
+        <div class="comp-tag">Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Wow-effect animated waves</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Optional Einstein summary</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Up to 3 gauges</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inline avatar upload</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrContactCard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Up to 3 gauges (label, field, icon, lower/higher-better semantics)</li>
+                <li>Image · URL field OR click-to-upload File</li>
+                <li>Customer ID line (toggle + field)</li>
+                <li>Animated wave colors / theme accent</li>
+                <li>Einstein prompt summary · default <code>einstein_gpt__summarizeContact</code> (the SDO-shipped template, not a true Salesforce standard)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Built-in "Summarize" button using the SDO-shipped contact-summary prompt — drop on a Contact / Case / Account page and you get an AI inline summary out of the box. Click the avatar to upload a contact photo (no schema work required).
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Contact · Account · Case · Opportunity · Order · Lead</dd>
+                <dt>Apex</dt><dd><code>SE_FR_ContactCardController</code> + <code>SE_FR_ImageFileController</code> + <code>SE_FR_ImageFileController</code> <em>(shared)</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill hybrid">Hybrid</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrContactCard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRPROMPTLAUNCHER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrPromptLauncher" data-section="Agentforce &amp; AI">
+    <div class="slide-section-tag">Agentforce &amp; AI</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Prompt Launcher<code>seFrPromptLauncher</code></h2>
+        <div class="comp-tag">Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Pill switcher per prompt</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Auto-fills record context</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Save as Note</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">HTML-formatted output</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrPromptLauncher.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>promptsJson</code> · catalogue (apiName, label, icon, objects[], userInputs[], extraInputs)</li>
+                <li>Auto record-type filtering (Account → Account summary, Home → free-text prompts)</li>
+                <li>Auto-detect HTML / Markdown response · dynamic height</li>
+                <li><code>autoRunFirstPrompt</code> · trigger AI on page load</li>
+                <li><code>resultAccent</code> · blue / purple / green · <code>maxHeight</code> · optional cap</li>
+                <li><code>namedCredential</code> · default <code>Agentforce_API</code></li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Default catalogue covers Account / Contact / Opportunity / Lead / Case summaries + free-text Summarize/Refine — drop on any record page, the right prompt shows up automatically. Save as Note attaches the AI output to the record in one click.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_PromptLauncherController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrPromptLauncher</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRSMARTRECOMMENDATIONS -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrSmartRecommendations" data-section="Agentforce &amp; AI">
+    <div class="slide-section-tag">Agentforce &amp; AI</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Smart Recommendations<code>seFrSmartRecommendations</code></h2>
+        <div class="comp-tag">Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Context-aware per object</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Relevance score badge</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Inline title &amp; reason override</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrSmartRecommendations.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Recommendations CSV (label + reason + icon)</li>
+                <li>Einstein prompt template (optional)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Default narratives are tuned for SDO-style sales scenarios. Plug an Einstein prompt template to flip the same UI into a real AI demo without rewiring the layout.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account · Contact · Case · Order</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrSmartRecommendations</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · DASHBOARDS & KPIS -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-dashboards-kpis" data-section="Dashboards &amp; KPIs">
+    <div class="num">SECTION 06</div>
+    <h2>Dashboards &amp; KPIs</h2>
+    <div class="lede">At-a-glance metric tiles, KPI grids, persona Home Pages.</div>
+    <div class="pieces"><span>Includes</span>Field Sales - Rep Home · KPI Launcher · Metric Tile · Revenue Dashboard · Telesales - Rep Home</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRFIELDREPHOME -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrFieldRepHome" data-section="Dashboards &amp; KPIs">
+    <div class="slide-section-tag">Dashboards &amp; KPIs</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Field Sales - Rep Home<code>seFrFieldRepHome</code></h2>
+        <div class="comp-tag">Field Sales rep home page with greeting, KPIs, priority accounts, hot leads, product penetration and campaign calendar.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Dynamic priority accounts</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Hot leads table</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Product-penetration bars</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Campaign calendar</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrFieldRepHome.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Number of tasks / events shown</li>
+                <li>KPI tiles (label, value, target)</li>
+                <li>Quick action links</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            One Home page with all the field-sales context preloaded — no need to assemble 5 components on a custom App Page.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_FieldSalesController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill hybrid">Hybrid</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrFieldRepHome</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRKPILAUNCHER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrKpiLauncher" data-section="Dashboards &amp; KPIs">
+    <div class="slide-section-tag">Dashboards &amp; KPIs</div>
+    <div class="comp-head">
+        <h2 class="comp-name">KPI Launcher<code>seFrKpiLauncher</code></h2>
+        <div class="comp-tag">Configurable grid of 3-6 clickable KPI tiles with icon, value, color and link, ready out of the box.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 to 6 tiles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Color-invert hover</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Internal &amp; external links</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrKpiLauncher.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Up to 8 tiles (label, value, trend %, target URL)</li>
+                <li>Color accent per tile</li>
+                <li>Layout (grid / horizontal)</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Most-tunable component in the library (40+ properties). Click-through targets let you stage navigation flows during a demo without writing a Flow or App Builder action.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrKpiLauncher</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRMETRICTILE -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrMetricTile" data-section="Dashboards &amp; KPIs">
+    <div class="slide-section-tag">Dashboards &amp; KPIs</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Metric Tile<code>seFrMetricTile</code></h2>
+        <div class="comp-tag">Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">4 chart styles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Forecast-vs-actual dashed</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Target line + goal donut</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Pure SVG ~3 KB</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrMetricTile.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li><code>chartStyle</code> · line / area / bar / mini-donut</li>
+                <li><code>seriesJson</code>, <code>secondarySeriesJson</code> (forecast vs actual)</li>
+                <li><code>targetValue</code> + dashed target line + chip</li>
+                <li><code>currentValue</code> + <code>currencyCode</code> · auto Intl format</li>
+                <li><code>scalingMode</code> · auto / from-zero / fixed</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Compact tile, dashboard-ready — set <code>hideCardTitle = true</code> to stack 4 tiles in a row aligned. Mini-donut variant is the striking "85% to target" demo moment without configuring a real Performance Goal.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrMetricTile</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRREVENUEDASHBOARD -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrRevenueDashboard" data-section="Dashboards &amp; KPIs">
+    <div class="slide-section-tag">Dashboards &amp; KPIs</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Revenue Dashboard<code>seFrRevenueDashboard</code></h2>
+        <div class="comp-tag">3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 years side-by-side</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 KPI tiles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Currency &amp; scale options</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrRevenueDashboard.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Months back, comparison year</li>
+                <li>Bucket source field, currency code</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Built-in YoY overlay — gives the "story" of growth or decline visually, without configuring a real Salesforce dashboard.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Account</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrRevenueDashboard</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRTELESALESREPHOME -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrTelesalesRepHome" data-section="Dashboards &amp; KPIs">
+    <div class="slide-section-tag">Dashboards &amp; KPIs</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Telesales - Rep Home<code>seFrTelesalesRepHome</code></h2>
+        <div class="comp-tag">Telesales rep home page with KPIs, live cases and orders tables, calls to make and 3 mini charts.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Live cases &amp; orders</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Calls-to-make queue</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">3 mini analytical charts</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrTelesalesRepHome.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Number of calls shown</li>
+                <li>KPI tiles</li>
+                <li>Quick action links</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            One template for Inside Sales Home — pre-composed, no need to wire 5 components manually in App Builder.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_TelesalesController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill hybrid">Hybrid</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrTelesalesRepHome</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DIVIDER · TRANSVERSE -->
+<!-- ================================================================ -->
+<div class="slide divider" id="slide-divider-transverse" data-section="Transverse">
+    <div class="num">SECTION 07</div>
+    <h2>Transverse</h2>
+    <div class="lede">Polish &amp; transverse components reused across categories.</div>
+    <div class="pieces"><span>Includes</span>Files Gallery · Splash Banner</div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">section</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRFILESGALLERY -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrFilesGallery" data-section="Transverse">
+    <div class="slide-section-tag">Transverse</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Files Gallery<code>seFrFilesGallery</code></h2>
+        <div class="comp-tag">Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Image thumbs + doctype icons</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Drag &amp; drop upload</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Click-to-preview</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrFilesGallery.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Max files, visible count in carousel</li>
+                <li>Show / hide upload + delete buttons</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            Real image thumbnails (not just generic doctype icons) — pull product photos, brand assets, contracts. Drag-drop upload zone is custom-built (not the native <code>lightning-file-upload</code>) so the layout looks clean in narrow sidebar columns.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><code>SE_FR_FilesGalleryController</code></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill live">Live</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrFilesGallery</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SEFRSPLASHBANNER -->
+<!-- ================================================================ -->
+<div class="slide comp" id="slide-seFrSplashBanner" data-section="Transverse">
+    <div class="slide-section-tag">Transverse</div>
+    <div class="comp-head">
+        <h2 class="comp-name">Splash Banner<code>seFrSplashBanner</code></h2>
+        <div class="comp-tag">Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.</div>
+        <div class="comp-chips" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">8 animated styles</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Pure CSS / SVG</span><span class="chip" style="background:#F4F6F9;border:1px solid #E5E5E5;border-radius:999px;padding:2px 10px;font-size:11.5pt;color:#333">Respects reduced-motion</span></div>
+    </div>
+    <div class="comp-shot"><div class="placeholder-name">seFrSplashBanner.png</div></div>
+    <div class="comp-meta">
+        <div class="meta-block">
+            <h4>Configurable settings</h4>
+            <ul>
+                <li>Title, subtitle, text size, alignment</li>
+                <li>Background style (8 options)</li>
+                <li>3 colors (primary / secondary / tertiary)</li>
+                <li>Height, animation speed</li>
+                <li>Optional CTA button</li>
+            </ul>
+        </div>
+        <div class="se-benefit">
+            <strong>SE benefit</strong>
+            8 distinct visual moods — pick "Constellation" or "Conic" for AI demos, "Waves" for sober customer-success vibes, "Aurora" for premium / luxury. No images / static resources to upload.
+        </div>
+        <div class="meta-block">
+            <dl class="meta-row">
+                <dt>Targets</dt><dd>App Page · Home Page · Record Page</dd>
+                <dt>Objects</dt><dd>Any</dd>
+                <dt>Apex</dt><dd><em>none</em></dd>
+            </dl>
+        </div>
+        <div style="display:flex;gap:6px"><span class="data-pill mock">Mock</span><span class="data-pill" style="background:#E0F2FE;color:#075985;border:1px solid #BAE6FD">Mobile-ready</span></div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">seFrSplashBanner</div>
+</div>
+<!-- DECK:end components -->
+
+<!-- ================================================================ -->
+<!-- SLIDE 46 — DEPLOY                                                  -->
+<!-- ================================================================ -->
+<div class="slide text-slide" id="slide-deploy" data-section="Closing">
+    <h2>Get the components into your org</h2>
+    <div class="subhead">Three steps. Five minutes per component.</div>
+    <div class="step-row">
+        <div class="step">
+            <div class="num">1</div>
+            <h3>Pick</h3>
+            <p>Browse the catalog on Drive (or GitHub when published). Each component is a standalone zip with everything it needs.</p>
+            <div class="step-shot">screenshot · Drive folder</div>
+        </div>
+        <div class="step">
+            <div class="num">2</div>
+            <h3>Drop</h3>
+            <p>Three options to deploy:</p>
+            <ul>
+                <li><strong>SF CLI</strong> — <code>sf project deploy start --source-dir &lt;folder&gt;</code></li>
+                <li><strong>Claude Code / Cursor</strong> — pass the bundle to your AI assistant</li>
+                <li><strong>Lightning Studio plugin</strong> — drag the zip in the UI</li>
+            </ul>
+            <div class="step-shot">screenshot · CLI / IDE / Studio</div>
+        </div>
+        <div class="step">
+            <div class="num">3</div>
+            <h3>Configure</h3>
+            <p>Place the component on the right page in App Builder. Tune via the properties panel — no code change. Demo-ready in minutes.</p>
+            <div class="step-shot">screenshot · App Builder</div>
+        </div>
+    </div>
+    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-num">deploy</div>
+</div>
+
+<!-- ================================================================ -->
+<!-- SLIDE 47 — CLOSING (contribute & contact)                          -->
+<!-- ================================================================ -->
+<div class="slide closing" id="slide-closing" data-section="Closing">
+    <h1>Thanks for using<br>the SE FR kit.</h1>
+    <div class="lede">Built by SE France, for SE France. Contributions and feedback welcome.</div>
+    <div class="contribute">
+        <strong>Contribute</strong><br>
+        Spotted a bug, want a new component, or have an SDO use case in mind? Ping the maintainer or open an issue when the GitHub repo lands.
+    </div>
+    <div class="contact">
+        <strong>Lionel Braun</strong> · Solution Engineering France<br>
+        lionel.braun@salesforce.com
+    </div>
+    <div class="slide-num">end</div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Floating present-mode toggle button -->
+<button class="present-toggle" onclick="document.body.classList.toggle('present-mode'); if(document.body.classList.contains('present-mode')) startPresent();">▶ Present</button>
+
+<script>
+    // ============================================================
+    // Navigation logic — sidebar highlight + topbar progress + keyboard
+    // ============================================================
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const sidebarLinks = Array.from(document.querySelectorAll('.sb-link'));
+    const tbNum = document.getElementById('tbNum');
+    const tbSection = document.getElementById('tbSection');
+    const progress = document.getElementById('progress');
+
+    function setActive(idx) {
+        const slide = slides[idx];
+        if (!slide) return;
+        const id = slide.id;
+        sidebarLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+        const num = (idx + 1).toString().padStart(2, '0');
+        tbNum.textContent = num;
+        const section = slide.dataset.section || '';
+        tbSection.innerHTML = '<span>Section</span>' + section;
+        progress.style.width = ((idx + 1) / slides.length * 100) + '%';
+        // Scroll the active sidebar link into view (smooth feel)
+        const activeLink = sidebarLinks.find(l => l.classList.contains('active'));
+        if (activeLink) {
+            const sb = document.querySelector('.sidebar');
+            const r = activeLink.getBoundingClientRect();
+            const sbR = sb.getBoundingClientRect();
+            if (r.top < sbR.top + 60 || r.bottom > sbR.bottom - 60) {
+                activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+        }
+    }
+
+    // IntersectionObserver — track which slide is most visible (scroll mode)
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                if (entry.intersectionRatio > 0.4) {
+                    const idx = slides.indexOf(entry.target);
+                    if (idx >= 0) setActive(idx);
+                }
+            }
+        });
+    }, { threshold: [0.0, 0.4, 0.6, 1.0] });
+    slides.forEach(s => io.observe(s));
+
+    // Initial state
+    const tbTotal = document.getElementById('tbTotal');
+    if (tbTotal) tbTotal.textContent = slides.length;
+    setActive(0);
+
+    // ============================================================
+    // Presentation mode — keyboard / arrow navigation
+    // ============================================================
+    let presentIdx = 0;
+
+    function showPresent(idx) {
+        if (idx < 0) idx = 0;
+        if (idx >= slides.length) idx = slides.length - 1;
+        presentIdx = idx;
+        slides.forEach((s, i) => s.classList.toggle('present-current', i === idx));
+        setActive(idx);
+    }
+
+    function startPresent() {
+        // Find the slide closest to viewport center to start from
+        const center = window.scrollY + window.innerHeight / 2;
+        let bestIdx = 0;
+        let bestDist = Infinity;
+        slides.forEach((s, i) => {
+            const r = s.getBoundingClientRect();
+            const sCenter = window.scrollY + r.top + r.height / 2;
+            const dist = Math.abs(sCenter - center);
+            if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+        });
+        showPresent(bestIdx);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        const inPresent = document.body.classList.contains('present-mode');
+        // Esc → exit presentation mode
+        if (e.key === 'Escape' && inPresent) {
+            document.body.classList.remove('present-mode');
+            slides[presentIdx].scrollIntoView({ block: 'start', behavior: 'instant' });
+            return;
+        }
+        // P → toggle presentation
+        if (e.key === 'p' || e.key === 'P') {
+            document.body.classList.toggle('present-mode');
+            if (document.body.classList.contains('present-mode')) startPresent();
+            return;
+        }
+        // Arrow keys / Page keys: navigate (works in both scroll and present modes)
+        const next = (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'j' || e.key === 'J' || (e.key === ' ' && !e.shiftKey));
+        const prev = (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'k' || e.key === 'K' || (e.key === ' ' && e.shiftKey));
+        if (next || prev) {
+            e.preventDefault();
+            if (inPresent) {
+                showPresent(presentIdx + (next ? 1 : -1));
+            } else {
+                const currentIdx = slides.findIndex(s => s.classList.contains('active-scroll')) >= 0
+                    ? slides.findIndex(s => s.classList.contains('active-scroll'))
+                    : (parseInt(tbNum.textContent, 10) - 1);
+                const newIdx = currentIdx + (next ? 1 : -1);
+                if (newIdx >= 0 && newIdx < slides.length) {
+                    slides[newIdx].scrollIntoView({ block: 'start', behavior: 'smooth' });
+                }
+            }
+        }
+        // Home / End jump
+        if (e.key === 'Home') {
+            e.preventDefault();
+            if (inPresent) showPresent(0);
+            else slides[0].scrollIntoView({ block: 'start', behavior: 'smooth' });
+        }
+        if (e.key === 'End') {
+            e.preventDefault();
+            if (inPresent) showPresent(slides.length - 1);
+            else slides[slides.length - 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+        }
+    });
+
+    // Smooth scroll for sidebar / catalog links (also exits present mode if active)
+    document.querySelectorAll('a[href^="#slide-"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (!target) return;
+            e.preventDefault();
+            if (document.body.classList.contains('present-mode')) {
+                const idx = slides.indexOf(target);
+                if (idx >= 0) showPresent(idx);
+            } else {
+                target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+.tm-body {
+    padding: 0 12px 12px 12px;
+}
+.header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ============================================================================================
+   KPI strip — sexy tinted tiles with side accent and icon
+   ============================================================================================ */
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.kpi-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px 10px 18px;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kpi-tile::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 4px;
+    background: var(--kpi-accent, #0176d3);
+}
+.kpi-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--kpi-accent, #0176d3) 0%, transparent 70%);
+    opacity: 0.08;
+    pointer-events: none;
+}
+.kpi-tile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+.kpi-icon {
+    --sds-c-icon-color-foreground-default: var(--kpi-accent, #0176d3);
+    --sds-c-icon-color-background: transparent;
+    flex-shrink: 0;
+}
+.kpi-text { display: flex; flex-direction: column; min-width: 0; }
+.kpi-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #181818;
+    line-height: 1.1;
+}
+.kpi-label {
+    font-size: 0.7rem;
+    color: #555;
+    line-height: 1.2;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kpi-tile_accounts { --kpi-accent: #0176d3; }
+.kpi-tile_amount   { --kpi-accent: #2e844a; }
+.kpi-tile_opps     { --kpi-accent: #fe9339; }
+.kpi-tile_cases    { --kpi-accent: #ba0517; }
+
+/* ============================================================================================
+   Filters panel
+   ============================================================================================ */
+.filters-panel {
+    background: #fafaf9;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+}
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.filter-listboxes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* ============================================================================================
+   Body split — fixed-height map + independently scrolling list
+   ============================================================================================ */
+.tm-split {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    height: var(--tm-map-height, 480px);
+}
+.tm-map-pane {
+    flex: 0 0 var(--tm-map-width, 66%);
+    height: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f3f3f3;
+    position: relative;
+}
+.tm-map-pane lightning-map { height: 100%; }
+.tm-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 5;
+}
+.tm-list-pane {
+    flex: 0 0 var(--tm-list-width, 34%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background: #ffffff;
+    overflow: hidden;
+}
+.tm-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #f3f3f3;
+    border-bottom: 1px solid #e5e5e5;
+}
+.tm-list-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.tm-list-count {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #181818;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 1px 10px;
+    border: 1px solid #e5e5e5;
+}
+.tm-list-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.tm-list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    min-width: 0;
+}
+.tm-list-item:hover { background: #f7f9fb; }
+.tm-list-item_selected {
+    background: #ecf5fc !important;
+    box-shadow: inset 3px 0 0 #0176d3;
+}
+.tm-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+.tm-list-item-body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.tm-list-item-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #181818;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tm-list-item-meta {
+    font-size: 0.75rem;
+    color: #707070;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tm-list-empty {
+    padding: 20px 12px;
+    color: #707070;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* ============================================================================================
+   Empty state for the map area (no accounts at all)
+   ============================================================================================ */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #555;
+    padding: 24px 12px;
+    text-align: center;
+}
+.empty-state p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ============================================================================================
+   Adaptive: stack on narrow widths (e.g. when placed in a sidebar column)
+   ============================================================================================ */
+@media (max-width: 720px) {
+    .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .filter-grid { grid-template-columns: 1fr 1fr; }
+    .filter-listboxes { grid-template-columns: 1fr; }
+    .tm-split {
+        flex-direction: column;
+        height: auto;
+    }
+    .tm-map-pane {
+        flex: 0 0 var(--tm-map-height, 480px);
+        height: var(--tm-map-height, 480px);
+    }
+    .tm-list-pane {
+        flex: 0 0 auto;
+        height: 280px;
+    }
+}

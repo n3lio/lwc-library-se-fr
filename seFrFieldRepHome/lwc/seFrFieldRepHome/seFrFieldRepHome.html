@@ -1,0 +1,127 @@
+<template>
+    <div class="greeting-banner">
+        <h1 class="slds-text-heading_medium greeting-text">
+            <template for:each={greetingSegments} for:item="seg">
+                <template if:true={seg.highlight}>
+                    <span key={seg.id} style={highlightStyle}>{seg.text}</span>
+                </template>
+                <template if:false={seg.highlight}>
+                    <span key={seg.id}>{seg.text}</span>
+                </template>
+            </template>
+        </h1>
+    </div>
+
+    <lightning-layout multiple-rows class="slds-m-bottom_medium" pull-to-boundary="small">
+        <lightning-layout-item size="6" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-visits">
+                <lightning-icon icon-name="utility:checkin" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi1Label}</div>
+                <div class="kpi-value">{kpi1Value}</div>
+                <div class={kpi1FooterClass}>{resolvedKpi1Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-leads">
+                <lightning-icon icon-name="utility:lead" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi2Label}</div>
+                <div class="kpi-value">{kpi2Value}</div>
+                <div class={kpi2FooterClass}>{resolvedKpi2Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-revenue">
+                <lightning-icon icon-name="utility:money" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi3Label}</div>
+                <div class="kpi-value">{kpi3Value}</div>
+                <div class={kpi3FooterClass}>{resolvedKpi3Footer}</div>
+            </div>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" medium-device-size="3" padding="horizontal-small" class="slds-m-bottom_small">
+            <div class="kpi-card kpi-month">
+                <lightning-icon icon-name="utility:event" size="small" class="slds-m-bottom_x-small"></lightning-icon>
+                <div class="kpi-label">{resolvedKpi4Label}</div>
+                <div class="kpi-value">{kpi4Value}</div>
+                <div class={kpi4FooterClass}>{resolvedKpi4Footer}</div>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout multiple-rows class="slds-m-bottom_medium" pull-to-boundary="small">
+        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+            <lightning-card title={labels.priorityAccounts} icon-name="standard:account">
+                <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToAccounts}></lightning-button>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <template if:false={hasAccounts}>
+                        <p class="slds-text-color_weak slds-text-align_center slds-m-vertical_medium">{labels.priorityEmpty}</p>
+                    </template>
+                    <ul>
+                        <template for:each={accounts} for:item="acc">
+                            <li class="list-item" key={acc.Id}>
+                                <div class="item-details slds-p-left_xx-small">
+                                    <div class="item-title"><a href="javascript:void(0);" data-id={acc.Id} onclick={navigateToRecord} class="theme-link">{acc.Name}</a></div>
+                                    <div class="item-meta">{acc.city} &bull; <strong class={acc.motiveClass}>{acc.visitMotive}</strong></div>
+                                </div>
+                                <div class="item-action"><lightning-button-icon icon-name="utility:checkin" variant="border-filled" alternative-text={labels.prepareVisit}></lightning-button-icon></div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+            <lightning-card title={labels.newLeads} icon-name="standard:lead">
+                <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToLeads}></lightning-button>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <template if:false={hasLeads}>
+                        <p class="slds-text-color_weak slds-text-align_center slds-m-vertical_medium">{labels.leadsEmpty}</p>
+                    </template>
+                    <ul>
+                        <template for:each={leads} for:item="lead">
+                            <li class="list-item" key={lead.Id}>
+                                <div class="item-details slds-p-left_xx-small">
+                                    <div class="item-title"><a href="javascript:void(0);" data-id={lead.Id} onclick={navigateToRecord} class="theme-link">{lead.Name}</a></div>
+                                    <div class="item-meta">{lead.Company} &bull; {lead.Rating}</div>
+                                </div>
+                                <div class="item-action"><lightning-button-icon icon-name="utility:call" variant="border-filled" alternative-text={labels.call}></lightning-button-icon></div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout multiple-rows pull-to-boundary="small">
+        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+            <lightning-card title={labels.productPenetration} icon-name="standard:chart">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_small">
+                    <template for:each={penetrationRows} for:item="row">
+                        <div key={row.id} class="bar-row">
+                            <div class="bar-labels"><span>{row.label}</span><strong>{row.percentDisplay}</strong></div>
+                            <div class="bar-track"><div class="bar-fill" style={row.fillStyle}></div></div>
+                        </div>
+                    </template>
+                    <p class="slds-text-body_small slds-text-color_weak slds-m-top_small"><em>{resolvedPenetrationTip}</em></p>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+            <lightning-card title={labels.campaignCalendar} icon-name="standard:event">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_small">
+                    <template for:each={events} for:item="evt">
+                        <div key={evt.id} class="cal-wrapper">
+                            <div class="cal-item" style={evt.borderStyle}>
+                                <strong>{evt.title}</strong>
+                                <div class="slds-text-body_small slds-text-color_weak">{evt.description}</div>
+                            </div>
+                            <lightning-button-icon icon-name="utility:chevronright" variant="bare" alternative-text={labels.learnMore}></lightning-button-icon>
+                        </div>
+                    </template>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

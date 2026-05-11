@@ -1,0 +1,181 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div slot="actions">
+            <template lwc:if={isAnySectionEditing}>
+                <lightning-button label={labels.reset} variant="neutral" class="slds-m-right_x-small" onclick={handleResetDefaults}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-around_medium" style={accentStyle}>
+
+            <!-- ======================= 1. Performance snapshot ======================= -->
+            <div class="section-title slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                <span>{labels.sectionSnapshot}</span>
+                <lightning-button-icon icon-name="utility:edit" alternative-text={labels.edit} size="x-small" variant="bare" onclick={toggleEditSnapshot}></lightning-button-icon>
+            </div>
+            <div class="slds-grid slds-gutters slds-wrap slds-m-bottom_medium slds-m-top_x-small">
+                <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-p-bottom_x-small">
+                    <div class="kpi-tile kpi-tile_primary">
+                        <div class="kpi-label">{resolvedKpiPreviousYearLabel}</div>
+                        <div class="kpi-value">{formattedPreviousYear}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-p-bottom_x-small">
+                    <div class="kpi-tile">
+                        <div class="kpi-label">{resolvedKpiRunRateLabel}</div>
+                        <div class="kpi-value">{formattedRunRate}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-p-bottom_x-small">
+                    <div class="kpi-tile">
+                        <div class="kpi-label">{resolvedKpiPotentialLabel}</div>
+                        <div class="kpi-value">{formattedPotential}</div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-p-bottom_x-small">
+                    <div class="kpi-tile">
+                        <div class="kpi-label">{resolvedKpiShareLabel}</div>
+                        <div class="kpi-value">{kpiShareValue}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="target-block">
+                <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                    <span class="slds-text-body_small"><strong>{resolvedAnnualTargetLabel}</strong></span>
+                    <span class="slds-text-body_small"><strong>{targetPercentLabel}</strong></span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" style={targetFillStyle}></div>
+                </div>
+                <div class="slds-grid slds-grid_align-spread slds-m-top_xx-small">
+                    <span class="slds-text-body_small slds-text-color_weak">{resolvedYtdRevenueLabel}: {formattedYtd}</span>
+                    <span class="slds-text-body_small slds-text-color_weak">{labels.target}: {formattedTarget}</span>
+                </div>
+                <template lwc:if={editSnapshot}>
+                    <div class="slds-grid slds-gutters slds-m-top_x-small">
+                        <div class="slds-col">
+                            <lightning-input type="number" formatter="currency" step="100" label={resolvedYtdRevenueLabel} value={ytdRevenue} onchange={handleYtdChange}></lightning-input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input type="number" formatter="currency" step="100" label={resolvedAnnualTargetLabel} value={annualTarget} onchange={handleTargetChange}></lightning-input>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- ======================= 2. SWOT ======================= -->
+            <div class="section-title slds-m-top_medium slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                <span>{labels.sectionPositioning}</span>
+                <lightning-button-icon icon-name="utility:edit" alternative-text={labels.edit} size="x-small" variant="bare" onclick={toggleEditSwot}></lightning-button-icon>
+            </div>
+            <div class="slds-grid slds-gutters slds-wrap slds-m-top_x-small">
+                <template for:each={swotCards} for:item="card">
+                    <div key={card.key} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_small">
+                        <div class="swot-card">
+                            <div class="swot-header slds-p-around_x-small slds-grid slds-grid_vertical-align-center" style={card.headerStyle}>
+                                <lightning-icon icon-name={card.icon} size="x-small" style={card.iconStyle} class="slds-m-right_x-small"></lightning-icon>
+                                <strong>{card.label}</strong>
+                            </div>
+                            <div class="swot-body slds-p-around_x-small">
+                                <template lwc:if={card.items.length}>
+                                    <ul class="swot-list">
+                                        <template for:each={card.items} for:item="it">
+                                            <li key={it.id}>{it.text}</li>
+                                        </template>
+                                    </ul>
+                                </template>
+                                <template lwc:else>
+                                    <p class="slds-text-color_weak slds-text-body_small">—</p>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <template lwc:if={editSwot}>
+                <div class="slds-grid slds-gutters slds-wrap slds-m-top_x-small">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-textarea label={labels.strengthsEdit} value={strengthsText} onchange={handleStrengthsChange}></lightning-textarea>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-textarea label={labels.weaknessesEdit} value={weaknessesText} onchange={handleWeaknessesChange}></lightning-textarea>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-textarea label={labels.opportunitiesEdit} value={opportunitiesText} onchange={handleOpportunitiesChange}></lightning-textarea>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-bottom_x-small">
+                        <lightning-textarea label={labels.threatsEdit} value={threatsText} onchange={handleThreatsChange}></lightning-textarea>
+                    </div>
+                </div>
+            </template>
+
+            <!-- ======================= 3. Action plan ======================= -->
+            <div class="section-title slds-m-top_medium slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                <span>{labels.sectionActionPlan}</span>
+                <div>
+                    <template lwc:if={editPlan}>
+                        <lightning-button-icon icon-name="utility:add" alternative-text={labels.addAction} size="x-small" variant="border-filled" class="slds-m-right_x-small" onclick={handleActionAdd}></lightning-button-icon>
+                    </template>
+                    <lightning-button-icon icon-name="utility:edit" alternative-text={labels.edit} size="x-small" variant="bare" onclick={toggleEditPlan}></lightning-button-icon>
+                </div>
+            </div>
+            <div class="action-plan slds-m-top_x-small">
+                <template lwc:if={editPlan}>
+                    <template for:each={actionRows} for:item="row">
+                        <div key={row.id} class="action-edit-row slds-grid slds-gutters slds-p-around_xx-small">
+                            <div class="slds-col slds-size_2-of-12">
+                                <lightning-input label={labels.quarter} variant="label-hidden" placeholder={labels.quarter} value={row.quarter} data-id={row.id} data-field="quarter" onchange={handleActionEdit}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <lightning-input label={labels.action} variant="label-hidden" placeholder={labels.action} value={row.action} data-id={row.id} data-field="action" onchange={handleActionEdit}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12">
+                                <lightning-input label={labels.owner} variant="label-hidden" placeholder={labels.owner} value={row.owner} data-id={row.id} data-field="owner" onchange={handleActionEdit}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12">
+                                <lightning-combobox label={labels.status} variant="label-hidden" options={statusOptions} value={row.status} data-id={row.id} data-field="status" onchange={handleActionEdit}></lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 slds-text-align_right">
+                                <lightning-button-icon icon-name="utility:delete" alternative-text={labels.remove} size="x-small" variant="bare" data-id={row.id} onclick={handleActionDelete}></lightning-button-icon>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <template for:each={actionRows} for:item="row">
+                        <div key={row.id} class="action-row slds-grid slds-grid_vertical-align-center slds-p-around_xx-small">
+                            <div class="quarter-chip">{row.quarter}</div>
+                            <div class="action-text slds-grow">
+                                <div class="slds-truncate"><strong>{row.action}</strong></div>
+                                <div class="slds-text-body_small slds-text-color_weak">{row.owner}</div>
+                            </div>
+                            <div class="status-pill" style={row.pillStyle}>{row.statusLabel}</div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <!-- ======================= 4. Strategic notes ======================= -->
+            <div class="section-title slds-m-top_medium slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                <span>{labels.sectionNotes}</span>
+                <lightning-button-icon icon-name="utility:edit" alternative-text={labels.edit} size="x-small" variant="bare" onclick={toggleEditNotes}></lightning-button-icon>
+            </div>
+            <template lwc:if={editNotes}>
+                <lightning-textarea variant="label-hidden" label={labels.strategyNotesLabel} value={strategyNotes} onchange={handleNotesChange}></lightning-textarea>
+            </template>
+            <template lwc:else>
+                <div class="notes-block slds-m-top_x-small">
+                    <template lwc:if={strategyNotes}>{strategyNotes}</template>
+                    <template lwc:else><span class="slds-text-color_weak">—</span></template>
+                </div>
+            </template>
+        </div>
+
+        <div slot="footer">
+            <lightning-button label={labels.savePlan} variant="brand" onclick={handleSave} class="slds-m-right_x-small"></lightning-button>
+            <lightning-button label={labels.submitToManager} variant="neutral" onclick={handleSubmit}></lightning-button>
+        </div>
+
+    </lightning-card>
+</template>

@@ -1,0 +1,70 @@
+.carousel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+}
+
+.contact-card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+.contact-card:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #0176d3;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+.avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+.initials {
+    letter-spacing: 0.5px;
+}
+
+.contact-name {
+    font-size: 0.9rem;
+    max-width: 100%;
+}
+.contact-title {
+    font-size: 0.75rem;
+    color: #747474;
+    max-width: 100%;
+}
+
+.contact-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+}

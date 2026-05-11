@@ -1,0 +1,109 @@
+:host {
+    display: block;
+}
+
+/* Toolbar — flex layout that wraps cleanly in narrow columns */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.toolbar-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+.toolbar-action lightning-button {
+    /* Force the label onto one line — prevents "New\nTask" wrapping vertically */
+    white-space: nowrap;
+}
+.toolbar-icons {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.filter-summary {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0.25rem;
+}
+
+.filter-panel {
+    background: #fafafa;
+}
+
+.type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.25rem 0.75rem;
+}
+
+.group-header {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #181818;
+    border-radius: 4px;
+}
+
+.feed-item {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s ease;
+    min-width: 0;
+}
+.feed-item > .slds-grid { min-width: 0; }
+/* The middle column (icon + title/subtitle) must allow its children to shrink so the title line
+   can apply text-overflow: ellipsis. Flex children default to min-width: auto, which is why the
+   title was overflowing its column. */
+.feed-item .slds-grid .slds-grow { min-width: 0; }
+
+.feed-item:hover {
+    background: #f7f9fb;
+}
+
+.chevron-btn {
+    margin-top: 2px;
+}
+
+/* Item body — collapsed state truncates; expanded state lets content flow on multiple lines */
+.item-body {
+    min-width: 0;
+    flex-grow: 1;
+}
+.item-body .item-title-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.item-body .item-subtitle-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #747474;
+    font-size: 0.8rem;
+}
+/* When the item is expanded, let the meta lines wrap instead of getting cut off at the column edge. */
+.item-body.is-expanded .item-subtitle-line,
+.item-body.is-expanded .item-meta-line {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    word-break: break-word;
+}
+
+.description-block {
+    white-space: pre-wrap;
+    background: #fafafa;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border-left: 3px solid #0176d3;
+    word-break: break-word;
+}
+
+a {
+    color: #0070d2;
+    cursor: pointer;
+}

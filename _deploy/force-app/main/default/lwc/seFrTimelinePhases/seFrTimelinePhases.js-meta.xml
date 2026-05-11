@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Timeline Phases</masterLabel>
+    <description>B2B / B2C - Horizontal multi-phase timeline (e.g. customer journey / project steps). Phases are JSON-configured with labels, target dates and done flags. A vertical "Today" marker shows current position.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls card title and the default phases when Phases JSON is empty." />
+            <property name="scope" type="String" datasource="record,home" default="record" label="Default phases scope" description="Seeds the default phases depending on where the component is used. 'record' = customer / deal cycle (Prospection → Découverte → Démo → Proposition → Closing). 'home' = global fiscal milestones (Q1/Q2/Q3/Q4 kick-off / ramp-up / expansion / year-end). Override with Phases JSON below to customise fully." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the language default ('Parcours' / 'Journey')." />
+            <property name="cardIcon" type="String" default="standard:timesheet" label="Card icon" />
+            <property name="phasesJson" type="String" label="Phases - JSON array (override)" description="Array of objects. Each item: { label, date (YYYY-MM-DD), done (boolean) }. Leave empty for the scope + language default." />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag (date formatting)" />
+            <property name="hideTodayMarker" type="Boolean" default="false" label="Hide 'Today' marker" description="Off by default - the vertical dotted line showing today's position is displayed." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

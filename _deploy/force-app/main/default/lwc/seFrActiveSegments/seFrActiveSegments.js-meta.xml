@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Active Segments</masterLabel>
+    <description>B2B / B2C - Configurable list of Data Cloud / marketing segments, rendered as badges. The card title auto-appends the segment count.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls the default card title and default segment list. Explicit values on cardTitle / segmentsCsv still override the dictionary." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default (‘Active Segments’ / ‘Segments actifs’). Shown as '&lt;title&gt; (N)'." />
+            <property name="cardIcon" type="String" default="standard:groups" label="Card icon" />
+            <property name="segmentsCsv" type="String" label="Segments (comma-separated) (override)" description="Leave empty for the language-appropriate default list. Each item becomes a badge." />
+            <property name="colorMode" type="String" datasource="random,custom,single" default="random" label="Color mode" description="'random' (default) = each tag gets a soft pastel from a curated palette. 'custom' = use the customColorsCsv list. 'single' = every tag uses the singleColor value." />
+            <property name="customColorsCsv" type="String" label="Custom colors (hex CSV, for 'custom' mode)" description="Comma-separated hex colors, one per segment. Shorter lists cycle. Ignored unless colorMode = custom." />
+            <property name="singleColor" type="String" default="#ecebea" label="Single color (hex, for 'single' mode)" description="Applied to every tag when colorMode = single. Defaults to the SLDS-style light grey." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

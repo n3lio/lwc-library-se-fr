@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text={loadingText} size="small"></lightning-spinner>
+        </template>
+
+        <div class="slds-p-around_medium">
+            <template if:true={needsMapping}>
+                <p class="slds-text-align_center slds-text-color_weak slds-text-body_small">{needsMappingMessage}</p>
+            </template>
+            <template if:false={needsMapping}>
+                <div class="slds-grid slds-wrap slds-grid_align-center">
+                    <template for:each={displayChannels} for:item="ch">
+                        <div key={ch.key} class={colClass}>
+                            <lightning-input
+                                type="toggle"
+                                label={ch.label}
+                                name={ch.key}
+                                data-field={ch.fieldApiName}
+                                data-inverted={ch.inverted}
+                                checked={ch.checked}
+                                message-toggle-active={resolvedToggleActive}
+                                message-toggle-inactive={resolvedToggleInactive}
+                                onchange={handleToggleChange}>
+                            </lightning-input>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,118 @@
+<template>
+    <template lwc:if={showCardWrapper}>
+        <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+            <div class="metric-tile metric-tile_carded" style={containerStyle}>
+                <div class="metric-head">
+                    <div class="metric-label">{resolvedMetricLabel}</div>
+                    <template lwc:if={showTargetChip}>
+                        <span class="metric-target-chip">{targetLabel}</span>
+                    </template>
+                </div>
+                <div class="metric-body">
+
+                    <!-- Mini-donut variant: large donut on the left, value on the right -->
+                    <template lwc:if={isMiniDonut}>
+                        <div class="metric-donut-wrap">
+                            <svg class="metric-donut" viewBox={donutViewBox} preserveAspectRatio="xMidYMid meet">
+                                <circle cx={donutCx} cy={donutCy} r={donutR} fill="none" stroke="var(--spark-donut-track)" stroke-width="8"></circle>
+                                <circle cx={donutCx} cy={donutCy} r={donutR} fill="none" stroke="var(--spark-color)" stroke-width="8" stroke-linecap="round" stroke-dasharray={donutDashArray} stroke-dashoffset={donutDashOffset} transform="rotate(-90 50 50)" class="metric-donut-fill"></circle>
+                                <text x={donutCx} y={donutCy} text-anchor="middle" dominant-baseline="central" class="metric-donut-pct">{donutPercent}</text>
+                            </svg>
+                            <div class="metric-donut-info">
+                                <div class="metric-value">{resolvedValueDisplay}</div>
+                                <template lwc:if={hasTrend}>
+                                    <div class={trendClass}>{resolvedTrendDisplay} <span class="trend-suffix">{trendSuffix}</span></div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- Line / area / bar variants -->
+                    <template lwc:else>
+                        <div class="metric-value">{resolvedValueDisplay}</div>
+                        <svg class="spark" viewBox={viewBox} preserveAspectRatio="none">
+                            <!-- Optional secondary series — drawn first so the primary stays on top -->
+                            <template lwc:if={hasSecondary}>
+                                <path d={svgSecPath} stroke="var(--spark-secondary)" stroke-width="1.5" stroke-dasharray="4,3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </template>
+                            <!-- Optional horizontal target line -->
+                            <template lwc:if={hasTargetLine}>
+                                <line x1="0" x2={chartLineWidth} y1={targetLineY} y2={targetLineY} stroke="var(--spark-target)" stroke-width="1" stroke-dasharray="3,3"></line>
+                            </template>
+                            <!-- Bar variant -->
+                            <template lwc:if={isBar}>
+                                <template for:each={bars} for:item="b">
+                                    <rect key={b.key} x={b.x} y={b.y} width={b.width} height={b.height} rx="2" fill="var(--spark-color)" class="spark-bar"></rect>
+                                </template>
+                            </template>
+                            <!-- Line / area variant -->
+                            <template lwc:if={isLine}>
+                                <template lwc:if={isAreaFilled}>
+                                    <path d={svgArea} fill="var(--spark-fill)"></path>
+                                </template>
+                                <path d={svgPath} stroke="var(--spark-color)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <circle cx={lastPointX} cy={lastPointY} r="5" fill="var(--spark-color)"></circle>
+                            </template>
+                        </svg>
+                        <template lwc:if={hasTrend}>
+                            <div class={trendClass}>{resolvedTrendDisplay} <span class="trend-suffix">{trendSuffix}</span></div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <template lwc:else>
+        <div class="metric-tile" style={containerStyle}>
+            <div class="metric-head">
+                <div class="metric-label">{resolvedMetricLabel}</div>
+                <template lwc:if={showTargetChip}>
+                    <span class="metric-target-chip">{targetLabel}</span>
+                </template>
+            </div>
+            <div class="metric-body">
+                <template lwc:if={isMiniDonut}>
+                    <div class="metric-donut-wrap">
+                        <svg class="metric-donut" viewBox={donutViewBox} preserveAspectRatio="xMidYMid meet">
+                            <circle cx={donutCx} cy={donutCy} r={donutR} fill="none" stroke="var(--spark-donut-track)" stroke-width="8"></circle>
+                            <circle cx={donutCx} cy={donutCy} r={donutR} fill="none" stroke="var(--spark-color)" stroke-width="8" stroke-linecap="round" stroke-dasharray={donutDashArray} stroke-dashoffset={donutDashOffset} transform="rotate(-90 50 50)" class="metric-donut-fill"></circle>
+                            <text x={donutCx} y={donutCy} text-anchor="middle" dominant-baseline="central" class="metric-donut-pct">{donutPercent}</text>
+                        </svg>
+                        <div class="metric-donut-info">
+                            <div class="metric-value">{resolvedValueDisplay}</div>
+                            <template lwc:if={hasTrend}>
+                                <div class={trendClass}>{resolvedTrendDisplay} <span class="trend-suffix">{trendSuffix}</span></div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="metric-value">{resolvedValueDisplay}</div>
+                    <svg class="spark" viewBox={viewBox} preserveAspectRatio="none">
+                        <template lwc:if={hasSecondary}>
+                            <path d={svgSecPath} stroke="var(--spark-secondary)" stroke-width="1.5" stroke-dasharray="4,3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </template>
+                        <template lwc:if={hasTargetLine}>
+                            <line x1="0" x2={chartLineWidth} y1={targetLineY} y2={targetLineY} stroke="var(--spark-target)" stroke-width="1" stroke-dasharray="3,3"></line>
+                        </template>
+                        <template lwc:if={isBar}>
+                            <template for:each={bars} for:item="b">
+                                <rect key={b.key} x={b.x} y={b.y} width={b.width} height={b.height} rx="2" fill="var(--spark-color)" class="spark-bar"></rect>
+                            </template>
+                        </template>
+                        <template lwc:if={isLine}>
+                            <template lwc:if={isAreaFilled}>
+                                <path d={svgArea} fill="var(--spark-fill)"></path>
+                            </template>
+                            <path d={svgPath} stroke="var(--spark-color)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <circle cx={lastPointX} cy={lastPointY} r="5" fill="var(--spark-color)"></circle>
+                        </template>
+                    </svg>
+                    <template lwc:if={hasTrend}>
+                        <div class={trendClass}>{resolvedTrendDisplay} <span class="trend-suffix">{trendSuffix}</span></div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

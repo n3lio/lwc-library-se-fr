@@ -1,0 +1,151 @@
+/* =========================================
+   1. TABLE MODERNIZATION & ALIGNMENTS
+========================================= */
+.modern-table { min-width: 1300px; color: #080707; }
+.modern-table td, .modern-table th { padding-top: 0.2rem !important; padding-bottom: 0.2rem !important; white-space: nowrap; }
+
+table.modern-table th, table.modern-table td { border-top: 1px solid #e5e5e5 !important; border-right: 1px solid #e5e5e5 !important; box-shadow: none !important; }
+table.modern-table th:first-child, table.modern-table td:first-child { border-left: 1px solid #e5e5e5 !important; }
+table.modern-table { border-bottom: 1px solid #e5e5e5 !important; }
+
+.text-right { text-align: right !important; }
+.truncate-header { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Correction pour bien centrer les inputs */
+.small-input { width: 75px; margin: 0 auto; display: block; }
+.date-input { width: 200px; margin-bottom: 0; }
+
+.input-error {
+    --slds-c-input-text-color: #ba0517; --slds-c-input-color-border: #ba0517;
+    --slds-c-input-color-border-focus: #ba0517; --slds-c-input-shadow-focus: 0 0 3px #ba0517;
+    font-weight: 700;
+}
+
+/* =========================================
+   2. ROW STATUS COLORS (HOVER & BACKGROUND)
+========================================= */
+.row-white > td { background-color: #ffffff; }
+.row-blue > td { background-color: #f0f4fb; } 
+.row-gray > td { background-color: #f3f3f3; color: #888; } 
+.row-orange > td { background-color: #fdf5e6; } 
+.row-red > td { background-color: #fdf0f0; } 
+
+.row-white:hover > td { background-color: #f4f6f9; }
+.row-blue:hover > td { background-color: #e2eaf6; }
+.row-gray:hover > td { background-color: #e8e8e8; }
+.row-orange:hover > td { background-color: #fcebd0; }
+.row-red:hover > td { background-color: #fadada; }
+
+/* =========================================
+   3. CONTAINERS & FULLSCREEN MODE
+========================================= */
+.table-container { 
+    /* Hauteur dynamique : ~45% de la hauteur de ton écran. Force la scrollbar interne ! */
+    max-height: 45vh; 
+    min-height: 300px; /* Sécurité pour les tout petits écrans */
+    overflow-y: auto; 
+    border-bottom: 1px solid #e5e5e5; 
+    
+    /* LA MAGIE EST ICI : Empêche la page principale de scroller quand on est sur la grille */
+    overscroll-behavior: contain; 
+}
+
+.fullscreen-container {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 9999; background-color: #f3f3f3; padding: 1rem; overflow: hidden; box-sizing: border-box; 
+}
+
+.fullscreen-container .table-container { 
+    max-height: calc(100vh - 200px); /* Laisse de la place propre pour le header et le footer */
+    overscroll-behavior: contain; /* Protège le scroll même en plein écran */
+}
+
+/* =========================================
+   4. FILTER PANEL
+========================================= */
+.custom-legend {
+    position: absolute; top: 2.5rem; left: 23rem; background: #ffffff;
+    border: 1px solid #d8dde6; border-radius: 0.25rem; padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); z-index: 100; min-width: 250px;
+}
+.filter-item { display: flex; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; color: #080707; cursor: pointer; }
+.filter-item:hover { background-color: #f3f3f3; border-radius: 4px; }
+.filter-item lightning-input { pointer-events: none; } 
+
+.color-box { width: 14px; height: 14px; border-radius: 2px; margin-right: 0.5rem; border: 1px solid #c9c9c9; }
+.bg-white { background-color: #ffffff; }
+.bg-blue { background-color: #f0f4fb; }
+.bg-orange { background-color: #fdf5e6; }
+.bg-red { background-color: #fdf0f0; }
+.bg-gray { background-color: #f3f3f3; border-color: #888; }
+
+/* =========================================
+   5. PRODUCT HOVER POPOVER
+========================================= */
+.product-link { display: inline-block; width: 100%; padding: 2px 0; }
+
+.product-popover {
+    position: fixed; z-index: 99999; background: #ffffff; border: 1px solid #d8dde6;
+    border-radius: 0.25rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); padding: 1rem; width: 380px; 
+}
+
+.popover-img-container {
+    display: flex; justify-content: center; align-items: center; background-color: #f3f3f3;
+    border-radius: 0.125rem; height: 120px; overflow: hidden;
+}
+.popover-img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* =========================================
+   6. AI THEME & EINSTEIN TOOLTIP
+========================================= */
+
+/* Bouton Pré-remplir */
+.ai-magic-btn {
+    --sds-c-button-neutral-text-color: #9d53f2;
+    --sds-c-button-neutral-color-border: #9d53f2;
+    --sds-c-button-neutral-color-background-hover: #f6f0ff;
+    --sds-c-icon-color-foreground-default: #9d53f2;
+}
+
+/* Éléments IA dans la grille */
+.einstein-icon { --sds-c-icon-color-foreground-default: #9d53f2 !important; }
+.ai-text { color: #9d53f2 !important; font-weight: bold !important; }
+.ai-value-text { color: #9d53f2 !important; text-decoration: underline dotted #9d53f2 !important; cursor: help; }
+.apply-btn { --sds-c-button-text-color: #9d53f2 !important; --slds-c-button-text-color: #9d53f2 !important; }
+
+/* Infobulle Fixe (Indestructible) */
+.ai-tooltip-fixed {
+    position: fixed; 
+    width: 280px;
+    z-index: 999999; 
+    background-color: #0b2338; 
+    color: #ffffff; 
+    padding: 0.75rem;
+    border-radius: 0.25rem; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+    white-space: normal; 
+    text-align: left; 
+    font-size: 0.8rem; 
+    line-height: 1.4; 
+    transform: translateY(-50%); 
+    pointer-events: none; 
+    animation: fadeInTooltip 0.15s ease-in-out;
+}
+
+.ai-tooltip-fixed::after {
+    content: ''; 
+    position: absolute; 
+    top: 50%; 
+    left: 100%; 
+    transform: translateY(-50%); 
+    border-width: 6px;
+    border-style: solid; 
+    border-color: transparent transparent transparent #0b2338;
+}
+
+.ai-tooltip-reason { color: #c9d7e9; margin-left: 2px; }
+
+@keyframes fadeInTooltip { 
+    from { opacity: 0; transform: translateY(-50%) translateX(-10px); } 
+    to { opacity: 1; transform: translateY(-50%) translateX(0); } 
+}

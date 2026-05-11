@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Prompt Launcher</masterLabel>
+    <description>Configurable AI panel that runs Salesforce Prompt Templates via Invocable Actions. Drop on any page, the SE picks which prompts to expose. Auto-fills record context, prompts requiring user input show a small form. HTML responses rendered with formatting.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the dictionary default ('Assistant IA' / 'AI Assistant')." />
+            <property name="cardIcon" type="String" default="standard:bot" label="Card icon" />
+            <property name="namedCredential" type="String" default="Agentforce_API" label="Named Credential" description="Named Credential routing the Apex callout to the org's REST API. Default 'Agentforce_API'. Despite the legacy name, it's used for any /services/data/... callout — Prompt Templates, Agent API, etc. Setup → Named Credentials in your org." />
+            <property name="promptsJson" type="String" label="Prompts catalogue (JSON)" description="JSON array. Each entry: { apiName, label, icon, objects:['Account',...], recordInputName:'Input:Account', userInputs:[{name,label,type,required,options}] }. 'objects' filters by host record type — empty list = always show. Leave the prop empty to use the default catalogue (Account/Contact/Deal/Lead/Case summaries + free-text Summarize/Refine)." />
+            <property name="autoRunFirstPrompt" type="Boolean" default="false" label="Auto-run first prompt on load" description="When ON, the first applicable prompt runs automatically as soon as the page loads. Skips silently if any required user input is empty." />
+            <property name="resultAccent" type="String" datasource="blue,purple,green" default="blue" label="Result panel accent color" />
+            <property name="maxHeight" type="Integer" default="0" label="Maximum component height (px)" description="0 (default) = no cap, the component grows with the AI response. Set a number (e.g. 600) to cap the vertical footprint and enable scroll inside the component when the response is very long." />
+            <!-- Legacy: replaced by maxHeight. Kept so existing FlexiPages don't break. -->
+            <property name="height" type="Integer" label="(deprecated)" />
+
+            <!-- Legacy properties kept so existing FlexiPages don't break on upgrade. The component
+                 used to be a chat surface for a real Agentforce agent — the refactor replaces it
+                 with a Prompt Launcher. None of the props below are read by the new code. -->
+            <property name="mode" type="String" label="(deprecated)" />
+            <property name="agentRef" type="String" label="(deprecated)" />
+            <property name="agentDisplayName" type="String" label="(deprecated)" />
+            <property name="scriptedRepliesJson" type="String" label="(deprecated)" />
+            <property name="flowRulesCsv" type="String" label="(deprecated)" />
+            <property name="quickFlowsCsv" type="String" label="(deprecated)" />
+            <property name="inputPlaceholder" type="String" label="(deprecated)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

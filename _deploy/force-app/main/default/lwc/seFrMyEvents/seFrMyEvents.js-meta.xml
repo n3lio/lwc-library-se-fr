@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - My Events</masterLabel>
+    <description>B2B / B2C - Today-timeline view of events for a sidebar column. Auto-trims empty hours, handles overlapping events side-by-side, live now-line, in-N-min badge, Join button for common web-meeting URLs, and a short Upcoming list.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings (headings, buttons, badges). Explicit values set on cardTitle / emptyStateMessage still override the dictionary." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default (‘My Day’ / ‘Ma journée’)." />
+            <property name="cardIcon" type="String" default="standard:event" label="Card icon" />
+            <property name="startHour" type="Integer" default="8" label="Start hour (0-23)" description="Earliest hour shown when auto-trim is off or when auto-trim can't narrow further." />
+            <property name="endHour" type="Integer" default="20" label="End hour (0-23)" description="Latest hour shown (same rule as start hour)." />
+            <property name="disableAutoTrim" type="Boolean" default="false" label="Disable auto-trim" description="Auto-trim is ON by default - the timeline is bounded to [first event − padding, last event + padding] (clamped between Start and End hour). Turn this on to always render the full Start→End hour window." />
+            <property name="autoTrimPaddingMin" type="Integer" default="30" label="Auto-trim padding (minutes)" description="Empty-hour margin kept before the first event and after the last event when auto-trim is on. Set to 0 to crop exactly to the events." />
+            <property name="daysAhead" type="Integer" default="2" label="Days ahead to query" description="Today counts as 1. Used to populate the Upcoming list." />
+            <property name="maxEvents" type="Integer" default="10" label="Max events (server-side)" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag (time formatting)" />
+            <property name="typeColorsCsv" type="String" default="Call|#0176d3,Meeting|#4bca81,Demo|#c13975,Training|#f2a900,Other|#747474" label="Type colors (Type|#hex, comma-separated)" description="Matched against Event.Type (case-insensitive). 'Other' is the fallback." />
+            <property name="typesFilterCsv" type="String" label="Event types to keep (comma-separated, optional)" description="Whitelist of Event.Type values to show. Leave empty to include every type. Acts as a static filter - the in-UI toggles mute types on top of this." />
+            <property name="hideTypeToggles" type="Boolean" default="false" label="Hide clickable type toggles" description="Off by default - chips are shown. Turn on to hide the one-chip-per-Event.Type filter strip that lets the user mute/unmute each 'calendar' in the timeline." />
+            <property name="hideNowLine" type="Boolean" default="false" label="Hide the 'now' line" description="Off by default - the red line is shown." />
+            <property name="hideJoinButton" type="Boolean" default="false" label="Hide the auto-detected Join button" description="Off by default - scans Event Location and Description for a Zoom / Teams / Meet / WebEx URL and shows a Join button when found." />
+            <property name="emptyStateMessage" type="String" label="Empty-state message (override)" description="Leave empty to use the dictionary default." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

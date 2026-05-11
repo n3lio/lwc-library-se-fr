@@ -1,0 +1,42 @@
+<template>
+    <template lwc:if={cardTitle}>
+        <lightning-card title={cardTitle} icon-name={cardIcon}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <div class="launcher-grid" style={gridStyle}>
+                    <template for:each={tiles} for:item="tile">
+                        <div key={tile.id}
+                             class="launch-tile"
+                             style={tile.tileStyle}
+                             data-link={tile.link}
+                             onclick={handleTileClick}>
+                            <div class="tile-label">{tile.label}</div>
+                            <div class="tile-main">
+                                <lightning-icon icon-name={tile.icon} size="small" class="custom-icon"></lightning-icon>
+                                <span class="stat-number">{tile.value}</span>
+                            </div>
+                            <div class="stat-sublabel">{tile.sublabel}</div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <template lwc:else>
+        <div class="launcher-grid" style={gridStyle}>
+            <template for:each={tiles} for:item="tile">
+                <div key={tile.id}
+                     class="launch-tile"
+                     style={tile.tileStyle}
+                     data-link={tile.link}
+                     onclick={handleTileClick}>
+                    <div class="tile-label">{tile.label}</div>
+                    <div class="tile-main">
+                        <lightning-icon icon-name={tile.icon} size="small" class="custom-icon"></lightning-icon>
+                        <span class="stat-number">{tile.value}</span>
+                    </div>
+                    <div class="stat-sublabel">{tile.sublabel}</div>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Telesales - Rep Home</masterLabel>
+    <description>B2B - Telesales Home page. KPI tiles, incoming cases, orders to validate, mini-charts, calls, news. Bilingual EN/FR via the language property.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
+            <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings including datatable column headers and the default demo JSON for calls / news / mini-charts. Explicit values on any *Json / kpi*Label property override the dictionary." />
+
+            <property name="greetingTemplate" type="String" label="Greeting template (override)" description="Use {name} placeholder. Wrap any word with **…** to render it in the highlight color. Leave empty for dictionary default." />
+            <property name="defaultUserName" type="String" label="Fallback user name (override)" />
+            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue." />
+
+            <property name="caseStatusesCsv" type="String" default="New,Working,Waiting on Customer,Escalated" label="Cases - statuses (comma-separated)" />
+            <property name="caseOwnerScope" type="String" default="all" label="Cases - owner scope" description="'mine' | 'all'" />
+            <property name="caseLimit" type="Integer" default="6" label="Cases - max rows" />
+            <property name="caseListView" type="String" default="Recent" label="Case list view API name" />
+
+            <property name="orderStatusesCsv" type="String" default="Draft" label="Orders - statuses (comma-separated)" />
+            <property name="orderOwnerScope" type="String" default="all" label="Orders - owner scope" />
+            <property name="orderLimit" type="Integer" default="6" label="Orders - max rows" />
+            <property name="orderListView" type="String" default="Recent" label="Order list view API name" />
+
+            <property name="callsRecordType" type="String" label="Calls - Account.RecordType.DeveloperName filter" description="Empty = all record types. Example: 'SDO_Account_Simple'." />
+            <property name="callsOwnerScope" type="String" default="all" label="Calls - owner scope" description="'mine' restricts to Accounts owned by the running user. 'all' (default) widens." />
+            <property name="callsLimit" type="Integer" default="5" label="Calls - max rows" description="Max number of Contacts shown. Contacts from Accounts with an open Case or a Draft Order bubble up first." />
+
+            <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+
+            <property name="kpi1Label" type="String" label="KPI 1 - Label (override)" />
+            <property name="kpi1Value" type="String" default="18 / 25" label="KPI 1 - Value" />
+            <property name="kpi1Footer" type="String" label="KPI 1 - Footer (override)" />
+            <property name="kpi1FooterClass" type="String" default="slds-text-color_success" label="KPI 1 - Footer CSS class" />
+            <property name="kpi2Label" type="String" label="KPI 2 - Label (override)" />
+            <property name="kpi2Value" type="String" default="8" label="KPI 2 - Value" />
+            <property name="kpi2Footer" type="String" label="KPI 2 - Footer (override)" />
+            <property name="kpi2FooterClass" type="String" default="slds-text-color_weak" label="KPI 2 - Footer CSS class" />
+            <property name="kpi3Label" type="String" label="KPI 3 - Label (override)" />
+            <property name="kpi3Value" type="String" default="38.4k" label="KPI 3 - Value" />
+            <property name="kpi3Footer" type="String" label="KPI 3 - Footer (override)" />
+            <property name="kpi3FooterClass" type="String" default="slds-text-color_weak" label="KPI 3 - Footer CSS class" />
+            <property name="kpi4Label" type="String" label="KPI 4 - Label (override)" />
+            <property name="kpi4Value" type="String" default="3m 15s" label="KPI 4 - Value" />
+            <property name="kpi4Footer" type="String" label="KPI 4 - Footer (override)" />
+            <property name="kpi4FooterClass" type="String" default="slds-text-color_success" label="KPI 4 - Footer CSS class" />
+
+            <property name="callsJson" type="String" label="Calls - JSON array (override)" description="Leave empty to use real Contacts (see Calls filters above). Any non-empty value overrides the live data. Fields: id, time, account, accountId, contact, contactId, phone, subject." />
+            <property name="newsJson" type="String" label="News / training - JSON array (override)" description="Fields: id, accent ('success' | 'info' | 'warning' | 'error'), title, desc, btnLabel, url." />
+            <property name="channelVolumeJson" type="String" label="Channel volume - JSON array (override)" description="Fields: label, percent." />
+            <property name="subjectVolumeJson" type="String" label="Subject volume - JSON array (override)" description="Fields: label, percent." />
+            <property name="monthlyClosedJson" type="String" label="Monthly closed - JSON array (override)" description="Fields: month, value, heightPct, highlight." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Splash Banner</masterLabel>
+    <description>Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+            <property name="title" type="String" default="Bonjour 👋" label="Titre" description="Le grand texte affiché au centre. Émojis acceptés." />
+            <property name="subtitle" type="String" label="Sous-titre (optionnel)" description="Texte plus petit affiché sous le titre." />
+            <property name="textSize" type="String" datasource="s,m,l,xl" default="l" label="Taille du texte" description="s = petit, m = moyen, l = grand (défaut), xl = très grand." />
+            <property name="bgStyle" type="String" datasource="waves,aurora,mesh,orbs,conic,geometric,constellation,grid" default="waves" label="Style de fond" description="waves (vagues animées de Charly) | aurora (aurores boréales) | mesh (mesh gradient Stripe-like) | orbs (sphères flottantes) | conic (rotation conique Vercel-like) | geometric (low-poly animé) | constellation (étoiles reliées) | grid (blueprint scan-line)." />
+            <property name="colorPrimary" type="String" default="#0176d3" label="Couleur principale" description="Couleur CSS (hex, rgb, named). Utilisée par tous les fonds." />
+            <property name="colorSecondary" type="String" default="#a445ff" label="Couleur secondaire" description="Couleur CSS. Utilisée par aurora / mesh / orbs / conic / geometric." />
+            <property name="colorTertiary" type="String" default="#ff6ec7" label="Couleur tertiaire" description="Couleur CSS. Utilisée par aurora / mesh / orbs / conic / geometric (sinon ignorée)." />
+            <property name="height" type="Integer" default="220" label="Hauteur (px)" description="Hauteur du composant en pixels. 180-300 conviennent à la plupart des bannières." />
+            <property name="darkText" type="Boolean" default="false" label="Texte sombre" description="Off par défaut (texte blanc, idéal sur fond foncé). On = texte noir." />
+            <property name="animationSpeed" type="String" datasource="slow,normal,fast" default="normal" label="Vitesse d'animation" />
+            <property name="alignment" type="String" datasource="center,left,right" default="center" label="Alignement du texte" />
+            <property name="ctaLabel" type="String" label="Label du bouton (optionnel)" description="Si renseigné, ajoute un bouton sous le texte." />
+            <property name="ctaUrl" type="String" label="URL du bouton (optionnel)" description="Lien activé par le bouton. URL relative Salesforce ('/lightning/...') ou absolue ('https://...')." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,54 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Local WIP / staging — not for distribution
+_staging_charly/
+_agent/_drafts/
+_agent/_tmp/
+FINAL_CLEANUP.md
+
+# Node / web app (future S1+)
+node_modules/
+dist/
+.cache/
+.parcel-cache/
+.astro/
+.next/
+.nuxt/
+.output/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Salesforce CLI / sfdx
+.sfdx/
+.sf/
+.localdevserver/
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Claude Code session files (keep settings, ignore local logs)
+.claude/local/

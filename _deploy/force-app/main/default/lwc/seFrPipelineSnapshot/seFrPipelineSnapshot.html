@@ -1,0 +1,68 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button-icon icon-name="utility:refresh" alternative-text={labels.refresh} variant="border-filled" size="small" class="slds-m-right_xx-small" onclick={handleRefresh}></lightning-button-icon>
+            <template if:false={hideNewOppButton}>
+                <lightning-button label={labels.newOpp} icon-name="utility:new" variant="brand" onclick={handleNewOpp}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <template if:true={hasOpps}>
+                <div class="slds-grid slds-gutters slds-m-bottom_small slds-wrap">
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="total-tile">
+                            <div class="total-label">{labels.totalPipeline}</div>
+                            <div class="total-value">{totalPipelineDisplay}</div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="total-tile">
+                            <div class="total-label">{labels.weightedTotal}</div>
+                            <div class="total-value total-value_weighted">{weightedPipelineDisplay}</div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="total-tile">
+                            <div class="total-label">{labels.opportunities}</div>
+                            <div class="total-value">{oppCount}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stage-grid">
+                    <template for:each={columns} for:item="col">
+                        <div key={col.key} class="stage-col" style={col.accentStyle}>
+                            <div class="stage-header">
+                                <strong>{col.label}</strong>
+                                <span class="slds-text-color_weak slds-text-body_small">{col.count}</span>
+                            </div>
+                            <div class="stage-totals slds-text-body_small slds-text-color_weak">{col.totalDisplay}</div>
+                            <ul class="stage-opps">
+                                <template for:each={col.opps} for:item="o">
+                                    <li key={o.id} class="opp-card" data-id={o.id} onclick={handleOppClick}>
+                                        <div class="opp-name slds-truncate" title={o.name}><strong>{o.name}</strong></div>
+                                        <div class="opp-meta slds-text-body_small slds-text-color_weak">
+                                            <span>{o.amountDisplay}</span>
+                                            <span class="slds-m-horizontal_xx-small">•</span>
+                                            <span>{o.probability}</span>
+                                            <template if:true={o.closeDateDisplay}>
+                                                <span class="slds-m-horizontal_xx-small">•</span>
+                                                <span>{o.closeDateDisplay}</span>
+                                            </template>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:false={hasOpps}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-vertical_medium">{labels.empty}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

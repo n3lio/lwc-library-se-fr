@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div class="slds-p-around_medium">
+
+            <template if:true={hasPhases}>
+                <div class="timeline-wrapper">
+                    <div class="timeline-track"></div>
+                    <template if:true={showTodayMarker}>
+                        <div class="today-marker" style={todayMarkerStyle}>
+                            <span class="today-label">{labels.today}</span>
+                        </div>
+                    </template>
+                    <ol class="phases">
+                        <template for:each={phases} for:item="p">
+                            <li key={p.id} class={p.stateClass}>
+                                <span class="phase-dot"></span>
+                                <div class="phase-body">
+                                    <div class="phase-label">{p.label}</div>
+                                    <div class="phase-date">{p.dateDisplay}</div>
+                                </div>
+                            </li>
+                        </template>
+                    </ol>
+                </div>
+            </template>
+
+            <template if:false={hasPhases}>
+                <p class="slds-text-color_weak slds-text-align_center">{labels.empty}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

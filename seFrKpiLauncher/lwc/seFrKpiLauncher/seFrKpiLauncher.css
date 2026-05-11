@@ -1,0 +1,92 @@
+:host {
+    display: block;
+    margin: 0;
+}
+
+.launcher-grid {
+    display: grid;
+    /* grid-template-columns is set inline via `gridStyle` to match the number of tiles — keeps
+       all tiles on a single row even in narrow App Builder columns. */
+    gap: 12px;
+}
+
+.launch-tile {
+    --tile-color: #0176d3;
+    background-color: #ffffff;
+    min-height: 110px;
+    padding: 14px 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.tile-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--tile-color);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    transition: color 0.2s;
+}
+
+.tile-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.stat-number {
+    /* clamp(min, preferred, max) — scales down on narrow tiles without dropping to an unreadable
+       size. 1.05rem floor keeps the value readable at ~100px tile widths. */
+    font-size: clamp(1.05rem, 3.5vw, 1.8rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--tile-color);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    transition: color 0.2s;
+}
+
+.stat-sublabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #747474;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    transition: color 0.2s;
+}
+
+/* Force the standard:* icon to take the tile's color on both its foreground glyph and its round
+   background so every tile looks coherent (label + value + icon all in the same hue). */
+.custom-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+    --sds-c-icon-color-background: var(--tile-color);
+}
+
+.launch-tile:hover {
+    background-color: var(--tile-color);
+    border-color: var(--tile-color);
+    box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.35), 0 8px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.launch-tile:hover .tile-label,
+.launch-tile:hover .stat-number,
+.launch-tile:hover .stat-sublabel {
+    color: #ffffff !important;
+}
+
+.launch-tile:hover .custom-icon {
+    --sds-c-icon-color-foreground-default: #ffffff !important;
+}

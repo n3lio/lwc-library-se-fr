@@ -1,0 +1,226 @@
+<template>
+    <div class={containerClass}>
+        <lightning-card title={displayTitle} icon-name={cardIcon}>
+            <div slot="actions">
+                <lightning-button-icon icon-name={fullScreenIcon} variant="border-filled" alternative-text={labels.fullScreen} title={labels.fullScreen} onclick={toggleFullScreen}></lightning-button-icon>
+            </div>
+
+            <template if:true={targetAccountId}>
+                <div class="slds-p-around_medium">
+
+                    <div class="slds-grid slds-m-bottom_small slds-grid_align-spread slds-grid_vertical-align-end" style="position: relative;">
+                        <div class="slds-col slds-grid slds-wrap slds-gutters_x-small">
+                            <div class="slds-col"><lightning-button label={labels.reorder} icon-name="utility:refresh" onclick={handleReorder}></lightning-button></div>
+                            <div class="slds-col"><lightning-button label={labels.prefillAI} icon-name="utility:einstein" variant="neutral" class="ai-magic-btn" onclick={handleFillAllAI}></lightning-button></div>
+                            <div class="slds-col"><lightning-button label={labels.clearGrid} icon-name="utility:clear" onclick={handleClearAll}></lightning-button></div>
+                            <div class="slds-col"><lightning-button-icon icon-name={toggleDiscountIcon} variant="border-filled" onclick={toggleDiscountColumns} title={toggleDiscountTitle}></lightning-button-icon></div>
+                            <div class="slds-col"><lightning-button-icon icon-name="utility:filterList" variant="border-filled" onclick={toggleLegend} title={labels.filter}></lightning-button-icon></div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning-input type="search" label={labels.search} variant="label-hidden" placeholder={labels.searchPlaceholder} value={searchTerm} onchange={handleSearch}></lightning-input>
+                        </div>
+
+                        <template if:true={showLegend}>
+                            <div class="custom-legend">
+                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-bottom_small">
+                                    <strong>{labels.statusFilters}</strong>
+                                    <lightning-button-icon icon-name="utility:close" variant="bare" size="small" onclick={toggleLegend}></lightning-button-icon>
+                                </div>
+                                <div class="filter-item" onclick={handleFilterToggle} data-status="recent"><lightning-input type="checkbox" checked={isFilterRecent}></lightning-input> <div class="color-box bg-white slds-m-left_x-small"></div> {labels.filterRecent}</div>
+                                <div class="filter-item" onclick={handleFilterToggle} data-status="old"><lightning-input type="checkbox" checked={isFilterOld}></lightning-input> <div class="color-box bg-blue slds-m-left_x-small"></div> {labels.filterOld}</div>
+                                <div class="filter-item" onclick={handleFilterToggle} data-status="promo"><lightning-input type="checkbox" checked={isFilterPromo}></lightning-input> <div class="color-box bg-orange slds-m-left_x-small"></div> {labels.filterPromo}</div>
+                                <div class="filter-item" onclick={handleFilterToggle} data-status="clearance"><lightning-input type="checkbox" checked={isFilterClearance}></lightning-input> <div class="color-box bg-red slds-m-left_x-small"></div> {labels.filterClearance}</div>
+                                <div class="filter-item" onclick={handleFilterToggle} data-status="oos"><lightning-input type="checkbox" checked={isFilterOOS}></lightning-input> <div class="color-box bg-gray slds-m-left_x-small"></div> {labels.filterOOS}</div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="slds-table slds-table_cell-buffer modern-table">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="truncate-header" title={labels.titleCode}>{labels.colCode}</th>
+                                    <th class="truncate-header" title={labels.titleProduct}>{labels.colProduct}</th>
+                                    <th class="truncate-header" title={labels.titleCategory}>{labels.colCategory}</th>
+                                    <th class="truncate-header slds-text-align_center" title={labels.titleLastOrder}>{labels.colLastOrder}</th>
+                                    <th class="truncate-header text-right" title={labels.titleStock}>{labels.colStock}</th>
+                                    <th class="truncate-header text-right" title={labels.titleListPrice}>{labels.colListPrice}</th>
+
+                                    <th class="truncate-header text-right" title={labels.titleRecQty}>{labels.colRecQty}</th>
+                                    <th class="truncate-header slds-text-align_center" title={labels.titleQty}>{labels.colQty}</th>
+
+                                    <template if:true={showDiscountColumns}>
+                                        <th class="truncate-header text-right" title={labels.titleRecDiscount}>{labels.colRecDiscount}</th>
+                                        <th class="truncate-header slds-text-align_center" title={labels.titleDiscount}>{labels.colDiscount}</th>
+                                        <th class="truncate-header text-right" title={labels.titleNetPrice}>{labels.colNetPrice}</th>
+                                    </template>
+                                    <th class="truncate-header text-right" title={labels.titleLineTotal}>{labels.colLineTotal}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={gridData} for:item="row">
+                                    <tr key={row.productId} class={row.cssClass}>
+                                        <td>{row.productCode}</td>
+
+                                        <td class="slds-truncate">
+                                            <a href={row.productUrl} target="_blank" class="product-link" data-id={row.productId} onmouseenter={handleMouseEnterProduct} onmouseleave={handleMouseLeaveProduct}>{row.name}</a>
+                                        </td>
+
+                                        <td>{row.category}</td>
+
+                                        <td class="slds-text-align_center">{row.formattedDate}</td>
+                                        <td class="text-right">{row.stock}</td>
+                                        <td class="text-right">{row.unitPrice} {currencySymbol}</td>
+
+                                        <td>
+                                            <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+                                                <template if:true={row.hasRecommendedQty}>
+                                                    <lightning-icon icon-name="utility:einstein" size="x-small" class="einstein-icon slds-m-right_xx-small"></lightning-icon>
+                                                    <span class="slds-m-right_medium ai-value-text" data-reason={row.aiReason} onmouseenter={handleMouseEnterAI} onmouseleave={handleMouseLeaveAI}>{row.displayRecommendedQty}</span>
+                                                    <lightning-button-icon icon-name="utility:arrow_right" variant="border-filled" size="small" class="apply-btn" data-id={row.productId} onclick={handleApplyRecommendedQty} title={labels.apply}></lightning-button-icon>
+                                                </template>
+                                                <template if:false={row.hasRecommendedQty}>
+                                                    <span class="slds-m-right_medium" style="color: #ccc;">-</span>
+                                                </template>
+                                            </div>
+                                        </td>
+
+                                        <td class="slds-text-align_center"><lightning-input type="number" variant="label-hidden" value={row.qty} data-id={row.productId} data-field="qty" onchange={handleInputChange} disabled={row.isOOS} class={row.qtyClass}></lightning-input></td>
+
+                                        <template if:true={showDiscountColumns}>
+                                            <td>
+                                                <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+                                                    <template if:true={row.hasRecommendedDiscount}>
+                                                        <lightning-icon icon-name="utility:einstein" size="x-small" class="einstein-icon slds-m-right_xx-small"></lightning-icon>
+                                                        <span class="slds-m-right_medium ai-value-text" data-reason={row.aiReason} onmouseenter={handleMouseEnterAI} onmouseleave={handleMouseLeaveAI}>{row.displayRecommendedDiscount}</span>
+                                                        <lightning-button-icon icon-name="utility:arrow_right" variant="border-filled" size="small" class="apply-btn" data-id={row.productId} onclick={handleApplyRecommendedDiscount} title={labels.apply}></lightning-button-icon>
+                                                    </template>
+                                                    <template if:false={row.hasRecommendedDiscount}>
+                                                        <span class="slds-m-right_medium" style="color: #ccc;">-</span>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-text-align_center"><lightning-input type="number" variant="label-hidden" value={row.discount} data-id={row.productId} data-field="discount" onchange={handleInputChange} disabled={row.isOOS} class={row.discountClass}></lightning-input></td>
+                                            <td class="text-right"><b>{row.netPrice} {currencySymbol}</b></td>
+                                        </template>
+
+                                        <td class="text-right"><b>{row.lineTotal} {currencySymbol}</b></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="order-bottom-bar">
+                        <div class="order-bottom-total">
+                            {labels.orderTotal}: <b>{orderTotal} {currencySymbol}</b>
+                        </div>
+                        <div class="order-bottom-actions">
+                            <lightning-input type="date" label={labels.requestedDelivery} value={deliveryDate} onchange={handleDeliveryDateChange} class="date-input"></lightning-input>
+                            <lightning-button label={labels.saveOrder} variant="brand" onclick={openSaveModal} disabled={isSaveDisabled}></lightning-button>
+                        </div>
+                    </div>
+
+                    <template if:true={isImagePopoverOpen}>
+                        <div class="product-popover slds-box slds-theme_default" style={popoverStyle}>
+                            <template if:true={hoveredProduct}>
+                                <div class="slds-border_bottom slds-p-bottom_x-small slds-m-bottom_small">
+                                    <h3 class="slds-text-heading_small"><b>{hoveredProduct.name}</b></h3>
+                                </div>
+                                <div class="slds-grid slds-gutters_small">
+                                    <div class="slds-col slds-size_1-of-2 popover-img-container">
+                                        <img src={hoveredProduct.imageUrl} alt={hoveredProduct.name} />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-text-body_small">
+                                        <p class="slds-m-bottom_xx-small"><strong>{labels.category}:</strong> {hoveredProduct.category}</p>
+                                        <p class="slds-m-bottom_xx-small"><strong>{labels.code}:</strong> {hoveredProduct.productCode}</p>
+                                        <p class="slds-m-bottom_xx-small"><strong>{labels.price}:</strong> {hoveredProduct.unitPrice} {currencySymbol}</p>
+                                        <p class="slds-m-bottom_small"><strong>{labels.stock}:</strong> {hoveredProduct.stock}</p>
+
+                                        <div class="slds-text-align_right slds-m-top_small">
+                                            <lightning-button-icon icon-name="utility:share" variant="border-filled" alternative-text={labels.sharePresentation} title={labels.emailPresentation} onclick={handleFakeEmail}></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={hoveredProduct.description}>
+                                    <div class="slds-m-top_small slds-p-top_x-small slds-border_top slds-text-body_small slds-text-color_weak slds-line-clamp_3" title={hoveredProduct.description}>
+                                        <i>{hoveredProduct.description}</i>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template if:true={isAIPopoverOpen}>
+                        <div class="ai-tooltip-fixed" style={aiPopoverStyle}>
+                            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <lightning-icon icon-name="utility:einstein" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                                <strong>{labels.einsteinAnalysis}</strong>
+                            </div>
+                            <div class="ai-tooltip-reason">{hoveredAIReason}</div>
+                        </div>
+                    </template>
+
+                    <template if:true={showSaveModal}>
+                        <section role="dialog" class="slds-modal slds-fade-in-open slds-modal_medium">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <lightning-button-icon icon-name="utility:close" onclick={closeSaveModal} size="large" variant="bare-inverse" class="slds-modal__close"></lightning-button-icon>
+                                    <h2 class="slds-modal__title slds-hyphenate">{labels.orderConfirmation}</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium">
+                                    <p class="slds-m-bottom_medium slds-text-align_center slds-text-heading_small">
+                                        {saveForTemplate}
+                                    </p>
+
+                                    <template if:true={deliveryDate}>
+                                        <div class="slds-box slds-theme_shade slds-m-bottom_medium slds-text-align_center">
+                                            <lightning-icon icon-name="utility:event" size="small" class="slds-m-right_small"></lightning-icon>
+                                            {labels.deliveryDateBanner}<b>{deliveryDate}</b>
+                                        </div>
+                                    </template>
+
+                                    <div class="slds-m-bottom_medium">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col">{labels.recapProduct}</th>
+                                                    <th scope="col" class="slds-text-align_center">{labels.recapQty}</th>
+                                                    <th scope="col" class="slds-text-align_right">{labels.recapTotal}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={recapItems} for:item="item">
+                                                    <tr key={item.productId}>
+                                                        <td>{item.name}</td>
+                                                        <td class="slds-text-align_center">{item.qty}</td>
+                                                        <td class="slds-text-align_right">{item.lineTotal} {currencySymbol}</td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning-button label={labels.cancel} variant="neutral" onclick={closeSaveModal}></lightning-button>
+                                    <lightning-button label={labels.confirm} variant="brand" onclick={processSaveOrder} class="slds-m-left_small"></lightning-button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+
+                </div>
+            </template>
+
+            <template if:false={targetAccountId}>
+                <div class="slds-p-around_large slds-text-align_center slds-text-color_weak">
+                    <lightning-icon icon-name="utility:info" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                    <p>{resolvedNoAccountMessage}</p>
+                </div>
+            </template>
+
+        </lightning-card>
+    </div>
+</template>

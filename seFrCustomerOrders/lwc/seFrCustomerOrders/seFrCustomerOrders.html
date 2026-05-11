@@ -1,0 +1,162 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-button-icon icon-name="utility:refresh" alternative-text={labels.refresh} variant="border-filled" size="small" class="slds-m-right_xx-small" onclick={handleRefresh}></lightning-button-icon>
+            <template if:false={hideNewOrderButton}>
+                <lightning-button label={labels.newOrder} icon-name="utility:new" variant="brand" onclick={handleNewOrder}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <!-- ======================= Empty state (no order at all OR no search match) ======================= -->
+            <template if:false={hasAnyOrder}>
+                <div class="empty-state slds-text-align_center slds-p-vertical_large">
+                    <lightning-icon icon-name="standard:orders" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_medium">{currentEmptyLabel}</p>
+                    <template if:true={isSearchActive}>
+                        <lightning-button label={labels.clearSearch} variant="neutral" onclick={handleClearSearch}></lightning-button>
+                    </template>
+                    <template if:false={isSearchActive}>
+                        <template if:false={hideNewOrderButton}>
+                            <lightning-button label={labels.emptyStateCta} icon-name="utility:new" variant="brand" onclick={handleNewOrder}></lightning-button>
+                        </template>
+                    </template>
+                </div>
+            </template>
+
+            <!-- ======================= Populated state ======================= -->
+            <template if:true={hasAnyOrder}>
+
+                <!-- Last order -->
+                <div class="section-title slds-text-title_caps slds-m-bottom_x-small">{labels.lastOrder}</div>
+
+                <template if:true={hasLatest}>
+                    <div class="slds-box slds-box_xx-small slds-m-bottom_medium latest-card">
+                        <div class="slds-grid slds-wrap slds-gutters_x-small">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-color_weak slds-text-body_small">{labels.orderNumber}</div>
+                                <div class="slds-text-heading_small">
+                                    <a href="javascript:void(0);" data-id={latest.orderId} onclick={navigateToOrder}>
+                                        <strong>{latest.orderNumber}</strong>
+                                        <lightning-icon icon-name="utility:new_window" size="xx-small" class="slds-m-left_xxx-small"></lightning-icon>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-text-color_weak slds-text-body_small">{labels.status}</div>
+                                <div class="slds-m-top_xxx-small">
+                                    <lightning-badge label={latest.status} class="slds-theme_info"></lightning-badge>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-top_x-small">
+                                <div class="slds-text-color_weak slds-text-body_small">{labels.totalAmount}</div>
+                                <div class="latest-amount">
+                                    <lightning-formatted-number value={latest.totalAmount} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-m-top_x-small">
+                                <div class="slds-text-color_weak slds-text-body_small">{labels.effectiveDate}</div>
+                                <div class="slds-text-body_regular"><strong>{latest.effectiveDateDisplay}</strong></div>
+                            </div>
+                        </div>
+
+                        <template if:true={latest.itemCount}>
+                            <div class="slds-border_top slds-m-top_small slds-p-top_small">
+                                <div class="slds-text-title_caps slds-text-color_weak slds-m-bottom_x-small">{labels.orderedProducts} ({latest.itemCount})</div>
+                                <ul class="slds-has-dividers_bottom-space">
+                                    <template for:each={latest.items} for:item="prod">
+                                        <li class="slds-item slds-m-bottom_x-small" key={prod.id} style="border: none; padding-left: 0; padding-right: 0;">
+                                            <lightning-layout vertical-align="center">
+                                                <lightning-layout-item class="slds-p-right_small">
+                                                    <template if:true={prod.hasImage}>
+                                                        <img src={prod.imageUrl} alt={prod.name} class="product-thumb" />
+                                                    </template>
+                                                    <template if:false={prod.hasImage}>
+                                                        <div class="product-thumb product-thumb_fallback slds-align_absolute-center">
+                                                            <lightning-icon icon-name="utility:image" size="small"></lightning-icon>
+                                                        </div>
+                                                    </template>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item flexibility="grow">
+                                                    <div class="slds-text-heading_small slds-truncate"><strong>{prod.name}</strong></div>
+                                                    <div class="slds-text-color_weak slds-text-body_small">{labels.ref}: {prod.code} &bull; {labels.qty}: {prod.quantity}</div>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item class="slds-text-align_right">
+                                                    <div class="slds-text-heading_small">
+                                                        <lightning-formatted-number value={prod.totalPrice} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+                                                    </div>
+                                                    <div class="slds-text-color_weak slds-text-body_small">
+                                                        <lightning-formatted-number value={prod.unitPrice} format-style="currency" currency-code={currencyCode}></lightning-formatted-number> {labels.perUnit}
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </lightning-layout>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:false={hasLatest}>
+                    <p class="slds-text-color_weak slds-text-body_small slds-text-align_center slds-m-bottom_medium">{labels.emptyLatest}</p>
+                </template>
+
+                <!-- Order history -->
+                <div class="section-title slds-text-title_caps slds-m-top_medium slds-m-bottom_x-small slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <span>{labels.orderHistory}</span>
+                    <span class="slds-text-body_small slds-text-color_weak">{totalCountLabel}</span>
+                </div>
+
+                <div class="slds-grid slds-gutters_x-small slds-m-bottom_small">
+                    <div class="slds-col">
+                        <lightning-input type="search" data-id="search" label={labels.search} variant="label-hidden" placeholder={labels.searchPlaceholder} value={searchTerm} onchange={handleSearchChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-grow-none" style="min-width: 180px;">
+                        <lightning-combobox label={labels.sortLabel} variant="label-hidden" options={sortOptions} value={currentSort} onchange={handleSortChange}></lightning-combobox>
+                    </div>
+                    <template if:true={showStatusPicker}>
+                        <div class="slds-col slds-grow-none" style="min-width: 150px;">
+                            <lightning-combobox label={labels.statusLabel} variant="label-hidden" options={statusOptions} value={currentStatus} onchange={handleStatusChange}></lightning-combobox>
+                        </div>
+                    </template>
+                </div>
+
+                <template if:true={hasHistory}>
+                    <ul class="history-list">
+                        <template for:each={historyRows} for:item="row">
+                            <li class="history-item slds-grid slds-grid_vertical-align-center" key={row.orderId} data-id={row.orderId} onclick={navigateToOrder}>
+                                <div class="history-cell history-cell_number">
+                                    <strong>{row.orderNumber}</strong>
+                                    <div class="slds-text-color_weak slds-text-body_small">{row.effectiveDateDisplay}</div>
+                                </div>
+                                <div class="history-cell slds-grow">
+                                    <lightning-badge label={row.status}></lightning-badge>
+                                </div>
+                                <div class="history-cell history-cell_amount slds-text-align_right">
+                                    <lightning-formatted-number value={row.totalAmount} format-style="currency" currency-code={currencyCode}></lightning-formatted-number>
+                                </div>
+                                <div class="history-cell history-cell_icon slds-p-left_x-small slds-text-align_right">
+                                    <lightning-icon icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+
+                <template if:false={hasHistory}>
+                    <p class="slds-text-color_weak slds-text-body_small slds-text-align_center slds-m-vertical_small">{labels.emptyHistory}</p>
+                </template>
+
+                <template if:true={shouldShowViewAll}>
+                    <div class="slds-text-align_center slds-m-top_small">
+                        <lightning-button label={labels.viewAllOrders} variant="neutral" onclick={navigateToAllOrders} class="slds-button_stretch"></lightning-button>
+                    </div>
+                </template>
+
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,88 @@
+<template>
+    <template lwc:if={showEmptyState}>
+        <div class="custom-highlights-panel slds-m-bottom_small slds-p-around_medium slds-text-color_weak">
+            {parentNotFoundMessage}
+        </div>
+    </template>
+
+    <template lwc:if={hasDisplayableRecord}>
+        <div class="custom-highlights-panel slds-m-bottom_small">
+
+            <div class="image-container slds-m-right_medium" style={containerSizeStyle}>
+                <template if:true={allowImageReplace}>
+                    <div class="image-slot" style={imageSizeStyle} title={openImageTitle} onclick={openFilePicker}>
+                        <template if:true={finalImageUrl}>
+                            <img src={finalImageUrl} alt={imageAlt} class="account-image" style={imageSizeStyle} />
+                        </template>
+                        <template if:false={finalImageUrl}>
+                            <div class="account-image fallback-image" style={imageSizeStyle}>
+                                <lightning-icon icon-name={fallbackIcon} size="large"></lightning-icon>
+                            </div>
+                        </template>
+                        <div class="image-overlay">
+                            <template if:true={isUploading}>
+                                <lightning-spinner alternative-text="Uploading" size="small" variant="inverse"></lightning-spinner>
+                            </template>
+                            <template if:false={isUploading}>
+                                <lightning-icon icon-name="utility:upload" size="small"></lightning-icon>
+                            </template>
+                        </div>
+                    </div>
+                    <input type="file" accept="image/*" class="hidden-file-input" onchange={handleNativeFileChange} lwc:ref="fileInput" />
+                </template>
+                <template if:false={allowImageReplace}>
+                    <template if:true={finalImageUrl}>
+                        <a href={finalImageUrl} target="_blank" title={openImageTitle}>
+                            <img src={finalImageUrl} alt={imageAlt} class="account-image" style={imageSizeStyle} />
+                        </a>
+                    </template>
+                    <template if:false={finalImageUrl}>
+                        <div class="account-image fallback-image" style={imageSizeStyle}>
+                            <lightning-icon icon-name={fallbackIcon} size="large"></lightning-icon>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <div class="info-container">
+                <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_8-of-12">
+                        <h1 class="slds-m-bottom_xx-small">
+                            <strong style="font-size: 1.75rem; color: #181818;">{recordName}</strong>
+                        </h1>
+                    </div>
+
+                    <div class="slds-col slds-size_4-of-12 slds-text-align_right actions-container">
+                        <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center" style="gap: 4px;">
+                            <template if:true={hasQuickActions}>
+                                <template for:each={quickActions} for:item="qa">
+                                    <lightning-button-icon key={qa.apiName}
+                                                           icon-name={qa.icon}
+                                                           variant="border-filled"
+                                                           size="small"
+                                                           alternative-text={qa.label}
+                                                           title={qa.label}
+                                                           data-api={qa.apiName}
+                                                           data-type={qa.actionType}
+                                                           onclick={handleQuickAction}></lightning-button-icon>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <template if:true={fieldsArray.length}>
+                    <lightning-record-view-form record-id={displayedRecordId} object-api-name={displayedObjectApiName}>
+                        <div class="fields-flex-container">
+                            <template for:each={fieldsArray} for:item="fieldName">
+                                <div key={fieldName} class="field-item">
+                                    <lightning-output-field field-name={fieldName} variant="label-stacked" class="custom-field"></lightning-output-field>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-record-view-form>
+                </template>
+            </div>
+        </div>
+    </template>
+</template>

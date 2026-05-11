@@ -1,0 +1,122 @@
+:host {
+    /* Shared SE_FR palette — all Home / App components share these values */
+    --se-fr-brand: #0176d3;
+    --se-fr-success: #2e844a;
+    --se-fr-warning: #fe9339;
+    --se-fr-error: #ba0517;
+    --se-fr-info: #0176d3;
+    --se-fr-neutral: #747474;
+    --se-fr-border: #e5e5e5;
+    --se-fr-track: #ecebea;
+    --se-fr-text-weak: #747474;
+    --se-fr-text-strong: #181818;
+}
+
+/* --- Greeting banner --- */
+.greeting-banner {
+    background: linear-gradient(90deg, #f3f3f3 0%, #ffffff 100%);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+.greeting-text { font-weight: 500; }
+
+/* --- KPI tiles (rounded, 4 distinct accents — no two blues side by side) --- */
+.kpi-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--se-fr-border);
+    border-top: 3px solid var(--kpi-accent, var(--se-fr-brand));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.kpi-card lightning-icon {
+    --sds-c-icon-color-foreground-default: var(--kpi-accent, var(--se-fr-brand));
+}
+.kpi-label {
+    font-size: 0.75rem;
+    color: var(--se-fr-text-weak);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    color: var(--kpi-accent, var(--se-fr-text-strong));
+    line-height: 1.1;
+}
+.kpi-visits  { --kpi-accent: var(--se-fr-brand); }
+.kpi-leads   { --kpi-accent: #7f8ceb; }
+.kpi-revenue { --kpi-accent: var(--se-fr-success); }
+.kpi-month   { --kpi-accent: var(--se-fr-warning); }
+
+/* --- Links & lists --- */
+.theme-link {
+    color: var(--lwc-brandTextLink, var(--lwc-colorTextLink, var(--se-fr-brand)));
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+.theme-link:hover {
+    text-decoration: underline;
+    color: var(--lwc-brandTextLinkActive, var(--lwc-colorTextLinkActive, var(--se-fr-brand)));
+}
+
+.list-item {
+    border-bottom: 1px solid var(--se-fr-border);
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+}
+.list-item:last-child { border-bottom: none; }
+.item-details { flex-grow: 1; overflow: hidden; }
+.item-title { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-meta { font-size: 0.8rem; color: var(--se-fr-text-weak); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-action { margin-left: 0.5rem; display: flex; align-items: center; }
+
+/* --- Penetration bars --- */
+.bar-row { margin-bottom: 0.75rem; }
+.bar-labels { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--se-fr-text-strong); margin-bottom: 4px; font-weight: 600; }
+.bar-track {
+    width: 100%;
+    height: 8px;
+    background-color: var(--se-fr-track);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+/* --- Campaign calendar --- */
+.cal-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.25rem;
+    border-bottom: 1px solid var(--se-fr-border);
+}
+.cal-wrapper:last-child { border-bottom: none; }
+.cal-item {
+    border-left: 3px solid var(--se-fr-brand);
+    padding-left: 10px;
+    flex-grow: 1;
+}

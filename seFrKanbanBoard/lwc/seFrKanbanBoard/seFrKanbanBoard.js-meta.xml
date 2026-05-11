@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Kanban Board</masterLabel>
+    <description>Generic kanban board. Any SObject + group-by picklist + display field. Optional drag &amp; drop that updates the group-by field on the record. Whitelisted objects: Case, Opportunity, Lead, Order, Task, Account.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:kanban" label="Card icon" />
+            <property name="sobjectApiName" type="String" default="Case" label="SObject to query" description="Whitelisted: Case | Opportunity | Lead | Order | Task | Account. On a Record Page this drives which object's records are listed (it does NOT follow the host page's object)." />
+            <property name="objectApiName" type="String" label="(deprecated) Object API name" description="Legacy alias - use 'SObject to query' above. Kept to avoid breaking existing FlexiPages." />
+            <property name="groupByField" type="String" default="Status" label="Group-by field API name" description="Picklist field used to form the columns." />
+            <property name="displayField" type="String" default="Subject" label="Display field API name" description="Field shown as the card title." />
+            <property name="secondaryField" type="String" default="Priority" label="Secondary field (optional)" />
+            <property name="amountField" type="String" label="Amount field (optional)" description="Currency / decimal field summed per column, e.g. 'Amount' on Opportunity." />
+            <property name="filterClause" type="String" default="IsClosed = false" label="SOQL WHERE clause (optional)" description="Raw SOQL fragment. Leave empty for no filter. Be cautious - injected as-is." />
+            <property name="limitCount" type="Integer" default="100" label="Max records" description="Server-side LIMIT (1-500)." />
+            <property name="maxPerColumn" type="Integer" default="6" label="Max cards visible per column" description="Beyond this cap, a 'Show all (N)' link unfolds the column." />
+            <property name="disableDragDrop" type="Boolean" default="false" label="Disable drag &amp; drop" description="Off by default - cards are draggable between columns; dropping updates the group-by field." />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:kanban" label="Card icon" />
+            <property name="sobjectApiName" type="String" default="Case" label="SObject to query" description="Whitelisted: Case | Opportunity | Lead | Order | Task | Account. On a Record Page this drives which object's records are listed (it does NOT follow the host page's object)." />
+            <property name="objectApiName" type="String" label="(deprecated) Object API name" description="Legacy alias - use 'SObject to query' above. Kept to avoid breaking existing FlexiPages." />
+            <property name="groupByField" type="String" default="Status" label="Group-by field API name" description="Picklist field used to form the columns." />
+            <property name="displayField" type="String" default="Subject" label="Display field API name" description="Field shown as the card title." />
+            <property name="secondaryField" type="String" default="Priority" label="Secondary field (optional)" />
+            <property name="amountField" type="String" label="Amount field (optional)" description="Currency / decimal field summed per column, e.g. 'Amount' on Opportunity." />
+            <property name="filterClause" type="String" default="IsClosed = false" label="SOQL WHERE clause (optional)" description="Raw SOQL fragment. Leave empty for no filter. Be cautious - injected as-is." />
+            <property name="recordScopeField" type="String" default="AccountId" label="Record-scope field API name" description="Lookup field on the queried object pointing at the current Record Id. Examples: 'AccountId' for Case / Opportunity / Order on an Account page. Leave empty to disable scoping." />
+            <property name="limitCount" type="Integer" default="100" label="Max records" description="Server-side LIMIT (1-500)." />
+            <property name="maxPerColumn" type="Integer" default="6" label="Max cards visible per column" description="Beyond this cap, a 'Show all (N)' link unfolds the column." />
+            <property name="disableDragDrop" type="Boolean" default="false" label="Disable drag &amp; drop" description="Off by default - cards are draggable between columns; dropping updates the group-by field." />
+            <property name="currencyCode" type="String" default="EUR" label="Currency code" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

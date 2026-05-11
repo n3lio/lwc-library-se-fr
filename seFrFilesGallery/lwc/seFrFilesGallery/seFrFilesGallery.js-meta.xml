@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Files Gallery</masterLabel>
+    <description>B2B / B2C - Visual gallery of files linked to the current record. Image thumbnails via the rendition endpoint, doctype icons for other types, click to open preview, Download link and drag-drop upload.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:file" label="Card icon" />
+            <property name="limitCount" type="Integer" default="20" label="Max files" description="Server-side LIMIT (1-100)." />
+            <property name="visibleCount" type="Integer" default="4" label="Files visible in the carousel" description="Number of tiles shown on one row. Chevrons in the header page through the rest." />
+            <property name="hideUploadButton" type="Boolean" default="false" label="Hide upload button" />
+            <property name="hideDeleteButton" type="Boolean" default="false" label="Hide delete button on tiles" description="Off by default - each tile shows a delete icon on hover. The user must have delete permission on the file." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

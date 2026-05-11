@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR - Territory Map</masterLabel>
+    <description>Sales / Field Sales - Map view of the territory: Accounts pinned by billing geo, color-coded by open pipeline, with side filters (Owner, RecordType, Open amount range, Stages, Case status, Type, Industry + name search), KPI tiles and CSV export.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the dictionary default." />
+            <property name="limitCount" type="Integer" default="100" label="Max accounts" description="Server-side LIMIT (1-200)." />
+            <property name="defaultOwnerScope" type="String" datasource="mine,all" default="mine" label="Default owner scope" description="'mine' = accounts owned by the running user (with auto-fallback to all when empty). 'all' = every owner." />
+            <property name="defaultRecordType" type="String" label="Default RecordType (developer name)" description="Optional. Pre-selects an Account RecordType filter (developer name). Leave empty to show all types." />
+            <property name="defaultStagesCsv" type="String" label="Default opportunity stages (CSV)" description="Optional. Pre-selects opportunity stages used to compute open-amount KPIs. Empty = all open opportunities." />
+            <property name="filterFieldAApiName" type="String" default="Type" label="Filter field A (API name)" description="API name of an Account picklist used as a filter and shown in the side list (default: Type). Set to a custom field if useful." />
+            <property name="filterFieldBApiName" type="String" default="Industry" label="Filter field B (API name)" description="API name of an Account picklist used as a filter and shown in the side list (default: Industry). Set to a custom field if useful." />
+            <property name="currencyCode" type="String" default="EUR" label="Currency ISO code" description="ISO 4217 code (EUR, USD, GBP...)." />
+            <property name="zoomLevel" type="Integer" default="6" label="Default zoom level" description="lightning-map zoom level (1=world, 13=neighborhood)." />
+            <property name="defaultCenterLatitude" type="String" default="46.7" label="Default center - latitude" description="Initial map center latitude. Defaults to France (46.7). Override for other regions." />
+            <property name="defaultCenterLongitude" type="String" default="2.5" label="Default center - longitude" description="Initial map center longitude. Defaults to France (2.5)." />
+            <property name="mapHeight" type="Integer" default="480" label="Map height (px)" description="Fixed height of the map + list area. The list scrolls independently inside this height." />
+            <property name="mapWidthRatio" type="String" default="0.66" label="Map / list ratio" description="Horizontal split ratio between the map (left) and the account list (right). Range 0.4 - 0.85. Default 0.66 = map ~ 2/3, list ~ 1/3." />
+            <property name="filtersOpenByDefault" type="Boolean" default="false" label="Open filters panel by default" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

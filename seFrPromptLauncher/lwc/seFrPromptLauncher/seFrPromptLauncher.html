@@ -1,0 +1,129 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <div class="pl-root" style={containerStyle}>
+
+            <!-- Config error (invalid JSON) ---------------------------------------- -->
+            <template if:true={configError}>
+                <div class="pl-config-error">{configError}</div>
+            </template>
+
+            <!-- No applicable prompts on this host --------------------------------- -->
+            <template if:false={hasApplicablePrompts}>
+                <template if:false={configError}>
+                    <div class="pl-empty">
+                        <lightning-icon icon-name="utility:bot" size="small"></lightning-icon>
+                        <p>{labels.noPromptForObject}</p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Pill switcher + body ----------------------------------------------- -->
+            <template if:true={hasApplicablePrompts}>
+                <div class="pl-pills" role="tablist" aria-label={labels.ariaPromptList}>
+                    <template for:each={promptPills} for:item="p">
+                        <button key={p.apiName}
+                                class={p.pillClass}
+                                data-api={p.apiName}
+                                onclick={handlePromptSelect}
+                                role="tab"
+                                aria-selected={p.isActive}>
+                            <lightning-icon icon-name={p.icon} size="xx-small"></lightning-icon>
+                            <span>{p.label}</span>
+                        </button>
+                    </template>
+                </div>
+
+                <!-- User inputs (if any) ------------------------------------------- -->
+                <template if:true={hasUserInputs}>
+                    <div class="pl-inputs">
+                        <template for:each={userInputFields} for:item="f">
+                            <div key={f.name} class="pl-input-row">
+                                <template if:true={f.isText}>
+                                    <lightning-input type="text"
+                                                     label={f.label}
+                                                     value={f.value}
+                                                     placeholder={f.placeholder}
+                                                     required={f.required}
+                                                     data-name={f.name}
+                                                     onchange={handleUserInputChange}></lightning-input>
+                                </template>
+                                <template if:true={f.isTextarea}>
+                                    <lightning-textarea label={f.label}
+                                                        value={f.value}
+                                                        placeholder={f.placeholder}
+                                                        required={f.required}
+                                                        data-name={f.name}
+                                                        onchange={handleUserInputChange}></lightning-textarea>
+                                </template>
+                                <template if:true={f.isNumber}>
+                                    <lightning-input type="number"
+                                                     label={f.label}
+                                                     value={f.value}
+                                                     placeholder={f.placeholder}
+                                                     required={f.required}
+                                                     data-name={f.name}
+                                                     onchange={handleUserInputChange}></lightning-input>
+                                </template>
+                                <template if:true={f.isPicklist}>
+                                    <lightning-combobox label={f.label}
+                                                        value={f.value}
+                                                        options={f.picklistOptions}
+                                                        placeholder={f.placeholder}
+                                                        required={f.required}
+                                                        data-name={f.name}
+                                                        onchange={handleUserInputChange}></lightning-combobox>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+
+                <!-- Run / Re-run button ------------------------------------------- -->
+                <div class="pl-actions">
+                    <lightning-button variant="brand"
+                                      icon-name="utility:magicwand"
+                                      label={runLabel}
+                                      disabled={runDisabled}
+                                      onclick={handleRun}></lightning-button>
+                </div>
+
+                <!-- Result area --------------------------------------------------- -->
+                <div class={resultClass}>
+                    <template if:true={isRunning}>
+                        <div class="pl-shimmer">
+                            <div class="pl-shimmer-line"></div>
+                            <div class="pl-shimmer-line pl-shimmer-line_short"></div>
+                            <div class="pl-shimmer-line"></div>
+                            <div class="pl-shimmer-line pl-shimmer-line_short"></div>
+                        </div>
+                        <div class="pl-thinking">{labels.thinking}</div>
+                    </template>
+                    <template if:true={hasResult}>
+                        <div class="pl-result-html" lwc:dom="manual"></div>
+                        <div class="pl-result-actions">
+                            <lightning-button-icon icon-name="utility:copy"
+                                                   alternative-text={labels.copy}
+                                                   title={labels.copy}
+                                                   variant="bare"
+                                                   size="small"
+                                                   onclick={handleCopy}></lightning-button-icon>
+                            <template if:true={showSaveAsNote}>
+                                <lightning-button-icon icon-name="utility:note"
+                                                       alternative-text={labels.saveNote}
+                                                       title={labels.saveNote}
+                                                       variant="bare"
+                                                       size="small"
+                                                       onclick={handleSaveAsNote}></lightning-button-icon>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={hasNoResult}>
+                        <div class="pl-empty pl-empty_subtle">
+                            <p>{labels.emptyState}</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

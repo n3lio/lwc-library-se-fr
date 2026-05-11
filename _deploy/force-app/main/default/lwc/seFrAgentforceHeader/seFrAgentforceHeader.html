@@ -1,0 +1,54 @@
+<template>
+    <div class="agentforce-container">
+        
+        <div class="astro-wrapper" onclick={triggerAgentforce}>
+            <div class="astro-glow"></div>
+            <div class="astro-float">
+                <img src={astroImageUrl} class="astro-img" alt="Agent">
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <h1 class="greeting-title">
+                <template for:each={greetingSegments} for:item="seg">
+                    <template lwc:if={seg.highlight}>
+                        <span key={seg.id} class="name-highlight" style={highlightStyle}>{seg.text}</span>
+                    </template>
+                    <template lwc:else>
+                        <span key={seg.id}>{seg.text}</span>
+                    </template>
+                </template>
+            </h1>
+            
+            <div class={inputWrapperClass}>
+                
+                <div class="icon-click-area mic-area" onclick={toggleDictation} title="Dictate">
+                    <lightning-icon 
+                        icon-name="utility:record" 
+                        size="small" 
+                        class="custom-color-icon mic-icon">
+                    </lightning-icon>
+                </div>
+
+                <input 
+                    type="text" 
+                    class="chat-input"
+                    placeholder={placeholderText}
+                    value={userInput}
+                    oninput={handleInputChange}
+                    onkeyup={handleKeyUp}
+                >
+
+                <div class="icon-click-area send-area" onclick={triggerAgentforce} title="Send">
+                    <lightning-icon 
+                        icon-name="utility:send" 
+                        size="small" 
+                        class="custom-color-icon">
+                    </lightning-icon>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+</template>

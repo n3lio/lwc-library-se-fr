@@ -1,0 +1,48 @@
+# Release notes — curated, user-facing changelog for the site.
+# Internal stuff (FlexiPage cleanups, showcase deploy details) is excluded.
+# Each entry: version, date (YYYY-MM-DD), title (short), body (one paragraph).
+
+- version: "2.8"
+  date: "2026-05-08"
+  title:
+    fr: Refonte Prompt Launcher + librairie « manifest-driven »
+    en: Prompt Launcher rebuilt + manifest-driven pipeline
+  body:
+    fr: Le composant <code>seFrPromptLauncher</code> remplace l’ancien chat — il exécute des Salesforce Prompt Templates via les Invocable Actions, contexte record auto-injecté, rendu HTML / Markdown. La librairie passe sur un manifeste central qui dirige README, deck, knowledge base de l’agent et ce site.
+    en: The <code>seFrPromptLauncher</code> component replaces the old chat — it runs Salesforce Prompt Templates via Invocable Actions, with auto-injected record context and HTML / Markdown rendering. The library now runs on a central manifest that drives the README, deck, agent knowledge base and this site.
+
+- version: "2.7"
+  date: "2026-05-03"
+  title:
+    fr: 8 composants ajoutés
+    en: 8 new components
+  body:
+    fr: Gros lot de composants génériques et réutilisables, couvrant pipeline, timelines, contacts, kanban, KPIs, fichiers et alertes — <code>seFrPipelineSnapshot</code>, <code>seFrTimelinePhases</code>, <code>seFrContactsCarousel</code>, <code>seFrAccountHealth</code>, <code>seFrKanbanBoard</code>, <code>seFrMetricTile</code>, <code>seFrFilesGallery</code>, <code>seFrAlertsRibbon</code>.
+    en: A big batch of generic, reusable components covering pipeline, timelines, contacts, kanban, KPIs, files and alerts — <code>seFrPipelineSnapshot</code>, <code>seFrTimelinePhases</code>, <code>seFrContactsCarousel</code>, <code>seFrAccountHealth</code>, <code>seFrKanbanBoard</code>, <code>seFrMetricTile</code>, <code>seFrFilesGallery</code>, <code>seFrAlertsRibbon</code>.
+
+- version: "2.6"
+  date: "2026-04-30"
+  title:
+    fr: Bilingue FR / EN sur l’ensemble de la lib
+    en: Bilingual FR / EN across the board
+  body:
+    fr: Tous les composants (sauf <code>seFrAgentforceHeader</code>) exposent désormais une prop <code>language</code> avec dictionnaires FR/EN complets. Les valeurs App Builder restent prioritaires — un SE FR peut démo en FR avec quelques labels en allemand sans changer de langue globale.
+    en: Every component (except <code>seFrAgentforceHeader</code>) now exposes a <code>language</code> prop with full FR/EN dictionaries. App Builder values still win — a French SE demoing to a German prospect can override individual labels without switching the whole language.
+
+- version: "2.4"
+  date: "2026-04-29"
+  title:
+    fr: My Events — refonte sidebar
+    en: My Events refonte
+  body:
+    fr: Layout sidebar compact, événements qui se chevauchent affichés côté à côte (style Google Calendar), ligne « now » live, bouton Join pour les liens Zoom / Teams / Meet / WebEx.
+    en: Compact sidebar layout, side-by-side overlapping events (Google Calendar style), live "now" line, Join button for Zoom / Teams / Meet / WebEx links.
+
+- version: "2.0"
+  date: "2026-04-24"
+  title:
+    fr: Première version publique
+    en: Initial release
+  body:
+    fr: 11 composants extraits de la démo « Coup de Pâtes » (B2B bakery) et génériques — bricks industry-neutral.
+    en: 11 components extracted from the "Coup de Pâtes" B2B bakery demo, generalized into industry-neutral building blocks.

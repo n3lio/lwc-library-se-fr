@@ -1,0 +1,296 @@
+:host {
+    --pl-blue: #0176d3;
+    --pl-blue-deep: #032D60;
+    --pl-blue-soft: #ECF5FC;
+    --pl-purple: #6F46AD;
+    --pl-purple-soft: #F1EBFB;
+    --pl-purple-light: #B179F4;
+    --pl-pink: #FF6EC7;
+    --pl-green: #2E844A;
+    --pl-green-soft: #E5F5EA;
+    --pl-text: #181818;
+    --pl-text-soft: #5C5C5C;
+    --pl-text-mute: #8C8C8C;
+    --pl-border: #E5E5E5;
+    --pl-tint: #F4F6F9;
+}
+
+.pl-root {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 18px 18px;
+    gap: 12px;
+    /* No fixed height — the component grows with its content. When `maxHeight` is set via prop,
+       inline style applies `max-height` and we enable scroll. */
+    overflow-y: auto;
+}
+
+/* ============================================================
+   Pill switcher — gradient when active, hover lift
+   ============================================================ */
+
+.pl-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.pl-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--pl-border);
+    background: white;
+    color: var(--pl-text);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+.pl-pill span {
+    color: inherit;
+    line-height: 1;
+}
+.pl-pill:hover {
+    background: var(--pl-tint);
+    border-color: #c9c7c5;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+.pl-pill_active,
+.pl-pill_active:hover,
+.pl-pill_active:focus {
+    background: linear-gradient(135deg, var(--pl-blue) 0%, var(--pl-purple) 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(111, 70, 173, 0.25);
+    font-weight: 700;
+}
+.pl-pill_active:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(111, 70, 173, 0.35);
+}
+.pl-pill_active span { color: #ffffff; }
+.pl-pill_active lightning-icon {
+    --sds-c-icon-color-foreground-default: #ffffff;
+    --slds-c-icon-color-foreground-default: #ffffff;
+}
+
+/* ============================================================
+   User inputs
+   ============================================================ */
+
+.pl-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--pl-tint);
+    border: 1px solid var(--pl-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.pl-input-row { display: block; }
+
+/* ============================================================
+   Run / Re-run action bar
+   ============================================================ */
+
+.pl-actions {
+    display: flex;
+    justify-content: center;
+}
+.pl-actions lightning-button {
+    --slds-c-button-brand-color-background: var(--pl-blue-deep);
+    --slds-c-button-brand-color-background-hover: var(--pl-purple);
+    --slds-c-button-brand-color-border: var(--pl-blue-deep);
+}
+
+/* ============================================================
+   Result panel — sexy version
+   ============================================================ */
+
+.pl-result {
+    position: relative;
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--pl-text);
+    /* Sized to its content — no min-height. The shimmer / empty state set their own padding
+       so the panel still feels substantial when it's empty. */
+    word-break: break-word;
+    background: linear-gradient(135deg, var(--pl-blue-soft) 0%, #ffffff 60%);
+    border: 1px solid color-mix(in srgb, var(--pl-blue) 18%, transparent);
+}
+.pl-result::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--pl-blue) 0%, var(--pl-purple) 100%);
+}
+.pl-result_purple {
+    background: linear-gradient(135deg, var(--pl-purple-soft) 0%, #ffffff 60%);
+    border-color: color-mix(in srgb, var(--pl-purple) 18%, transparent);
+}
+.pl-result_purple::before { background: linear-gradient(180deg, var(--pl-purple) 0%, var(--pl-pink) 100%); }
+.pl-result_green {
+    background: linear-gradient(135deg, var(--pl-green-soft) 0%, #ffffff 60%);
+    border-color: color-mix(in srgb, var(--pl-green) 18%, transparent);
+}
+.pl-result_green::before { background: linear-gradient(180deg, var(--pl-green) 0%, #95C04B 100%); }
+
+.pl-result-html {
+    padding-right: 60px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    animation: pl-fade-in 0.4s ease-out;
+}
+@keyframes pl-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.pl-result-html p { margin: 0 0 8px 0; }
+.pl-result-html p:last-child { margin-bottom: 0; }
+.pl-result-html a {
+    color: var(--pl-blue);
+    border-bottom: 1px dotted color-mix(in srgb, var(--pl-blue) 50%, transparent);
+    text-decoration: none;
+    transition: border-color 0.12s ease;
+}
+.pl-result-html a:hover { border-bottom-color: var(--pl-blue); }
+.pl-result-html ul, .pl-result-html ol { margin: 4px 0 8px 1.4em; padding: 0; }
+.pl-result-html li { margin: 2px 0; }
+.pl-result-html strong { font-weight: 700; color: var(--pl-blue-deep); }
+.pl-result-html em { font-style: italic; }
+.pl-result-html h1, .pl-result-html h2, .pl-result-html h3 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--pl-blue-deep);
+    margin: 14px 0 6px 0;
+    letter-spacing: -0.01em;
+}
+.pl-result-html h1 { font-size: 1.15rem; }
+.pl-result-html h2 { font-size: 1.05rem; }
+.pl-result-html h3 { font-size: 0.98rem; }
+.pl-result-html pre {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-family: 'SF Mono', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.pl-result-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-flex;
+    gap: 4px;
+    opacity: 0.4;
+    transition: opacity 0.18s ease;
+}
+.pl-result:hover .pl-result-actions { opacity: 1; }
+
+/* ============================================================
+   Loading — Charly-style animated gradient lines
+   ============================================================ */
+
+.pl-shimmer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.pl-shimmer-line {
+    height: 12px;
+    border-radius: 6px;
+    background-size: 400% 400%;
+    animation: pl-gradient 3.5s ease infinite;
+}
+.pl-shimmer-line:nth-child(1) {
+    width: 100%;
+    background-image: linear-gradient(-45deg, #C0C6FF, #7F8CEB, #4A4AFF, #C0C6FF);
+}
+.pl-shimmer-line:nth-child(2) {
+    width: 80%;
+    background-image: linear-gradient(-45deg, #7F8CEB, #4A4AFF, #C0C6FF, #7F8CEB);
+}
+.pl-shimmer-line:nth-child(3) {
+    width: 95%;
+    background-image: linear-gradient(-45deg, #4A4AFF, #C0C6FF, #7F8CEB, #4A4AFF);
+}
+.pl-shimmer-line:nth-child(4) {
+    width: 60%;
+    background-image: linear-gradient(-45deg, #B179F4, #FF6EC7, #4A4AFF, #B179F4);
+}
+@keyframes pl-gradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.pl-thinking {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--pl-text-soft);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.pl-thinking::before {
+    content: '✨';
+    animation: pl-sparkle 1.6s ease-in-out infinite;
+    display: inline-block;
+}
+@keyframes pl-sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50%      { transform: scale(1.2) rotate(15deg); opacity: 0.7; }
+}
+
+/* ============================================================
+   Empty / config error
+   ============================================================ */
+
+.pl-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 16px;
+    color: var(--pl-text-soft);
+    text-align: center;
+}
+.pl-empty p { margin: 0; font-size: 13px; }
+.pl-empty_subtle { padding: 14px 0 6px; color: var(--pl-text-mute); }
+
+.pl-config-error {
+    background: #FCEBEB;
+    border-left: 3px solid #BA0517;
+    border-radius: 4px;
+    padding: 10px 12px;
+    color: #181818;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.pl-error {
+    color: #BA0517;
+    font-weight: 600;
+    font-size: 13px;
+}
+.pl-error small {
+    font-weight: 400;
+    color: var(--pl-text-soft);
+    font-style: italic;
+    display: block;
+    margin-top: 6px;
+    word-break: break-word;
+}

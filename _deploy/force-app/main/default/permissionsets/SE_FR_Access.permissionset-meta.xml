@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>SE_FR</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>Grants access to the SE FR app and its custom components.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>SE FR Access</label>
+    <license>Salesforce</license>
+</PermissionSet>
