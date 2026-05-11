@@ -10,7 +10,7 @@
   const T = {
     fr: {
       'connect.btn': '↗ Connecter à mon org',
-      'showcase.btn': '🌐 Org de démo',
+      'showcase.btn': '🚀 Voir en live',
       'search.placeholder': 'Rechercher…',
       'search.empty': 'Aucun résultat.',
       'cart.selected': 'composants sélectionnés',
@@ -86,16 +86,21 @@
       'download.toast': '⬇ Téléchargement lancé',
       'connect.menu.disconnect': 'Se déconnecter',
       'connect.menu.signedinas': 'Connecté en tant que',
-      'connect.choose.title': 'Connecter votre org',
-      'connect.choose.sub': 'Choisissez le type d\'org à laquelle vous voulez connecter cette session.',
+      'connect.choose.title': 'Connecter votre org de démo',
+      'connect.choose.sub': "Cette org sera la cible des déploiements. Connectez-vous à VOTRE org de démo (SDO/IDO/scratch) — pas à l'org showcase, pas à une prod client.",
+      'connect.choose.sdo': 'Mon SDO / IDO',
+      'connect.choose.sdo.sub': 'Saisissez votre My Domain',
+      'connect.choose.sdo.ph': 'storm.my.salesforce.com',
+      'connect.choose.scratch': 'Scratch org',
+      'connect.choose.scratch.sub': 'test.salesforce.com',
+      'connect.choose.advanced': 'Sandbox ou Production',
+      'connect.choose.advanced.sub': 'Cas avancés uniquement',
       'connect.choose.prod': 'Production',
       'connect.choose.prod.sub': 'login.salesforce.com',
       'connect.choose.sandbox': 'Sandbox',
       'connect.choose.sandbox.sub': 'test.salesforce.com',
-      'connect.choose.custom': 'Domaine personnalisé',
-      'connect.choose.custom.sub': 'mycompany.my.salesforce.com',
-      'connect.choose.custom.ph': 'mycompany.my.salesforce.com',
       'connect.choose.continue': 'Continuer →',
+      'connect.choose.back': '← Retour',
       'connect.choose.cancel': 'Annuler',
       'connect.popup.blocked': '⚠ Autorisez la popup pour vous connecter à Salesforce.',
       'connect.toast.connected': '✓ Connecté à',
@@ -117,7 +122,7 @@
     },
     en: {
       'connect.btn': '↗ Connect to my org',
-      'showcase.btn': '🌐 Showcase org',
+      'showcase.btn': '🚀 See it live',
       'search.placeholder': 'Search…',
       'search.empty': 'No match.',
       'cart.selected': 'components selected',
@@ -193,16 +198,21 @@
       'download.toast': '⬇ Download started',
       'connect.menu.disconnect': 'Disconnect',
       'connect.menu.signedinas': 'Signed in as',
-      'connect.choose.title': 'Connect your org',
-      'connect.choose.sub': 'Pick the type of org you want to connect to for this session.',
+      'connect.choose.title': 'Connect to your demo org',
+      'connect.choose.sub': "This org will be the deploy target. Connect to YOUR demo org (SDO/IDO/scratch) — NOT the showcase org, NOT a customer prod.",
+      'connect.choose.sdo': 'My SDO / IDO',
+      'connect.choose.sdo.sub': 'Enter your My Domain',
+      'connect.choose.sdo.ph': 'storm.my.salesforce.com',
+      'connect.choose.scratch': 'Scratch org',
+      'connect.choose.scratch.sub': 'test.salesforce.com',
+      'connect.choose.advanced': 'Sandbox or Production',
+      'connect.choose.advanced.sub': 'Advanced cases only',
       'connect.choose.prod': 'Production',
       'connect.choose.prod.sub': 'login.salesforce.com',
       'connect.choose.sandbox': 'Sandbox',
       'connect.choose.sandbox.sub': 'test.salesforce.com',
-      'connect.choose.custom': 'Custom domain',
-      'connect.choose.custom.sub': 'mycompany.my.salesforce.com',
-      'connect.choose.custom.ph': 'mycompany.my.salesforce.com',
       'connect.choose.continue': 'Continue →',
+      'connect.choose.back': '← Back',
       'connect.choose.cancel': 'Cancel',
       'connect.popup.blocked': '⚠ Please allow the popup to sign in to Salesforce.',
       'connect.toast.connected': '✓ Connected to',
@@ -664,7 +674,9 @@
     return { verifier, challenge: b64url(hash) };
   }
 
-  // ── Connect modal — choose Production / Sandbox / Custom domain
+  // ── Connect modal — 2-screen flow
+  // Screen 1 (default): Mon SDO/IDO (input direct) / Scratch / Sandbox or Prod (advanced ↘)
+  // Screen 2 (advanced): Sandbox / Production / ← Back
   function openConnectChooser(onProceed) {
     let m = document.getElementById('connect-modal');
     if (!m) {
@@ -673,39 +685,86 @@
       m.className = 'modal-mask';
       m.innerHTML = (
         '<div class="modal connect-modal">' +
+        // Screen 1
+        '<div class="cm-screen cm-screen-main">' +
         '<h3 data-i18n="connect.choose.title"></h3>' +
         '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
         '<div class="connect-choices">' +
-        '<button type="button" class="connect-choice" data-host="login.salesforce.com">' +
-        '<span class="cc-icon">☁️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.prod"></span><span class="cc-sub" data-i18n="connect.choose.prod.sub"></span></span></button>' +
-        '<button type="button" class="connect-choice" data-host="test.salesforce.com">' +
-        '<span class="cc-icon">🧪</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sandbox"></span><span class="cc-sub" data-i18n="connect.choose.sandbox.sub"></span></span></button>' +
-        '<div class="connect-choice connect-custom"><span class="cc-icon">🔗</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.custom"></span>' +
-        '<input type="text" name="customDomain" data-i18n-placeholder="connect.choose.custom.ph"></span>' +
-        '<button type="button" class="btn btn-primary btn-sm" data-custom-go data-i18n="connect.choose.continue"></button></div>' +
+        '<div class="connect-choice connect-custom is-primary"><span class="cc-icon">🛠️</span>' +
+        '<span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sdo"></span>' +
+        '<input type="text" name="sdoDomain" data-i18n-placeholder="connect.choose.sdo.ph" autocomplete="off"></span>' +
+        '<button type="button" class="btn btn-primary btn-sm" data-sdo-go data-i18n="connect.choose.continue"></button></div>' +
+        '<button type="button" class="connect-choice" data-host="test.salesforce.com" data-kind="scratch">' +
+        '<span class="cc-icon">🧬</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.scratch"></span><span class="cc-sub" data-i18n="connect.choose.scratch.sub"></span></span></button>' +
+        '<button type="button" class="connect-choice connect-advanced-toggle">' +
+        '<span class="cc-icon">⚙️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.advanced"></span><span class="cc-sub" data-i18n="connect.choose.advanced.sub"></span></span><span class="cc-chev">›</span></button>' +
         '</div>' +
         '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
+        '</div>' +
+        // Screen 2 (advanced)
+        '<div class="cm-screen cm-screen-advanced" hidden>' +
+        '<h3 data-i18n="connect.choose.advanced"></h3>' +
+        '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
+        '<div class="connect-choices">' +
+        '<button type="button" class="connect-choice" data-host="test.salesforce.com" data-kind="sandbox">' +
+        '<span class="cc-icon">🧪</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sandbox"></span><span class="cc-sub" data-i18n="connect.choose.sandbox.sub"></span></span></button>' +
+        '<button type="button" class="connect-choice" data-host="login.salesforce.com" data-kind="prod">' +
+        '<span class="cc-icon">☁️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.prod"></span><span class="cc-sub" data-i18n="connect.choose.prod.sub"></span></span></button>' +
+        '</div>' +
+        '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-back data-i18n="connect.choose.back"></button>' +
+        '<button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
+        '</div>' +
         '</div>'
       );
       document.body.appendChild(m);
+
+      const screenMain = m.querySelector('.cm-screen-main');
+      const screenAdv = m.querySelector('.cm-screen-advanced');
+      function showMain() { screenMain.hidden = false; screenAdv.hidden = true; }
+      function showAdv() { screenMain.hidden = true; screenAdv.hidden = false; }
+
       m.addEventListener('click', (ev) => {
-        if (ev.target === m || ev.target.matches('[data-connect-cancel]')) m.classList.remove('open');
+        if (ev.target === m || ev.target.matches('[data-connect-cancel]')) {
+          m.classList.remove('open'); showMain();
+        }
       });
+      m.querySelector('.connect-advanced-toggle').addEventListener('click', showAdv);
+      m.querySelector('[data-connect-back]').addEventListener('click', showMain);
+
+      // Direct host buttons (Scratch on screen 1, Sandbox/Prod on screen 2)
       m.querySelectorAll('.connect-choice[data-host]').forEach(b => {
-        b.addEventListener('click', () => { m.classList.remove('open'); onProceed(b.dataset.host); });
+        b.addEventListener('click', () => {
+          m.classList.remove('open'); showMain();
+          const cb = m.__sePending; m.__sePending = null;
+          if (typeof cb === 'function') cb(b.dataset.host);
+        });
       });
-      m.querySelector('[data-custom-go]').addEventListener('click', () => {
-        const raw = (m.querySelector('input[name="customDomain"]').value || '').trim().toLowerCase();
+
+      // SDO/IDO direct domain
+      const sdoInput = m.querySelector('input[name="sdoDomain"]');
+      const goSdo = () => {
+        const raw = (sdoInput.value || '').trim().toLowerCase();
         const host = raw.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
         if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*\.(my\.salesforce\.com|force\.com)$/i.test(host)) {
-          m.querySelector('input[name="customDomain"]').focus();
+          sdoInput.focus(); sdoInput.classList.add('err');
+          setTimeout(() => sdoInput.classList.remove('err'), 800);
           return;
         }
-        m.classList.remove('open'); onProceed(host);
-      });
+        m.classList.remove('open'); showMain();
+        const cb = m.__sePending; m.__sePending = null;
+        if (typeof cb === 'function') cb(host);
+      };
+      m.querySelector('[data-sdo-go]').addEventListener('click', goSdo);
+      sdoInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); goSdo(); } });
+
       applyLang();
     }
+    m.__sePending = onProceed;
     m.classList.add('open');
+    setTimeout(() => {
+      const inp = m.querySelector('input[name="sdoDomain"]');
+      if (inp) inp.focus();
+    }, 60);
   }
 
   // ── Launch the OAuth popup flow against `loginHost`.
@@ -853,6 +912,42 @@
     bumpDownloadCounters(target);
   }
 
+  // ── Confirm-deploy modal — last chance to abort if the SE is signed in to the wrong org.
+  function openConfirmDeploy(host, list, onConfirm) {
+    let m = document.getElementById('deploy-confirm');
+    if (!m) {
+      m = document.createElement('div');
+      m.id = 'deploy-confirm';
+      m.className = 'modal-mask';
+      m.innerHTML = (
+        '<div class="modal deploy-confirm-modal">' +
+        '<h3 data-i18n="deploy.confirm.title"></h3>' +
+        '<p class="modal-sub"><span class="dc-prefix"></span> <strong class="dc-host"></strong></p>' +
+        '<ul class="dc-list"></ul>' +
+        '<div class="modal-actions">' +
+        '<button type="button" class="btn btn-ghost" data-dc-cancel data-i18n="deploy.confirm.cancel"></button>' +
+        '<button type="button" class="btn btn-primary" data-dc-go data-i18n="deploy.confirm.deploy"></button>' +
+        '</div></div>'
+      );
+      document.body.appendChild(m);
+      m.addEventListener('click', (ev) => {
+        if (ev.target === m || ev.target.matches('[data-dc-cancel]')) m.classList.remove('open');
+      });
+      m.querySelector('[data-dc-go]').addEventListener('click', () => {
+        m.classList.remove('open');
+        const cb = m.__sePending; m.__sePending = null;
+        if (typeof cb === 'function') setTimeout(cb, 80);
+      });
+      applyLang();
+    }
+    m.querySelector('.dc-prefix').textContent = list.length === 1 ? t('deploy.confirm.body.one') : t('deploy.confirm.body.many');
+    m.querySelector('.dc-host').textContent = host;
+    const ul = m.querySelector('.dc-list');
+    ul.innerHTML = list.map(api => '<li><code>' + api + '</code></li>').join('');
+    m.__sePending = onConfirm;
+    m.classList.add('open');
+  }
+
   // ── Real deploy: posts components to /api/deploy then polls status.
   let deployInFlight = false;
   async function deployComponents(target) {
@@ -862,6 +957,17 @@
     if (!auth.isConnected()) {
       // Prompt connect and resume once done.
       openConnectChooser((host) => startOAuth(host, () => deployComponents(target)));
+      return;
+    }
+    // Last-chance confirmation showing the cible host.
+    if (!target.dataset.deployConfirmed) {
+      const a0 = auth.get();
+      const host0 = auth.instanceHost();
+      openConfirmDeploy(host0, list, () => {
+        target.dataset.deployConfirmed = '1';
+        try { deployComponents(target); }
+        finally { delete target.dataset.deployConfirmed; }
+      });
       return;
     }
     deployInFlight = true;
