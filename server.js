@@ -16,8 +16,22 @@ const SITE_DIR = path.join(__dirname, '_site');
 const ZIPS_DIR = path.join(__dirname, '_zips');
 
 // Connected App credentials — set via `heroku config:set SF_CLIENT_ID=... SF_CLIENT_SECRET=...`
+// Used for the user-agent flow (SE connects to their own org for deploy).
 const SF_CLIENT_ID = process.env.SF_CLIENT_ID || '';
 const SF_CLIENT_SECRET = process.env.SF_CLIENT_SECRET || '';
+
+// Showcase Connected App — client_credentials flow, runs as the Showcase Visitor bot user
+// on the SE FR showcase org. The host is the org's My Domain (NOT login.salesforce.com).
+const SF_SHOWCASE_CLIENT_ID = process.env.SF_SHOWCASE_CLIENT_ID || '';
+const SF_SHOWCASE_CLIENT_SECRET = process.env.SF_SHOWCASE_CLIENT_SECRET || '';
+const SF_SHOWCASE_LOGIN_HOST = (process.env.SF_SHOWCASE_LOGIN_HOST || '').replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+// Where on the showcase org we drop the SE after frontdoor (default = LEX home).
+const SF_SHOWCASE_LANDING = process.env.SF_SHOWCASE_LANDING || '/lightning/page/home';
+
+// Light in-memory click counter for the showcase button (resets on dyno restart;
+// good enough for a "is anyone using it" pulse — proper analytics live in Plausible
+// later). Map<dateString, count>.
+const SHOWCASE_CLICKS = new Map();
 
 // Salesforce Metadata API version used for package.xml + deployRequest endpoint
 const SF_API_VERSION = '62.0';
@@ -207,6 +221,51 @@ app.post('/api/oauth/identity', async (req, reply) => {
     organizationId: data.organization_id,
     userId: data.user_id,
   });
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// Showcase — client_credentials grant on the showcase org, then frontdoor.jsp
+// to drop the SE in LEX as the Showcase Visitor bot user. No SE login required.
+
+app.get('/api/showcase/url', async (req, reply) => {
+  if (!SF_SHOWCASE_CLIENT_ID || !SF_SHOWCASE_CLIENT_SECRET || !SF_SHOWCASE_LOGIN_HOST) {
+    return reply.code(503).send({ error: 'showcase_not_configured' });
+  }
+  if (!isAllowedSalesforceHost(SF_SHOWCASE_LOGIN_HOST)) {
+    return reply.code(500).send({ error: 'invalid_showcase_host' });
+  }
+  // Bump click counter (per UTC date)
+  const today = new Date().toISOString().slice(0, 10);
+  SHOWCASE_CLICKS.set(today, (SHOWCASE_CLICKS.get(today) || 0) + 1);
+
+  const params = new URLSearchParams({
+    grant_type: 'client_credentials',
+    client_id: SF_SHOWCASE_CLIENT_ID,
+    client_secret: SF_SHOWCASE_CLIENT_SECRET,
+  });
+  const tokenUrl = `https://${SF_SHOWCASE_LOGIN_HOST}/services/oauth2/token`;
+  const resp = await fetch(tokenUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params,
+  });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) {
+    req.log.error({ status: resp.status, data }, 'showcase token exchange failed');
+    return reply.code(resp.status || 502).send({ error: 'token_failed', details: data });
+  }
+  const instance = (data.instance_url || '').replace(/\/+$/, '');
+  if (!instance) return reply.code(502).send({ error: 'no_instance_url' });
+  // frontdoor.jsp: drops the user directly into the org with a valid session
+  const url = `${instance}/secur/frontdoor.jsp?sid=${encodeURIComponent(data.access_token)}&retURL=${encodeURIComponent(SF_SHOWCASE_LANDING)}`;
+  return reply.send({ url });
+});
+
+app.get('/api/showcase/stats', async () => {
+  // Tiny stats endpoint — useful for debugging "is anyone clicking?".
+  const out = {};
+  for (const [d, n] of SHOWCASE_CLICKS) out[d] = n;
+  return { clicks: out };
 });
 
 // ───────────────────────────────────────────────────────────────────────────

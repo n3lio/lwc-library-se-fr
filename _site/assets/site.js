@@ -119,6 +119,8 @@
       'deploy.confirm.body.many': 'Déployer ces composants sur',
       'deploy.confirm.deploy': 'Déployer →',
       'deploy.confirm.cancel': 'Annuler',
+      'showcase.toast.failed': '✗ Showcase indisponible',
+      'showcase.toast.popupblocked': '⚠ Popup bloquée — ouverture dans cet onglet…',
     },
     en: {
       'connect.btn': '↗ Connect to my org',
@@ -231,6 +233,8 @@
       'deploy.confirm.body.many': 'Deploy these components to',
       'deploy.confirm.deploy': 'Deploy →',
       'deploy.confirm.cancel': 'Cancel',
+      'showcase.toast.failed': '✗ Showcase unavailable',
+      'showcase.toast.popupblocked': '⚠ Popup blocked — opening in this tab…',
     }
   };
 
@@ -1042,6 +1046,51 @@
     };
   }
 
+  // ── Showcase live — opens a frontdoor.jsp URL in a new tab (read-only bot user).
+  // The URL is short-lived and minted by the backend on each click.
+  let showcaseInFlight = false;
+  function openShowcaseLive(target) {
+    if (showcaseInFlight) return;
+    showcaseInFlight = true;
+    // Open the tab synchronously to keep the user-gesture context (avoids popup
+    // blockers). We fill its location after the fetch resolves.
+    const tab = window.open('about:blank', '_blank');
+    if (tab) {
+      try {
+        tab.document.title = 'SE FR Showcase — chargement…';
+        tab.document.body.style.cssText = 'background:#0a0e2a;color:#e6e9ff;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0';
+        const wrap = tab.document.createElement('div');
+        wrap.style.textAlign = 'center';
+        const icon = tab.document.createElement('div');
+        icon.style.cssText = 'font-size:42px;margin-bottom:12px';
+        icon.textContent = '🚀';
+        const label = tab.document.createElement('div');
+        label.textContent = 'Chargement de l’org showcase…';
+        wrap.appendChild(icon); wrap.appendChild(label);
+        tab.document.body.appendChild(wrap);
+      } catch (e) { /* same-origin restrictions are fine to ignore */ }
+    }
+    fetch('/api/showcase/url').then(r => r.json().then(j => ({ ok: r.ok, j }))).then(({ ok, j }) => {
+      showcaseInFlight = false;
+      if (!ok || !j.url) {
+        if (tab) { try { tab.close(); } catch (e) {} }
+        const code = (j && j.error) || 'unknown';
+        toast(t('showcase.toast.failed') + ' — ' + code, 5000);
+        return;
+      }
+      if (tab) { tab.location = j.url; }
+      else {
+        // Popup got blocked — fall back to a plain navigation in the current tab.
+        toast(t('showcase.toast.popupblocked'), 3500);
+        setTimeout(() => { window.location.href = j.url; }, 800);
+      }
+    }).catch(() => {
+      showcaseInFlight = false;
+      if (tab) { try { tab.close(); } catch (e) {} }
+      toast(t('showcase.toast.failed'), 5000);
+    });
+  }
+
   // ── Mock buttons handler (now real for connect/deploy/download)
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-mock]');
@@ -1055,7 +1104,7 @@
       else { openConnectChooser((host) => startOAuth(host)); }
       return;
     }
-    if (kind === 'showcase') { openShowcaseModal({ context: target.dataset.componentApi || '' }); return; }
+    if (kind === 'showcase') { openShowcaseLive(target); return; }
     if (kind === 'submit' || kind === 'submit-component') { openSubmitComponentModal(); return; }
     if (kind === 'feedback') { openFeedbackModal(); return; }
     if (kind === 'contact') { openContactModal(); return; }
