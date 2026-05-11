@@ -1013,6 +1013,34 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .toast-host { position: fixed; bottom: 78px; left: 50%; transform: translateX(-50%); z-index: 300; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
 .toast { background: var(--brand-deep); color: #fff; padding: 10px 18px; border-radius: 100px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); font-weight: 500; opacity: 0; transform: translateY(10px); transition: opacity 0.2s, transform 0.2s; }
 .toast.show { opacity: 1; transform: translateY(0); }
+.toast-sticky { background: linear-gradient(135deg, #1d4ed8, #6c63ff); padding-left: 18px; padding-right: 22px; }
+.toast-sticky::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; margin-right: 10px; vertical-align: -2px; animation: sefr-spin 0.7s linear infinite; }
+@keyframes sefr-spin { to { transform: rotate(360deg); } }
+
+/* CONNECT */
+[data-mock="connect"].is-connected { background: rgba(46, 132, 74, 0.10) !important; color: var(--success) !important; border: 1px solid rgba(46, 132, 74, 0.30) !important; }
+[data-mock="connect"].is-connected:hover { background: rgba(46, 132, 74, 0.18) !important; }
+.connect-modal { max-width: 460px; }
+.connect-choices { display: flex; flex-direction: column; gap: 10px; margin: 18px 0 12px; }
+.connect-choice { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; }
+.connect-choice:hover { border-color: var(--brand); background: rgba(108, 99, 255, 0.04); transform: translateX(2px); }
+.connect-choice .cc-icon { font-size: 22px; flex: 0 0 auto; }
+.connect-choice .cc-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.connect-choice .cc-label { font-weight: 600; color: var(--text); font-size: 14px; }
+.connect-choice .cc-sub { font-size: 11.5px; color: var(--text-muted); }
+.connect-custom { gap: 10px; align-items: center; cursor: default; }
+.connect-custom:hover { border-color: var(--border); background: #fff; transform: none; }
+.connect-custom .cc-text { gap: 6px; }
+.connect-custom input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 12.5px; font-family: inherit; outline: none; }
+.connect-custom input:focus { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.15); }
+.btn-sm { padding: 6px 12px !important; font-size: 12px !important; }
+.connect-menu { position: absolute; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.14); z-index: 350; min-width: 220px; overflow: hidden; animation: sefr-menu-in 0.14s ease-out; }
+@keyframes sefr-menu-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.connect-menu-head { padding: 12px 14px; border-bottom: 1px solid var(--border); background: rgba(108, 99, 255, 0.04); }
+.connect-menu-head .cmh-name { font-weight: 600; font-size: 13px; color: var(--text); }
+.connect-menu-head .cmh-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.connect-menu-item { display: block; width: 100%; padding: 10px 14px; background: none; border: none; text-align: left; font-size: 13px; color: var(--text); cursor: pointer; transition: background 0.12s; }
+.connect-menu-item:hover { background: rgba(220, 38, 38, 0.06); color: #b91c1c; }
 
 /* FOOTER */
 /* Back-to-top — sober link, centered, above the footer. Acts as a consistent end-of-content
@@ -1054,6 +1082,8 @@ JS = r"""// SE FR Library — client UX
 (function () {
   const STORAGE_LANG = 'sefr.lang';
   const STORAGE_TRACKED = 'sefr.tracked.v1';
+  const STORAGE_AUTH = 'sefr.auth.v1';
+  const PKCE_KEY = 'sefr.pkce.v1';
 
   // ── i18n
   const T = {
@@ -1133,6 +1163,36 @@ JS = r"""// SE FR Library — client UX
       'agent.examples': 'Exemples : « un composant mobile-ready pour le Field Sales », « ceux qui utilisent l’Apex partagé », « les nouveautés de la v2.8 ».',
       'deploy.toast': '🚀 Déploiement lancé',
       'download.toast': '⬇ Téléchargement lancé',
+      'connect.menu.disconnect': 'Se déconnecter',
+      'connect.menu.signedinas': 'Connecté en tant que',
+      'connect.choose.title': 'Connecter votre org',
+      'connect.choose.sub': 'Choisissez le type d\'org à laquelle vous voulez connecter cette session.',
+      'connect.choose.prod': 'Production',
+      'connect.choose.prod.sub': 'login.salesforce.com',
+      'connect.choose.sandbox': 'Sandbox',
+      'connect.choose.sandbox.sub': 'test.salesforce.com',
+      'connect.choose.custom': 'Domaine personnalisé',
+      'connect.choose.custom.sub': 'mycompany.my.salesforce.com',
+      'connect.choose.custom.ph': 'mycompany.my.salesforce.com',
+      'connect.choose.continue': 'Continuer →',
+      'connect.choose.cancel': 'Annuler',
+      'connect.popup.blocked': '⚠ Autorisez la popup pour vous connecter à Salesforce.',
+      'connect.toast.connected': '✓ Connecté à',
+      'connect.toast.disconnected': 'Déconnecté de votre org.',
+      'connect.toast.failed': '✗ Connexion échouée',
+      'connect.toast.notconfigured': 'OAuth pas encore configuré côté serveur — réessayez dans quelques minutes.',
+      'deploy.progress.preparing': 'Préparation du package…',
+      'deploy.progress.uploading': 'Envoi du package à Salesforce…',
+      'deploy.progress.deploying': 'Déploiement en cours',
+      'deploy.toast.success': '✓ Déployé sur',
+      'deploy.toast.partial': '⚠ Déployé partiellement —',
+      'deploy.toast.failed': '✗ Déploiement échoué',
+      'deploy.error.notconnected': 'Veuillez vous connecter à votre org avant de déployer.',
+      'deploy.confirm.title': 'Confirmer le déploiement',
+      'deploy.confirm.body.one': 'Déployer ce composant sur',
+      'deploy.confirm.body.many': 'Déployer ces composants sur',
+      'deploy.confirm.deploy': 'Déployer →',
+      'deploy.confirm.cancel': 'Annuler',
     },
     en: {
       'connect.btn': '↗ Connect to my org',
@@ -1210,6 +1270,36 @@ JS = r"""// SE FR Library — client UX
       'agent.examples': 'Try: "a mobile-ready component for Field Sales", "what uses Apex shared classes", "what’s new in v2.8".',
       'deploy.toast': '🚀 Deploy launched',
       'download.toast': '⬇ Download started',
+      'connect.menu.disconnect': 'Disconnect',
+      'connect.menu.signedinas': 'Signed in as',
+      'connect.choose.title': 'Connect your org',
+      'connect.choose.sub': 'Pick the type of org you want to connect to for this session.',
+      'connect.choose.prod': 'Production',
+      'connect.choose.prod.sub': 'login.salesforce.com',
+      'connect.choose.sandbox': 'Sandbox',
+      'connect.choose.sandbox.sub': 'test.salesforce.com',
+      'connect.choose.custom': 'Custom domain',
+      'connect.choose.custom.sub': 'mycompany.my.salesforce.com',
+      'connect.choose.custom.ph': 'mycompany.my.salesforce.com',
+      'connect.choose.continue': 'Continue →',
+      'connect.choose.cancel': 'Cancel',
+      'connect.popup.blocked': '⚠ Please allow the popup to sign in to Salesforce.',
+      'connect.toast.connected': '✓ Connected to',
+      'connect.toast.disconnected': 'Disconnected from your org.',
+      'connect.toast.failed': '✗ Connection failed',
+      'connect.toast.notconfigured': 'OAuth not configured yet on the server — try again in a moment.',
+      'deploy.progress.preparing': 'Preparing the package…',
+      'deploy.progress.uploading': 'Uploading the package to Salesforce…',
+      'deploy.progress.deploying': 'Deploying',
+      'deploy.toast.success': '✓ Deployed to',
+      'deploy.toast.partial': '⚠ Partial deploy —',
+      'deploy.toast.failed': '✗ Deploy failed',
+      'deploy.error.notconnected': 'Please connect to your org before deploying.',
+      'deploy.confirm.title': 'Confirm deploy',
+      'deploy.confirm.body.one': 'Deploy this component to',
+      'deploy.confirm.body.many': 'Deploy these components to',
+      'deploy.confirm.deploy': 'Deploy →',
+      'deploy.confirm.cancel': 'Cancel',
     }
   };
 
@@ -1585,7 +1675,347 @@ JS = r"""// SE FR Library — client UX
     setTimeout(() => m.querySelector('input[name="email"]').focus(), 30);
   }
 
-  // ── Mock buttons handler
+  // ── OAuth state machine (sefr.auth.v1)
+  // Stored in localStorage so the SE remains connected across browser sessions
+  // (refresh_token grant covers token expiry transparently).
+  // Shape: { accessToken, refreshToken, instanceUrl, loginHost, name, username, orgId, issuedAt }
+  const auth = {
+    get() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_AUTH) || 'null'); } catch { return null; }
+    },
+    set(v) {
+      if (v) localStorage.setItem(STORAGE_AUTH, JSON.stringify(v));
+      else localStorage.removeItem(STORAGE_AUTH);
+      renderConnectButtons();
+    },
+    isConnected() { return !!(auth.get() && auth.get().accessToken); },
+    instanceHost() { const a = auth.get(); if (!a) return ''; try { return new URL(a.instanceUrl).hostname; } catch { return ''; } },
+    async fetch(url, opts) {
+      // Wrapper: adds Authorization, refreshes once on 401.
+      const a = auth.get();
+      if (!a) throw new Error('not_connected');
+      const doFetch = (token) => fetch(url, Object.assign({}, opts, {
+        headers: Object.assign({}, (opts && opts.headers) || {}, {
+          Authorization: 'Bearer ' + token,
+          'X-SF-Instance-Url': a.instanceUrl,
+        }),
+      }));
+      let r = await doFetch(a.accessToken);
+      if (r.status !== 401 || !a.refreshToken) return r;
+      // Try refresh
+      const rr = await fetch('/api/oauth/refresh', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken: a.refreshToken, loginHost: a.loginHost }),
+      });
+      if (!rr.ok) { auth.set(null); throw new Error('refresh_failed'); }
+      const fresh = await rr.json();
+      const merged = Object.assign({}, a, { accessToken: fresh.accessToken, instanceUrl: fresh.instanceUrl || a.instanceUrl, issuedAt: fresh.issuedAt });
+      auth.set(merged);
+      return doFetch(merged.accessToken);
+    },
+  };
+
+  function renderConnectButtons() {
+    const a = auth.get();
+    const buttons = document.querySelectorAll('[data-mock="connect"]');
+    buttons.forEach(b => {
+      if (a && a.accessToken) {
+        const label = (a.name || a.username || '').split(' ')[0] || 'connecté';
+        b.textContent = '✓ ' + label + ' · ' + auth.instanceHost();
+        b.classList.add('is-connected');
+      } else {
+        b.textContent = t('connect.btn');
+        b.classList.remove('is-connected');
+      }
+    });
+  }
+
+  // ── PKCE helpers (RFC 7636)
+  function b64url(buf) {
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(buf)))
+      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  async function makePkcePair() {
+    const rand = new Uint8Array(48); crypto.getRandomValues(rand);
+    const verifier = b64url(rand);
+    const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
+    return { verifier, challenge: b64url(hash) };
+  }
+
+  // ── Connect modal — choose Production / Sandbox / Custom domain
+  function openConnectChooser(onProceed) {
+    let m = document.getElementById('connect-modal');
+    if (!m) {
+      m = document.createElement('div');
+      m.id = 'connect-modal';
+      m.className = 'modal-mask';
+      m.innerHTML = (
+        '<div class="modal connect-modal">' +
+        '<h3 data-i18n="connect.choose.title"></h3>' +
+        '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
+        '<div class="connect-choices">' +
+        '<button type="button" class="connect-choice" data-host="login.salesforce.com">' +
+        '<span class="cc-icon">☁️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.prod"></span><span class="cc-sub" data-i18n="connect.choose.prod.sub"></span></span></button>' +
+        '<button type="button" class="connect-choice" data-host="test.salesforce.com">' +
+        '<span class="cc-icon">🧪</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sandbox"></span><span class="cc-sub" data-i18n="connect.choose.sandbox.sub"></span></span></button>' +
+        '<div class="connect-choice connect-custom"><span class="cc-icon">🔗</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.custom"></span>' +
+        '<input type="text" name="customDomain" data-i18n-placeholder="connect.choose.custom.ph"></span>' +
+        '<button type="button" class="btn btn-primary btn-sm" data-custom-go data-i18n="connect.choose.continue"></button></div>' +
+        '</div>' +
+        '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
+        '</div>'
+      );
+      document.body.appendChild(m);
+      m.addEventListener('click', (ev) => {
+        if (ev.target === m || ev.target.matches('[data-connect-cancel]')) m.classList.remove('open');
+      });
+      m.querySelectorAll('.connect-choice[data-host]').forEach(b => {
+        b.addEventListener('click', () => { m.classList.remove('open'); onProceed(b.dataset.host); });
+      });
+      m.querySelector('[data-custom-go]').addEventListener('click', () => {
+        const raw = (m.querySelector('input[name="customDomain"]').value || '').trim().toLowerCase();
+        const host = raw.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+        if (!/^[a-z0-9-]+(\.[a-z0-9-]+)*\.(my\.salesforce\.com|force\.com)$/i.test(host)) {
+          m.querySelector('input[name="customDomain"]').focus();
+          return;
+        }
+        m.classList.remove('open'); onProceed(host);
+      });
+      applyLang();
+    }
+    m.classList.add('open');
+  }
+
+  // ── Launch the OAuth popup flow against `loginHost`.
+  async function startOAuth(loginHost, onDone) {
+    const cfg = await (await fetch('/api/oauth/config')).json().catch(() => ({}));
+    if (!cfg.clientId) {
+      toast(t('connect.toast.notconfigured'), 4000);
+      return;
+    }
+    const pkce = await makePkcePair();
+    const state = b64url(crypto.getRandomValues(new Uint8Array(16)));
+    sessionStorage.setItem(PKCE_KEY, JSON.stringify({ verifier: pkce.verifier, state, loginHost }));
+    const params = new URLSearchParams({
+      response_type: 'code',
+      client_id: cfg.clientId,
+      redirect_uri: cfg.redirectUri,
+      scope: cfg.scopes,
+      state,
+      code_challenge: pkce.challenge,
+      code_challenge_method: 'S256',
+      prompt: 'login',
+    });
+    const url = 'https://' + loginHost + '/services/oauth2/authorize?' + params.toString();
+    const popup = window.open(url, 'sefr-oauth', 'width=520,height=720,menubar=no,toolbar=no,location=yes');
+    if (!popup) { toast(t('connect.popup.blocked'), 4000); return; }
+
+    function handler(ev) {
+      const data = ev && ev.data;
+      if (!data || data.source !== 'sefr-oauth') return;
+      window.removeEventListener('message', handler);
+      try { popup.close(); } catch (e) {}
+      if (data.error) { toast(t('connect.toast.failed') + ' — ' + data.error_description, 4000); return; }
+      // Validate state
+      const pending = JSON.parse(sessionStorage.getItem(PKCE_KEY) || 'null');
+      sessionStorage.removeItem(PKCE_KEY);
+      if (!pending || data.state !== pending.state) { toast(t('connect.toast.failed'), 4000); return; }
+      // Exchange code for tokens via our backend
+      fetch('/api/oauth/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: data.code, codeVerifier: pending.verifier, loginHost: pending.loginHost }),
+      }).then(r => r.json().then(j => ({ ok: r.ok, j }))).then(async ({ ok, j }) => {
+        if (!ok) { toast(t('connect.toast.failed') + ' — ' + (j.error || ''), 4000); return; }
+        // Identity lookup for display
+        let ident = {};
+        try {
+          const idResp = await fetch('/api/oauth/identity', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accessToken: j.accessToken, idUrl: j.id }),
+          });
+          if (idResp.ok) ident = await idResp.json();
+        } catch (e) {}
+        auth.set({
+          accessToken: j.accessToken,
+          refreshToken: j.refreshToken,
+          instanceUrl: j.instanceUrl,
+          loginHost: pending.loginHost,
+          name: ident.name || '',
+          username: ident.username || '',
+          orgId: ident.organizationId || '',
+          issuedAt: j.issuedAt,
+        });
+        let host = ''; try { host = new URL(j.instanceUrl).hostname; } catch (e) {}
+        toast(t('connect.toast.connected') + ' ' + host, 3200);
+        if (typeof onDone === 'function') onDone();
+      }).catch(() => toast(t('connect.toast.failed'), 4000));
+    }
+    window.addEventListener('message', handler);
+  }
+
+  function disconnectOrg() {
+    auth.set(null);
+    toast(t('connect.toast.disconnected'), 2400);
+  }
+
+  // ── Connect button menu (when already connected)
+  function openConnectMenu(anchor) {
+    const a = auth.get(); if (!a) return;
+    let menu = document.getElementById('connect-menu');
+    if (menu) { menu.remove(); }
+    menu = document.createElement('div');
+    menu.id = 'connect-menu';
+    menu.className = 'connect-menu';
+    menu.innerHTML = (
+      '<div class="connect-menu-head">' +
+      '<div class="cmh-name">' + (a.name || a.username || '—') + '</div>' +
+      '<div class="cmh-sub">' + auth.instanceHost() + '</div>' +
+      '</div>' +
+      '<button type="button" class="connect-menu-item" data-connect-disconnect data-i18n="connect.menu.disconnect"></button>'
+    );
+    document.body.appendChild(menu);
+    const r = anchor.getBoundingClientRect();
+    menu.style.top = (r.bottom + window.scrollY + 6) + 'px';
+    menu.style.right = (window.innerWidth - r.right) + 'px';
+    applyLang();
+    function close(ev) {
+      if (ev && menu.contains(ev.target)) return;
+      window.removeEventListener('click', close, true);
+      menu.remove();
+    }
+    setTimeout(() => window.addEventListener('click', close, true), 10);
+    menu.querySelector('[data-connect-disconnect]').addEventListener('click', () => {
+      disconnectOrg();
+      close();
+    });
+  }
+
+  // Update connect button labels when the page loads (pre-existing localStorage state)
+  setTimeout(renderConnectButtons, 0);
+
+  // ── Resolve the list of components to deploy/download from the click target.
+  function resolveTargetComponents(target) {
+    // Priority: data-bundle-members (CSV), then data-component-api (single).
+    const csv = (target.dataset.bundleMembers || '').trim();
+    if (csv) return csv.split(',').map(s => s.trim()).filter(Boolean);
+    const single = target.dataset.componentApi || target.dataset.api || '';
+    return single ? [single] : [];
+  }
+
+  function bumpDownloadCounters(target) {
+    const ids = [];
+    const bundleId = target.dataset.bundleId;
+    if (bundleId) ids.push('recipe-' + bundleId);
+    const members = (target.dataset.bundleMembers || '').split(',').filter(Boolean);
+    ids.push(...members);
+    ids.forEach(id => bumpDownload(id));
+  }
+
+  // ── Real download: trigger a real <a download> click for each zip.
+  function downloadComponents(target) {
+    const list = resolveTargetComponents(target);
+    if (!list.length) return;
+    list.forEach((api, i) => {
+      // Stagger downloads so the browser doesn't bundle them as one prompt.
+      setTimeout(() => {
+        const a = document.createElement('a');
+        a.href = '/zips/' + api + '.zip';
+        a.download = api + '.zip';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }, i * 120);
+    });
+    toast(t('download.toast') + ' (' + list.length + ')');
+    bumpDownloadCounters(target);
+  }
+
+  // ── Real deploy: posts components to /api/deploy then polls status.
+  let deployInFlight = false;
+  async function deployComponents(target) {
+    if (deployInFlight) return;
+    const list = resolveTargetComponents(target);
+    if (!list.length) return;
+    if (!auth.isConnected()) {
+      // Prompt connect and resume once done.
+      openConnectChooser((host) => startOAuth(host, () => deployComponents(target)));
+      return;
+    }
+    deployInFlight = true;
+    const a = auth.get();
+    const host = auth.instanceHost();
+    const stickyMs = 60000;
+    const stickyToast = openStickyToast(t('deploy.progress.preparing'));
+    try {
+      stickyToast.update(t('deploy.progress.uploading'));
+      const r = await auth.fetch('/api/deploy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken: a.accessToken, instanceUrl: a.instanceUrl, components: list }),
+      });
+      const data = await r.json();
+      if (!r.ok) {
+        stickyToast.close();
+        toast(t('deploy.toast.failed') + ' — ' + (data.message || data.error || r.status), 5000);
+        return;
+      }
+      const id = data.deployRequestId;
+      stickyToast.update(t('deploy.progress.deploying') + ' (1/' + list.length + ')');
+      // Poll status every 2s, up to 120s.
+      let tries = 0;
+      const result = await new Promise((resolve) => {
+        const itv = setInterval(async () => {
+          tries++;
+          let rr;
+          try { rr = await auth.fetch('/api/deploy/status/' + id, { method: 'GET' }); } catch (e) { return; }
+          let dd; try { dd = await rr.json(); } catch (e) { dd = {}; }
+          if (dd && (dd.numberComponentsDeployed || dd.numberComponentsTotal)) {
+            stickyToast.update(t('deploy.progress.deploying') + ' (' + (dd.numberComponentsDeployed || 0) + '/' + (dd.numberComponentsTotal || list.length) + ')');
+          }
+          if (dd && dd.done) { clearInterval(itv); resolve(dd); return; }
+          if (tries > 60) { clearInterval(itv); resolve({ done: true, success: false, status: 'Timeout' }); }
+        }, 2000);
+      });
+      stickyToast.close();
+      if (result.success) {
+        toast(t('deploy.toast.success') + ' ' + host + ' (' + list.length + ')', 5000);
+        bumpDownloadCounters(target);
+      } else if (result.numberComponentsDeployed > 0) {
+        toast(t('deploy.toast.partial') + ' ' + (result.numberComponentsDeployed || 0) + '/' + (result.numberComponentsTotal || list.length), 6000);
+      } else {
+        const fail = (result.componentFailures && result.componentFailures[0]) || {};
+        const msg = fail.problem || fail.fullName || result.status || '';
+        toast(t('deploy.toast.failed') + (msg ? ' — ' + msg : ''), 6000);
+      }
+    } catch (err) {
+      stickyToast.close();
+      toast(t('deploy.toast.failed') + ' — ' + (err.message || err), 5000);
+    } finally {
+      deployInFlight = false;
+    }
+  }
+
+  // Persistent toast (no auto-dismiss) for in-flight progress.
+  function openStickyToast(initialMsg) {
+    if (!toastHost) {
+      toastHost = document.createElement('div');
+      toastHost.className = 'toast-host';
+      document.body.appendChild(toastHost);
+    }
+    const el = document.createElement('div');
+    el.className = 'toast toast-sticky';
+    el.textContent = initialMsg;
+    toastHost.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('show'));
+    return {
+      update(msg) { el.textContent = msg; },
+      close() { el.classList.remove('show'); setTimeout(() => el.remove(), 250); },
+    };
+  }
+
+  // ── Mock buttons handler (now real for connect/deploy/download)
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-mock]');
     if (!target) return;
@@ -1593,50 +2023,28 @@ JS = r"""// SE FR Library — client UX
     e.stopPropagation();
     const kind = target.dataset.mock;
 
-    function doAction() {
-      if (kind === 'deploy' || kind === 'deploy-bundle' || kind === 'deploy-all') {
-        const n = target.dataset.count || '1';
-        toast(t('deploy.toast') + ' (' + n + ')');
-      } else if (kind === 'download') {
-        toast(t('download.toast'));
-      }
-      // Bump download counters for all members + the bundle id (if any)
-      const ids = [];
-      const bundleId = target.dataset.bundleId;
-      if (bundleId) ids.push('recipe-' + bundleId);
-      const members = (target.dataset.bundleMembers || '').split(',').filter(Boolean);
-      ids.push(...members);
-      ids.forEach(id => bumpDownload(id));
-    }
-
     if (kind === 'connect') {
-      openInfoModal({ title: t('connect.title'), body: t('connect.body') });
+      if (auth.isConnected()) { openConnectMenu(target); }
+      else { openConnectChooser((host) => startOAuth(host)); }
       return;
     }
-    if (kind === 'showcase') {
-      openShowcaseModal({ context: target.dataset.componentApi || '' });
+    if (kind === 'showcase') { openShowcaseModal({ context: target.dataset.componentApi || '' }); return; }
+    if (kind === 'submit' || kind === 'submit-component') { openSubmitComponentModal(); return; }
+    if (kind === 'feedback') { openFeedbackModal(); return; }
+    if (kind === 'contact') { openContactModal(); return; }
+
+    if (kind === 'download') {
+      const go = () => downloadComponents(target);
+      if (isTracked()) go(); else openTrackingModal(go);
       return;
     }
-    if (kind === 'submit' || kind === 'submit-component') {
-      openSubmitComponentModal();
+    if (kind === 'deploy' || kind === 'deploy-bundle' || kind === 'deploy-all') {
+      const go = () => deployComponents(target);
+      if (isTracked()) go(); else openTrackingModal(go);
       return;
     }
-    if (kind === 'feedback') {
-      openFeedbackModal();
-      return;
-    }
-    if (kind === 'contact') {
-      openContactModal();
-      return;
-    }
-    // Tracked actions: deploy + download
-    if (['deploy', 'deploy-bundle', 'deploy-all', 'download'].includes(kind)) {
-      if (isTracked()) doAction();
-      else openTrackingModal(doAction);
-      return;
-    }
-    // Default fallthrough
-    doAction();
+    // Default fallthrough — keep behaviour for any future data-mock kind
+    bumpDownloadCounters(target);
   });
 
   // ── Language switcher
