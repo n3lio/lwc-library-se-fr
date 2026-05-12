@@ -219,6 +219,9 @@ app.get('/healthz', async () => ({ status: 'ok', time: new Date().toISOString() 
 // Admin module — login + dashboard + /api/admin/* endpoints
 require('./admin').register(app);
 
+// Agent module — proxy /api/agent/* to Salesforce Einstein AI Agent API
+require('./agent').register(app);
+
 // ───────────────────────────────────────────────────────────────────────────
 // OAuth — public config endpoint so the frontend knows the client_id + redirect_uri
 // without us hardcoding them in the bundled JS.
