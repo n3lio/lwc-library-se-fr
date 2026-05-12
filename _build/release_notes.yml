@@ -2,6 +2,55 @@
 # Internal stuff (FlexiPage cleanups, showcase deploy details) is excluded.
 # Each entry: version, date (YYYY-MM-DD), title (short), body (one paragraph).
 
+- kind: "roadmap"
+  title:
+    fr: 🤖 Soumission via connexion d'org (no-zip)
+    en: 🤖 Submission via org-connect (no-zip)
+  body:
+    fr: Vous connectez votre org de démo, vous cochez les composants à offrir à la lib, le site les empaquette pour vous et lance une validation automatique. Plus besoin d’uploader un zip à la main.
+    en: Connect your demo org, tick the components you want to share, the site bundles them for you and runs auto-validation. No more zip uploads.
+
+- kind: "roadmap"
+  title:
+    fr: 🧪 Auto-deploy + check de validité d'une soumission
+    en: 🧪 Auto-deploy + validity check on submission
+  body:
+    fr: À chaque nouvelle soumission, un déploiement automatique sur une org de test détecte les erreurs (composants cassés, dépendances manquantes, schema-unsafe). Un agent MCP guide ensuite le contributeur pour corriger et intégrer proprement à la librairie.
+    en: Each new submission triggers an automatic deploy to a sandbox org to catch errors (broken components, missing deps, schema-unsafe). An MCP agent then walks the contributor through fixes and clean library integration.
+
+- kind: "roadmap"
+  title:
+    fr: 👥 Espace contributeurs
+    en: 👥 Contributor space
+  body:
+    fr: Chaque contributeur aura sa page personnelle pour suivre ses composants, voir les téléchargements et déploiements, gérer les retours utilisateurs, et soumettre de nouveaux composants en quelques clics.
+    en: Each contributor will have their own page to track their components, see downloads and deploys, handle user feedback, and submit new components in a few clicks.
+
+- kind: "roadmap"
+  title:
+    fr: 🏆 Gamification des contributions
+    en: 🏆 Contribution gamification
+  body:
+    fr: Badges, classement des contributeurs, compteurs « impacts » par composant (downloads, deploys, likes). De quoi rendre la contribution gratifiante et visible.
+    en: Badges, contributor leaderboard, per-component impact counters (downloads, deploys, likes). To make contributing rewarding and visible.
+
+- kind: "roadmap"
+  title:
+    fr: 📊 Page admin / pilotage de la lib
+    en: 📊 Admin / library steering page
+  body:
+    fr: Tableau de bord centralisé pour piloter la lib : analytics complets (visites, téléchargements, déploiements, conversions), revue des soumissions et feedbacks, gestion des contributeurs, modération.
+    en: Centralized dashboard to steer the lib: full analytics (visits, downloads, deploys, conversions), submission and feedback review, contributor management, moderation.
+
+- version: "2.9"
+  date: "2026-05-12"
+  title:
+    fr: Le site va sur Heroku, déploiement 1-clic à votre org de démo
+    en: The site goes on Heroku, 1-click deploy to your demo org
+  body:
+    fr: Le site est désormais hébergé sur Heroku. Connectez votre org via OAuth, sélectionnez les composants ou un cookbook, déployez en quelques secondes — multi-sélection, bundles, modale de confirmation, suivi de progression et récap persistant après déploiement. Bouton « Voir en live » qui vous ouvre l’org showcase en read-only sans login. Tracking complet de l’usage côté serveur (Postgres) pour piloter la lib. Formulaires Soumettre / Feedback / Contact branchés en base et notifiés par email. Submit avec pièce jointe (.zip ou .txt, 2 MB max).
+    en: The site is now hosted on Heroku. Connect your org via OAuth, pick components or a cookbook, deploy in seconds — multi-select, bundles, confirmation modal, progress tracking and a persistent summary after deploy. New "See it live" button drops you in the showcase org read-only with no login. Full server-side usage tracking (Postgres) to steer the lib. Submit / Feedback / Contact forms persisted in DB and notified by email. Submit with attachment (.zip or .txt, 2 MB max).
+
 - version: "2.8"
   date: "2026-05-08"
   title:

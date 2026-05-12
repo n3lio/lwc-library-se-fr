@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LWC Library SE FR — composants must-have pour vos démos Salesforce</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
@@ -57,7 +59,8 @@ window.addEventListener('pageshow', function() {
     <p class="hero-sub" data-i18n-pair='{"fr": "Une librairie de Lightning Web Components au design soigné et prêts à l’emploi.<br>Choisissez, déployez en quelques secondes, personnalisez dans App Builder.", "en": "A library of Lightning Web Components with a polished design, ready to use.<br>Pick what you need, deploy in seconds, customize in App Builder."}'></p>
     <div class="hero-cta">
       <a href="components.html" class="btn btn-hero btn-hero-primary" data-i18n-pair='{"fr": "Parcourir les composants", "en": "Browse components"}'>Parcourir les composants</a>
-      <a href="cookbook.html" class="btn btn-hero btn-hero-ghost" data-i18n-pair='{"fr": "Voir le cookbook", "en": "See the cookbook"}'>Voir le cookbook</a>
+      <button type="button" class="btn btn-hero btn-hero-ghost" data-mock="showcase" data-i18n-pair='{"fr": "🚀 Voir en live", "en": "🚀 See it live"}'>🚀 Voir en live</button>
+      <button type="button" class="btn btn-hero btn-hero-ghost" data-mock="submit-component" data-i18n-pair='{"fr": "🤝 Contribuer", "en": "🤝 Contribute"}'>🤝 Contribuer</button>
     </div>
     <div class="hero-stats">
       <div class="stat stat-1"><div class="num-row"><span class="stat-icon">🧩</span><span class="num">32</span></div><div class="label" data-i18n-pair='{"fr": "Composants", "en": "Components"}'>Composants</div></div>
@@ -111,161 +114,33 @@ window.addEventListener('pageshow', function() {
   </div>
 </article>
 <article class="card"
-  data-api="seFrRecordHighlights"
-  data-personas="All"
+  data-api="seFrActivityFeed"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
   data-surfaces="RecordPage"
   data-categories="Account 360°"
   data-datamode="live"
-  data-base-dl="1986"
-  data-base-lk="143"
-  data-haystack="sefrrecordhighlights record highlights custom highlights panel with round image, key fields and action buttons, working on 8 standard objects. all inline image upload works on 8 objects configurable field strip">
+  data-base-dl="681"
+  data-base-lk="71"
+  data-haystack="sefractivityfeed activity feed unified activity timeline aggregating 16+ salesforce record types in a single feed with rich filtering. sales fieldsales 16+ record types unified rich filters + expand per-source error isolation">
   
-  <a class="card-preview-link" href="components/seFrRecordHighlights.html">
+  <a class="card-preview-link" href="components/seFrActivityFeed.html">
     <div class="card-preview has-image">
       <span class="card-status stable">● Stable</span>
       
-      <img class="card-preview-img" src="assets/previews/seFrRecordHighlights.png" alt="seFrRecordHighlights preview" loading="lazy">
+      <img class="card-preview-img" src="assets/previews/seFrActivityFeed-2.png" alt="seFrActivityFeed preview" loading="lazy">
     </div>
   </a>
   <div class="card-body">
     <div class="card-title">
-      <span class="card-name">Record Highlights</span>
-      <span class="card-api">seFrRecordHighlights</span>
+      <span class="card-name">Activity Feed</span>
+      <span class="card-api">seFrActivityFeed</span>
     </div>
-    <p class="card-tagline" data-i18n-comp="seFrRecordHighlights.tagline">Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrRecordHighlights">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">2.0k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrRecordHighlights" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">143</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrFilesGallery"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="1955"
-  data-base-lk="78"
-  data-haystack="sefrfilesgallery files gallery visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload. sales fieldsales image thumbs + doctype icons drag &amp; drop upload click-to-preview">
-  
-  <a class="card-preview-link" href="components/seFrFilesGallery.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrFilesGallery.png" alt="seFrFilesGallery preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Files Gallery</span>
-      <span class="card-api">seFrFilesGallery</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrFilesGallery.tagline">Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</p>
+    <p class="card-tagline" data-i18n-comp="seFrActivityFeed.tagline">Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</p>
     <div class="card-foot">
       <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrFilesGallery">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">2.0k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrFilesGallery" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">78</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrActiveSegments"
-  data-personas="Marketing"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Marketing &amp; Data"
-  data-datamode="mock"
-  data-base-dl="960"
-  data-base-lk="134"
-  data-haystack="sefractivesegments active segments compact panel showing the marketing / data cloud segments the record belongs to, as colored badges. marketing segment count in title color-coded badges record / app / home page">
-  
-  <a class="card-preview-link" href="components/seFrActiveSegments.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrActiveSegments.png" alt="seFrActiveSegments preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Active Segments</span>
-      <span class="card-api">seFrActiveSegments</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrActiveSegments.tagline">Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span></div>
-      <div class="card-stats" data-stats-for="seFrActiveSegments">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">960</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrActiveSegments" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">134</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrPromptLauncher"
-  data-personas="All"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Agentforce &amp; AI"
-  data-datamode="live"
-  data-base-dl="1728"
-  data-base-lk="87"
-  data-haystack="sefrpromptlauncher prompt launcher configurable ai panel running salesforce prompt templates via invocable actions, with auto-filled record context. all pill switcher per prompt auto-fills record context save as note html-formatted output">
-  
-  <a class="card-preview-link" href="components/seFrPromptLauncher.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      <span class="card-status ai">🤖 AI-ready</span>
-      <img class="card-preview-img" src="assets/previews/seFrPromptLauncher-2.png" alt="seFrPromptLauncher preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Prompt Launcher</span>
-      <span class="card-api">seFrPromptLauncher</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrPromptLauncher.tagline">Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrPromptLauncher">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">1.7k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrPromptLauncher" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">87</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrAgentforceHeader"
-  data-personas="All"
-  data-surfaces="HomePage"
-  data-categories="Agentforce &amp; AI"
-  data-datamode="mock"
-  data-base-dl="1505"
-  data-base-lk="75"
-  data-haystack="sefragentforceheader agentforce header astro-themed home page header with a search / dictation box that forwards questions to the agentforce panel. all astro floating header voice dictation triggers agentforce panel">
-  
-  <a class="card-preview-link" href="components/seFrAgentforceHeader.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      <span class="card-status ai">🤖 AI-ready</span>
-      <img class="card-preview-img" src="assets/previews/seFrAgentforceHeader-2.png" alt="seFrAgentforceHeader preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Agentforce Header</span>
-      <span class="card-api">seFrAgentforceHeader</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrAgentforceHeader.tagline">Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrAgentforceHeader">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">1.5k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrAgentforceHeader" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">75</span></button>
+      <div class="card-stats" data-stats-for="seFrActivityFeed">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">681</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrActivityFeed" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">71</span></button>
       </div>
     </div>
   </div>
@@ -303,161 +178,33 @@ window.addEventListener('pageshow', function() {
   </div>
 </article>
 <article class="card"
-  data-api="seFrAccountHealth"
-  data-personas="Sales"
-  data-surfaces="RecordPage"
-  data-categories="Account 360°"
-  data-datamode="live"
-  data-base-dl="611"
-  data-base-lk="54"
-  data-haystack="sefraccounthealth account health quantitative account health score (0-100) with verdict level and weighted positive / negative signals. sales svg donut gauge weighted +/- signals drill-down explainability">
-  
-  <a class="card-preview-link" href="components/seFrAccountHealth.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrAccountHealth.png" alt="seFrAccountHealth preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Account Health</span>
-      <span class="card-api">seFrAccountHealth</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrAccountHealth.tagline">Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span></div>
-      <div class="card-stats" data-stats-for="seFrAccountHealth">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">611</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrAccountHealth" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">54</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrActivityFeed"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Account 360°"
-  data-datamode="live"
-  data-base-dl="681"
-  data-base-lk="71"
-  data-haystack="sefractivityfeed activity feed unified activity timeline aggregating 16+ salesforce record types in a single feed with rich filtering. sales fieldsales 16+ record types unified rich filters + expand per-source error isolation">
-  
-  <a class="card-preview-link" href="components/seFrActivityFeed.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrActivityFeed-2.png" alt="seFrActivityFeed preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Activity Feed</span>
-      <span class="card-api">seFrActivityFeed</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrActivityFeed.tagline">Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrActivityFeed">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">681</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrActivityFeed" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">71</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrTerritoryMap"
-  data-personas="FieldSales|Sales"
-  data-surfaces="AppPage|HomePage"
-  data-categories="Geo &amp; Field"
-  data-datamode="live"
-  data-base-dl="1104"
-  data-base-lk="68"
-  data-haystack="sefrterritorymap territory map interactive territory map with geocoded accounts, pipeline color coding, sidebar filters and csv export. fieldsales sales pipeline-tier color code sidebar filters csv export of view">
-  
-  <a class="card-preview-link" href="components/seFrTerritoryMap.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrTerritoryMap-2.png" alt="seFrTerritoryMap preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Territory Map</span>
-      <span class="card-api">seFrTerritoryMap</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrTerritoryMap.tagline">Interactive territory map with geocoded Accounts, pipeline color coding, sidebar filters and CSV export.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-field">🚗 Field</span><span class="chip persona-sales">📌 Sales</span></div>
-      <div class="card-stats" data-stats-for="seFrTerritoryMap">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">1.1k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrTerritoryMap" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">68</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrOrderSummary"
-  data-personas="Service"
-  data-surfaces="RecordPage"
+  data-api="seFrMyEvents"
+  data-personas="All"
+  data-surfaces="AppPage|HomePage|RecordPage"
   data-categories="Sales Productivity"
   data-datamode="live"
-  data-base-dl="1068"
-  data-base-lk="62"
-  data-haystack="sefrordersummary order summary most recent order linked to a case with products, total, delivery info and edit / delete / submit actions. service auto-resolves account edit / delete / submit activates order on submit">
+  data-base-dl="595"
+  data-base-lk="74"
+  data-haystack="sefrmyevents my events today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with google-calendar-style overlap. all side-by-side overlap auto-trims empty hours compact today view">
   
-  <a class="card-preview-link" href="components/seFrOrderSummary.html">
+  <a class="card-preview-link" href="components/seFrMyEvents.html">
     <div class="card-preview has-image">
       <span class="card-status stable">● Stable</span>
       
-      <img class="card-preview-img" src="assets/previews/seFrOrderSummary.png" alt="seFrOrderSummary preview" loading="lazy">
+      <img class="card-preview-img" src="assets/previews/seFrMyEvents.png" alt="seFrMyEvents preview" loading="lazy">
     </div>
   </a>
   <div class="card-body">
     <div class="card-title">
-      <span class="card-name">Order Summary</span>
-      <span class="card-api">seFrOrderSummary</span>
+      <span class="card-name">My Events</span>
+      <span class="card-api">seFrMyEvents</span>
     </div>
-    <p class="card-tagline" data-i18n-comp="seFrOrderSummary.tagline">Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.</p>
+    <p class="card-tagline" data-i18n-comp="seFrMyEvents.tagline">Today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</p>
     <div class="card-foot">
-      <div class="chips"><span class="chip persona-service">🎧 Service</span></div>
-      <div class="card-stats" data-stats-for="seFrOrderSummary">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">1.1k</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrOrderSummary" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">62</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card"
-  data-api="seFrOrderEntry"
-  data-personas="Telesales"
-  data-surfaces="RecordPage"
-  data-categories="Sales Productivity"
-  data-datamode="live"
-  data-base-dl="122"
-  data-base-lk="12"
-  data-haystack="sefrorderentry order entry full-grid order entry on an account or case with stock, ai-recommended quantities and discounts, persisted as real order records. telesales ai-recommended qty + discount live running total persists real order">
-  
-  <a class="card-preview-link" href="components/seFrOrderEntry.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrOrderEntry.png" alt="seFrOrderEntry preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Order Entry</span>
-      <span class="card-api">seFrOrderEntry</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrOrderEntry.tagline">Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-service">☎️ Telesales</span></div>
-      <div class="card-stats" data-stats-for="seFrOrderEntry">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">122</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrOrderEntry" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">12</span></button>
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrMyEvents">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">595</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrMyEvents" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">74</span></button>
       </div>
     </div>
   </div>

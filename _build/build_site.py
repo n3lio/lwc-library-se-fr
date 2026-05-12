@@ -210,7 +210,7 @@ def parse_release_notes(path: Path) -> list[dict]:
             val = val[1:-1]
         elif val.startswith("'") and val.endswith("'"):
             val = val[1:-1]
-        if indent <= 2 and key in ("version", "date", "title", "body"):
+        if indent <= 2 and key in ("version", "date", "title", "body", "kind"):
             sub_key = key if val == "" else None
             if val == "":
                 cur[key] = {}
@@ -844,6 +844,9 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .release-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
 .release-version { font-family: 'SF Mono', Menlo, monospace; font-size: 13px; background: var(--brand-deep); color: #fff; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
 .release.minor .release-version { background: var(--bg-soft); color: var(--text); border: 1px solid var(--border); }
+.release-badge.roadmap { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; background: linear-gradient(135deg, rgba(108, 99, 255, 0.18), rgba(59, 130, 246, 0.14)); color: var(--brand-deep); border: 1px solid rgba(108, 99, 255, 0.35); font-size: 11.5px; font-weight: 700; letter-spacing: 0.02em; }
+.release.roadmap { padding-left: 14px; border-left: 3px dashed rgba(108, 99, 255, 0.40); }
+.release.roadmap h2 { color: var(--brand-deep); }
 .release-date { font-size: 12.5px; color: var(--text-muted); }
 .release h2 { font-size: 19px; margin-bottom: 8px; }
 .release p { font-size: 13.5px; color: var(--text-soft); margin-bottom: 10px; }
@@ -993,6 +996,9 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .tracking-form input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font-family: inherit; font-size: 12.5px; cursor: pointer; transition: background 0.15s; }
 .tracking-form input[type="file"]::file-selector-button:hover { background: rgba(108, 99, 255, 0.06); border-color: var(--brand); }
 .tracking-form .form-hint { font-size: 11.5px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+.comingsoon-banner { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; margin: 12px 0; border-radius: 8px; background: linear-gradient(135deg, rgba(108, 99, 255, 0.07), rgba(59, 130, 246, 0.05)); border: 1px solid rgba(108, 99, 255, 0.20); font-size: 12.5px; color: var(--text-soft); }
+.comingsoon-banner .cs-pill { display: inline-block; padding: 2px 8px; border-radius: 100px; background: var(--brand); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; flex: 0 0 auto; line-height: 1.5; }
+.comingsoon-banner .cs-text { line-height: 1.45; }
 
 /* Language switcher */
 .lang-switch { display: inline-flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
@@ -1218,6 +1224,8 @@ JS = r"""// SE FR Library — client UX
       'submitc.toast.error': '✗ Erreur d’envoi. Vérifiez votre connexion et réessayez.',
       'submitc.toast.toobig': '✗ Fichier trop lourd (max 2 MB).',
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
+      'submitc.coming.pill': 'Bientôt',
+      'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
       'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets SE FR",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -1345,6 +1353,8 @@ JS = r"""// SE FR Library — client UX
       'submitc.toast.error': '✗ Submission failed. Check your connection and retry.',
       'submitc.toast.toobig': '✗ File too large (max 2 MB).',
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
+      'submitc.coming.pill': 'Coming soon',
+      'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
       'channels.slack': "Slack #cco-fr-assets — the SE FR shared-assets channel",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -1640,6 +1650,7 @@ JS = r"""// SE FR Library — client UX
         '<div class="modal modal-wide">' +
         '<h3 data-i18n="submitc.title"></h3>' +
         '<p class="modal-sub" data-i18n="submitc.body"></p>' +
+        '<div class="comingsoon-banner"><span class="cs-pill" data-i18n="submitc.coming.pill"></span><span class="cs-text" data-i18n="submitc.coming.text"></span></div>' +
         '<form id="submit-component-form" class="tracking-form" enctype="multipart/form-data">' +
         '<div class="form-row">' +
         '<label><span data-i18n="submitc.author"></span><input type="text" name="author" required></label>' +
@@ -2990,6 +3001,8 @@ def html_shell(title: str, body: str, *, active: str, base: str = "", component_
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html_lib.escape(title)}</title>
+<link rel="icon" type="image/png" href="{base}assets/favicon.png">
+<link rel="apple-touch-icon" href="{base}assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
@@ -3164,18 +3177,15 @@ def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: boo
 # PAGE: index.html
 # ----------------------------------------------------------------------
 def render_index(components: list[dict], recipes: list[dict], n_components: int, search_index: list[dict]) -> str:
-    # Featured ordered by featuredRank (set in each component's frontmatter).
-    # Components without rank fall back to alpha order at the end.
-    featured = sorted(
-        [c for c in components if c.get("featured")],
-        key=lambda x: (x.get("featuredRank") if x.get("featuredRank") is not None else 999, x["apiName"])
-    )
-    if len(featured) < 3:
-        featured = sorted(components, key=lambda x: x["apiName"])[:12]
+    # Featured = a hand-picked, fixed list of 4 components shown on the home.
+    # Curated for visual diversity (rich card, timeline, AI panel, calendar).
+    HOME_FEATURED = ["seFrContactCard", "seFrActivityFeed", "seFrSmartRecommendations", "seFrMyEvents"]
+    by_api_pre = {c["apiName"]: c for c in components}
+    featured = [by_api_pre[a] for a in HOME_FEATURED if a in by_api_pre]
     mobile_count = sum(1 for c in components if c.get("mobileReady"))
-    by_api = {c["apiName"]: c for c in components}
+    by_api = by_api_pre
 
-    featured_cards = "\n".join(card_html(c, base="") for c in featured[:12])
+    featured_cards = "\n".join(card_html(c, base="") for c in featured)
 
     def pair_attr(fr: str, en: str) -> str:
         s = json.dumps({"fr": fr, "en": en}, ensure_ascii=False).replace("'", "&#39;")
@@ -3212,7 +3222,8 @@ def render_index(components: list[dict], recipes: list[dict], n_components: int,
     <p class="hero-sub" {pair_attr('Une librairie de Lightning Web Components au design soigné et prêts à l’emploi.<br>Choisissez, déployez en quelques secondes, personnalisez dans App Builder.', 'A library of Lightning Web Components with a polished design, ready to use.<br>Pick what you need, deploy in seconds, customize in App Builder.')}></p>
     <div class="hero-cta">
       <a href="components.html" class="btn btn-hero btn-hero-primary" {pair_attr('Parcourir les composants', 'Browse components')}>Parcourir les composants</a>
-      <a href="cookbook.html" class="btn btn-hero btn-hero-ghost" {pair_attr('Voir le cookbook', 'See the cookbook')}>Voir le cookbook</a>
+      <button type="button" class="btn btn-hero btn-hero-ghost" data-mock="showcase" {pair_attr('🚀 Voir en live', '🚀 See it live')}>🚀 Voir en live</button>
+      <button type="button" class="btn btn-hero btn-hero-ghost" data-mock="submit-component" {pair_attr('🤝 Contribuer', '🤝 Contribute')}>🤝 Contribuer</button>
     </div>
     <div class="hero-stats">
       <div class="stat stat-1"><div class="num-row"><span class="stat-icon">🧩</span><span class="num">{n_components}</span></div><div class="label" {pair_attr('Composants', 'Components')}>Composants</div></div>
@@ -4021,19 +4032,34 @@ def render_whats_new(releases: list[dict], n_components: int, search_index: list
         timeline = '<p style="color:var(--text-muted)">No release notes yet.</p>'
     else:
         items = []
-        for i, r in enumerate(releases):
-            minor = " minor" if i > 0 else ""
+        # Released entries are rendered first ('minor' on every-but-first), then roadmap items.
+        # For mixed lists we still respect file order, but mark roadmap items with a badge.
+        first_seen = False
+        for r in releases:
+            kind = r.get("kind") or "release"
+            is_roadmap = kind == "roadmap"
+            cls_extra = " roadmap" if is_roadmap else (" minor" if first_seen else "")
+            if not is_roadmap:
+                first_seen = True
             title = r.get("title") or {}
             body = r.get("body") or {}
             title_fr = title.get("fr", "") if isinstance(title, dict) else str(title)
             title_en = title.get("en", title_fr) if isinstance(title, dict) else str(title)
             body_fr = body.get("fr", "") if isinstance(body, dict) else str(body)
             body_en = body.get("en", body_fr) if isinstance(body, dict) else str(body)
+            badge_html = ''
+            if is_roadmap:
+                badge_html = f'<span class="release-badge roadmap" {pair_attr("🚀 Roadmap", "🚀 Roadmap")}>🚀 Roadmap</span>'
+            version_html = ''
+            if r.get("version"):
+                version_html = f'<span class="release-version">v{r.get("version","")}</span>'
+            date_html = ''
+            if r.get("date"):
+                date_html = f'<span class="release-date">{r.get("date","")}</span>'
             items.append(f"""
-    <div class="release{minor}">
+    <div class="release{cls_extra}">
       <div class="release-meta">
-        <span class="release-version">v{r.get('version','')}</span>
-        <span class="release-date">{r.get('date','')}</span>
+        {badge_html}{version_html}{date_html}
       </div>
       <h2 {pair_attr(title_fr, title_en)}>{title_fr}</h2>
       <p {pair_attr(body_fr, body_en)}>{body_fr}</p>
@@ -4340,11 +4366,14 @@ def main() -> int:
     (ASSETS_DIR / "site.js").write_text(JS, encoding="utf-8")
     if SOURCE_LOGO_LIB.exists():
         shutil.copy(SOURCE_LOGO_LIB, ASSETS_DIR / "logo-library.png")
+        # Reuse the LWC Library logo as the favicon (PNG works for all modern browsers)
+        shutil.copy(SOURCE_LOGO_LIB, ASSETS_DIR / "favicon.png")
     else:
         # fallback to project root logo
         for candidate in [ROOT.parent / "Logo LWC Library transparent.png", ROOT.parent / "Logo LWC Library.png"]:
             if candidate.exists():
                 shutil.copy(candidate, ASSETS_DIR / "logo-library.png")
+                shutil.copy(candidate, ASSETS_DIR / "favicon.png")
                 break
     if SOURCE_LOGO_SEFR.exists():
         shutil.copy(SOURCE_LOGO_SEFR, ASSETS_DIR / "logo-sefr.png")

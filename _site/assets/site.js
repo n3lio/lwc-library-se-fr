@@ -109,6 +109,8 @@
       'submitc.toast.error': '✗ Erreur d’envoi. Vérifiez votre connexion et réessayez.',
       'submitc.toast.toobig': '✗ Fichier trop lourd (max 2 MB).',
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
+      'submitc.coming.pill': 'Bientôt',
+      'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
       'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets SE FR",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -236,6 +238,8 @@
       'submitc.toast.error': '✗ Submission failed. Check your connection and retry.',
       'submitc.toast.toobig': '✗ File too large (max 2 MB).',
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
+      'submitc.coming.pill': 'Coming soon',
+      'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
       'channels.slack': "Slack #cco-fr-assets — the SE FR shared-assets channel",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -531,6 +535,7 @@
         '<div class="modal modal-wide">' +
         '<h3 data-i18n="submitc.title"></h3>' +
         '<p class="modal-sub" data-i18n="submitc.body"></p>' +
+        '<div class="comingsoon-banner"><span class="cs-pill" data-i18n="submitc.coming.pill"></span><span class="cs-text" data-i18n="submitc.coming.text"></span></div>' +
         '<form id="submit-component-form" class="tracking-form" enctype="multipart/form-data">' +
         '<div class="form-row">' +
         '<label><span data-i18n="submitc.author"></span><input type="text" name="author" required></label>' +
