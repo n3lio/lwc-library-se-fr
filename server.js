@@ -634,6 +634,54 @@ app.post('/api/track/like', async (req, reply) => {
   }
 });
 
+// ───────────────────────────────────────────────────────────────────────────
+// Forms — feedback, contact, showcase-request all share /api/feedback.
+// V1: insert in `feedbacks` table only. Email notif comes later (Phase E).
+// Submit-component form is separate (B1) because it carries a binary attachment.
+
+const FEEDBACK_KINDS = new Set(['feedback', 'contact', 'showcase-request']);
+const FEEDBACK_SUBKINDS = new Set(['bug', 'idea', 'other']);
+
+function safeStr(v, max) {
+  if (typeof v !== 'string') return null;
+  const s = v.trim();
+  return s ? s.slice(0, max) : null;
+}
+
+function isValidEmail(v) {
+  return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && v.length <= 200;
+}
+
+app.post('/api/feedback', async (req, reply) => {
+  const b = req.body || {};
+  if (!FEEDBACK_KINDS.has(b.kind)) return reply.code(400).send({ error: 'invalid_kind' });
+  if (!isValidEmail(b.email)) return reply.code(400).send({ error: 'invalid_email' });
+  const message = safeStr(b.message, 4000);
+  if (!message) return reply.code(400).send({ error: 'missing_message' });
+  const subkind = b.kind === 'feedback' && FEEDBACK_SUBKINDS.has(b.subkind) ? b.subkind : null;
+  if (!getPool()) {
+    return reply.code(503).send({ error: 'database_not_configured' });
+  }
+  try {
+    await query(
+      `INSERT INTO feedbacks (kind, subkind, email, subject, message, page)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        b.kind,
+        subkind,
+        b.email.trim().toLowerCase(),
+        safeStr(b.subject, 200),
+        message,
+        safeStr(b.page, 200),
+      ]
+    );
+    return reply.code(201).send({ ok: true });
+  } catch (err) {
+    req.log.error({ err: err.message }, 'feedback insert failed');
+    return reply.code(500).send({ error: 'insert_failed' });
+  }
+});
+
 // Aggregated counts for the components page — { components: { apiName: {downloads, likes} }, recipes: { id: count } }
 app.get('/api/track/counts', async (req, reply) => {
   if (!getPool()) return reply.send({ components: {}, recipes: {} });

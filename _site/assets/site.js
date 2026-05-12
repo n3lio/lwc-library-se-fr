@@ -80,6 +80,8 @@
       'feedback.subject.bug': 'LWC Library — Bug',
       'feedback.subject.idea': 'LWC Library — Idée',
       'feedback.subject.other': 'LWC Library — Feedback',
+      'feedback.toast.sent': '✓ Merci, votre message a bien été enregistré.',
+      'feedback.toast.error': '✗ Erreur d’envoi. Réessayez dans un instant.',
       'contact.title': 'Me contacter',
       'contact.body': "Une question ? Un retour ? Écrivez-moi.",
       'contact.email': 'Votre email',
@@ -201,6 +203,8 @@
       'feedback.subject.bug': 'LWC Library — Bug',
       'feedback.subject.idea': 'LWC Library — Idea',
       'feedback.subject.other': 'LWC Library — Feedback',
+      'feedback.toast.sent': '✓ Thanks — your message has been recorded.',
+      'feedback.toast.error': '✗ Submission failed. Please try again.',
       'contact.title': 'Contact me',
       'contact.body': "A question? Feedback? Drop me a line.",
       'contact.email': 'Your email',
@@ -433,9 +437,22 @@
     setTimeout(() => m.querySelector('input[name="email"]').focus(), 30);
   }
 
-  // ── Feedback modal — opens a mailto: with prefilled subject + body
+  // ── Form submission helper — POST /api/feedback, returns Promise<ok>
+  async function submitFeedbackForm(payload) {
+    try {
+      const r = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      return r.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // ── Feedback modal — POSTs to /api/feedback (DB only, V1)
   function openFeedbackModal() {
-    const FEEDBACK_TO = 'lionel.braun@salesforce.com';
     let m = document.getElementById('feedback-modal');
     if (!m) {
       m = document.createElement('div');
@@ -465,19 +482,27 @@
           m.classList.remove('open');
         }
       });
-      m.querySelector('#feedback-form').addEventListener('submit', (e) => {
+      m.querySelector('#feedback-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const f = e.target;
-        const kind = f.kind.value;
-        const subject = t('feedback.subject.' + kind);
-        const fromEmail = f.email.value.trim();
-        const msg = f.message.value.trim();
-        const body = msg + '\n\n— ' + fromEmail + ' (via the LWC Library site)';
-        const url = 'mailto:' + FEEDBACK_TO +
-          '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(body);
-        window.location.href = url;
-        m.classList.remove('open');
+        const submitBtn = f.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+        const ok = await submitFeedbackForm({
+          kind: 'feedback',
+          subkind: f.kind.value,
+          email: f.email.value.trim(),
+          subject: t('feedback.subject.' + f.kind.value),
+          message: f.message.value.trim(),
+          page: window.location.pathname,
+        });
+        if (submitBtn) submitBtn.disabled = false;
+        if (ok) {
+          m.classList.remove('open');
+          f.reset();
+          toast(t('feedback.toast.sent'), 3500);
+        } else {
+          toast(t('feedback.toast.error'), 4000);
+        }
       });
       applyLang();
     }
@@ -554,9 +579,8 @@
     setTimeout(() => m.querySelector('input[name="author"]').focus(), 30);
   }
 
-  // ── Contact modal — same blurred-mask UX, prefills mailto on submit
+  // ── Contact modal — POSTs to /api/feedback (kind='contact')
   function openContactModal() {
-    const CONTACT_TO = 'lionel.braun@salesforce.com';
     let m = document.getElementById('contact-modal');
     if (!m) {
       m = document.createElement('div');
@@ -581,18 +605,26 @@
           m.classList.remove('open');
         }
       });
-      m.querySelector('#contact-form').addEventListener('submit', (e) => {
+      m.querySelector('#contact-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const f = e.target;
-        const subject = f.subject.value.trim() || 'LWC Library — Contact';
-        const fromEmail = f.email.value.trim();
-        const msg = f.message.value.trim();
-        const body = msg + '\\n\\n— ' + fromEmail + ' (via the LWC Library site)';
-        const url = 'mailto:' + CONTACT_TO +
-          '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(body);
-        window.location.href = url;
-        m.classList.remove('open');
+        const submitBtn = f.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+        const ok = await submitFeedbackForm({
+          kind: 'contact',
+          email: f.email.value.trim(),
+          subject: f.subject.value.trim() || 'LWC Library — Contact',
+          message: f.message.value.trim(),
+          page: window.location.pathname,
+        });
+        if (submitBtn) submitBtn.disabled = false;
+        if (ok) {
+          m.classList.remove('open');
+          f.reset();
+          toast(t('feedback.toast.sent'), 3500);
+        } else {
+          toast(t('feedback.toast.error'), 4000);
+        }
       });
       applyLang();
     }
@@ -601,60 +633,8 @@
   }
 
   // ── Showcase access request — same blurred-mask UX, prefills mailto on submit
-  function openShowcaseModal(opts) {
-    const SHOWCASE_TO = 'lionel.braun@salesforce.com';
-    const ctx = (opts && opts.context) || '';
-    let m = document.getElementById('showcase-modal');
-    if (!m) {
-      m = document.createElement('div');
-      m.id = 'showcase-modal';
-      m.className = 'modal-mask';
-      m.innerHTML = (
-        '<div class="modal">' +
-        '<h3 data-i18n="showcase.title"></h3>' +
-        '<p class="modal-sub" data-i18n="showcase.body"></p>' +
-        '<form id="showcase-form" class="tracking-form">' +
-        '<label><span data-i18n="showcase.email"></span><input type="email" name="email" required></label>' +
-        '<label><span data-i18n="showcase.comment"></span><textarea name="comment" rows="3" data-i18n-placeholder="showcase.comment.ph"></textarea></label>' +
-        '<div class="modal-actions">' +
-        '<button type="button" class="btn btn-ghost" data-showcase-cancel data-i18n="showcase.cancel"></button>' +
-        '<button type="submit" class="btn btn-primary" data-i18n="showcase.submit"></button>' +
-        '</div></form></div>'
-      );
-      document.body.appendChild(m);
-      m.addEventListener('click', (ev) => {
-        if (ev.target === m || ev.target.matches('[data-showcase-cancel]')) {
-          m.classList.remove('open');
-        }
-      });
-      m.querySelector('#showcase-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const f = e.target;
-        const fromEmail = f.email.value.trim();
-        const comment = f.comment.value.trim();
-        const ctxNow = m.dataset.context || '';
-        const subject = ctxNow
-          ? 'Demande d’accès SE FR Showcase — focus ' + ctxNow
-          : 'Demande d’accès SE FR Showcase';
-        const lines = [
-          'Email demandeur: ' + fromEmail,
-          'Type: read-only access via STORM',
-        ];
-        if (ctxNow) lines.push('Composant d’intérêt: ' + ctxNow);
-        if (comment) lines.push('', 'Commentaire:', comment);
-        lines.push('', '— sent via the LWC Library site');
-        const url = 'mailto:' + SHOWCASE_TO +
-          '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(lines.join('\\n'));
-        window.location.href = url;
-        m.classList.remove('open');
-      });
-      applyLang();
-    }
-    m.dataset.context = ctx;
-    m.classList.add('open');
-    setTimeout(() => m.querySelector('input[name="email"]').focus(), 30);
-  }
+  // (Showcase magic-link modal removed — superseded by the JWT 'Voir en live'
+  // flow that drops the SE directly into LEX as the Showcase Visitor bot.)
 
   // ── OAuth state machine (sefr.auth.v1)
   // Stored in localStorage so the SE remains connected across browser sessions
