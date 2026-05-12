@@ -95,6 +95,12 @@ DATA_MODE_PILLS = {"live": ("Live", "var(--success)", "rgba(46, 132, 74, 0.08)")
 
 
 def seeded_counts(api: str, featured_rank: int | None = None) -> tuple[int, int]:
+    # Phase A2 onwards: real counts come from the DB via /api/track/counts.
+    # Cards start at 0 and get hydrated client-side on page load.
+    return (0, 0)
+
+
+def _legacy_seeded_counts_unused(api: str, featured_rank: int | None = None) -> tuple[int, int]:
     """Deterministic (downloads, likes) per component apiName.
     Featured / well-ranked components get a boost. Pure mock — same seed gives same numbers."""
     h = 0
@@ -2752,53 +2758,69 @@ JS = r"""// SE FR Library — client UX
     else if (e.key === 'ArrowRight') showLb(lbIndex + 1);
   });
 
-  // ── Social counters: stable per-id base values + localStorage deltas (downloads + likes)
-  const COUNTS_KEY = 'se_fr_counts_v1';
-  const LIKES_KEY = 'se_fr_likes_v1';
-  function loadCounts() { try { return JSON.parse(localStorage.getItem(COUNTS_KEY) || '{}'); } catch (_) { return {}; } }
-  function saveCounts(c) { try { localStorage.setItem(COUNTS_KEY, JSON.stringify(c)); } catch (_) {} }
+  // ── Social counters — live from /api/track/counts (DB), with optimistic updates.
+  // Local state mirrors what's on screen; updated on page load by GET /api/track/counts.
+  const LIKES_KEY = 'se_fr_likes_v1';      // SET of locally-liked ids (for the heart UI)
+  const liveCounts = {};                   // { id: { dl, lk } } — server truth + optimistic deltas
   function loadLikedSet() { try { return new Set(JSON.parse(localStorage.getItem(LIKES_KEY) || '[]')); } catch (_) { return new Set(); } }
   function saveLikedSet(s) { try { localStorage.setItem(LIKES_KEY, JSON.stringify(Array.from(s))); } catch (_) {} }
   function fmtCount(n) {
+    n = Math.max(0, n|0);
     if (n >= 10000) return Math.floor(n / 1000) + 'k';
-    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\\.0$/, '') + 'k';
+    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
     return String(n);
   }
-  function applyCountsTo(scope) {
-    const counts = loadCounts();
-    const liked = loadLikedSet();
-    (scope || document).querySelectorAll('[data-stats-for]').forEach(el => {
-      const id = el.dataset.statsFor;
-      const host = id.startsWith('recipe-')
-        ? document.querySelector('.recipe-card[id="' + id.slice('recipe-'.length) + '"]')
-        : document.querySelector('[data-api="' + id + '"]') || el.closest('[data-base-dl]');
-      const baseDl = host ? Number(host.dataset.baseDl || 0) : 0;
-      const baseLk = host ? Number(host.dataset.baseLk || 0) : 0;
-      const c = counts[id] || {};
-      const dl = baseDl + (c.dl || 0);
-      const lk = baseLk + (c.lk || 0);
-      const dlEl = el.querySelector('.dl-count');
-      const lkEl = el.querySelector('.lk-count');
-      if (dlEl) dlEl.textContent = fmtCount(dl);
-      if (lkEl) lkEl.textContent = fmtCount(lk);
-      const btn = el.querySelector('.like-btn');
-      if (btn) {
-        const isLiked = liked.has(id);
-        btn.classList.toggle('liked', isLiked);
-        btn.setAttribute('aria-pressed', isLiked ? 'true' : 'false');
-        const ic = btn.querySelector('.icon');
-        if (ic) ic.textContent = isLiked ? '♥' : '♡';
-      }
+  function renderCount(id, what, value) {
+    // Iterate then match — avoids needing CSS.escape on arbitrary id values.
+    document.querySelectorAll('[data-stats-for]').forEach(el => {
+      if (el.dataset.statsFor !== id) return;
+      const sel = what === 'dl' ? '.dl-count' : '.lk-count';
+      const target = el.querySelector(sel);
+      if (target) target.textContent = fmtCount(value);
     });
   }
+  function applyAllCounts() {
+    document.querySelectorAll('[data-stats-for]').forEach(el => {
+      const id = el.dataset.statsFor;
+      const c = liveCounts[id] || {};
+      const dl = el.querySelector('.dl-count');
+      const lk = el.querySelector('.lk-count');
+      if (dl) dl.textContent = fmtCount(c.dl || 0);
+      if (lk) lk.textContent = fmtCount(c.lk || 0);
+    });
+    // Restore the heart state from local storage
+    const likedSet = loadLikedSet();
+    document.querySelectorAll('.like-btn').forEach(btn => {
+      const id = btn.dataset.likeFor;
+      if (!id) return;
+      const isLiked = likedSet.has(id);
+      btn.classList.toggle('liked', isLiked);
+      btn.setAttribute('aria-pressed', isLiked ? 'true' : 'false');
+      const ic = btn.querySelector('.icon');
+      if (ic) ic.textContent = isLiked ? '♥' : '♡';
+    });
+  }
+  // Hydrate counts from the server on page load
+  fetch('/api/track/counts').then(r => r.ok ? r.json() : null).then(data => {
+    if (!data) return;
+    const comps = data.components || {};
+    const recs = data.recipes || {};
+    Object.keys(comps).forEach(id => { liveCounts[id] = { dl: comps[id].downloads || 0, lk: comps[id].likes || 0 }; });
+    Object.keys(recs).forEach(id => {
+      const k = 'recipe-' + id;
+      liveCounts[k] = liveCounts[k] || { dl: 0, lk: 0 };
+      liveCounts[k].dl = recs[id] || 0;
+    });
+    applyAllCounts();
+  }).catch(() => {});
+  // Optimistic download bump (called from downloadComponents + deployComponents)
   function bumpDownload(id) {
     if (!id) return;
-    const counts = loadCounts();
-    counts[id] = counts[id] || {};
-    counts[id].dl = (counts[id].dl || 0) + 1;
-    saveCounts(counts);
-    applyCountsTo();
+    liveCounts[id] = liveCounts[id] || { dl: 0, lk: 0 };
+    liveCounts[id].dl = (liveCounts[id].dl || 0) + 1;
+    renderCount(id, 'dl', liveCounts[id].dl);
   }
+  // Like toggle — POST /api/track/like, server returns the authoritative count
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('.like-btn');
     if (!btn) return;
@@ -2806,24 +2828,38 @@ JS = r"""// SE FR Library — client UX
     e.stopPropagation();
     const id = btn.dataset.likeFor;
     if (!id) return;
-    const liked = loadLikedSet();
-    const counts = loadCounts();
-    counts[id] = counts[id] || {};
-    if (liked.has(id)) {
-      liked.delete(id);
-      counts[id].lk = (counts[id].lk || 0) - 1;
-    } else {
-      liked.add(id);
-      counts[id].lk = (counts[id].lk || 0) + 1;
-      btn.classList.remove('bump');
-      void btn.offsetWidth;
-      btn.classList.add('bump');
+    const likedSet = loadLikedSet();
+    const wasLiked = likedSet.has(id);
+    const action = wasLiked ? 'unlike' : 'like';
+    // Optimistic UI flip
+    if (wasLiked) likedSet.delete(id); else likedSet.add(id);
+    saveLikedSet(likedSet);
+    btn.classList.toggle('liked', !wasLiked);
+    btn.setAttribute('aria-pressed', !wasLiked ? 'true' : 'false');
+    const ic = btn.querySelector('.icon');
+    if (ic) ic.textContent = !wasLiked ? '♥' : '♡';
+    if (!wasLiked) {
+      btn.classList.remove('bump'); void btn.offsetWidth; btn.classList.add('bump');
     }
-    saveLikedSet(liked);
-    saveCounts(counts);
-    applyCountsTo();
+    // Optimistic count
+    liveCounts[id] = liveCounts[id] || { dl: 0, lk: 0 };
+    liveCounts[id].lk = Math.max(0, (liveCounts[id].lk || 0) + (wasLiked ? -1 : 1));
+    renderCount(id, 'lk', liveCounts[id].lk);
+    // Server sync — only for component likes (recipes-* ids would 400 with the safeApiName regex)
+    if (id.indexOf('recipe-') !== 0) {
+      fetch('/api/track/like', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiName: id, fingerprint: getFingerprint(), action }),
+      }).then(r => r.ok ? r.json() : null).then(j => {
+        if (j && typeof j.count === 'number') {
+          liveCounts[id].lk = j.count;
+          renderCount(id, 'lk', j.count);
+        }
+      }).catch(() => {});
+    }
   });
-  applyCountsTo();
+  applyAllCounts();
 
   // ── Page transitions — fade-in only, on arrival. No fade-out before unload (would leave a
   // white gap during load). The smooth feel comes entirely from pageInitialFade on body.
