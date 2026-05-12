@@ -79,6 +79,46 @@ async function sendNotificationEmail({ subject, text, html }) {
   }
 }
 
+async function sendNotificationEmailWithAttachment({ subject, text, html, attachment }) {
+  if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) return;
+  try {
+    // Build multipart/form-data manually so we can stream the binary attachment.
+    const boundary = '----SeFrLib' + crypto.randomBytes(8).toString('hex');
+    const lines = [];
+    const push = (s) => lines.push(Buffer.from(s, 'utf-8'));
+    function field(name, value) {
+      push(`--${boundary}\r\nContent-Disposition: form-data; name="${name}"\r\n\r\n${value}\r\n`);
+    }
+    field('from', NOTIFY_FROM);
+    field('to', NOTIFY_TO);
+    field('subject', subject);
+    if (text) field('text', text);
+    if (html) field('html', html);
+    if (attachment && attachment.buffer && attachment.buffer.length) {
+      push(`--${boundary}\r\nContent-Disposition: form-data; name="attachment"; filename="${attachment.filename}"\r\nContent-Type: ${attachment.mime}\r\n\r\n`);
+      lines.push(attachment.buffer);
+      push('\r\n');
+    }
+    push(`--${boundary}--\r\n`);
+    const body = Buffer.concat(lines);
+    const auth = Buffer.from('api:' + MAILGUN_API_KEY).toString('base64');
+    const resp = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + auth,
+        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+      },
+      body,
+    });
+    if (!resp.ok) {
+      const t = await resp.text().catch(() => '');
+      console.error('Mailgun (with attachment) failed:', resp.status, t.slice(0, 300));
+    }
+  } catch (err) {
+    console.error('Mailgun (with attachment) threw:', err.message);
+  }
+}
+
 function escapeHtml(s) {
   if (s == null) return '';
   return String(s)
@@ -116,6 +156,17 @@ function isAllowedSalesforceHost(hostname) {
 const app = fastify({ logger: true, trustProxy: true, bodyLimit: 5 * 1024 * 1024 });
 
 // Static — site on /, zips on /zips/
+// Multipart upload support (Submit Component form). Limits enforced per-route.
+app.register(require('@fastify/multipart'), {
+  attachFieldsToBody: 'keyValues',
+  limits: {
+    fileSize: 2 * 1024 * 1024, // 2 MB hard cap per file
+    files: 1,
+    fields: 20,
+    fieldSize: 64 * 1024,
+  },
+});
+
 app.register(require('@fastify/static'), {
   root: SITE_DIR,
   prefix: '/',
@@ -737,6 +788,151 @@ app.post('/api/feedback', async (req, reply) => {
     req.log.error({ err: err.message }, 'feedback insert failed');
     return reply.code(500).send({ error: 'insert_failed' });
   }
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// B1 — Submit a component (multipart with attachment)
+
+const SUBMIT_ALLOWED_MIME = new Set([
+  'application/zip', 'application/x-zip-compressed',
+  'text/plain',
+]);
+const SUBMIT_ALLOWED_EXT = /\.(zip|txt)$/i;
+const SUBMIT_MAX_BYTES = 2 * 1024 * 1024; // mirrors plugin cap, double-checked here
+
+app.post('/api/submit-component', async (req, reply) => {
+  // With attachFieldsToBody='keyValues', text fields appear as strings on req.body
+  // and the file appears as the value of its field name (a Buffer-like object).
+  // We use req.parts() instead for clearer per-field handling.
+  let authorName = null, authorEmail = null, componentName = null;
+  let description = null, useCase = null, notes = null;
+  let attachmentBuf = null, attachmentName = null, attachmentMime = null;
+  let tooLarge = false;
+
+  try {
+    for await (const part of req.parts()) {
+      if (part.type === 'file') {
+        const chunks = [];
+        let total = 0;
+        for await (const chunk of part.file) {
+          total += chunk.length;
+          if (total > SUBMIT_MAX_BYTES) { tooLarge = true; break; }
+          chunks.push(chunk);
+        }
+        if (tooLarge) {
+          // Drain the rest to avoid hanging connection, then break.
+          part.file.resume();
+          break;
+        }
+        if (part.file.truncated) { tooLarge = true; break; }
+        attachmentBuf = Buffer.concat(chunks);
+        attachmentName = (part.filename || 'submission').slice(0, 200);
+        attachmentMime = part.mimetype || 'application/octet-stream';
+      } else {
+        const v = typeof part.value === 'string' ? part.value : '';
+        switch (part.fieldname) {
+          case 'authorName':    authorName = v; break;
+          case 'authorEmail':   authorEmail = v; break;
+          case 'componentName': componentName = v; break;
+          case 'description':   description = v; break;
+          case 'useCase':       useCase = v; break;
+          case 'notes':         notes = v; break;
+        }
+      }
+    }
+  } catch (err) {
+    if (err && err.code === 'FST_REQ_FILE_TOO_LARGE') tooLarge = true;
+    else {
+      req.log.error({ err: err.message }, 'submit-component multipart parse failed');
+      return reply.code(400).send({ error: 'invalid_multipart' });
+    }
+  }
+
+  if (tooLarge) return reply.code(413).send({ error: 'file_too_large', max: SUBMIT_MAX_BYTES });
+  if (!isValidEmail(authorEmail)) return reply.code(400).send({ error: 'invalid_email' });
+  authorName = safeStr(authorName, 200);
+  if (!authorName) return reply.code(400).send({ error: 'missing_author_name' });
+  componentName = safeStr(componentName, 200);
+  if (!componentName) return reply.code(400).send({ error: 'missing_component_name' });
+  description = safeStr(description, 2000);
+  useCase = safeStr(useCase, 2000);
+  notes = safeStr(notes, 2000);
+
+  // Validate attachment if present
+  if (attachmentBuf) {
+    if (!SUBMIT_ALLOWED_EXT.test(attachmentName)) {
+      return reply.code(400).send({ error: 'invalid_file_extension', allowed: ['zip', 'txt'] });
+    }
+    if (!SUBMIT_ALLOWED_MIME.has(attachmentMime)) {
+      // Fall back to extension trust if mime is generic — Safari sometimes sends
+      // application/octet-stream for .zip. Don't be too strict.
+      if (attachmentMime !== 'application/octet-stream') {
+        return reply.code(400).send({ error: 'invalid_file_mime', got: attachmentMime });
+      }
+    }
+  }
+
+  if (!getPool()) return reply.code(503).send({ error: 'database_not_configured' });
+
+  let submissionId;
+  try {
+    const r = await query(
+      `INSERT INTO submissions (
+         author_name, author_email, component_name, description, use_case, notes,
+         attachment_blob, attachment_filename, attachment_mime
+       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+       RETURNING id`,
+      [
+        authorName,
+        authorEmail.trim().toLowerCase(),
+        componentName,
+        description,
+        useCase,
+        notes,
+        attachmentBuf,
+        attachmentName,
+        attachmentMime,
+      ]
+    );
+    submissionId = r.rows[0].id;
+  } catch (err) {
+    req.log.error({ err: err.message }, 'submit-component insert failed');
+    return reply.code(500).send({ error: 'insert_failed' });
+  }
+
+  // Fire email notification with the attachment inline.
+  const subject = `[SE FR Lib] New component submission: ${componentName} (from ${authorEmail.trim().toLowerCase()})`;
+  const htmlParts = [
+    `<h2>New component submission</h2>`,
+    `<p><strong>Author:</strong> ${escapeHtml(authorName)} &lt;${escapeHtml(authorEmail)}&gt;</p>`,
+    `<p><strong>Component:</strong> <code>${escapeHtml(componentName)}</code></p>`,
+  ];
+  if (description) htmlParts.push(`<p><strong>Description:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(description)}</blockquote>`);
+  if (useCase)     htmlParts.push(`<p><strong>Use case:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(useCase)}</blockquote>`);
+  if (notes)       htmlParts.push(`<p><strong>Notes:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(notes)}</blockquote>`);
+  if (attachmentBuf) htmlParts.push(`<p><strong>Attachment:</strong> ${escapeHtml(attachmentName)} (${(attachmentBuf.length / 1024).toFixed(1)} KB)</p>`);
+  htmlParts.push(`<p style="font-size:12px;color:#888">Submission #${submissionId} — review on /admin</p>`);
+
+  const text =
+    `New component submission #${submissionId}\n` +
+    `Author: ${authorName} <${authorEmail}>\n` +
+    `Component: ${componentName}\n` +
+    (description ? `\nDescription:\n${description}\n` : '') +
+    (useCase ? `\nUse case:\n${useCase}\n` : '') +
+    (notes ? `\nNotes:\n${notes}\n` : '') +
+    (attachmentBuf ? `\nAttachment: ${attachmentName} (${(attachmentBuf.length / 1024).toFixed(1)} KB) — see attached\n` : '');
+
+  // Mailgun multipart send — fire-and-forget but we want the attachment.
+  sendNotificationEmailWithAttachment({
+    subject,
+    text,
+    html: htmlParts.join(''),
+    attachment: attachmentBuf
+      ? { buffer: attachmentBuf, filename: attachmentName, mime: attachmentMime || 'application/octet-stream' }
+      : null,
+  });
+
+  return reply.code(201).send({ ok: true, id: String(submissionId) });
 });
 
 // Aggregated counts for the components page — { components: { apiName: {downloads, likes} }, recipes: { id: count } }

@@ -989,6 +989,10 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .tracking-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--text-soft); font-weight: 500; }
 .tracking-form input, .tracking-form textarea { font-family: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; outline: none; transition: border-color 0.15s; resize: vertical; }
 .tracking-form input:focus, .tracking-form textarea:focus { border-color: var(--brand); }
+.tracking-form input[type="file"] { padding: 6px 10px; background: var(--surface, #fafbff); cursor: pointer; }
+.tracking-form input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font-family: inherit; font-size: 12.5px; cursor: pointer; transition: background 0.15s; }
+.tracking-form input[type="file"]::file-selector-button:hover { background: rgba(108, 99, 255, 0.06); border-color: var(--brand); }
+.tracking-form .form-hint { font-size: 11.5px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
 
 /* Language switcher */
 .lang-switch { display: inline-flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
@@ -1205,11 +1209,15 @@ JS = r"""// SE FR Library — client UX
       'submitc.desc.ph': 'En une phrase, ce que fait le composant.',
       'submitc.usage': "Cas d'usage / personas",
       'submitc.usage.ph': 'Sales, Service, Marketing… page Account, Home, Service Console, etc.',
-      'submitc.attach': 'Lien (zip, repo, vidéo)',
-      'submitc.attach.ph': 'Drive, Quip, GitHub… (les pièces jointes lourdes passent mieux par lien)',
+      'submitc.file': 'Fichier (.zip ou .txt, max 2 MB)',
+      'submitc.file.hint': 'Joignez le zip de votre composant ou un export de code en .txt.',
       'submitc.notes': 'Commentaires libres',
       'submitc.submit': 'Envoyer →',
       'submitc.cancel': 'Annuler',
+      'submitc.toast.sent': '✓ Soumission envoyée. Merci ! On revient vers vous.',
+      'submitc.toast.error': '✗ Erreur d’envoi. Vérifiez votre connexion et réessayez.',
+      'submitc.toast.toobig': '✗ Fichier trop lourd (max 2 MB).',
+      'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
       'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets SE FR",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -1328,11 +1336,15 @@ JS = r"""// SE FR Library — client UX
       'submitc.desc.ph': 'In one sentence, what your component does.',
       'submitc.usage': 'Use cases / personas',
       'submitc.usage.ph': 'Sales, Service, Marketing… Account record page, Home, Service Console, etc.',
-      'submitc.attach': 'Link (zip, repo, video)',
-      'submitc.attach.ph': 'Drive, Quip, GitHub… (large attachments are easier via link)',
+      'submitc.file': 'File (.zip or .txt, max 2 MB)',
+      'submitc.file.hint': 'Attach the zip of your component or a .txt code export.',
       'submitc.notes': 'Other comments',
       'submitc.submit': 'Send →',
       'submitc.cancel': 'Cancel',
+      'submitc.toast.sent': '✓ Submission sent. Thanks — we’ll get back to you.',
+      'submitc.toast.error': '✗ Submission failed. Check your connection and retry.',
+      'submitc.toast.toobig': '✗ File too large (max 2 MB).',
+      'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
       'channels.slack': "Slack #cco-fr-assets — the SE FR shared-assets channel",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
@@ -1615,9 +1627,10 @@ JS = r"""// SE FR Library — client UX
     setTimeout(() => m.querySelector('input[name="email"]').focus(), 30);
   }
 
-  // ── Submit-component modal — full form, mailto on submit
+  // ── Submit-component modal — POSTs multipart to /api/submit-component
   function openSubmitComponentModal() {
-    const TO = 'lionel.braun@salesforce.com';
+    const MAX_BYTES = 2 * 1024 * 1024;
+    const ALLOWED_EXT = /\.(zip|txt)$/i;
     let m = document.getElementById('submit-component-modal');
     if (!m) {
       m = document.createElement('div');
@@ -1627,7 +1640,7 @@ JS = r"""// SE FR Library — client UX
         '<div class="modal modal-wide">' +
         '<h3 data-i18n="submitc.title"></h3>' +
         '<p class="modal-sub" data-i18n="submitc.body"></p>' +
-        '<form id="submit-component-form" class="tracking-form">' +
+        '<form id="submit-component-form" class="tracking-form" enctype="multipart/form-data">' +
         '<div class="form-row">' +
         '<label><span data-i18n="submitc.author"></span><input type="text" name="author" required></label>' +
         '<label><span data-i18n="submitc.email"></span><input type="email" name="email" required></label>' +
@@ -1635,7 +1648,7 @@ JS = r"""// SE FR Library — client UX
         '<label><span data-i18n="submitc.name"></span><input type="text" name="cname" data-i18n-placeholder="submitc.name.ph" required></label>' +
         '<label><span data-i18n="submitc.desc"></span><textarea name="desc" rows="2" data-i18n-placeholder="submitc.desc.ph" required></textarea></label>' +
         '<label><span data-i18n="submitc.usage"></span><textarea name="usage" rows="2" data-i18n-placeholder="submitc.usage.ph" required></textarea></label>' +
-        '<label><span data-i18n="submitc.attach"></span><input type="url" name="attach" data-i18n-placeholder="submitc.attach.ph"></label>' +
+        '<label><span data-i18n="submitc.file"></span><input type="file" name="attachment" accept=".zip,.txt"><span class="form-hint" data-i18n="submitc.file.hint"></span></label>' +
         '<label><span data-i18n="submitc.notes"></span><textarea name="notes" rows="3"></textarea></label>' +
         '<div class="modal-actions">' +
         '<button type="button" class="btn btn-ghost" data-submitc-cancel data-i18n="submitc.cancel"></button>' +
@@ -1648,35 +1661,40 @@ JS = r"""// SE FR Library — client UX
           m.classList.remove('open');
         }
       });
-      m.querySelector('#submit-component-form').addEventListener('submit', (e) => {
+      m.querySelector('#submit-component-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const f = e.target;
-        const author = f.author.value.trim();
-        const fromEmail = f.email.value.trim();
-        const cname = f.cname.value.trim();
-        const desc = f.desc.value.trim();
-        const usage = f.usage.value.trim();
-        const attach = f.attach.value.trim();
-        const notes = f.notes.value.trim();
-        const subject = 'LWC Library — Submission: ' + cname;
-        const lines = [
-          'Author: ' + author + ' <' + fromEmail + '>',
-          'Component: ' + cname,
-          '',
-          'Description:',
-          desc,
-          '',
-          'Use cases / personas:',
-          usage,
-        ];
-        if (attach) { lines.push('', 'Link: ' + attach); }
-        if (notes)  { lines.push('', 'Notes:', notes); }
-        lines.push('', '— sent via the LWC Library site');
-        const url = 'mailto:' + TO +
-          '?subject=' + encodeURIComponent(subject) +
-          '&body=' + encodeURIComponent(lines.join('\\n'));
-        window.location.href = url;
-        m.classList.remove('open');
+        const submitBtn = f.querySelector('button[type="submit"]');
+        const file = f.attachment.files && f.attachment.files[0];
+        // Client-side validation (server-side validates again, this is just UX)
+        if (file) {
+          if (file.size > MAX_BYTES) { toast(t('submitc.toast.toobig'), 4000); return; }
+          if (!ALLOWED_EXT.test(file.name)) { toast(t('submitc.toast.badext'), 4000); return; }
+        }
+        if (submitBtn) submitBtn.disabled = true;
+        const fd = new FormData();
+        fd.append('authorName', f.author.value.trim());
+        fd.append('authorEmail', f.email.value.trim());
+        fd.append('componentName', f.cname.value.trim());
+        fd.append('description', f.desc.value.trim());
+        fd.append('useCase', f.usage.value.trim());
+        fd.append('notes', f.notes.value.trim());
+        if (file) fd.append('attachment', file, file.name);
+        let ok = false;
+        try {
+          const r = await fetch('/api/submit-component', { method: 'POST', body: fd });
+          ok = r.ok;
+        } catch (err) {
+          ok = false;
+        }
+        if (submitBtn) submitBtn.disabled = false;
+        if (ok) {
+          m.classList.remove('open');
+          f.reset();
+          toast(t('submitc.toast.sent'), 4000);
+        } else {
+          toast(t('submitc.toast.error'), 4500);
+        }
       });
       applyLang();
     }

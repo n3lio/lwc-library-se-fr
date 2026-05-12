@@ -761,6 +761,10 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .tracking-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--text-soft); font-weight: 500; }
 .tracking-form input, .tracking-form textarea { font-family: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; outline: none; transition: border-color 0.15s; resize: vertical; }
 .tracking-form input:focus, .tracking-form textarea:focus { border-color: var(--brand); }
+.tracking-form input[type="file"] { padding: 6px 10px; background: var(--surface, #fafbff); cursor: pointer; }
+.tracking-form input[type="file"]::file-selector-button { margin-right: 12px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font-family: inherit; font-size: 12.5px; cursor: pointer; transition: background 0.15s; }
+.tracking-form input[type="file"]::file-selector-button:hover { background: rgba(108, 99, 255, 0.06); border-color: var(--brand); }
+.tracking-form .form-hint { font-size: 11.5px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
 
 /* Language switcher */
 .lang-switch { display: inline-flex; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
