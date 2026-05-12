@@ -88,17 +88,17 @@
       'connect.menu.signedinas': 'Connecté en tant que',
       'connect.choose.title': 'Connecter votre org de démo',
       'connect.choose.sub': "Cette org sera la cible des déploiements. Connectez-vous à VOTRE org de démo (SDO/IDO/scratch) — pas à l'org showcase, pas à une prod client.",
-      'connect.choose.sdo': 'Mon SDO / IDO',
-      'connect.choose.sdo.sub': 'Saisissez votre My Domain',
+      'connect.choose.login': 'Login Salesforce',
+      'connect.choose.login.sub': 'login.salesforce.com — vos identifiants Salesforce habituels',
+      'connect.choose.sandbox': 'Sandbox',
+      'connect.choose.sandbox.sub': 'test.salesforce.com',
+      'connect.choose.advanced': 'My Domain personnalisé',
+      'connect.choose.advanced.sub': 'Si vous connaissez l’URL exacte de votre org',
+      'connect.choose.sdo': 'My Domain',
+      'connect.choose.sdo.sub': 'Tapez votre URL d’org',
       'connect.choose.sdo.ph': 'storm.my.salesforce.com',
       'connect.choose.scratch': 'Scratch org',
       'connect.choose.scratch.sub': 'test.salesforce.com',
-      'connect.choose.advanced': 'Sandbox ou Production',
-      'connect.choose.advanced.sub': 'Cas avancés uniquement',
-      'connect.choose.prod': 'Production',
-      'connect.choose.prod.sub': 'login.salesforce.com',
-      'connect.choose.sandbox': 'Sandbox',
-      'connect.choose.sandbox.sub': 'test.salesforce.com',
       'connect.choose.continue': 'Continuer →',
       'connect.choose.back': '← Retour',
       'connect.choose.cancel': 'Annuler',
@@ -202,17 +202,17 @@
       'connect.menu.signedinas': 'Signed in as',
       'connect.choose.title': 'Connect to your demo org',
       'connect.choose.sub': "This org will be the deploy target. Connect to YOUR demo org (SDO/IDO/scratch) — NOT the showcase org, NOT a customer prod.",
-      'connect.choose.sdo': 'My SDO / IDO',
-      'connect.choose.sdo.sub': 'Enter your My Domain',
+      'connect.choose.login': 'Salesforce login',
+      'connect.choose.login.sub': 'login.salesforce.com — your usual Salesforce credentials',
+      'connect.choose.sandbox': 'Sandbox',
+      'connect.choose.sandbox.sub': 'test.salesforce.com',
+      'connect.choose.advanced': 'Custom My Domain',
+      'connect.choose.advanced.sub': 'If you know your org URL exactly',
+      'connect.choose.sdo': 'My Domain',
+      'connect.choose.sdo.sub': 'Type your org URL',
       'connect.choose.sdo.ph': 'storm.my.salesforce.com',
       'connect.choose.scratch': 'Scratch org',
       'connect.choose.scratch.sub': 'test.salesforce.com',
-      'connect.choose.advanced': 'Sandbox or Production',
-      'connect.choose.advanced.sub': 'Advanced cases only',
-      'connect.choose.prod': 'Production',
-      'connect.choose.prod.sub': 'login.salesforce.com',
-      'connect.choose.sandbox': 'Sandbox',
-      'connect.choose.sandbox.sub': 'test.salesforce.com',
       'connect.choose.continue': 'Continue →',
       'connect.choose.back': '← Back',
       'connect.choose.cancel': 'Cancel',
@@ -689,31 +689,29 @@
       m.className = 'modal-mask';
       m.innerHTML = (
         '<div class="modal connect-modal">' +
-        // Screen 1
+        // Screen 1 — main
         '<div class="cm-screen cm-screen-main">' +
         '<h3 data-i18n="connect.choose.title"></h3>' +
+        '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
+        '<div class="connect-choices">' +
+        '<button type="button" class="connect-choice is-primary" data-host="login.salesforce.com" data-kind="login">' +
+        '<span class="cc-icon">☁️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.login"></span><span class="cc-sub" data-i18n="connect.choose.login.sub"></span></span></button>' +
+        '<button type="button" class="connect-choice" data-host="test.salesforce.com" data-kind="sandbox">' +
+        '<span class="cc-icon">🧪</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sandbox"></span><span class="cc-sub" data-i18n="connect.choose.sandbox.sub"></span></span></button>' +
+        '<button type="button" class="connect-choice connect-advanced-toggle">' +
+        '<span class="cc-icon">⚙️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.advanced"></span><span class="cc-sub" data-i18n="connect.choose.advanced.sub"></span></span><span class="cc-chev">›</span></button>' +
+        '</div>' +
+        '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
+        '</div>' +
+        // Screen 2 (advanced) — custom My Domain
+        '<div class="cm-screen cm-screen-advanced" hidden>' +
+        '<h3 data-i18n="connect.choose.advanced"></h3>' +
         '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
         '<div class="connect-choices">' +
         '<div class="connect-choice connect-custom is-primary"><span class="cc-icon">🛠️</span>' +
         '<span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sdo"></span>' +
         '<input type="text" name="sdoDomain" data-i18n-placeholder="connect.choose.sdo.ph" autocomplete="off"></span>' +
         '<button type="button" class="btn btn-primary btn-sm" data-sdo-go data-i18n="connect.choose.continue"></button></div>' +
-        '<button type="button" class="connect-choice" data-host="test.salesforce.com" data-kind="scratch">' +
-        '<span class="cc-icon">🧬</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.scratch"></span><span class="cc-sub" data-i18n="connect.choose.scratch.sub"></span></span></button>' +
-        '<button type="button" class="connect-choice connect-advanced-toggle">' +
-        '<span class="cc-icon">⚙️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.advanced"></span><span class="cc-sub" data-i18n="connect.choose.advanced.sub"></span></span><span class="cc-chev">›</span></button>' +
-        '</div>' +
-        '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
-        '</div>' +
-        // Screen 2 (advanced)
-        '<div class="cm-screen cm-screen-advanced" hidden>' +
-        '<h3 data-i18n="connect.choose.advanced"></h3>' +
-        '<p class="modal-sub" data-i18n="connect.choose.sub"></p>' +
-        '<div class="connect-choices">' +
-        '<button type="button" class="connect-choice" data-host="test.salesforce.com" data-kind="sandbox">' +
-        '<span class="cc-icon">🧪</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.sandbox"></span><span class="cc-sub" data-i18n="connect.choose.sandbox.sub"></span></span></button>' +
-        '<button type="button" class="connect-choice" data-host="login.salesforce.com" data-kind="prod">' +
-        '<span class="cc-icon">☁️</span><span class="cc-text"><span class="cc-label" data-i18n="connect.choose.prod"></span><span class="cc-sub" data-i18n="connect.choose.prod.sub"></span></span></button>' +
         '</div>' +
         '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-connect-back data-i18n="connect.choose.back"></button>' +
         '<button type="button" class="btn btn-ghost" data-connect-cancel data-i18n="connect.choose.cancel"></button></div>' +
@@ -732,7 +730,13 @@
           m.classList.remove('open'); showMain();
         }
       });
-      m.querySelector('.connect-advanced-toggle').addEventListener('click', showAdv);
+      m.querySelector('.connect-advanced-toggle').addEventListener('click', () => {
+        showAdv();
+        setTimeout(() => {
+          const inp = m.querySelector('input[name="sdoDomain"]');
+          if (inp) inp.focus();
+        }, 30);
+      });
       m.querySelector('[data-connect-back]').addEventListener('click', showMain);
 
       // Direct host buttons (Scratch on screen 1, Sandbox/Prod on screen 2)
@@ -765,10 +769,6 @@
     }
     m.__sePending = onProceed;
     m.classList.add('open');
-    setTimeout(() => {
-      const inp = m.querySelector('input[name="sdoDomain"]');
-      if (inp) inp.focus();
-    }, 60);
   }
 
   // ── Launch the OAuth popup flow against `loginHost`.
