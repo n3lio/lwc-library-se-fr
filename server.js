@@ -160,7 +160,7 @@ const app = fastify({ logger: true, trustProxy: true, bodyLimit: 5 * 1024 * 1024
 app.register(require('@fastify/multipart'), {
   attachFieldsToBody: 'keyValues',
   limits: {
-    fileSize: 2 * 1024 * 1024, // 2 MB hard cap per file
+    fileSize: 5 * 1024 * 1024, // 5 MB hard cap per file
     files: 1,
     fields: 20,
     fieldSize: 64 * 1024,
@@ -798,7 +798,7 @@ const SUBMIT_ALLOWED_MIME = new Set([
   'text/plain',
 ]);
 const SUBMIT_ALLOWED_EXT = /\.(zip|txt)$/i;
-const SUBMIT_MAX_BYTES = 2 * 1024 * 1024; // mirrors plugin cap, double-checked here
+const SUBMIT_MAX_BYTES = 5 * 1024 * 1024; // mirrors plugin cap, double-checked here
 
 app.post('/api/submit-component', async (req, reply) => {
   // With attachFieldsToBody='keyValues', text fields appear as strings on req.body

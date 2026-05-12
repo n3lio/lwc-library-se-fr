@@ -1226,14 +1226,14 @@ JS = r"""// SE FR Library — client UX
       'submitc.desc.ph': 'En une phrase, ce que fait le composant.',
       'submitc.usage': "Cas d'usage / personas",
       'submitc.usage.ph': 'Sales, Service, Marketing… page Account, Home, Service Console, etc.',
-      'submitc.file': 'Fichier (.zip ou .txt, max 2 MB)',
+      'submitc.file': 'Fichier (.zip ou .txt, max 5 MB)',
       'submitc.file.hint': 'Joignez le zip de votre composant ou un export de code en .txt.',
       'submitc.notes': 'Commentaires libres',
       'submitc.submit': 'Envoyer →',
       'submitc.cancel': 'Annuler',
       'submitc.toast.sent': '✓ Soumission envoyée. Merci ! On revient vers vous.',
       'submitc.toast.error': '✗ Erreur d’envoi. Vérifiez votre connexion et réessayez.',
-      'submitc.toast.toobig': '✗ Fichier trop lourd (max 2 MB).',
+      'submitc.toast.toobig': '✗ Fichier trop lourd (max 5 MB).',
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
       'submitc.coming.pill': 'Bientôt',
       'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
@@ -1355,14 +1355,14 @@ JS = r"""// SE FR Library — client UX
       'submitc.desc.ph': 'In one sentence, what your component does.',
       'submitc.usage': 'Use cases / personas',
       'submitc.usage.ph': 'Sales, Service, Marketing… Account record page, Home, Service Console, etc.',
-      'submitc.file': 'File (.zip or .txt, max 2 MB)',
+      'submitc.file': 'File (.zip or .txt, max 5 MB)',
       'submitc.file.hint': 'Attach the zip of your component or a .txt code export.',
       'submitc.notes': 'Other comments',
       'submitc.submit': 'Send →',
       'submitc.cancel': 'Cancel',
       'submitc.toast.sent': '✓ Submission sent. Thanks — we’ll get back to you.',
       'submitc.toast.error': '✗ Submission failed. Check your connection and retry.',
-      'submitc.toast.toobig': '✗ File too large (max 2 MB).',
+      'submitc.toast.toobig': '✗ File too large (max 5 MB).',
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
       'submitc.coming.pill': 'Coming soon',
       'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
@@ -1650,7 +1650,7 @@ JS = r"""// SE FR Library — client UX
 
   // ── Submit-component modal — POSTs multipart to /api/submit-component
   function openSubmitComponentModal() {
-    const MAX_BYTES = 2 * 1024 * 1024;
+    const MAX_BYTES = 5 * 1024 * 1024;
     const ALLOWED_EXT = /\.(zip|txt)$/i;
     let m = document.getElementById('submit-component-modal');
     if (!m) {
@@ -3804,6 +3804,15 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
     </div>
   </section>
 
+  <section class="about-section about-cta">
+    <h2 {pair_attr('Envie de contribuer ?', 'Want to contribute?')}>Envie de contribuer ?</h2>
+    <p {pair_attr('La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.', 'The library grows thanks to SEs who share their components. Add yours, or check out the SEs who already joined.')}>La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.</p>
+    <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch;">
+      <button type="button" class="btn btn-primary" data-mock="submit-component" {pair_attr('Proposer mon composant →', 'Propose my component →')}>Proposer mon composant →</button>
+      <a href="contributors.html" class="btn btn-ghost" {pair_attr('Voir les contributeurs', 'See the contributors')}>Voir les contributeurs</a>
+    </div>
+  </section>
+
   <section class="about-section">
     <h2 {pair_attr('Principes de design', 'Design principles')}>Principes de design</h2>
     <ul class="about-bullets">
@@ -3843,14 +3852,6 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
     </ul>
   </section>
 
-  <section class="about-section about-cta">
-    <h2 {pair_attr('Envie de contribuer ?', 'Want to contribute?')}>Envie de contribuer ?</h2>
-    <p {pair_attr('La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.', 'The library grows thanks to SEs who share their components. Add yours, or check out the SEs who already joined.')}>La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.</p>
-    <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch;">
-      <button type="button" class="btn btn-primary" data-mock="submit-component" {pair_attr('Proposer mon composant →', 'Propose my component →')}>Proposer mon composant →</button>
-      <a href="contributors.html" class="btn btn-ghost" {pair_attr('Voir les contributeurs', 'See the contributors')}>Voir les contributeurs</a>
-    </div>
-  </section>
 </div>"""
     return html_shell("À propos · LWC Library SE FR", body,
                       active="about", base="", component_count=n_components,

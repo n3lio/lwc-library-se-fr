@@ -100,14 +100,14 @@
       'submitc.desc.ph': 'En une phrase, ce que fait le composant.',
       'submitc.usage': "Cas d'usage / personas",
       'submitc.usage.ph': 'Sales, Service, Marketing… page Account, Home, Service Console, etc.',
-      'submitc.file': 'Fichier (.zip ou .txt, max 2 MB)',
+      'submitc.file': 'Fichier (.zip ou .txt, max 5 MB)',
       'submitc.file.hint': 'Joignez le zip de votre composant ou un export de code en .txt.',
       'submitc.notes': 'Commentaires libres',
       'submitc.submit': 'Envoyer →',
       'submitc.cancel': 'Annuler',
       'submitc.toast.sent': '✓ Soumission envoyée. Merci ! On revient vers vous.',
       'submitc.toast.error': '✗ Erreur d’envoi. Vérifiez votre connexion et réessayez.',
-      'submitc.toast.toobig': '✗ Fichier trop lourd (max 2 MB).',
+      'submitc.toast.toobig': '✗ Fichier trop lourd (max 5 MB).',
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
       'submitc.coming.pill': 'Bientôt',
       'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
@@ -229,14 +229,14 @@
       'submitc.desc.ph': 'In one sentence, what your component does.',
       'submitc.usage': 'Use cases / personas',
       'submitc.usage.ph': 'Sales, Service, Marketing… Account record page, Home, Service Console, etc.',
-      'submitc.file': 'File (.zip or .txt, max 2 MB)',
+      'submitc.file': 'File (.zip or .txt, max 5 MB)',
       'submitc.file.hint': 'Attach the zip of your component or a .txt code export.',
       'submitc.notes': 'Other comments',
       'submitc.submit': 'Send →',
       'submitc.cancel': 'Cancel',
       'submitc.toast.sent': '✓ Submission sent. Thanks — we’ll get back to you.',
       'submitc.toast.error': '✗ Submission failed. Check your connection and retry.',
-      'submitc.toast.toobig': '✗ File too large (max 2 MB).',
+      'submitc.toast.toobig': '✗ File too large (max 5 MB).',
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
       'submitc.coming.pill': 'Coming soon',
       'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
@@ -524,7 +524,7 @@
 
   // ── Submit-component modal — POSTs multipart to /api/submit-component
   function openSubmitComponentModal() {
-    const MAX_BYTES = 2 * 1024 * 1024;
+    const MAX_BYTES = 5 * 1024 * 1024;
     const ALLOWED_EXT = /\.(zip|txt)$/i;
     let m = document.getElementById('submit-component-modal');
     if (!m) {
