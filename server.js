@@ -161,6 +161,21 @@ function isAllowedSalesforceHost(hostname) {
 
 const app = fastify({ logger: true, trustProxy: true, bodyLimit: 5 * 1024 * 1024 });
 
+// Parse application/x-www-form-urlencoded bodies (used by the admin login form).
+app.addContentTypeParser('application/x-www-form-urlencoded', { parseAs: 'string' }, (req, body, done) => {
+  try {
+    const out = {};
+    for (const pair of body.split('&')) {
+      if (!pair) continue;
+      const i = pair.indexOf('=');
+      const k = i >= 0 ? pair.slice(0, i) : pair;
+      const v = i >= 0 ? pair.slice(i + 1) : '';
+      out[decodeURIComponent(k.replace(/\+/g, ' '))] = decodeURIComponent(v.replace(/\+/g, ' '));
+    }
+    done(null, out);
+  } catch (err) { done(err, undefined); }
+});
+
 // Static — site on /, zips on /zips/
 // Multipart upload support (Submit Component form). We consume the stream
 // manually with req.parts() so attachFieldsToBody must be off (otherwise the
@@ -200,6 +215,9 @@ app.register(require('@fastify/static'), {
 });
 
 app.get('/healthz', async () => ({ status: 'ok', time: new Date().toISOString() }));
+
+// Admin module — login + dashboard + /api/admin/* endpoints
+require('./admin').register(app);
 
 // ───────────────────────────────────────────────────────────────────────────
 // OAuth — public config endpoint so the frontend knows the client_id + redirect_uri
@@ -678,11 +696,24 @@ app.post('/api/track/deploy', async (req, reply) => {
     ? b.components.filter(safeApiName).slice(0, 100)
     : [];
   if (!components.length) return;
+  // Sanitize failures: keep only known fields, cap to 100 entries.
+  let failuresJson = null;
+  if (Array.isArray(b.failures) && b.failures.length) {
+    const safe = b.failures.slice(0, 100).map(f => ({
+      componentName: typeof f.componentName === 'string' ? f.componentName.slice(0, 200) : null,
+      componentType: typeof f.componentType === 'string' ? f.componentType.slice(0, 60) : null,
+      problem: typeof f.problem === 'string' ? f.problem.slice(0, 1000) : null,
+      problemType: typeof f.problemType === 'string' ? f.problemType.slice(0, 60) : null,
+      lineNumber: Number.isFinite(f.lineNumber) ? f.lineNumber : null,
+      columnNumber: Number.isFinite(f.columnNumber) ? f.columnNumber : null,
+    }));
+    failuresJson = JSON.stringify(safe);
+  }
   await safeInsert(
     `INSERT INTO deploys (
        components_csv, recipe_id, target_host, sf_org_id, sf_user_id, sf_username,
-       deploy_request_id, status, num_total, num_success, source_page, ip_hash
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+       deploy_request_id, status, num_total, num_success, source_page, ip_hash, failures
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb)`,
     [
       components.join(','),
       typeof b.recipeId === 'string' ? b.recipeId.slice(0, 60) : null,
@@ -696,6 +727,7 @@ app.post('/api/track/deploy', async (req, reply) => {
       Number.isFinite(b.numSuccess) ? b.numSuccess : null,
       typeof b.sourcePage === 'string' ? b.sourcePage.slice(0, 200) : null,
       hashIp(clientIp(req)),
+      failuresJson,
     ],
     'deploy'
   );

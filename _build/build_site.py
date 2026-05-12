@@ -2300,6 +2300,16 @@ JS = r"""// SE FR Library — client UX
       stickyToast.close();
       // Server-side deploy tracking (success/partial/fail). Carries org metadata
       // for the admin dashboard (which SE deployed what to which org).
+      // Also captures componentFailures from Salesforce so the admin can
+      // diagnose failed deploys without digging into Heroku logs.
+      const failures = (result.componentFailures || []).map(f => ({
+        componentName: f.fullName || f.componentName || null,
+        componentType: f.componentType || null,
+        problem: f.problem || null,
+        problemType: f.problemType || null,
+        lineNumber: f.lineNumber || null,
+        columnNumber: f.columnNumber || null,
+      }));
       const deployTrack = {
         components: list,
         recipeId: target.dataset.bundleId || null,
@@ -2311,6 +2321,7 @@ JS = r"""// SE FR Library — client UX
         status: result.success ? 'success' : (result.numberComponentsDeployed > 0 ? 'partial' : 'failed'),
         numTotal: result.numberComponentsTotal || list.length,
         numSuccess: result.numberComponentsDeployed || 0,
+        failures,
         sourcePage: window.location.pathname || '/',
       };
       track('deploy', deployTrack);
