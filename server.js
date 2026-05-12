@@ -361,26 +361,29 @@ ${types.join('\n')}
 }
 
 async function buildDeployZip(apiNames) {
+  // Metadata API REST `deployRequest` expects the package.xml at the zip root,
+  // NOT under an unpackaged/ folder (which is what `sf project deploy start`
+  // and the SOAP API expect). Hence the flat layout below.
   const out = new AdmZip();
   const lwcSet = new Set();
   const apexSet = new Set();
   for (const apiName of apiNames) {
     const entries = await loadComponentZip(apiName);
     for (const { relPath, data } of entries) {
-      // Avoid duplicating shared apex (e.g. SE_FR_AgendaController appears in
-      // both seFrMyTasks.zip and seFrMyEvents.zip — adm-zip would error).
+      // Dedupe shared apex (e.g. SE_FR_AgendaController appears in both
+      // seFrMyTasks.zip and seFrMyEvents.zip — adm-zip would error).
       if (relPath.startsWith('classes/')) {
         const file = relPath.split('/').pop();
-        if (out.getEntry(`unpackaged/${relPath}`)) continue;
+        if (out.getEntry(relPath)) continue;
         apexSet.add(file.replace(/\.cls(-meta\.xml)?$/, ''));
       } else if (relPath.startsWith('lwc/')) {
         const bundleName = relPath.split('/')[1];
         lwcSet.add(bundleName);
       }
-      out.addFile(`unpackaged/${relPath}`, data);
+      out.addFile(relPath, data);
     }
   }
-  out.addFile('unpackaged/package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet]), 'utf-8'));
+  out.addFile('package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet]), 'utf-8'));
   return out.toBuffer();
 }
 
