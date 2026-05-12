@@ -6,6 +6,7 @@ const fsp = require('node:fs/promises');
 const crypto = require('node:crypto');
 const AdmZip = require('adm-zip');
 const fastify = require('fastify');
+const { query, hashIp, getPool } = require('./db');
 
 // ───────────────────────────────────────────────────────────────────────────
 // Config
@@ -509,6 +510,154 @@ app.get('/api/deploy/status/:id', async (req, reply) => {
     componentFailures: (r.details && r.details.componentFailures) || [],
     raw: data,
   });
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// Tracking — fire-and-forget endpoints. We always return 200/204 so a DB hiccup
+// never breaks the UX; failures are logged server-side but invisible to the
+// client. All inserts are best-effort.
+
+const API_NAME_RE = /^seFr[A-Z][A-Za-z0-9]+$/;
+
+function safeApiName(s) {
+  return typeof s === 'string' && API_NAME_RE.test(s) ? s : null;
+}
+
+function clientIp(req) {
+  // Heroku sets X-Forwarded-For; trustProxy=true on fastify already parses it.
+  return req.ip || (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || null;
+}
+
+async function safeInsert(sql, params, op) {
+  if (!getPool()) return; // DATABASE_URL not configured — skip silently
+  try {
+    await query(sql, params);
+  } catch (err) {
+    // Don't surface to the client; log only.
+    console.error(`tracking insert failed (${op}):`, err.message);
+  }
+}
+
+app.post('/api/track/visit', async (req, reply) => {
+  reply.code(204).send();
+  const b = req.body || {};
+  await safeInsert(
+    `INSERT INTO visits (ip_hash, user_agent, referrer, lang, page) VALUES ($1, $2, $3, $4, $5)`,
+    [
+      hashIp(clientIp(req)),
+      (req.headers['user-agent'] || '').slice(0, 500),
+      typeof b.referrer === 'string' ? b.referrer.slice(0, 500) : null,
+      typeof b.lang === 'string' ? b.lang.slice(0, 8) : null,
+      typeof b.page === 'string' ? b.page.slice(0, 200) : null,
+    ],
+    'visit'
+  );
+});
+
+app.post('/api/track/download', async (req, reply) => {
+  reply.code(204).send();
+  const b = req.body || {};
+  const apiName = safeApiName(b.apiName);
+  if (!apiName) return;
+  await safeInsert(
+    `INSERT INTO downloads (component_api_name, recipe_id, source_page, ip_hash) VALUES ($1, $2, $3, $4)`,
+    [
+      apiName,
+      typeof b.recipeId === 'string' ? b.recipeId.slice(0, 60) : null,
+      typeof b.sourcePage === 'string' ? b.sourcePage.slice(0, 200) : null,
+      hashIp(clientIp(req)),
+    ],
+    'download'
+  );
+});
+
+app.post('/api/track/deploy', async (req, reply) => {
+  reply.code(204).send();
+  const b = req.body || {};
+  const components = Array.isArray(b.components)
+    ? b.components.filter(safeApiName).slice(0, 100)
+    : [];
+  if (!components.length) return;
+  await safeInsert(
+    `INSERT INTO deploys (
+       components_csv, recipe_id, target_host, sf_org_id, sf_user_id, sf_username,
+       deploy_request_id, status, num_total, num_success, source_page, ip_hash
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+    [
+      components.join(','),
+      typeof b.recipeId === 'string' ? b.recipeId.slice(0, 60) : null,
+      typeof b.targetHost === 'string' ? b.targetHost.slice(0, 200) : null,
+      typeof b.sfOrgId === 'string' ? b.sfOrgId.slice(0, 32) : null,
+      typeof b.sfUserId === 'string' ? b.sfUserId.slice(0, 32) : null,
+      typeof b.sfUsername === 'string' ? b.sfUsername.slice(0, 200) : null,
+      typeof b.deployRequestId === 'string' ? b.deployRequestId.slice(0, 32) : null,
+      typeof b.status === 'string' ? b.status.slice(0, 40) : null,
+      Number.isFinite(b.numTotal) ? b.numTotal : null,
+      Number.isFinite(b.numSuccess) ? b.numSuccess : null,
+      typeof b.sourcePage === 'string' ? b.sourcePage.slice(0, 200) : null,
+      hashIp(clientIp(req)),
+    ],
+    'deploy'
+  );
+});
+
+// Toggle like — { apiName, fingerprint, action: 'like' | 'unlike' } → { liked, count }
+app.post('/api/track/like', async (req, reply) => {
+  const b = req.body || {};
+  const apiName = safeApiName(b.apiName);
+  const fp = typeof b.fingerprint === 'string' ? b.fingerprint.slice(0, 64) : null;
+  if (!apiName || !fp) return reply.code(400).send({ error: 'missing_params' });
+  if (!getPool()) return reply.send({ liked: false, count: 0 });
+  try {
+    if (b.action === 'unlike') {
+      await query(
+        `DELETE FROM likes WHERE component_api_name = $1 AND fingerprint = $2`,
+        [apiName, fp]
+      );
+    } else {
+      // upsert via ON CONFLICT for idempotence on re-clicks
+      await query(
+        `INSERT INTO likes (component_api_name, fingerprint) VALUES ($1, $2)
+         ON CONFLICT (component_api_name, fingerprint) DO NOTHING`,
+        [apiName, fp]
+      );
+    }
+    const r = await query(
+      `SELECT COUNT(*)::int AS c FROM likes WHERE component_api_name = $1`,
+      [apiName]
+    );
+    const liked = b.action !== 'unlike';
+    return reply.send({ liked, count: r.rows[0].c });
+  } catch (err) {
+    req.log.error({ err: err.message }, 'like toggle failed');
+    return reply.code(500).send({ error: 'like_failed' });
+  }
+});
+
+// Aggregated counts for the components page — { components: { apiName: {downloads, likes} }, recipes: { id: count } }
+app.get('/api/track/counts', async (req, reply) => {
+  if (!getPool()) return reply.send({ components: {}, recipes: {} });
+  try {
+    const [dl, lk, rp] = await Promise.all([
+      query(`SELECT component_api_name, COUNT(*)::int AS n FROM downloads GROUP BY 1`),
+      query(`SELECT component_api_name, COUNT(*)::int AS n FROM likes GROUP BY 1`),
+      query(`SELECT recipe_id, COUNT(*)::int AS n FROM downloads WHERE recipe_id IS NOT NULL GROUP BY 1`),
+    ]);
+    const components = {};
+    for (const row of dl.rows) components[row.component_api_name] = { downloads: row.n, likes: 0 };
+    for (const row of lk.rows) {
+      components[row.component_api_name] = components[row.component_api_name] || { downloads: 0, likes: 0 };
+      components[row.component_api_name].likes = row.n;
+    }
+    const recipes = {};
+    for (const row of rp.rows) recipes[row.recipe_id] = row.n;
+    // Cache 60s on the CDN/edge — fresh enough for a dashboard, fast for the SE
+    reply.header('Cache-Control', 'public, max-age=60');
+    return reply.send({ components, recipes });
+  } catch (err) {
+    req.log.error({ err: err.message }, 'counts query failed');
+    return reply.send({ components: {}, recipes: {} });
+  }
 });
 
 // ───────────────────────────────────────────────────────────────────────────

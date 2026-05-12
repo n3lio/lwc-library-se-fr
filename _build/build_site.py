@@ -1109,7 +1109,39 @@ JS = r"""// SE FR Library — client UX
   const STORAGE_LANG = 'sefr.lang';
   const STORAGE_TRACKED = 'sefr.tracked.v1';
   const STORAGE_AUTH = 'sefr.auth.v1';
+  const STORAGE_FP = 'sefr.fp.v1';
   const PKCE_KEY = 'sefr.pkce.v1';
+
+  // ── Tracking — fire-and-forget POST to backend. Never blocks UX.
+  function track(path, body) {
+    const url = '/api/track/' + path;
+    const payload = JSON.stringify(body || {});
+    // Use sendBeacon when available so the request survives page navigation.
+    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      try {
+        const blob = new Blob([payload], { type: 'application/json' });
+        if (navigator.sendBeacon(url, blob)) return;
+      } catch (e) { /* fall through to fetch */ }
+    }
+    try {
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    } catch (e) { /* ignore */ }
+  }
+
+  // Stable per-browser fingerprint for like dedup (not used for identification).
+  function getFingerprint() {
+    let fp = localStorage.getItem(STORAGE_FP);
+    if (!fp) {
+      fp = (Math.random().toString(36).slice(2) + Date.now().toString(36)).slice(0, 24);
+      localStorage.setItem(STORAGE_FP, fp);
+    }
+    return fp;
+  }
 
   // ── i18n
   const T = {
@@ -1998,6 +2030,15 @@ JS = r"""// SE FR Library — client UX
   // Update connect button labels when the page loads (pre-existing localStorage state)
   setTimeout(renderConnectButtons, 0);
 
+  // Page-load visit tracking — fired once per pageview, fire-and-forget.
+  setTimeout(() => {
+    track('visit', {
+      page: window.location.pathname || '/',
+      referrer: document.referrer ? document.referrer.slice(0, 500) : null,
+      lang: getLang(),
+    });
+  }, 50);
+
   // ── Resolve the list of components to deploy/download from the click target.
   function resolveTargetComponents(target) {
     // Priority: data-bundle-members (CSV), then data-component-api (single).
@@ -2037,6 +2078,11 @@ JS = r"""// SE FR Library — client UX
       toast(t('download.toast'));
     }
     bumpDownloadCounters(target);
+    // Server-side tracking — one row per component, plus carry the recipe id
+    // when the download originated from a cookbook bundle.
+    const recipeId = target.dataset.bundleId || null;
+    const sourcePage = window.location.pathname || '/';
+    list.forEach(api => track('download', { apiName: api, recipeId, sourcePage }));
   }
 
   // ── Deploy success modal — persistent recap, doesn't auto-dismiss.
@@ -2232,6 +2278,22 @@ JS = r"""// SE FR Library — client UX
         }, 2000);
       });
       stickyToast.close();
+      // Server-side deploy tracking (success/partial/fail). Carries org metadata
+      // for the admin dashboard (which SE deployed what to which org).
+      const deployTrack = {
+        components: list,
+        recipeId: target.dataset.bundleId || null,
+        targetHost: host,
+        sfOrgId: a.orgId || null,
+        sfUserId: '', // not stored by auth state
+        sfUsername: a.username || a.name || null,
+        deployRequestId: data.deployRequestId || null,
+        status: result.success ? 'success' : (result.numberComponentsDeployed > 0 ? 'partial' : 'failed'),
+        numTotal: result.numberComponentsTotal || list.length,
+        numSuccess: result.numberComponentsDeployed || 0,
+        sourcePage: window.location.pathname || '/',
+      };
+      track('deploy', deployTrack);
       if (result.success) {
         openDeploySuccessModal(host, list, a.instanceUrl);
         bumpDownloadCounters(target);
