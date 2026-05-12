@@ -52,7 +52,7 @@ const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN || '';
 const NOTIFY_TO = process.env.NOTIFY_EMAIL || 'lionel.braun@salesforce.com';
 const NOTIFY_FROM = process.env.NOTIFY_FROM || (MAILGUN_DOMAIN ? `SE FR Library <noreply@${MAILGUN_DOMAIN}>` : '');
 
-async function sendNotificationEmail({ subject, text, html }) {
+async function sendNotificationEmail({ subject, text, html, replyTo }) {
   if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) return; // not configured
   try {
     const form = new URLSearchParams();
@@ -61,6 +61,11 @@ async function sendNotificationEmail({ subject, text, html }) {
     form.set('subject', subject);
     form.set('text', text || '');
     if (html) form.set('html', html);
+    // Reply-To = the actual SE so a reply from your inbox lands directly with them.
+    // Putting their email here (header) instead of in the body avoids Gmail
+    // 'espblock' (looks like spoofing when sandbox.mailgun.org sends a body
+    // claiming "from <name>@salesforce.com").
+    if (replyTo) form.set('h:Reply-To', replyTo);
     const auth = Buffer.from('api:' + MAILGUN_API_KEY).toString('base64');
     const resp = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
       method: 'POST',
@@ -79,7 +84,7 @@ async function sendNotificationEmail({ subject, text, html }) {
   }
 }
 
-async function sendNotificationEmailWithAttachment({ subject, text, html, attachment }) {
+async function sendNotificationEmailWithAttachment({ subject, text, html, attachment, replyTo }) {
   if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) return;
   try {
     // Build multipart/form-data manually so we can stream the binary attachment.
@@ -94,6 +99,7 @@ async function sendNotificationEmailWithAttachment({ subject, text, html, attach
     field('subject', subject);
     if (text) field('text', text);
     if (html) field('html', html);
+    if (replyTo) field('h:Reply-To', replyTo);
     if (attachment && attachment.buffer && attachment.buffer.length) {
       push(`--${boundary}\r\nContent-Disposition: form-data; name="attachment"; filename="${attachment.filename}"\r\nContent-Type: ${attachment.mime}\r\n\r\n`);
       lines.push(attachment.buffer);
@@ -156,9 +162,10 @@ function isAllowedSalesforceHost(hostname) {
 const app = fastify({ logger: true, trustProxy: true, bodyLimit: 5 * 1024 * 1024 });
 
 // Static — site on /, zips on /zips/
-// Multipart upload support (Submit Component form). Limits enforced per-route.
+// Multipart upload support (Submit Component form). We consume the stream
+// manually with req.parts() so attachFieldsToBody must be off (otherwise the
+// plugin auto-drains the body and req.parts() yields nothing).
 app.register(require('@fastify/multipart'), {
-  attachFieldsToBody: 'keyValues',
   limits: {
     fileSize: 5 * 1024 * 1024, // 5 MB hard cap per file
     files: 1,
@@ -765,24 +772,27 @@ app.post('/api/feedback', async (req, reply) => {
       [b.kind, subkind, fromEmail, subject, message, page]
     );
     // Fire-and-forget email notification (don't block the response on it).
+    // The submitter's email goes into Reply-To header, not the visible body —
+    // some ESPs (Gmail) block sandbox-domain mails that "look like spoofing"
+    // by mentioning a different domain in the body text.
     const kindLabel = b.kind === 'feedback'
       ? `feedback${subkind ? ` (${subkind})` : ''}`
       : b.kind;
-    const emailSubject = `[SE FR Lib] New ${kindLabel} from ${fromEmail}`;
+    const emailSubject = `[SE FR Lib] New ${kindLabel} via the site`;
     const emailHtml =
       `<h2>New ${escapeHtml(kindLabel)}</h2>` +
-      `<p><strong>From:</strong> ${escapeHtml(fromEmail)}</p>` +
       (subject ? `<p><strong>Subject:</strong> ${escapeHtml(subject)}</p>` : '') +
       (page ? `<p><strong>Page:</strong> <code>${escapeHtml(page)}</code></p>` : '') +
       `<p><strong>Message:</strong></p>` +
-      `<blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(message)}</blockquote>`;
+      `<blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(message)}</blockquote>` +
+      `<p style="font-size:12px;color:#888;margin-top:18px">Reply directly to this email to reach the sender.</p>`;
     const emailText =
       `New ${kindLabel}\n` +
-      `From: ${fromEmail}\n` +
       (subject ? `Subject: ${subject}\n` : '') +
       (page ? `Page: ${page}\n` : '') +
-      `\n${message}\n`;
-    sendNotificationEmail({ subject: emailSubject, text: emailText, html: emailHtml });
+      `\n${message}\n\n` +
+      `Reply directly to reach the sender.\n`;
+    sendNotificationEmail({ subject: emailSubject, text: emailText, html: emailHtml, replyTo: fromEmail });
     return reply.code(201).send({ ok: true });
   } catch (err) {
     req.log.error({ err: err.message }, 'feedback insert failed');
@@ -901,32 +911,36 @@ app.post('/api/submit-component', async (req, reply) => {
   }
 
   // Fire email notification with the attachment inline.
-  const subject = `[SE FR Lib] New component submission: ${componentName} (from ${authorEmail.trim().toLowerCase()})`;
+  // Submitter email is exposed via Reply-To header (not body) to avoid Gmail
+  // 'espblock' on sandbox.mailgun.org senders that look like spoofing.
+  const subject = `[SE FR Lib] New component submission: ${componentName}`;
   const htmlParts = [
     `<h2>New component submission</h2>`,
-    `<p><strong>Author:</strong> ${escapeHtml(authorName)} &lt;${escapeHtml(authorEmail)}&gt;</p>`,
+    `<p><strong>Author:</strong> ${escapeHtml(authorName)}</p>`,
     `<p><strong>Component:</strong> <code>${escapeHtml(componentName)}</code></p>`,
   ];
   if (description) htmlParts.push(`<p><strong>Description:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(description)}</blockquote>`);
   if (useCase)     htmlParts.push(`<p><strong>Use case:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(useCase)}</blockquote>`);
   if (notes)       htmlParts.push(`<p><strong>Notes:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(notes)}</blockquote>`);
   if (attachmentBuf) htmlParts.push(`<p><strong>Attachment:</strong> ${escapeHtml(attachmentName)} (${(attachmentBuf.length / 1024).toFixed(1)} KB)</p>`);
-  htmlParts.push(`<p style="font-size:12px;color:#888">Submission #${submissionId} — review on /admin</p>`);
+  htmlParts.push(`<p style="font-size:12px;color:#888;margin-top:18px">Submission #${submissionId} — review on /admin. Reply directly to this email to reach the author.</p>`);
 
   const text =
     `New component submission #${submissionId}\n` +
-    `Author: ${authorName} <${authorEmail}>\n` +
+    `Author: ${authorName}\n` +
     `Component: ${componentName}\n` +
     (description ? `\nDescription:\n${description}\n` : '') +
     (useCase ? `\nUse case:\n${useCase}\n` : '') +
     (notes ? `\nNotes:\n${notes}\n` : '') +
-    (attachmentBuf ? `\nAttachment: ${attachmentName} (${(attachmentBuf.length / 1024).toFixed(1)} KB) — see attached\n` : '');
+    (attachmentBuf ? `\nAttachment: ${attachmentName} (${(attachmentBuf.length / 1024).toFixed(1)} KB) — see attached\n` : '') +
+    `\nReply directly to reach the author.\n`;
 
   // Mailgun multipart send — fire-and-forget but we want the attachment.
   sendNotificationEmailWithAttachment({
     subject,
     text,
     html: htmlParts.join(''),
+    replyTo: authorEmail.trim().toLowerCase(),
     attachment: attachmentBuf
       ? { buffer: attachmentBuf, filename: attachmentName, mime: attachmentMime || 'application/octet-stream' }
       : null,
