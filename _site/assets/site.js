@@ -1324,9 +1324,14 @@
       cart.classList.toggle('hidden', selected.size === 0);
       const c = cart.querySelector('.cart-count strong');
       if (c) c.textContent = selected.size;
-      cart.dataset.selectedApis = Array.from(selected).join(',');
-      const deployBtn = cart.querySelector('[data-mock="deploy-bundle"]');
-      if (deployBtn) deployBtn.dataset.count = selected.size;
+      const csv = Array.from(selected).join(',');
+      cart.dataset.selectedApis = csv;
+      // Propagate the selected apiNames + count onto every action button so
+      // resolveTargetComponents() / bumpDownloadCounters() see them.
+      cart.querySelectorAll('[data-mock="deploy-bundle"], [data-mock="download"]').forEach(btn => {
+        btn.dataset.count = selected.size;
+        btn.dataset.bundleMembers = csv;
+      });
     }
     document.addEventListener('click', (e) => {
       const cb = e.target.closest('.card-checkbox');
