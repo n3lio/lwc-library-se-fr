@@ -820,6 +820,17 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .deploy-confirm-modal .dc-list li { padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
 .deploy-confirm-modal .dc-list li:last-child { border-bottom: none; }
 .deploy-confirm-modal .dc-list code { background: none; padding: 0; color: var(--text); }
+/* Deploy success modal — persistent recap */
+.deploy-success-modal { max-width: 540px; }
+.deploy-success-modal h3 { color: var(--success); }
+.deploy-success-modal .ds-list { list-style: none; padding: 0; margin: 14px 0 4px; max-height: 220px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--surface, #fafbff); }
+.deploy-success-modal .ds-list li { padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.deploy-success-modal .ds-list li:last-child { border-bottom: none; }
+.deploy-success-modal .ds-list code { background: none; padding: 0; color: var(--text); }
+.deploy-success-modal .ds-list:empty { display: none; }
+.deploy-success-modal .ds-ko { border-color: rgba(220, 38, 38, 0.30); background: rgba(220, 38, 38, 0.04); margin-top: 10px; }
+.deploy-success-modal .ds-ko li { color: #b91c1c; }
+.deploy-success-modal .ds-ko code { color: #b91c1c; font-weight: 600; }
 .btn-sm { padding: 6px 12px !important; font-size: 12px !important; }
 .connect-menu { position: absolute; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.14); z-index: 350; min-width: 220px; overflow: hidden; animation: sefr-menu-in 0.14s ease-out; }
 @keyframes sefr-menu-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }

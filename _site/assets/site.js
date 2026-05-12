@@ -84,6 +84,7 @@
       'agent.examples': 'Exemples : « un composant mobile-ready pour le Field Sales », « ceux qui utilisent l’Apex partagé », « les nouveautés de la v2.8 ».',
       'deploy.toast': '🚀 Déploiement lancé',
       'download.toast': '⬇ Téléchargement lancé',
+      'download.multi.allow': 'autorisez les téléchargements multiples si demandé',
       'connect.menu.disconnect': 'Se déconnecter',
       'connect.menu.signedinas': 'Connecté en tant que',
       'connect.choose.title': 'Connecter votre org de démo',
@@ -119,6 +120,12 @@
       'deploy.confirm.body.many': 'Déployer ces composants sur',
       'deploy.confirm.deploy': 'Déployer →',
       'deploy.confirm.cancel': 'Annuler',
+      'deploy.success.title': '✓ Déploiement réussi',
+      'deploy.success.title.partial': '⚠ Déploiement partiel',
+      'deploy.success.sub': '{count} composant(s) déployé(s) sur {host}.',
+      'deploy.success.sub.partial': '{deployed}/{total} composant(s) déployé(s) sur {host}. Quelques erreurs ci-dessous.',
+      'deploy.success.open': '↗ Ouvrir mon org',
+      'deploy.success.close': 'Fermer',
       'showcase.toast.failed': '✗ Showcase indisponible',
       'showcase.toast.popupblocked': '⚠ Popup bloquée — ouverture dans cet onglet…',
     },
@@ -198,6 +205,7 @@
       'agent.examples': 'Try: "a mobile-ready component for Field Sales", "what uses Apex shared classes", "what’s new in v2.8".',
       'deploy.toast': '🚀 Deploy launched',
       'download.toast': '⬇ Download started',
+      'download.multi.allow': 'allow multiple downloads if your browser asks',
       'connect.menu.disconnect': 'Disconnect',
       'connect.menu.signedinas': 'Signed in as',
       'connect.choose.title': 'Connect to your demo org',
@@ -233,6 +241,12 @@
       'deploy.confirm.body.many': 'Deploy these components to',
       'deploy.confirm.deploy': 'Deploy →',
       'deploy.confirm.cancel': 'Cancel',
+      'deploy.success.title': '✓ Deploy successful',
+      'deploy.success.title.partial': '⚠ Partial deploy',
+      'deploy.success.sub': '{count} component(s) deployed to {host}.',
+      'deploy.success.sub.partial': '{deployed}/{total} component(s) deployed to {host}. A few errors are listed below.',
+      'deploy.success.open': '↗ Open my org',
+      'deploy.success.close': 'Close',
       'showcase.toast.failed': '✗ Showcase unavailable',
       'showcase.toast.popupblocked': '⚠ Popup blocked — opening in this tab…',
     }
@@ -901,19 +915,122 @@
   function downloadComponents(target) {
     const list = resolveTargetComponents(target);
     if (!list.length) return;
+    // Stagger via hidden iframes — more reliable than chained <a>.click() in Safari/Firefox.
     list.forEach((api, i) => {
-      // Stagger downloads so the browser doesn't bundle them as one prompt.
       setTimeout(() => {
-        const a = document.createElement('a');
-        a.href = '/zips/' + api + '.zip';
-        a.download = api + '.zip';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }, i * 120);
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '/zips/' + api + '.zip';
+        document.body.appendChild(iframe);
+        // Clean up iframe after browser kicks the download
+        setTimeout(() => iframe.remove(), 4000);
+      }, i * 250);
     });
-    toast(t('download.toast') + ' (' + list.length + ')');
+    if (list.length > 1) {
+      toast(t('download.toast') + ' (' + list.length + ') — ' + t('download.multi.allow'), 5000);
+    } else {
+      toast(t('download.toast'));
+    }
     bumpDownloadCounters(target);
+  }
+
+  // ── Deploy success modal — persistent recap, doesn't auto-dismiss.
+  // Shows host, deployed components, link to open the org. Optional `partial`
+  // payload renders a warning section listing the failures.
+  function openDeploySuccessModal(host, list, instanceUrl, partial) {
+    let m = document.getElementById('deploy-success');
+    if (!m) {
+      m = document.createElement('div');
+      m.id = 'deploy-success';
+      m.className = 'modal-mask';
+      // Build DOM via createElement to avoid innerHTML lint warnings
+      const modal = document.createElement('div');
+      modal.className = 'modal deploy-success-modal';
+      const h = document.createElement('h3');
+      h.dataset.role = 'title';
+      modal.appendChild(h);
+      const sub = document.createElement('p');
+      sub.className = 'modal-sub';
+      sub.dataset.role = 'sub';
+      modal.appendChild(sub);
+      const ulOk = document.createElement('ul');
+      ulOk.className = 'ds-list ds-ok';
+      ulOk.dataset.role = 'ok';
+      modal.appendChild(ulOk);
+      const ulKo = document.createElement('ul');
+      ulKo.className = 'ds-list ds-ko';
+      ulKo.dataset.role = 'ko';
+      modal.appendChild(ulKo);
+      const actions = document.createElement('div');
+      actions.className = 'modal-actions';
+      const btnOpen = document.createElement('a');
+      btnOpen.className = 'btn btn-primary';
+      btnOpen.target = '_blank';
+      btnOpen.rel = 'noopener';
+      btnOpen.dataset.role = 'open';
+      btnOpen.dataset.i18n = 'deploy.success.open';
+      actions.appendChild(btnOpen);
+      const btnClose = document.createElement('button');
+      btnClose.type = 'button';
+      btnClose.className = 'btn btn-ghost';
+      btnClose.dataset.dsClose = '1';
+      btnClose.dataset.i18n = 'deploy.success.close';
+      actions.appendChild(btnClose);
+      modal.appendChild(actions);
+      m.appendChild(modal);
+      document.body.appendChild(m);
+      m.addEventListener('click', (ev) => {
+        if (ev.target === m || ev.target.matches('[data-ds-close]')) m.classList.remove('open');
+      });
+      applyLang();
+    }
+    const isPartial = partial && partial.partial;
+    const title = isPartial ? t('deploy.success.title.partial') : t('deploy.success.title');
+    m.querySelector('[data-role="title"]').textContent = title;
+    let subText = '';
+    if (isPartial) {
+      subText = t('deploy.success.sub.partial')
+        .replace('{deployed}', String(partial.deployed))
+        .replace('{total}', String(partial.total))
+        .replace('{host}', host);
+    } else {
+      subText = t('deploy.success.sub')
+        .replace('{count}', String(list.length))
+        .replace('{host}', host);
+    }
+    const sub = m.querySelector('[data-role="sub"]');
+    sub.textContent = '';
+    sub.appendChild(document.createTextNode(subText));
+    // OK list (deployed components)
+    const ulOk = m.querySelector('[data-role="ok"]');
+    ulOk.textContent = '';
+    list.forEach(api => {
+      const li = document.createElement('li');
+      const code = document.createElement('code');
+      code.textContent = api;
+      li.appendChild(code);
+      ulOk.appendChild(li);
+    });
+    // KO list (failures, only on partial)
+    const ulKo = m.querySelector('[data-role="ko"]');
+    ulKo.textContent = '';
+    if (isPartial && partial.failures && partial.failures.length) {
+      partial.failures.forEach(f => {
+        const li = document.createElement('li');
+        const code = document.createElement('code');
+        code.textContent = f.fullName || f.componentName || '?';
+        li.appendChild(code);
+        const span = document.createElement('span');
+        span.textContent = ' — ' + (f.problem || f.problemType || '');
+        li.appendChild(span);
+        ulKo.appendChild(li);
+      });
+    }
+    // Open button → instance home
+    const btnOpen = m.querySelector('[data-role="open"]');
+    const cleanInstance = (instanceUrl || '').replace(/\/+$/, '');
+    btnOpen.href = cleanInstance + '/lightning/page/home';
+    m.classList.add('open');
   }
 
   // ── Confirm-deploy modal — last chance to abort if the SE is signed in to the wrong org.
@@ -1011,14 +1128,20 @@
       });
       stickyToast.close();
       if (result.success) {
-        toast(t('deploy.toast.success') + ' ' + host + ' (' + list.length + ')', 5000);
+        openDeploySuccessModal(host, list, a.instanceUrl);
         bumpDownloadCounters(target);
       } else if (result.numberComponentsDeployed > 0) {
-        toast(t('deploy.toast.partial') + ' ' + (result.numberComponentsDeployed || 0) + '/' + (result.numberComponentsTotal || list.length), 6000);
+        const failures = result.componentFailures || [];
+        openDeploySuccessModal(host, list, a.instanceUrl, {
+          partial: true,
+          deployed: result.numberComponentsDeployed,
+          total: result.numberComponentsTotal || list.length,
+          failures
+        });
       } else {
         const fail = (result.componentFailures && result.componentFailures[0]) || {};
         const msg = fail.problem || fail.fullName || result.status || '';
-        toast(t('deploy.toast.failed') + (msg ? ' — ' + msg : ''), 6000);
+        toast(t('deploy.toast.failed') + (msg ? ' — ' + msg : ''), 8000);
       }
     } catch (err) {
       stickyToast.close();
