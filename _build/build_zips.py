@@ -369,6 +369,14 @@ def build_zip(comp: Component, dry_run: bool) -> Optional[Path]:
                 shutil.copy(cls.cls_path, classes_dir / cls.cls_path.name)
                 shutil.copy(cls.meta_path, classes_dir / cls.meta_path.name)
 
+        # Static resources — copy the whole staticresources/ folder if it exists.
+        # Convention: <comp>/staticresources/<resName>.png + <resName>.resource-meta.xml
+        # (small images / SVG bundled with the component, e.g. astro_agentforce).
+        sr_src = comp.folder / "staticresources"
+        if sr_src.is_dir():
+            sr_dst = force_app / "staticresources"
+            shutil.copytree(sr_src, sr_dst)
+
         # Zip it
         with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as zf:
             for path in staging.rglob("*"):

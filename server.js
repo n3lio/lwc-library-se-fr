@@ -334,7 +334,8 @@ async function loadComponentZip(apiName) {
   for (const e of zip.getEntries()) {
     if (e.isDirectory) continue;
     const name = e.entryName;
-    const m = name.match(/^[^/]+\/force-app\/main\/default\/(lwc\/[^/]+\/[^/]+|classes\/[^/]+)$/);
+    // Match LWC bundle, Apex class, and Static Resource files
+    const m = name.match(/^[^/]+\/force-app\/main\/default\/(lwc\/[^/]+\/[^/]+|classes\/[^/]+|staticresources\/[^/]+)$/);
     if (!m) continue;
     entries.push({ relPath: m[1], data: e.getData() });
   }
@@ -342,16 +343,15 @@ async function loadComponentZip(apiName) {
   return entries;
 }
 
-function buildPackageXml(lwcNames, apexNames) {
-  const lwc = [...new Set(lwcNames)].sort().map(n => `    <members>${n}</members>`).join('\n');
-  const apex = [...new Set(apexNames)].sort().map(n => `    <members>${n}</members>`).join('\n');
+function buildPackageXml(lwcNames, apexNames, staticResourceNames) {
+  const renderType = (members, name) => {
+    const lines = [...new Set(members)].sort().map(n => `    <members>${n}</members>`).join('\n');
+    return `  <types>\n${lines}\n    <name>${name}</name>\n  </types>`;
+  };
   const types = [];
-  if (lwcNames.length) {
-    types.push(`  <types>\n${lwc}\n    <name>LightningComponentBundle</name>\n  </types>`);
-  }
-  if (apexNames.length) {
-    types.push(`  <types>\n${apex}\n    <name>ApexClass</name>\n  </types>`);
-  }
+  if (lwcNames.length) types.push(renderType(lwcNames, 'LightningComponentBundle'));
+  if (apexNames.length) types.push(renderType(apexNames, 'ApexClass'));
+  if (staticResourceNames && staticResourceNames.length) types.push(renderType(staticResourceNames, 'StaticResource'));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 ${types.join('\n')}
@@ -367,10 +367,11 @@ async function buildDeployZip(apiNames) {
   const out = new AdmZip();
   const lwcSet = new Set();
   const apexSet = new Set();
+  const staticResourceSet = new Set();
   for (const apiName of apiNames) {
     const entries = await loadComponentZip(apiName);
     for (const { relPath, data } of entries) {
-      // Dedupe shared apex (e.g. SE_FR_AgendaController appears in both
+      // Dedupe shared files (e.g. SE_FR_AgendaController appears in both
       // seFrMyTasks.zip and seFrMyEvents.zip — adm-zip would error).
       if (relPath.startsWith('classes/')) {
         const file = relPath.split('/').pop();
@@ -379,11 +380,15 @@ async function buildDeployZip(apiNames) {
       } else if (relPath.startsWith('lwc/')) {
         const bundleName = relPath.split('/')[1];
         lwcSet.add(bundleName);
+      } else if (relPath.startsWith('staticresources/')) {
+        if (out.getEntry(relPath)) continue;
+        const file = relPath.split('/').pop();
+        staticResourceSet.add(file.replace(/\.resource-meta\.xml$/, '').replace(/\.[^./]+$/, ''));
       }
       out.addFile(relPath, data);
     }
   }
-  out.addFile('package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet]), 'utf-8'));
+  out.addFile('package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet], [...staticResourceSet]), 'utf-8'));
   return out.toBuffer();
 }
 
