@@ -44,6 +44,48 @@ const SF_SHOWCASE_LANDING = process.env.SF_SHOWCASE_LANDING || '/lightning/page/
 // later). Map<dateString, count>.
 const SHOWCASE_CLICKS = new Map();
 
+// ─── Mailgun (notification emails) ──────────────────────────────────────────
+// Heroku addon sets MAILGUN_API_KEY + MAILGUN_DOMAIN. Best-effort — DB inserts
+// never fail because of an email hiccup.
+const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY || '';
+const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN || '';
+const NOTIFY_TO = process.env.NOTIFY_EMAIL || 'lionel.braun@salesforce.com';
+const NOTIFY_FROM = process.env.NOTIFY_FROM || (MAILGUN_DOMAIN ? `SE FR Library <noreply@${MAILGUN_DOMAIN}>` : '');
+
+async function sendNotificationEmail({ subject, text, html }) {
+  if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN) return; // not configured
+  try {
+    const form = new URLSearchParams();
+    form.set('from', NOTIFY_FROM);
+    form.set('to', NOTIFY_TO);
+    form.set('subject', subject);
+    form.set('text', text || '');
+    if (html) form.set('html', html);
+    const auth = Buffer.from('api:' + MAILGUN_API_KEY).toString('base64');
+    const resp = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + auth,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: form,
+    });
+    if (!resp.ok) {
+      const body = await resp.text().catch(() => '');
+      console.error('Mailgun send failed:', resp.status, body.slice(0, 300));
+    }
+  } catch (err) {
+    console.error('Mailgun send threw:', err.message);
+  }
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 // Salesforce Metadata API version used for package.xml + deployRequest endpoint
 const SF_API_VERSION = '62.0';
 
@@ -663,18 +705,33 @@ app.post('/api/feedback', async (req, reply) => {
     return reply.code(503).send({ error: 'database_not_configured' });
   }
   try {
+    const fromEmail = b.email.trim().toLowerCase();
+    const subject = safeStr(b.subject, 200);
+    const page = safeStr(b.page, 200);
     await query(
       `INSERT INTO feedbacks (kind, subkind, email, subject, message, page)
        VALUES ($1, $2, $3, $4, $5, $6)`,
-      [
-        b.kind,
-        subkind,
-        b.email.trim().toLowerCase(),
-        safeStr(b.subject, 200),
-        message,
-        safeStr(b.page, 200),
-      ]
+      [b.kind, subkind, fromEmail, subject, message, page]
     );
+    // Fire-and-forget email notification (don't block the response on it).
+    const kindLabel = b.kind === 'feedback'
+      ? `feedback${subkind ? ` (${subkind})` : ''}`
+      : b.kind;
+    const emailSubject = `[SE FR Lib] New ${kindLabel} from ${fromEmail}`;
+    const emailHtml =
+      `<h2>New ${escapeHtml(kindLabel)}</h2>` +
+      `<p><strong>From:</strong> ${escapeHtml(fromEmail)}</p>` +
+      (subject ? `<p><strong>Subject:</strong> ${escapeHtml(subject)}</p>` : '') +
+      (page ? `<p><strong>Page:</strong> <code>${escapeHtml(page)}</code></p>` : '') +
+      `<p><strong>Message:</strong></p>` +
+      `<blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(message)}</blockquote>`;
+    const emailText =
+      `New ${kindLabel}\n` +
+      `From: ${fromEmail}\n` +
+      (subject ? `Subject: ${subject}\n` : '') +
+      (page ? `Page: ${page}\n` : '') +
+      `\n${message}\n`;
+    sendNotificationEmail({ subject: emailSubject, text: emailText, html: emailHtml });
     return reply.code(201).send({ ok: true });
   } catch (err) {
     req.log.error({ err: err.message }, 'feedback insert failed');
