@@ -910,9 +910,19 @@ app.post('/api/submit-component', async (req, reply) => {
     return reply.code(500).send({ error: 'insert_failed' });
   }
 
-  // Fire email notification with the attachment inline.
-  // Submitter email is exposed via Reply-To header (not body) to avoid Gmail
-  // 'espblock' on sandbox.mailgun.org senders that look like spoofing.
+  // Fire email notification — NO attachment in the mail, just a download link.
+  // Gmail blocks sandbox.mailgun.org messages that carry binary attachments
+  // (espblock) even when the rest of the content is fine. The attachment
+  // stays in the DB (BYTEA) and is fetched via /api/admin/submission/:id/file
+  // by the admin or directly here via a token-protected URL for V1.
+  const downloadToken = attachmentBuf
+    ? crypto.createHmac('sha256', SF_CLIENT_SECRET || 'sefr-default')
+        .update(`submission:${submissionId}`)
+        .digest('hex').slice(0, 32)
+    : null;
+  const downloadUrl = attachmentBuf
+    ? `${PUBLIC_BASE_URL}/api/submissions/${submissionId}/file?token=${downloadToken}`
+    : null;
   const subject = `[SE FR Lib] New component submission: ${componentName}`;
   const htmlParts = [
     `<h2>New component submission</h2>`,
@@ -922,7 +932,9 @@ app.post('/api/submit-component', async (req, reply) => {
   if (description) htmlParts.push(`<p><strong>Description:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(description)}</blockquote>`);
   if (useCase)     htmlParts.push(`<p><strong>Use case:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(useCase)}</blockquote>`);
   if (notes)       htmlParts.push(`<p><strong>Notes:</strong></p><blockquote style="border-left:3px solid #6c63ff;padding:8px 14px;margin:0;background:#fafbff;white-space:pre-wrap">${escapeHtml(notes)}</blockquote>`);
-  if (attachmentBuf) htmlParts.push(`<p><strong>Attachment:</strong> ${escapeHtml(attachmentName)} (${(attachmentBuf.length / 1024).toFixed(1)} KB)</p>`);
+  if (attachmentBuf) {
+    htmlParts.push(`<p><strong>Attachment:</strong> ${escapeHtml(attachmentName)} (${(attachmentBuf.length / 1024).toFixed(1)} KB) — <a href="${downloadUrl}" style="color:#6c63ff;font-weight:600">Download</a></p>`);
+  }
   htmlParts.push(`<p style="font-size:12px;color:#888;margin-top:18px">Submission #${submissionId} — review on /admin. Reply directly to this email to reach the author.</p>`);
 
   const text =
@@ -932,21 +944,50 @@ app.post('/api/submit-component', async (req, reply) => {
     (description ? `\nDescription:\n${description}\n` : '') +
     (useCase ? `\nUse case:\n${useCase}\n` : '') +
     (notes ? `\nNotes:\n${notes}\n` : '') +
-    (attachmentBuf ? `\nAttachment: ${attachmentName} (${(attachmentBuf.length / 1024).toFixed(1)} KB) — see attached\n` : '') +
+    (attachmentBuf ? `\nAttachment: ${attachmentName} (${(attachmentBuf.length / 1024).toFixed(1)} KB)\nDownload: ${downloadUrl}\n` : '') +
     `\nReply directly to reach the author.\n`;
 
-  // Mailgun multipart send — fire-and-forget but we want the attachment.
-  sendNotificationEmailWithAttachment({
+  // Mailgun simple send (no attachment) — far more reliable through Gmail.
+  sendNotificationEmail({
     subject,
     text,
     html: htmlParts.join(''),
     replyTo: authorEmail.trim().toLowerCase(),
-    attachment: attachmentBuf
-      ? { buffer: attachmentBuf, filename: attachmentName, mime: attachmentMime || 'application/octet-stream' }
-      : null,
   });
 
   return reply.code(201).send({ ok: true, id: String(submissionId) });
+});
+
+// Submission attachment download — token-protected for V1 (HMAC of the id).
+// Phase D admin will reuse this endpoint with proper session auth.
+app.get('/api/submissions/:id/file', async (req, reply) => {
+  const id = parseInt(req.params.id, 10);
+  const token = req.query && req.query.token;
+  if (!Number.isFinite(id) || !token) return reply.code(400).send({ error: 'invalid_request' });
+  const expected = crypto.createHmac('sha256', SF_CLIENT_SECRET || 'sefr-default')
+    .update(`submission:${id}`)
+    .digest('hex').slice(0, 32);
+  if (token !== expected) return reply.code(403).send({ error: 'invalid_token' });
+  if (!getPool()) return reply.code(503).send({ error: 'database_not_configured' });
+  try {
+    const r = await query(
+      `SELECT attachment_blob, attachment_filename, attachment_mime
+       FROM submissions WHERE id = $1`,
+      [id]
+    );
+    if (!r.rows.length) return reply.code(404).send({ error: 'not_found' });
+    const row = r.rows[0];
+    if (!row.attachment_blob) return reply.code(404).send({ error: 'no_attachment' });
+    const filename = (row.attachment_filename || `submission-${id}`).replace(/[^A-Za-z0-9._-]/g, '_');
+    reply
+      .type(row.attachment_mime || 'application/octet-stream')
+      .header('Content-Disposition', `attachment; filename="${filename}"`)
+      .header('Cache-Control', 'private, no-store')
+      .send(row.attachment_blob);
+  } catch (err) {
+    req.log.error({ err: err.message }, 'submission file fetch failed');
+    return reply.code(500).send({ error: 'fetch_failed' });
+  }
 });
 
 // Aggregated counts for the components page — { components: { apiName: {downloads, likes} }, recipes: { id: count } }
