@@ -2050,6 +2050,32 @@ JS = r"""// SE FR Library — client UX
   // Update connect button labels when the page loads (pre-existing localStorage state)
   setTimeout(renderConnectButtons, 0);
 
+  // Featured override: if /admin has saved a custom featured list, swap the
+  // default 4 cards for the configured ones (pulled from the hidden pool).
+  // Default-rendered Python cards stay if the API is empty or unreachable.
+  (function applyFeaturedOverride() {
+    const grid = document.getElementById('featured-grid');
+    const pool = document.getElementById('featured-pool');
+    if (!grid || !pool) return;
+    fetch('/api/site/featured').then(r => r.ok ? r.json() : null).then(data => {
+      if (!data || !Array.isArray(data.apiNames) || !data.apiNames.length) return;
+      // Build new card list by cloning from pool. Skip apiNames not in the pool.
+      const newCards = [];
+      data.apiNames.forEach(api => {
+        const wrapper = pool.querySelector('[data-pool-card][data-api="' + api + '"]');
+        if (!wrapper) return;
+        const card = wrapper.firstElementChild;
+        if (card) newCards.push(card.cloneNode(true));
+      });
+      if (!newCards.length) return;
+      grid.textContent = '';
+      newCards.forEach(c => grid.appendChild(c));
+      // Re-apply i18n + counters on the freshly inserted nodes.
+      if (typeof applyLang === 'function') applyLang();
+      if (typeof applyAllCounts === 'function') applyAllCounts();
+    }).catch(() => {});
+  })();
+
   // Page-load visit tracking — fired once per pageview, fire-and-forget.
   setTimeout(() => {
     track('visit', {
@@ -3229,8 +3255,8 @@ def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: boo
 # PAGE: index.html
 # ----------------------------------------------------------------------
 def render_index(components: list[dict], recipes: list[dict], n_components: int, search_index: list[dict]) -> str:
-    # Featured = a hand-picked, fixed list of 4 components shown on the home.
-    # Curated for visual diversity (rich card, timeline, AI panel, calendar).
+    # Featured = hand-picked default. Admins can override via /admin → site_settings.
+    # Default kicks in if admin hasn't set anything (or DB unreachable).
     HOME_FEATURED = ["seFrContactCard", "seFrActivityFeed", "seFrSmartRecommendations", "seFrMyEvents"]
     by_api_pre = {c["apiName"]: c for c in components}
     featured = [by_api_pre[a] for a in HOME_FEATURED if a in by_api_pre]
@@ -3238,6 +3264,12 @@ def render_index(components: list[dict], recipes: list[dict], n_components: int,
     by_api = by_api_pre
 
     featured_cards = "\n".join(card_html(c, base="") for c in featured)
+    # Hidden pool of all components — JS swaps the visible 4 against this pool
+    # if /api/site/featured returns a different list.
+    all_cards_pool = "\n".join(
+        f'<div data-pool-card data-api="{c["apiName"]}" hidden>{card_html(c, base="")}</div>'
+        for c in sorted(components, key=lambda x: x["apiName"])
+    )
 
     def pair_attr(fr: str, en: str) -> str:
         s = json.dumps({"fr": fr, "en": en}, ensure_ascii=False).replace("'", "&#39;")
@@ -3295,8 +3327,13 @@ def render_index(components: list[dict], recipes: list[dict], n_components: int,
       </div>
       <a href="components.html" class="see-all" {pair_attr(f'Voir les {n_components} →', f'See all {n_components} →')}>Voir les {n_components} →</a>
     </div>
-    <div class="grid">
+    <div class="grid" id="featured-grid">
 {featured_cards}
+    </div>
+    <!-- Hidden pool of every component card; JS pulls from here when admin
+         has configured a custom featured list via /api/site/featured. -->
+    <div id="featured-pool" hidden aria-hidden="true">
+{all_cards_pool}
     </div>
   </div>
 </section>

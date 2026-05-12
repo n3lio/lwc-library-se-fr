@@ -158,6 +158,16 @@ details pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:6px;font
 @media(max-width:900px){.charts{grid-template-columns:1fr}}
 .chart-wrap{position:relative;height:240px}
 .muted{color:#94a3b8}
+.featured-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:900px){.featured-grid{grid-template-columns:repeat(2,1fr)}}
+.featured-slot{display:flex;flex-direction:column;gap:6px}
+.featured-slot label{font-size:11.5px;color:#64748b;text-transform:uppercase;letter-spacing:0.04em;font-weight:600}
+.featured-slot select{width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:#fff;cursor:pointer}
+.featured-slot select:focus{border-color:#6c63ff;box-shadow:0 0 0 2px rgba(108,99,255,0.15)}
+.featured-actions{display:flex;gap:10px;align-items:center}
+.featured-status{font-size:12px;color:#64748b}
+.featured-status.ok{color:#166534}
+.featured-status.err{color:#b91c1c}
 </style></head>
 <body>
 <header>
@@ -181,6 +191,12 @@ details pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:6px;font
     <div><div class="subtitle">Visites — 30 derniers jours</div><div class="chart-wrap"><canvas id="chartVisits"></canvas></div></div>
     <div><div class="subtitle">Deploys — 30 derniers jours</div><div class="chart-wrap"><canvas id="chartDeploys"></canvas></div></div>
   </div>
+</section>
+
+<section>
+  <h2>⭐ Composants à la une (homepage)</h2>
+  <p class="subtitle">Choisissez jusqu'à 8 composants affichés sur la home. Vide = on retombe sur la sélection par défaut codée en dur.</p>
+  <div id="featuredEditor"><div class="empty">Loading…</div></div>
 </section>
 
 <section>
@@ -333,9 +349,55 @@ async function setSbStatus(id, status) {
 window.setFbStatus = setFbStatus;
 window.setSbStatus = setSbStatus;
 
+async function loadFeatured() {
+  const data = await fetchJson('/api/admin/featured');
+  const host = document.getElementById('featuredEditor');
+  const SLOTS = 4;
+  const selected = (data.selected && data.selected.length) ? data.selected : [];
+  const opts = ['<option value="">— vide —</option>'].concat(
+    data.available.map(a => '<option value="' + a + '">' + a + '</option>')
+  ).join('');
+  let html = '<div class="featured-grid">';
+  for (let i = 0; i < SLOTS; i++) {
+    const cur = selected[i] || '';
+    html += '<div class="featured-slot"><label>Slot ' + (i + 1) + '</label><select data-slot="' + i + '">' + opts + '</select></div>';
+  }
+  html += '</div><div class="featured-actions"><button class="btn-mini primary" id="featuredSave">Enregistrer</button><button class="btn-mini" id="featuredReset">Vider tout</button><span class="featured-status" id="featuredStatus"></span></div>';
+  host.innerHTML = html;
+  // Pre-select current values
+  host.querySelectorAll('select[data-slot]').forEach((sel, i) => {
+    if (selected[i]) sel.value = selected[i];
+  });
+  document.getElementById('featuredSave').addEventListener('click', async () => {
+    const apiNames = Array.from(host.querySelectorAll('select[data-slot]'))
+      .map(s => s.value.trim())
+      .filter(Boolean);
+    const status = document.getElementById('featuredStatus');
+    status.className = 'featured-status';
+    status.textContent = 'Enregistrement…';
+    try {
+      const r = await fetch('/api/admin/featured', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiNames }),
+      });
+      if (!r.ok) throw new Error('http ' + r.status);
+      const j = await r.json();
+      status.textContent = '✓ Enregistré (' + j.count + ' composant(s)). Effet immédiat sur la home.';
+      status.className = 'featured-status ok';
+    } catch (e) {
+      status.textContent = '✗ Erreur d\\'enregistrement.';
+      status.className = 'featured-status err';
+    }
+  });
+  document.getElementById('featuredReset').addEventListener('click', () => {
+    host.querySelectorAll('select[data-slot]').forEach(s => { s.value = ''; });
+  });
+}
+
 (async () => {
   try {
-    await Promise.all([loadKpis(), loadTop(), loadDeploysBySE(), loadDeploys(), loadInbox()]);
+    await Promise.all([loadKpis(), loadFeatured(), loadTop(), loadDeploysBySE(), loadDeploys(), loadInbox()]);
   } catch (e) { console.error(e); }
 })();
 </script>
@@ -552,6 +614,62 @@ function register(app) {
       viewedAt: row.viewed_at,
       fileToken: row.attachment_filename ? submissionFileToken(row.id) : null,
     })));
+  });
+
+  // ─── Featured components (home page) ──────────────────────────────────────
+  // Stored in site_settings(key='featured_components').value as { apiNames: [...] }
+  // Public read: /api/site/featured (no auth, 60s cache).
+  // Admin write: /api/admin/featured (gated).
+
+  app.get('/api/admin/featured', async (req, reply) => {
+    if (!requireAuth(req, reply)) return;
+    if (!getPool()) return reply.send({ selected: [], available: [] });
+    // Selected = current admin-saved list, falls back to empty (frontend default kicks in)
+    const sel = await query(`SELECT value FROM site_settings WHERE key = 'featured_components'`);
+    const selected = (sel.rows[0] && sel.rows[0].value && sel.rows[0].value.apiNames) || [];
+    // Available = all known component apiNames (read from manifest at build time
+    // and inlined here, to avoid coupling admin.js to the file system at runtime).
+    // We snapshot the current set of seFr* zips on disk — it's the same source
+    // of truth used by /api/deploy.
+    const fs = require('node:fs');
+    const path = require('node:path');
+    const ZIPS = path.join(__dirname, '_zips');
+    let available = [];
+    try {
+      available = fs.readdirSync(ZIPS)
+        .filter(f => /^seFr[A-Z][A-Za-z0-9]+\.zip$/.test(f))
+        .map(f => f.replace(/\.zip$/, ''))
+        .sort();
+    } catch { /* zips dir missing — empty list */ }
+    reply.send({ selected, available });
+  });
+
+  app.post('/api/admin/featured', async (req, reply) => {
+    if (!requireAuth(req, reply)) return;
+    if (!getPool()) return reply.code(503).send({ error: 'database_not_configured' });
+    const apiNames = Array.isArray(req.body && req.body.apiNames) ? req.body.apiNames : null;
+    if (!apiNames) return reply.code(400).send({ error: 'invalid_payload' });
+    // Validate: each is a valid seFr* apiName, max 8 entries
+    const valid = apiNames.filter(s => typeof s === 'string' && /^seFr[A-Z][A-Za-z0-9]+$/.test(s)).slice(0, 8);
+    await query(
+      `INSERT INTO site_settings (key, value, updated_at, updated_by)
+       VALUES ('featured_components', $1::jsonb, NOW(), 'admin')
+       ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW(), updated_by = 'admin'`,
+      [JSON.stringify({ apiNames: valid })]
+    );
+    reply.send({ ok: true, count: valid.length });
+  });
+
+  // Public — used by the home page to override the hardcoded default
+  app.get('/api/site/featured', async (req, reply) => {
+    if (!getPool()) return reply.send({ apiNames: [] });
+    try {
+      const r = await query(`SELECT value FROM site_settings WHERE key = 'featured_components'`);
+      const list = (r.rows[0] && r.rows[0].value && r.rows[0].value.apiNames) || [];
+      reply.header('Cache-Control', 'public, max-age=60').send({ apiNames: list });
+    } catch (err) {
+      reply.send({ apiNames: [] });
+    }
   });
 
   app.post('/api/admin/submissions/:id/status', async (req, reply) => {

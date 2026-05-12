@@ -924,6 +924,32 @@
   // Update connect button labels when the page loads (pre-existing localStorage state)
   setTimeout(renderConnectButtons, 0);
 
+  // Featured override: if /admin has saved a custom featured list, swap the
+  // default 4 cards for the configured ones (pulled from the hidden pool).
+  // Default-rendered Python cards stay if the API is empty or unreachable.
+  (function applyFeaturedOverride() {
+    const grid = document.getElementById('featured-grid');
+    const pool = document.getElementById('featured-pool');
+    if (!grid || !pool) return;
+    fetch('/api/site/featured').then(r => r.ok ? r.json() : null).then(data => {
+      if (!data || !Array.isArray(data.apiNames) || !data.apiNames.length) return;
+      // Build new card list by cloning from pool. Skip apiNames not in the pool.
+      const newCards = [];
+      data.apiNames.forEach(api => {
+        const wrapper = pool.querySelector('[data-pool-card][data-api="' + api + '"]');
+        if (!wrapper) return;
+        const card = wrapper.firstElementChild;
+        if (card) newCards.push(card.cloneNode(true));
+      });
+      if (!newCards.length) return;
+      grid.textContent = '';
+      newCards.forEach(c => grid.appendChild(c));
+      // Re-apply i18n + counters on the freshly inserted nodes.
+      if (typeof applyLang === 'function') applyLang();
+      if (typeof applyAllCounts === 'function') applyAllCounts();
+    }).catch(() => {});
+  })();
+
   // Page-load visit tracking — fired once per pageview, fire-and-forget.
   setTimeout(() => {
     track('visit', {
