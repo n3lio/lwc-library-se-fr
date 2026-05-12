@@ -853,6 +853,11 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .release-badge.roadmap { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 100px; background: linear-gradient(135deg, rgba(108, 99, 255, 0.18), rgba(59, 130, 246, 0.14)); color: var(--brand-deep); border: 1px solid rgba(108, 99, 255, 0.35); font-size: 11.5px; font-weight: 700; letter-spacing: 0.02em; }
 .release.roadmap { padding-left: 14px; border-left: 3px dashed rgba(108, 99, 255, 0.40); }
 .release.roadmap h2 { color: var(--brand-deep); }
+.release-body { font-size: 13.5px; color: var(--text-soft); margin-bottom: 10px; }
+.release-body p { margin-bottom: 8px; }
+.release-bullets { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.release-bullets li { padding: 10px 14px 10px 14px; border-radius: 8px; background: rgba(108, 99, 255, 0.04); border: 1px solid rgba(108, 99, 255, 0.10); line-height: 1.5; }
+.release-bullets strong { color: var(--text); font-weight: 600; }
 .release-date { font-size: 12.5px; color: var(--text-muted); }
 .release h2 { font-size: 19px; margin-bottom: 8px; }
 .release p { font-size: 13.5px; color: var(--text-soft); margin-bottom: 10px; }
@@ -4092,13 +4097,15 @@ def render_whats_new(releases: list[dict], n_components: int, search_index: list
             date_html = ''
             if r.get("date"):
                 date_html = f'<span class="release-date">{r.get("date","")}</span>'
+            # Use a div for the body so multi-element HTML (e.g. roadmap <ul>) is valid;
+            # data-i18n-pair sets innerHTML so the markup survives the FR/EN switch.
             items.append(f"""
     <div class="release{cls_extra}">
       <div class="release-meta">
         {badge_html}{version_html}{date_html}
       </div>
       <h2 {pair_attr(title_fr, title_en)}>{title_fr}</h2>
-      <p {pair_attr(body_fr, body_en)}>{body_fr}</p>
+      <div class="release-body" {pair_attr(body_fr, body_en)}>{body_fr}</div>
     </div>""")
         timeline = "".join(items)
 
