@@ -381,9 +381,23 @@ async function buildDeployZip(apiNames) {
         const bundleName = relPath.split('/')[1];
         lwcSet.add(bundleName);
       } else if (relPath.startsWith('staticresources/')) {
-        if (out.getEntry(relPath)) continue;
         const file = relPath.split('/').pop();
-        staticResourceSet.add(file.replace(/\.resource-meta\.xml$/, '').replace(/\.[^./]+$/, ''));
+        // Metadata API REST expects the binary at <name>.resource (NOT <name>.png).
+        // The XML companion stays as <name>.resource-meta.xml. SFDX format uses
+        // the original extension (e.g. .png) in source — we rewrite on the fly.
+        let writePath = relPath;
+        if (file.endsWith('.resource-meta.xml')) {
+          // metadata file: keep as-is
+          staticResourceSet.add(file.replace(/\.resource-meta\.xml$/, ''));
+        } else {
+          // binary file: rename to <name>.resource
+          const baseName = file.replace(/\.[^./]+$/, '');
+          writePath = `staticresources/${baseName}.resource`;
+          staticResourceSet.add(baseName);
+        }
+        if (out.getEntry(writePath)) continue;
+        out.addFile(writePath, data);
+        continue;
       }
       out.addFile(relPath, data);
     }
