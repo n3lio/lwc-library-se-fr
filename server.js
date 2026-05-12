@@ -426,7 +426,9 @@ app.post('/api/deploy', async (req, reply) => {
       ignoreWarnings: false,
       performRetrieve: false,
       purgeOnDelete: false,
-      rollbackOnError: true,
+      // Best-effort partial deploy: if 1 component fails, the others still
+      // land. The frontend success modal already lists OK + failures.
+      rollbackOnError: false,
       runTests: [],
       singlePackage: true,
       testLevel: 'NoTestRun',
