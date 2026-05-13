@@ -736,6 +736,29 @@ app.post('/api/track/deploy', async (req, reply) => {
   );
 });
 
+// Capture the consent-and-intent form (email + use case + opp/customer)
+// shown before any download/deploy. Stored in `tracking_intents` so the
+// admin dashboard can list who's exploring and for what — even when the
+// SE drops off before deploying.
+app.post('/api/track/intent', async (req, reply) => {
+  reply.code(204).send();
+  const b = req.body || {};
+  const email = typeof b.email === 'string' ? b.email.trim().slice(0, 200) : null;
+  if (!email) return;
+  await safeInsert(
+    `INSERT INTO tracking_intents (email, reason, opp_or_customer, source_page, ip_hash)
+     VALUES ($1, $2, $3, $4, $5)`,
+    [
+      email,
+      typeof b.reason === 'string' ? b.reason.trim().slice(0, 1000) : null,
+      typeof b.opp === 'string' ? b.opp.trim().slice(0, 200) : null,
+      typeof b.sourcePage === 'string' ? b.sourcePage.slice(0, 200) : null,
+      hashIp(clientIp(req)),
+    ],
+    'intent'
+  );
+});
+
 // Toggle like — { apiName, fingerprint, action: 'like' | 'unlike' } → { liked, count }
 app.post('/api/track/like', async (req, reply) => {
   const b = req.body || {};

@@ -215,6 +215,12 @@ details pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:6px;font
 </section>
 
 <section>
+  <h2>🎯 Intentions / cas d'usage</h2>
+  <p class="subtitle">Email + raison + opp/client saisis par les SE dans la modale de tracking (avant download/deploy). Capturé même quand le SE abandonne avant le deploy.</p>
+  <table id="intents"><thead><tr><th>When</th><th>Email</th><th>Cas d'usage</th><th>Opp / Client</th><th>Page</th></tr></thead><tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table>
+</section>
+
+<section>
   <h2>🔍 Deploys (détail + erreurs)</h2>
   <div class="tabs">
     <button class="tab-btn active" data-tab="dpAll">All</button>
@@ -309,6 +315,21 @@ async function loadDeploysBySE() {
   tbody.innerHTML = d.map(row => '<tr><td>' + (row.username || '<span class="muted">—</span>') + '</td><td><code>' + (row.host || '—') + '</code></td><td>' + fmt(row.total) + '</td><td>' + fmt(row.success) + '</td><td>' + fmt(row.partial) + '</td><td>' + fmt(row.failed) + '</td><td>' + dt(row.last) + '</td></tr>').join('');
 }
 
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function loadIntents() {
+  const d = await fetchJson('/api/admin/intents');
+  const tbody = document.querySelector('#intents tbody');
+  if (!d.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">Aucune intention captée pour le moment.</td></tr>'; return; }
+  tbody.innerHTML = d.map(row =>
+    '<tr><td>' + dt(row.ts) + '</td>' +
+    '<td>' + esc(row.email || '—') + '</td>' +
+    '<td style="max-width:380px"><div style="white-space:pre-wrap;font-size:12.5px">' + esc(row.reason || '—') + '</div></td>' +
+    '<td>' + esc(row.oppOrCustomer || '<span class="muted">—</span>') + '</td>' +
+    '<td><code>' + esc(row.sourcePage || '—') + '</code></td></tr>'
+  ).join('');
+}
+
 function renderFailures(failures) {
   if (!failures || !failures.length) return '<span class="muted">—</span>';
   return '<ul class="failure-list">' + failures.map(f =>
@@ -397,7 +418,7 @@ async function loadFeatured() {
 
 (async () => {
   try {
-    await Promise.all([loadKpis(), loadFeatured(), loadTop(), loadDeploysBySE(), loadDeploys(), loadInbox()]);
+    await Promise.all([loadKpis(), loadFeatured(), loadTop(), loadDeploysBySE(), loadIntents(), loadDeploys(), loadInbox()]);
   } catch (e) { console.error(e); }
 })();
 </script>
@@ -564,6 +585,20 @@ function register(app) {
       status: row.status,
       numTotal: row.num_total, numSuccess: row.num_success,
       failures: row.failures || [],
+    })));
+  });
+
+  app.get('/api/admin/intents', async (req, reply) => {
+    if (!requireAuth(req, reply)) return;
+    if (!getPool()) return reply.send([]);
+    const r = await query(`
+      SELECT id, ts, email, reason, opp_or_customer, source_page
+      FROM tracking_intents ORDER BY ts DESC LIMIT 200
+    `);
+    reply.send(r.rows.map(row => ({
+      id: row.id, ts: row.ts, email: row.email,
+      reason: row.reason, oppOrCustomer: row.opp_or_customer,
+      sourcePage: row.source_page,
     })));
   });
 

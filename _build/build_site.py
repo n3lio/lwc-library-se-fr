@@ -1577,6 +1577,23 @@ JS = r"""// CCO FR Library — client UX
       });
       m.querySelector('#tracking-form').addEventListener('submit', (e) => {
         e.preventDefault();
+        const f = e.target;
+        const payload = {
+          email: (f.email && f.email.value || '').trim(),
+          reason: (f.reason && f.reason.value || '').trim(),
+          opp: (f.opp && f.opp.value || '').trim(),
+          sourcePage: location.pathname,
+        };
+        // Fire-and-forget — we don't want the user waiting on the network
+        // before the actual download/deploy starts. Backend returns 204.
+        try {
+          fetch('/api/track/intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            keepalive: true,
+          }).catch(() => {});
+        } catch (err) { /* ignore */ }
         markTracked();
         m.classList.remove('open');
         toast(t('tracking.toast'));
