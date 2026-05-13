@@ -314,7 +314,11 @@
     const lang = getLang();
     document.documentElement.lang = lang;
     // Library-controlled content — innerHTML is safe here.
+    // Skip connect buttons: their label is owned by renderConnectButtons()
+    // (otherwise a connected SE sees the green "✓ Name · host" wiped back to
+    // "Connecter à mon org" every time any modal calls applyLang()).
     document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (el.matches('[data-mock="connect"]')) return;
       el.innerHTML = t(el.dataset.i18n);
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -365,6 +369,9 @@
     // Update cmd-k index pointer
     if (window.__SE_INDEX_FR && lang === 'fr') window.__SE_ACTIVE_INDEX = window.__SE_INDEX_FR;
     else window.__SE_ACTIVE_INDEX = window.__SE_INDEX;
+    // Re-render connect buttons (we skipped them above; a language switch
+    // must still flip the disconnected "Connecter à mon org" label).
+    if (typeof renderConnectButtons === 'function') renderConnectButtons();
   }
 
   // ── Toast helper

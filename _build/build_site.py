@@ -943,6 +943,13 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .about-bullets li { margin-bottom: 8px; font-size: 14px; }
 /* Lead-in (the bold word at the start of each bullet) — sober brand-deep, not too heavy */
 .about-bullets li strong { font-weight: 600; color: var(--brand-deep); }
+/* Two-column CTA row — Releases & Roadmap | Want to contribute, side-by-side, aligned */
+.about-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
+.about-cta-row .about-cta { display: flex; flex-direction: column; margin-bottom: 0; padding: 24px 24px 22px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); }
+.about-cta-row .about-cta h2 { font-size: 22px; margin: 0 0 12px; min-height: 28px; }
+.about-cta-row .about-cta p { margin: 0; flex: 1; max-width: none; }
+.about-cta-row .about-cta-actions { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; min-height: 38px; }
+@media (max-width: 720px) { .about-cta-row { grid-template-columns: 1fr; } }
 
 /* DOCS */
 .docs-grid { display: grid; grid-template-columns: 240px 1fr; gap: 36px; align-items: start; }
@@ -1442,7 +1449,11 @@ JS = r"""// CCO FR Library — client UX
     const lang = getLang();
     document.documentElement.lang = lang;
     // Library-controlled content — innerHTML is safe here.
+    // Skip connect buttons: their label is owned by renderConnectButtons()
+    // (otherwise a connected SE sees the green "✓ Name · host" wiped back to
+    // "Connecter à mon org" every time any modal calls applyLang()).
     document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (el.matches('[data-mock="connect"]')) return;
       el.innerHTML = t(el.dataset.i18n);
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -1493,6 +1504,9 @@ JS = r"""// CCO FR Library — client UX
     // Update cmd-k index pointer
     if (window.__SE_INDEX_FR && lang === 'fr') window.__SE_ACTIVE_INDEX = window.__SE_INDEX_FR;
     else window.__SE_ACTIVE_INDEX = window.__SE_INDEX;
+    // Re-render connect buttons (we skipped them above; a language switch
+    // must still flip the disconnected "Connecter à mon org" label).
+    if (typeof renderConnectButtons === 'function') renderConnectButtons();
   }
 
   // ── Toast helper
@@ -3875,22 +3889,23 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
     </div>
   </section>
 
-  <section class="about-section about-cta">
-    <h2 {pair_attr('Envie de contribuer ?', 'Want to contribute?')}>Envie de contribuer ?</h2>
-    <p {pair_attr('La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.', 'The library grows thanks to SEs who share their components. Add yours, or check out the SEs who already joined.')}>La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.</p>
-    <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch;">
-      <button type="button" class="btn btn-primary" data-mock="submit-component" {pair_attr('Proposer mon composant →', 'Propose my component →')}>Proposer mon composant →</button>
-      <a href="contributors.html" class="btn btn-ghost" {pair_attr('Voir les contributeurs', 'See the contributors')}>Voir les contributeurs</a>
-    </div>
-  </section>
-
-  <section class="about-section">
-    <h2 {pair_attr('Releases &amp; roadmap', 'Releases &amp; roadmap')}>Releases &amp; roadmap</h2>
-    <p {pair_attr('La page <strong>Nouveautés</strong> regroupe l’historique des releases et la roadmap des évolutions à venir — soumission via connexion d’org, espace contributeurs, gamification, page admin avancée…', 'The <strong>What’s new</strong> page gathers the release history and the roadmap of upcoming evolutions — org-connect submission, contributor space, gamification, advanced admin page…')}>La page <strong>Nouveautés</strong> regroupe l'historique des releases et la roadmap des évolutions à venir — soumission via connexion d'org, espace contributeurs, gamification, page admin avancée…</p>
-    <div style="margin-top: 16px;">
-      <a href="whats-new.html" class="btn btn-primary" {pair_attr('Voir Nouveautés &amp; Roadmap →', 'See What’s new &amp; Roadmap →')}>Voir Nouveautés &amp; Roadmap →</a>
-    </div>
-  </section>
+  <div class="about-cta-row">
+    <section class="about-cta">
+      <h2 {pair_attr('Releases &amp; roadmap', 'Releases &amp; roadmap')}>Releases &amp; roadmap</h2>
+      <p {pair_attr('La page <strong>Nouveautés</strong> regroupe l’historique des releases et la roadmap des évolutions à venir — soumission via connexion d’org, espace contributeurs, gamification, page admin avancée…', 'The <strong>What’s new</strong> page gathers the release history and the roadmap of upcoming evolutions — org-connect submission, contributor space, gamification, advanced admin page…')}>La page <strong>Nouveautés</strong> regroupe l'historique des releases et la roadmap des évolutions à venir — soumission via connexion d'org, espace contributeurs, gamification, page admin avancée…</p>
+      <div class="about-cta-actions">
+        <a href="whats-new.html" class="btn btn-primary" {pair_attr('Voir les nouveautés →', 'See what’s new →')}>Voir les nouveautés →</a>
+      </div>
+    </section>
+    <section class="about-cta">
+      <h2 {pair_attr('Envie de contribuer ?', 'Want to contribute?')}>Envie de contribuer ?</h2>
+      <p {pair_attr('La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.', 'The library grows thanks to SEs who share their components. Add yours, or check out the SEs who already joined.')}>La librairie vit grâce aux SE qui partagent leurs composants. Ajoutez le vôtre, ou découvrez ceux qui ont déjà rejoint la party.</p>
+      <div class="about-cta-actions">
+        <button type="button" class="btn btn-primary" data-mock="submit-component" {pair_attr('Proposer mon composant →', 'Propose my component →')}>Proposer mon composant →</button>
+        <a href="contributors.html" class="btn btn-ghost" {pair_attr('Voir les contributeurs', 'See the contributors')}>Voir les contributeurs</a>
+      </div>
+    </section>
+  </div>
 
   <section class="about-section">
     <h2 {pair_attr('Principes de design', 'Design principles')}>Principes de design</h2>
@@ -4448,7 +4463,12 @@ def build_search_index(components: list[dict], recipes: list[dict]) -> list[dict
     out: list[dict] = []
     for c in sorted(components, key=lambda x: x["apiName"]):
         api = c["apiName"]
-        name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
+        name = (c.get("masterLabel") or api)
+        for prefix in ("CCO FR - ", "SE FR - "):
+            if name.startswith(prefix):
+                name = name[len(prefix):]
+                break
+        name = name.strip()
         haystack = " ".join([api, name, c.get("tagline","")] + (c.get("personas") or []) + (c.get("chips") or [])).lower()
         out.append({
             "name": name,

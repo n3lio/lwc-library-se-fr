@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-09",
+  "generatedAt": "2026-05-13",
   "componentCount": 32,
   "components": [
     {
       "apiName": "seFrAccountHealth",
-      "masterLabel": "SE FR - Account Health",
+      "masterLabel": "CCO FR - Account Health",
       "description": "B2B - Jauge quantitative de santé du compte (0-100) avec donut SVG, niveau de verdict (Excellent / Healthy / Watch / At risk / Critical) et la liste des signaux pondérés utilisés dans le calcul.",
       "tagline": "Score quantitatif de santé du compte (0-100) avec verdict et signaux pondérés positifs / négatifs.",
       "categories": [
@@ -98,7 +98,7 @@
     },
     {
       "apiName": "seFrAccountStrategyPlan",
-      "masterLabel": "SE FR - Account Strategy Plan",
+      "masterLabel": "CCO FR - Account Strategy Plan",
       "description": "B2B - Plan de compte narratif : KPIs, progression vers l'objectif, SWOT 2x2, plan d'actions, notes stratégiques. Bilingue EN / FR.",
       "tagline": "Plan de compte narratif avec KPIs éditables, jauge d'objectif, SWOT 2x2 et plan d'actions trimestriel.",
       "categories": [
@@ -336,7 +336,7 @@
     },
     {
       "apiName": "seFrActiveSegments",
-      "masterLabel": "SE FR - Active Segments",
+      "masterLabel": "CCO FR - Active Segments",
       "description": "B2B / B2C - Liste configurable de segments Data Cloud / Marketing, rendus en badges. Le titre de la carte affiche automatiquement le compteur de segments.",
       "tagline": "Panneau compact affichant les segments Marketing / Data Cloud auxquels appartient le record, sous forme de badges colorés.",
       "categories": [
@@ -433,7 +433,7 @@
     },
     {
       "apiName": "seFrActivityFeed",
-      "masterLabel": "SE FR - Activity Feed",
+      "masterLabel": "CCO FR - Activity Feed",
       "description": "Timeline d'activité agrégée affichant Tasks, Events, emails, SMS/Web, appels, sessions de messaging, chats, Orders, Cases, Opportunities, Quotes, Contracts, Visits, fichiers, posts Chatter et réponses Survey pour un Account ou Contact.",
       "tagline": "Timeline d'activité unifiée agrégeant 16+ types de records Salesforce dans un seul flux avec filtrage avancé.",
       "categories": [
@@ -564,7 +564,7 @@
     },
     {
       "apiName": "seFrAgentforceHeader",
-      "masterLabel": "SE FR - Agentforce Header",
+      "masterLabel": "CCO FR - Agentforce Header",
       "description": "Bannière de salutation Home page avec mascotte Astro, champ de dictée vocale et bouton d'envoi. {name} est remplacé par le prénom de l'utilisateur courant. Bilingue FR / EN.",
       "tagline": "Header de Home page avec Astro et une barre de recherche / dictée qui transmet les questions au panneau Agentforce.",
       "categories": [
@@ -654,7 +654,7 @@
     },
     {
       "apiName": "seFrAlertsRibbon",
-      "masterLabel": "SE FR - Alerts Ribbon",
+      "masterLabel": "CCO FR - Alerts Ribbon",
       "description": "Bandeau d'alertes configurable. Deux sources : alertes basées sur des règles évaluées contre le record courant (Record Page), et alertes statiques toujours affichées (Home / App Page). 4 sévérités, 3 variantes visuelles, 2 densités, comportement sticky-on-scroll optionnel.",
       "tagline": "Bandeau d'alertes configurable combinant règles déclaratives basées sur le record et bannières statiques toujours visibles.",
       "categories": [
@@ -793,7 +793,7 @@
     },
     {
       "apiName": "seFrConsentManager",
-      "masterLabel": "SE FR - Consent Manager",
+      "masterLabel": "CCO FR - Consent Manager",
       "description": "B2B / B2C - Panneau de toggles RGPD / préférences de contact. Lit/écrit les champs opt-in/opt-out sur le record. Bilingue EN / FR.",
       "tagline": "Panneau de consentement RGPD par canal qui lie chaque canal à un champ booléen sur le record courant.",
       "categories": [
@@ -902,7 +902,7 @@
     },
     {
       "apiName": "seFrContactCard",
-      "masterLabel": "SE FR - Contact Card",
+      "masterLabel": "CCO FR - Contact Card",
       "description": "B2B / B2C - Carte Contact visuelle (avatar, détails, jusqu'à 3 jauges) avec vagues animées + résumé Einstein optionnel. Auteur original : Charly Ansel.",
       "tagline": "Carte Contact visuelle avec vagues animées, avatar, adresse, jauges configurables et résumé Einstein optionnel.",
       "categories": [
@@ -1222,7 +1222,7 @@
     },
     {
       "apiName": "seFrContactsCarousel",
-      "masterLabel": "SE FR - Contacts Carousel",
+      "masterLabel": "CCO FR - Contacts Carousel",
       "description": "B2B - Carousel visuel des Contacts liés à un Account. Photo (ou fallback initiales), titre, badge de rôle optionnel et raccourcis Email/Call. Flèches de navigation quand il y en a plus que le nombre visible.",
       "tagline": "Carousel horizontal des Contacts d'un Account avec avatars, badges de rôle et raccourcis Email / Call.",
       "categories": [
@@ -1334,7 +1334,7 @@
     },
     {
       "apiName": "seFrCustomerOrders",
-      "masterLabel": "SE FR - Customer Orders",
+      "masterLabel": "CCO FR - Customer Orders",
       "description": "B2B / B2C - Liste les orders liés à un Account ou Contact. Le bloc du haut affiche le dernier order avec ses lignes ; le bloc du bas est un historique compact avec recherche / tri / filtre statut / Voir tout. Bilingue EN / FR.",
       "tagline": "Carte détail du dernier order plus historique des commandes recherchable, triable et filtrable pour un Account ou Contact.",
       "categories": [
@@ -1472,7 +1472,7 @@
     },
     {
       "apiName": "seFrCustomerSalesSummary",
-      "masterLabel": "SE FR - Customer Sales Summary",
+      "masterLabel": "CCO FR - Customer Sales Summary",
       "description": "B2C - Synthèse des ventes au niveau client pour une page Contact / Person Account / Account. Bilingue EN / FR.",
       "tagline": "Synthèse des ventes orientée B2C avec tuiles KPI et répartitions par Catégorie, Marque et Magasin.",
       "categories": [
@@ -1656,7 +1656,7 @@
     },
     {
       "apiName": "seFrFieldRepHome",
-      "masterLabel": "SE FR - Field Sales - Rep Home",
+      "masterLabel": "CCO FR - Field Sales - Rep Home",
       "description": "B2B - Home / App page pour un commercial terrain. Salutation, 4 tuiles KPI, comptes prioritaires (dynamiques, filtres configurables), hot leads, barres de pénétration produit et calendrier de campagnes. Bilingue EN / FR via la propriété language.",
       "tagline": "Home page Field Sales avec salutation, KPIs, comptes prioritaires, hot leads, pénétration produit et calendrier de campagnes.",
       "categories": [
@@ -1925,7 +1925,7 @@
     },
     {
       "apiName": "seFrFilesGallery",
-      "masterLabel": "SE FR - Files Gallery",
+      "masterLabel": "CCO FR - Files Gallery",
       "description": "B2B / B2C - Galerie visuelle des fichiers liés au record courant. Miniatures d'images via le rendition endpoint, icônes par type pour les autres, click pour ouvrir la preview, lien Download et upload drag-drop.",
       "tagline": "Galerie visuelle des fichiers attachés à un record avec thumbnails d'images, icônes par type et upload drag-and-drop.",
       "categories": [
@@ -2027,7 +2027,7 @@
     },
     {
       "apiName": "seFrKanbanBoard",
-      "masterLabel": "SE FR - Kanban Board",
+      "masterLabel": "CCO FR - Kanban Board",
       "description": "Kanban générique. N'importe quel SObject + picklist de groupement + champ d'affichage. Drag-and-drop optionnel qui met à jour le champ de groupement sur le record. Objets whitelistés : Case, Opportunity, Lead, Order, Task, Account.",
       "tagline": "Kanban générique avec drag-and-drop natif sur n'importe quel SObject whitelisté (Case, Opp, Lead, Order, Task, Account).",
       "categories": [
@@ -2192,7 +2192,7 @@
     },
     {
       "apiName": "seFrKpiLauncher",
-      "masterLabel": "SE FR - KPI Launcher",
+      "masterLabel": "CCO FR - KPI Launcher",
       "description": "B2B / B2C - Grille configurable de 3 à 6 tuiles KPI cliquables. Choisissez un preset (Standard / Field Sales / Telesales / Custom) ou overridez chaque tuile individuellement. Bilingue EN / FR.",
       "tagline": "Grille configurable de 3-6 tuiles KPI cliquables avec icône, valeur, couleur et lien, prête à l'emploi.",
       "categories": [
@@ -2634,7 +2634,7 @@
     },
     {
       "apiName": "seFrMetricTile",
-      "masterLabel": "SE FR - Metric Tile",
+      "masterLabel": "CCO FR - Metric Tile",
       "description": "B2B / B2C - Tuile KPI avec chart de tendance inline. 4 styles (line, area, bar, mini-donut), série de comparaison optionnelle, ligne d'objectif, formatage devise. Bilingue FR / EN.",
       "tagline": "Tuile mono-métrique avec 4 styles de chart (line / area / bar / mini-donut), série de comparaison, ligne d'objectif et formatage devise.",
       "categories": [
@@ -2867,7 +2867,7 @@
     },
     {
       "apiName": "seFrMyEvents",
-      "masterLabel": "SE FR - My Events",
+      "masterLabel": "CCO FR - My Events",
       "description": "B2B / B2C - Vue timeline du jour pour une colonne sidebar. Auto-trim des heures vides, gestion des events qui se chevauchent côte à côte, ligne « now » en live, badge in-N-min, bouton Join pour les URLs de visio classiques, et liste Upcoming courte.",
       "tagline": "Calendrier du jour en timeline verticale compacte qui tient dans une colonne sidebar, avec gestion des chevauchements style Google Calendar.",
       "categories": [
@@ -3033,7 +3033,7 @@
     },
     {
       "apiName": "seFrMyTasks",
-      "masterLabel": "SE FR - My Tasks",
+      "masterLabel": "CCO FR - My Tasks",
       "description": "B2B / B2C - Panneau « My Tasks » compact pour une colonne sidebar. Checkbox de complétion interactive, dropdown de filtre, regroupement automatique par En retard / Aujourd'hui / Demain / Cette semaine / Plus tard, quick actions optionnelles, et raccourci « Nouvelle tâche ».",
       "tagline": "Panneau « My Tasks » sidebar compact groupé par date d'échéance avec complétion en un clic.",
       "categories": [
@@ -3150,7 +3150,7 @@
     },
     {
       "apiName": "seFrNearbyAccountsMap",
-      "masterLabel": "SE FR - Nearby Accounts Map",
+      "masterLabel": "CCO FR - Nearby Accounts Map",
       "description": "Carte interactive affichant les comptes à proximité depuis un point d'origine configurable.",
       "tagline": "Carte interactive des comptes à proximité qui utilise la géolocalisation du navigateur avec tri par distance Haversine.",
       "categories": [
@@ -3280,7 +3280,7 @@
     },
     {
       "apiName": "seFrOrderEntry",
-      "masterLabel": "SE FR - Order Entry",
+      "masterLabel": "CCO FR - Order Entry",
       "description": "",
       "tagline": "Saisie de commande pleine grille sur un Account ou Case avec stock, quantités et remises recommandées par IA, persistées comme vrais Orders.",
       "categories": [
@@ -3466,7 +3466,7 @@
     },
     {
       "apiName": "seFrOrderSummary",
-      "masterLabel": "SE FR - Order Summary",
+      "masterLabel": "CCO FR - Order Summary",
       "description": "",
       "tagline": "Order le plus récent lié à un Case avec produits, total, infos de livraison et actions edit / delete / submit.",
       "categories": [
@@ -3595,7 +3595,7 @@
     },
     {
       "apiName": "seFrPipelineSnapshot",
-      "masterLabel": "SE FR - Pipeline Snapshot",
+      "masterLabel": "CCO FR - Pipeline Snapshot",
       "description": "B2B - Visualisation du pipeline client : Opportunities ouvertes groupées par Stage avec totaux par colonne, totaux pondérés et non-pondérés en haut.",
       "tagline": "Visualisation du pipeline au niveau Account avec tuiles de synthèse et une colonne par stage Opportunity.",
       "categories": [
@@ -3704,7 +3704,7 @@
     },
     {
       "apiName": "seFrPromptLauncher",
-      "masterLabel": "SE FR - Prompt Launcher",
+      "masterLabel": "CCO FR - Prompt Launcher",
       "description": "Panneau IA configurable qui exécute des Salesforce Prompt Templates via Invocable Actions. Posez sur n'importe quelle page, le SE choisit les prompts à exposer. Le contexte record est auto-injecté, les prompts qui demandent des inputs affichent un petit formulaire. Les réponses HTML sont rendues avec le formatage.",
       "tagline": "Panneau IA configurable qui exécute des Salesforce Prompt Templates via Invocable Actions, avec contexte record auto-injecté.",
       "categories": [
@@ -3872,7 +3872,7 @@
     },
     {
       "apiName": "seFrRecordHighlights",
-      "masterLabel": "SE FR - Record Highlights",
+      "masterLabel": "CCO FR - Record Highlights",
       "description": "B2B / B2C - Panneau highlights custom avec image ronde et champs / actions configurables. Fonctionne sur Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote — peut afficher le record courant ou son parent Account (propriété recordSource).",
       "tagline": "Panneau highlights custom avec image ronde, champs clés et boutons d'action, fonctionnel sur 8 objets standards.",
       "categories": [
@@ -4027,7 +4027,7 @@
     },
     {
       "apiName": "seFrRelatedRecordCard",
-      "masterLabel": "SE FR - Related Record Card",
+      "masterLabel": "CCO FR - Related Record Card",
       "description": "B2B / B2C - Carte verticale qui affiche un record lié (l'Account d'un Contact/Case/Opp, ou le Contact principal d'un Account). Choisit la contrepartie automatiquement à partir du type de record courant. Bilingue EN / FR. Valeurs par défaut industry-agnostic.",
       "tagline": "Carte sidebar verticale affichant le record contrepartie (Contact / Account) avec champs clés et avatar.",
       "categories": [
@@ -4160,7 +4160,7 @@
     },
     {
       "apiName": "seFrRevenueDashboard",
-      "masterLabel": "SE FR - Revenue Dashboard",
+      "masterLabel": "CCO FR - Revenue Dashboard",
       "description": "B2B - Mini-dashboard revenue 3 ans au niveau Account. Bilingue EN / FR via la propriété language.",
       "tagline": "Mini-dashboard de revenue sur 3 ans avec tuiles KPI et un bar chart mensuel côte à côte.",
       "categories": [
@@ -4331,7 +4331,7 @@
     },
     {
       "apiName": "seFrSmartRecommendations",
-      "masterLabel": "SE FR - Smart Recommendations",
+      "masterLabel": "CCO FR - Smart Recommendations",
       "description": "Actions recommandées context-aware (Next Best Action).",
       "tagline": "Panneau Next Best Action context-aware avec 1-6 recommandations, score de pertinence et override par carte.",
       "categories": [
@@ -4660,7 +4660,7 @@
     },
     {
       "apiName": "seFrSplashBanner",
-      "masterLabel": "SE FR - Splash Banner",
+      "masterLabel": "CCO FR - Splash Banner",
       "description": "Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).",
       "tagline": "Bannière d'accueil avec 8 styles de fond animés (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) en pur CSS / SVG.",
       "categories": [
@@ -4803,7 +4803,7 @@
     },
     {
       "apiName": "seFrTelesalesRepHome",
-      "masterLabel": "SE FR - Telesales - Rep Home",
+      "masterLabel": "CCO FR - Telesales - Rep Home",
       "description": "B2B - Home page Telesales. Tuiles KPI, Cases entrants, Orders à valider, mini-charts, calls, news. Bilingue EN/FR via la propriété language.",
       "tagline": "Home page Telesales avec KPIs, tables Cases et Orders en live, calls à passer et 3 mini-charts.",
       "categories": [
@@ -5120,7 +5120,7 @@
     },
     {
       "apiName": "seFrTerritoryMap",
-      "masterLabel": "SE FR - Territory Map",
+      "masterLabel": "CCO FR - Territory Map",
       "description": "Sales / Field Sales - Vue carte du territoire : Accounts géolocalisés via leur Billing Address, code couleur par pipeline ouvert, filtres latéraux (Owner, RecordType, fourchette de montant ouvert, Stages, statut Case, Type, Industry + recherche par nom), tuiles KPI et export CSV.",
       "tagline": "Carte de territoire interactive avec Accounts géolocalisés, code couleur par pipeline, filtres latéraux et export CSV.",
       "categories": [
@@ -5277,7 +5277,7 @@
     },
     {
       "apiName": "seFrTimelinePhases",
-      "masterLabel": "SE FR - Timeline Phases",
+      "masterLabel": "CCO FR - Timeline Phases",
       "description": "B2B / B2C - Timeline horizontale multi-phases (parcours client / étapes projet). Les phases sont configurées en JSON avec labels, dates cibles et flags done. Un marqueur vertical « Today » indique la position actuelle.",
       "tagline": "Timeline horizontale multi-phases avec axe de dates, marqueur « Today » et état done / pending par phase.",
       "categories": [
@@ -5375,7 +5375,7 @@
     },
     {
       "apiName": "seFrVoiceNoteTaker",
-      "masterLabel": "SE FR - Voice Note Taker",
+      "masterLabel": "CCO FR - Voice Note Taker",
       "description": "Dictez une note vocale et sauvegardez-la comme Task complétée liée au record courant. Bilingue EN / FR.",
       "tagline": "Dictez une note vocale via la Web Speech API et sauvegardez-la comme Task complétée liée au record courant.",
       "categories": [

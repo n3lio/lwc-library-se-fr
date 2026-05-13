@@ -187,7 +187,11 @@ def main() -> int:
         prev = existing_components.get(api)
 
         # If we have a translation with matching source hash and not --force, reuse it.
+        # Refresh non-translated fields (masterLabel, apiName) from EN source —
+        # they may have changed (e.g. SE FR → CCO FR rebrand) without affecting
+        # the translation hash.
         if not args.force and prev and prev.get("_sourceHash") == h:
+            prev["masterLabel"] = c.get("masterLabel", prev.get("masterLabel", ""))
             fr_components.append(prev)
             continue
 
