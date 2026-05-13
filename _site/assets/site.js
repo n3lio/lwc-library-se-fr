@@ -1352,22 +1352,8 @@
     setLang(b.dataset.langBtn);
   });
 
-  // ── Agent widget mock
-  const agentBtn = document.querySelector('.agent-button');
-  if (agentBtn) {
-    let panel = null;
-    agentBtn.addEventListener('click', () => {
-      if (!panel) {
-        panel = document.createElement('div');
-        panel.className = 'agent-panel';
-        panel.innerHTML = '<button class="close">×</button><h4 data-i18n="agent.title"></h4><p data-i18n="agent.body"></p><p style="font-size:11.5px; color:var(--text-muted)" data-i18n="agent.examples"></p>';
-        document.body.appendChild(panel);
-        panel.querySelector('.close').addEventListener('click', () => panel.classList.remove('open'));
-        applyLang();
-      }
-      panel.classList.toggle('open');
-    });
-  }
+  // (Old mocked agent widget code removed — replaced by Salesforce Embedded
+  // Messaging for Web, injected via agent_html() in the page shell.)
 
   // ── Cmd+K search
   const cmdkBtn = document.querySelector('.cmd-k');

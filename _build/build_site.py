@@ -290,7 +290,7 @@ body.page-ready .page-veil.gone { display: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   body { opacity: 1; transition: none; }
 }
-a, button, [role='button'], .card, .recipe, .recipe-card, .pill, .chip, .btn, .nav-links a, .lang-switch button, .filter-pill, .like-btn, .cmd-k, .agent-button, label[for], summary, [data-mock], [data-lang-btn] {
+a, button, [role='button'], .card, .recipe, .recipe-card, .pill, .chip, .btn, .nav-links a, .lang-switch button, .filter-pill, .like-btn, .cmd-k, label[for], summary, [data-mock], [data-lang-btn] {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><defs><radialGradient id='g' cx='50%25' cy='50%25' r='50%25'><stop offset='0%25' stop-color='%236b4eff' stop-opacity='0.35'/><stop offset='70%25' stop-color='%236b4eff' stop-opacity='0'/></radialGradient><linearGradient id='c' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%230176d3'/><stop offset='100%25' stop-color='%236b4eff'/></linearGradient></defs><circle cx='15' cy='15' r='14' fill='url(%23g)'/><circle cx='15' cy='15' r='5' fill='url(%23c)' stroke='%23ffffff' stroke-width='1.5'/></svg>") 15 15, pointer;
 }
 input, textarea, select { cursor: text; }
@@ -357,7 +357,7 @@ body::after {
 
 /* Make sure content cards stay readable on top of the animated bg. */
 .card, .recipe, .recipe-card, .step, .about-card, .side-card, .modal,
-.search-box, .agent-panel, .filter-bar, footer, .nav,
+.search-box, .filter-bar, footer, .nav,
 .detail-head, .card-block, .preview-large, .cart {
   position: relative;
   z-index: 1;
@@ -975,16 +975,10 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .docs-main li { margin-bottom: 4px; }
 .callout { padding: 12px 14px; border-left: 3px solid var(--brand); background: var(--brand-light); border-radius: 0 6px 6px 0; font-size: 13.5px; color: var(--text); margin: 14px 0; }
 
-/* AGENT WIDGET */
-.agent { position: fixed; bottom: 20px; right: 20px; z-index: 60; }
-.agent-button { display: flex; align-items: center; gap: 9px; padding: 10px 16px 10px 12px; border-radius: 100px; background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 24px rgba(1, 118, 211, 0.3); transition: transform 0.15s, box-shadow 0.15s; font-family: inherit; }
-.agent-button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(1, 118, 211, 0.4); }
-.agent-icon { width: 22px; height: 22px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: grid; place-items: center; font-size: 13px; }
-.agent-panel { position: fixed; bottom: 78px; right: 20px; width: 340px; max-width: calc(100vw - 40px); background: #fff; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 20px 50px rgba(3,45,96,0.2); padding: 18px 18px 16px; z-index: 65; display: none; }
-.agent-panel.open { display: block; }
-.agent-panel h4 { font-size: 14px; margin-bottom: 6px; }
-.agent-panel p { font-size: 12.5px; color: var(--text-soft); margin-bottom: 12px; }
-.agent-panel .close { position: absolute; top: 10px; right: 12px; background: transparent; border: none; cursor: pointer; font-size: 18px; color: var(--text-muted); }
+/* AGENT WIDGET — provided by Salesforce Embedded Messaging for Web (injected
+   via the bootstrap script in agent_html()). Salesforce ships the button +
+   panel + branding; we don't style anything here. If we ever need to override
+   Salesforce defaults, target [class*="embeddedMessagingFrame"]. */
 
 /* MODAL */
 .modal-mask { position: fixed; inset: 0; background: rgba(3, 45, 96, 0.55); display: none; align-items: flex-start; justify-content: center; padding-top: 8vh; z-index: 200; }
@@ -2478,22 +2472,8 @@ JS = r"""// SE FR Library — client UX
     setLang(b.dataset.langBtn);
   });
 
-  // ── Agent widget mock
-  const agentBtn = document.querySelector('.agent-button');
-  if (agentBtn) {
-    let panel = null;
-    agentBtn.addEventListener('click', () => {
-      if (!panel) {
-        panel = document.createElement('div');
-        panel.className = 'agent-panel';
-        panel.innerHTML = '<button class="close">×</button><h4 data-i18n="agent.title"></h4><p data-i18n="agent.body"></p><p style="font-size:11.5px; color:var(--text-muted)" data-i18n="agent.examples"></p>';
-        document.body.appendChild(panel);
-        panel.querySelector('.close').addEventListener('click', () => panel.classList.remove('open'));
-        applyLang();
-      }
-      panel.classList.toggle('open');
-    });
-  }
+  // (Old mocked agent widget code removed — replaced by Salesforce Embedded
+  // Messaging for Web, injected via agent_html() in the page shell.)
 
   // ── Cmd+K search
   const cmdkBtn = document.querySelector('.cmd-k');
@@ -3047,9 +3027,27 @@ def footer_html(component_count: int, base: str = "") -> str:
 
 
 def agent_html() -> str:
-    return """<div class="agent">
-  <button class="agent-button" type="button"><span class="agent-icon">💬</span><span data-i18n="agent.btn">Demander à l'agent</span></button>
-</div>"""
+    # Salesforce Embedded Messaging for Web — wires the in-org Service Agent
+    # (LWC Library Service Agent on storm-ea9bc09d78eb59) to a floating chat
+    # widget on every page of the site. The widget UI is provided by Salesforce
+    # (button + chat panel + history + send + branding), so we don't render any
+    # of our own chat HTML here.
+    return """<script type="text/javascript">
+function initEmbeddedMessaging() {
+  try {
+    embeddedservice_bootstrap.settings.language = (localStorage.getItem('sefr.lang') || 'fr');
+    embeddedservice_bootstrap.init(
+      '00DJ9000001uyAv',
+      'LWC_Library_Web_Channel',
+      'https://storm-ea9bc09d78eb59.my.site.com/ESWLWCLibraryWebChanne1778664304983',
+      { scrt2URL: 'https://storm-ea9bc09d78eb59.my.salesforce-scrt.com' }
+    );
+  } catch (err) {
+    console.error('Error loading Embedded Messaging: ', err);
+  }
+}
+</script>
+<script type="text/javascript" src="https://storm-ea9bc09d78eb59.my.site.com/ESWLWCLibraryWebChanne1778664304983/assets/js/bootstrap.min.js" onload="initEmbeddedMessaging()" defer></script>"""
 
 
 def back_to_top_html() -> str:
