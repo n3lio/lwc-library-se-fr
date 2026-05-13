@@ -2949,8 +2949,9 @@ NAV_LINKS = [
     ("components.html", {"fr": "Composants", "en": "Components"}, "components"),
     ("cookbook.html", {"fr": "Cookbook", "en": "Cookbook"}, "cookbook"),
     ("docs.html", {"fr": "Docs", "en": "Docs"}, "docs"),
-    ("whats-new.html", {"fr": "Nouveautés", "en": "What’s new"}, "whats-new"),
     ("about.html", {"fr": "À propos", "en": "About"}, "about"),
+    # whats-new.html intentionnellement absent du nav top — accessible via
+    # le footer ('Nouveautés') et un encart sur la page À propos.
 ]
 
 
@@ -3011,7 +3012,7 @@ def footer_html(component_count: int, base: str = "") -> str:
       <ul>
         <li><a href="{base}docs.html#install" {pair('Installation', 'Install')}>Installation</a></li>
         <li><a href="{base}docs.html#bilingual" {pair('Configuration', 'Configure')}>Configuration</a></li>
-        <li><a href="{base}whats-new.html" {pair('Releases', 'Releases')}>Releases</a></li>
+        <li><a href="{base}whats-new.html" {pair('Nouveautés', 'What’s new')}>Nouveautés</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -3864,6 +3865,14 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
     <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch;">
       <button type="button" class="btn btn-primary" data-mock="submit-component" {pair_attr('Proposer mon composant →', 'Propose my component →')}>Proposer mon composant →</button>
       <a href="contributors.html" class="btn btn-ghost" {pair_attr('Voir les contributeurs', 'See the contributors')}>Voir les contributeurs</a>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <h2 {pair_attr('Releases &amp; roadmap', 'Releases &amp; roadmap')}>Releases &amp; roadmap</h2>
+    <p {pair_attr('La page <strong>Nouveautés</strong> regroupe l’historique des releases et la roadmap des évolutions à venir — soumission via connexion d’org, espace contributeurs, gamification, page admin avancée…', 'The <strong>What’s new</strong> page gathers the release history and the roadmap of upcoming evolutions — org-connect submission, contributor space, gamification, advanced admin page…')}>La page <strong>Nouveautés</strong> regroupe l'historique des releases et la roadmap des évolutions à venir — soumission via connexion d'org, espace contributeurs, gamification, page admin avancée…</p>
+    <div style="margin-top: 16px;">
+      <a href="whats-new.html" class="btn btn-primary" {pair_attr('Voir Nouveautés &amp; Roadmap →', 'See What’s new &amp; Roadmap →')}>Voir Nouveautés &amp; Roadmap →</a>
     </div>
   </section>
 
