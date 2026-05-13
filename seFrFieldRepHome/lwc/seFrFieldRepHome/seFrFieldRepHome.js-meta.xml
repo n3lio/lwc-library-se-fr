@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Field Sales - Rep Home</masterLabel>
+    <masterLabel>CCO FR - Field Sales - Rep Home</masterLabel>
     <description>B2B - Home / App page for a field sales rep. Greeting, 4 KPI tiles, priority accounts (dynamic, filter-configurable), hot leads, product-penetration bars and campaign calendar. Bilingual EN / FR via the language property.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -14,7 +14,7 @@
 
             <property name="greetingTemplate" type="String" label="Greeting template (override)" description="Leave empty for the dictionary default. Use {name} placeholder. Wrap any word with **…** to render it in the highlight color." />
             <property name="defaultUserName" type="String" label="Fallback user name (override)" description="Leave empty for dictionary default ('Rep' / 'Commercial')." />
-            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue." />
+            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the CCO FR brand blue." />
 
             <property name="accountRecordType" type="String" default="SDO_Account_Simple" label="Accounts - RecordType.DeveloperName filter" description="Leave empty for all record types. SDO default: 'SDO_Account_Simple' (B2B)." />
             <property name="accountOwnerScope" type="String" default="mine" label="Accounts - owner scope" description="'mine' | 'all'" />

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-09",
+  "generatedAt": "2026-05-13",
   "componentCount": 32,
   "skippedCount": 0,
   "skipped": [],
   "components": [
     {
       "apiName": "seFrAccountHealth",
-      "masterLabel": "SE FR - Account Health",
+      "masterLabel": "CCO FR - Account Health",
       "description": "B2B - Quantitative account-health gauge (0-100) with a SVG donut, verdict level (Excellent / Healthy / Watch / At risk / Critical) and the list of weighted signals used in the computation.",
       "tagline": "Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.",
       "categories": [
@@ -99,7 +99,7 @@
     },
     {
       "apiName": "seFrAccountStrategyPlan",
-      "masterLabel": "SE FR - Account Strategy Plan",
+      "masterLabel": "CCO FR - Account Strategy Plan",
       "description": "B2B - Narrative Account plan: KPIs, target progress, SWOT 2x2, action plan, strategic notes. Bilingual EN / FR.",
       "tagline": "Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.",
       "categories": [
@@ -336,7 +336,7 @@
     },
     {
       "apiName": "seFrActiveSegments",
-      "masterLabel": "SE FR - Active Segments",
+      "masterLabel": "CCO FR - Active Segments",
       "description": "B2B / B2C - Configurable list of Data Cloud / marketing segments, rendered as badges. The card title auto-appends the segment count.",
       "tagline": "Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.",
       "categories": [
@@ -432,7 +432,7 @@
     },
     {
       "apiName": "seFrActivityFeed",
-      "masterLabel": "SE FR - Activity Feed",
+      "masterLabel": "CCO FR - Activity Feed",
       "description": "Aggregated activity timeline showing Tasks, Events, Emails, SMS/Web, calls, messaging sessions, chats, Orders, Cases, Opportunities, Quotes, Contracts, Visits, Files, Chatter posts and Survey responses for an Account or Contact.",
       "tagline": "Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.",
       "categories": [
@@ -565,7 +565,7 @@
     },
     {
       "apiName": "seFrAgentforceHeader",
-      "masterLabel": "SE FR - Agentforce Header",
+      "masterLabel": "CCO FR - Agentforce Header",
       "description": "Home page greeting banner with Astro mascot, a voice-dictation field and a send button. {name} is replaced with the running user's first name. Bilingual FR / EN.",
       "tagline": "Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.",
       "categories": [
@@ -627,7 +627,7 @@
           "type": "String",
           "label": "Highlight color (hex)",
           "default": "#0176d3",
-          "description": "Applied to the **bold** segment of the greeting. Defaults to the SE FR brand blue."
+          "description": "Applied to the **bold** segment of the greeting. Defaults to the CCO FR brand blue."
         },
         {
           "name": "idlePlaceholder",
@@ -654,7 +654,7 @@
     },
     {
       "apiName": "seFrAlertsRibbon",
-      "masterLabel": "SE FR - Alerts Ribbon",
+      "masterLabel": "CCO FR - Alerts Ribbon",
       "description": "Configurable alerts ribbon. Two sources: rule-driven alerts evaluated against the current record (Record Page), and static alerts always shown (Home / App Page friendly). 4 severities, 3 visual variants, 2 densities, optional sticky-on-scroll behavior.",
       "tagline": "Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.",
       "categories": [
@@ -792,7 +792,7 @@
     },
     {
       "apiName": "seFrConsentManager",
-      "masterLabel": "SE FR - Consent Manager",
+      "masterLabel": "CCO FR - Consent Manager",
       "description": "B2B / B2C - GDPR / contact-preferences toggle panel. Reads/writes opt-in/opt-out fields on the record. Bilingual EN / FR.",
       "tagline": "Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.",
       "categories": [
@@ -900,7 +900,7 @@
     },
     {
       "apiName": "seFrContactCard",
-      "masterLabel": "SE FR - Contact Card",
+      "masterLabel": "CCO FR - Contact Card",
       "description": "B2B / B2C - Visual Contact card (avatar, details, up to 3 gauges) with animated waves + optional Einstein prompt summary. Original author: Charly Ansel.",
       "tagline": "Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.",
       "categories": [
@@ -1219,7 +1219,7 @@
     },
     {
       "apiName": "seFrContactsCarousel",
-      "masterLabel": "SE FR - Contacts Carousel",
+      "masterLabel": "CCO FR - Contacts Carousel",
       "description": "B2B - Visual carousel of the Contacts linked to an Account. Photo (or initials fallback), title, optional role badge and quick Email/Call actions. Arrows to navigate when there are more than the visible count.",
       "tagline": "Horizontal carousel of an Account's Contacts with avatars, role badges and quick Email / Call actions.",
       "categories": [
@@ -1330,7 +1330,7 @@
     },
     {
       "apiName": "seFrCustomerOrders",
-      "masterLabel": "SE FR - Customer Orders",
+      "masterLabel": "CCO FR - Customer Orders",
       "description": "B2B / B2C - Lists the orders linked to an Account or Contact. Top block shows the latest order with its line items; bottom block is a compact history with search / sort / status filter / View all. Bilingual EN / FR.",
       "tagline": "Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.",
       "categories": [
@@ -1467,7 +1467,7 @@
     },
     {
       "apiName": "seFrCustomerSalesSummary",
-      "masterLabel": "SE FR - Customer Sales Summary",
+      "masterLabel": "CCO FR - Customer Sales Summary",
       "description": "B2C - Customer-level sales summary for a Contact / Person Account / Account record page. Bilingual EN / FR.",
       "tagline": "B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.",
       "categories": [
@@ -1650,7 +1650,7 @@
     },
     {
       "apiName": "seFrFieldRepHome",
-      "masterLabel": "SE FR - Field Sales - Rep Home",
+      "masterLabel": "CCO FR - Field Sales - Rep Home",
       "description": "B2B - Home / App page for a field sales rep. Greeting, 4 KPI tiles, priority accounts (dynamic, filter-configurable), hot leads, product-penetration bars and campaign calendar. Bilingual EN / FR via the language property.",
       "tagline": "Field Sales rep home page with greeting, KPIs, priority accounts, hot leads, product penetration and campaign calendar.",
       "categories": [
@@ -1723,7 +1723,7 @@
           "type": "String",
           "label": "Greeting highlight color (hex)",
           "default": "#0176d3",
-          "description": "Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue."
+          "description": "Applied to **bold** segments of the greeting. Defaults to the CCO FR brand blue."
         },
         {
           "name": "accountRecordType",
@@ -1918,7 +1918,7 @@
     },
     {
       "apiName": "seFrFilesGallery",
-      "masterLabel": "SE FR - Files Gallery",
+      "masterLabel": "CCO FR - Files Gallery",
       "description": "B2B / B2C - Visual gallery of files linked to the current record. Image thumbnails via the rendition endpoint, doctype icons for other types, click to open preview, Download link and drag-drop upload.",
       "tagline": "Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.",
       "categories": [
@@ -2019,7 +2019,7 @@
     },
     {
       "apiName": "seFrKanbanBoard",
-      "masterLabel": "SE FR - Kanban Board",
+      "masterLabel": "CCO FR - Kanban Board",
       "description": "Generic kanban board. Any SObject + group-by picklist + display field. Optional drag & drop that updates the group-by field on the record. Whitelisted objects: Case, Opportunity, Lead, Order, Task, Account.",
       "tagline": "Generic kanban board with native drag & drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).",
       "categories": [
@@ -2183,7 +2183,7 @@
     },
     {
       "apiName": "seFrKpiLauncher",
-      "masterLabel": "SE FR - KPI Launcher",
+      "masterLabel": "CCO FR - KPI Launcher",
       "description": "B2B / B2C - Configurable grid of 3 to 6 clickable KPI tiles. Pick a preset (Standard / Field Sales / Telesales / Custom) or override any tile individually. Bilingual EN / FR.",
       "tagline": "Configurable grid of 3-6 clickable KPI tiles with icon, value, color and link, ready out of the box.",
       "categories": [
@@ -2624,7 +2624,7 @@
     },
     {
       "apiName": "seFrMetricTile",
-      "masterLabel": "SE FR - Metric Tile",
+      "masterLabel": "CCO FR - Metric Tile",
       "description": "B2B / B2C - Single KPI tile with inline trend chart. 4 chart styles (line, area, bar, mini-donut), optional comparison series, target line, currency formatting. Bilingual FR / EN.",
       "tagline": "Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.",
       "categories": [
@@ -2808,7 +2808,7 @@
           "type": "String",
           "label": "Accent color (hex)",
           "default": "#0176d3",
-          "description": "Color of the primary chart series. Defaults to SE FR brand blue."
+          "description": "Color of the primary chart series. Defaults to CCO FR brand blue."
         },
         {
           "name": "donutTrack",
@@ -2856,7 +2856,7 @@
     },
     {
       "apiName": "seFrMyEvents",
-      "masterLabel": "SE FR - My Events",
+      "masterLabel": "CCO FR - My Events",
       "description": "B2B / B2C - Today-timeline view of events for a sidebar column. Auto-trims empty hours, handles overlapping events side-by-side, live now-line, in-N-min badge, Join button for common web-meeting URLs, and a short Upcoming list.",
       "tagline": "Today's calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.",
       "categories": [
@@ -3021,7 +3021,7 @@
     },
     {
       "apiName": "seFrMyTasks",
-      "masterLabel": "SE FR - My Tasks",
+      "masterLabel": "CCO FR - My Tasks",
       "description": "B2B / B2C - Compact \"My Tasks\" panel for a sidebar column. Interactive completion checkbox, filter dropdown, auto-grouping by Overdue / Today / Tomorrow / This week / Later, optional quick actions, and \"New task\" shortcut.",
       "tagline": "Compact 'My Tasks' sidebar panel grouped by due date with one-click completion.",
       "categories": [
@@ -3137,7 +3137,7 @@
     },
     {
       "apiName": "seFrNearbyAccountsMap",
-      "masterLabel": "SE FR - Nearby Accounts Map",
+      "masterLabel": "CCO FR - Nearby Accounts Map",
       "description": "Interactive map showing nearby accounts from a configurable origin point.",
       "tagline": "Interactive map of nearby accounts using the browser's geolocation with Haversine distance sort.",
       "categories": [
@@ -3266,7 +3266,7 @@
     },
     {
       "apiName": "seFrOrderEntry",
-      "masterLabel": "SE FR - Order Entry",
+      "masterLabel": "CCO FR - Order Entry",
       "description": "",
       "tagline": "Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.",
       "categories": [
@@ -3451,7 +3451,7 @@
     },
     {
       "apiName": "seFrOrderSummary",
-      "masterLabel": "SE FR - Order Summary",
+      "masterLabel": "CCO FR - Order Summary",
       "description": "",
       "tagline": "Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.",
       "categories": [
@@ -3579,7 +3579,7 @@
     },
     {
       "apiName": "seFrPipelineSnapshot",
-      "masterLabel": "SE FR - Pipeline Snapshot",
+      "masterLabel": "CCO FR - Pipeline Snapshot",
       "description": "B2B - Customer pipeline visualisation: open Opportunities grouped by Stage with per-column totals, unweighted and weighted totals at the top.",
       "tagline": "Account-level pipeline visualization with summary tiles and one column per Opportunity stage.",
       "categories": [
@@ -3687,7 +3687,7 @@
     },
     {
       "apiName": "seFrPromptLauncher",
-      "masterLabel": "SE FR - Prompt Launcher",
+      "masterLabel": "CCO FR - Prompt Launcher",
       "description": "Configurable AI panel that runs Salesforce Prompt Templates via Invocable Actions. Drop on any page, the SE picks which prompts to expose. Auto-fills record context, prompts requiring user input show a small form. HTML responses rendered with formatting.",
       "tagline": "Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.",
       "categories": [
@@ -3854,7 +3854,7 @@
     },
     {
       "apiName": "seFrRecordHighlights",
-      "masterLabel": "SE FR - Record Highlights",
+      "masterLabel": "CCO FR - Record Highlights",
       "description": "B2B / B2C - Custom highlights panel with round image and configurable fields/actions. Works on Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote - can display the current record or its parent Account (recordSource property).",
       "tagline": "Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.",
       "categories": [
@@ -4008,7 +4008,7 @@
     },
     {
       "apiName": "seFrRelatedRecordCard",
-      "masterLabel": "SE FR - Related Record Card",
+      "masterLabel": "CCO FR - Related Record Card",
       "description": "B2B / B2C - Vertical card that displays a related record (the Account of a Contact/Case/Opp, or the primary Contact of an Account). Picks the counterpart automatically from the record's object type. Bilingual EN / FR. Industry-agnostic defaults.",
       "tagline": "Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.",
       "categories": [
@@ -4140,7 +4140,7 @@
     },
     {
       "apiName": "seFrRevenueDashboard",
-      "masterLabel": "SE FR - Revenue Dashboard",
+      "masterLabel": "CCO FR - Revenue Dashboard",
       "description": "B2B - Account-level 3-year revenue mini-dashboard. Bilingual EN / FR via the language property.",
       "tagline": "3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.",
       "categories": [
@@ -4310,7 +4310,7 @@
     },
     {
       "apiName": "seFrSmartRecommendations",
-      "masterLabel": "SE FR - Smart Recommendations",
+      "masterLabel": "CCO FR - Smart Recommendations",
       "description": "Context-aware recommended actions (Next Best Action).",
       "tagline": "Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.",
       "categories": [
@@ -4638,7 +4638,7 @@
     },
     {
       "apiName": "seFrSplashBanner",
-      "masterLabel": "SE FR - Splash Banner",
+      "masterLabel": "CCO FR - Splash Banner",
       "description": "Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).",
       "tagline": "Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.",
       "categories": [
@@ -4780,7 +4780,7 @@
     },
     {
       "apiName": "seFrTelesalesRepHome",
-      "masterLabel": "SE FR - Telesales - Rep Home",
+      "masterLabel": "CCO FR - Telesales - Rep Home",
       "description": "B2B - Telesales Home page. KPI tiles, incoming cases, orders to validate, mini-charts, calls, news. Bilingual EN/FR via the language property.",
       "tagline": "Telesales rep home page with KPIs, live cases and orders tables, calls to make and 3 mini charts.",
       "categories": [
@@ -4852,7 +4852,7 @@
           "type": "String",
           "label": "Greeting highlight color (hex)",
           "default": "#0176d3",
-          "description": "Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue."
+          "description": "Applied to **bold** segments of the greeting. Defaults to the CCO FR brand blue."
         },
         {
           "name": "caseStatusesCsv",
@@ -5096,7 +5096,7 @@
     },
     {
       "apiName": "seFrTerritoryMap",
-      "masterLabel": "SE FR - Territory Map",
+      "masterLabel": "CCO FR - Territory Map",
       "description": "Sales / Field Sales - Map view of the territory: Accounts pinned by billing geo, color-coded by open pipeline, with side filters (Owner, RecordType, Open amount range, Stages, Case status, Type, Industry + name search), KPI tiles and CSV export.",
       "tagline": "Interactive territory map with geocoded Accounts, pipeline color coding, sidebar filters and CSV export.",
       "categories": [
@@ -5252,7 +5252,7 @@
     },
     {
       "apiName": "seFrTimelinePhases",
-      "masterLabel": "SE FR - Timeline Phases",
+      "masterLabel": "CCO FR - Timeline Phases",
       "description": "B2B / B2C - Horizontal multi-phase timeline (e.g. customer journey / project steps). Phases are JSON-configured with labels, target dates and done flags. A vertical \"Today\" marker shows current position.",
       "tagline": "Horizontal multi-phase timeline with date axis, 'Today' marker and done / pending state per phase.",
       "categories": [
@@ -5349,7 +5349,7 @@
     },
     {
       "apiName": "seFrVoiceNoteTaker",
-      "masterLabel": "SE FR - Voice Note Taker",
+      "masterLabel": "CCO FR - Voice Note Taker",
       "description": "Dictate a voice note and save it as a completed Task linked to the current record. Bilingual EN / FR.",
       "tagline": "Dictate a voice note via the Web Speech API and save it as a completed Task linked to the current record.",
       "categories": [
@@ -5495,17 +5495,17 @@
     }
   ],
   "byCategory": {
+    "Geo & Field": [
+      "seFrNearbyAccountsMap",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
+    ],
     "Dashboards & KPIs": [
       "seFrFieldRepHome",
       "seFrKpiLauncher",
       "seFrMetricTile",
       "seFrRevenueDashboard",
       "seFrTelesalesRepHome"
-    ],
-    "Geo & Field": [
-      "seFrNearbyAccountsMap",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
     ],
     "Agentforce & AI": [
       "seFrAgentforceHeader",
@@ -5521,9 +5521,10 @@
       "seFrOrderSummary",
       "seFrTimelinePhases"
     ],
-    "Transverse": [
-      "seFrFilesGallery",
-      "seFrSplashBanner"
+    "Marketing & Data": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrMetricTile"
     ],
     "Account 360°": [
       "seFrAccountHealth",
@@ -5539,57 +5540,12 @@
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard"
     ],
-    "Marketing & Data": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrMetricTile"
+    "Transverse": [
+      "seFrFilesGallery",
+      "seFrSplashBanner"
     ]
   },
   "byPersona": {
-    "Telesales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderEntry",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTelesalesRepHome"
-    ],
-    "Retail": [
-      "seFrCustomerSalesSummary"
-    ],
-    "FieldSales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFieldRepHome",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrNearbyAccountsMap",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
-    ],
-    "Service": [
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderSummary",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
-    ],
     "Sales": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -5619,6 +5575,50 @@
       "seFrRelatedRecordCard",
       "seFrSmartRecommendations"
     ],
+    "FieldSales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFieldRepHome",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrNearbyAccountsMap",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
+    ],
+    "Telesales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderEntry",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTelesalesRepHome"
+    ],
+    "Retail": [
+      "seFrCustomerSalesSummary"
+    ],
+    "Service": [
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderSummary",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
+    ],
     "All": [
       "seFrAgentforceHeader",
       "seFrKpiLauncher",
@@ -5630,9 +5630,8 @@
     ]
   },
   "bySurface": {
-    "HomePage": [
+    "AppPage": [
       "seFrActiveSegments",
-      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrFieldRepHome",
       "seFrKanbanBoard",
@@ -5676,8 +5675,9 @@
       "seFrTimelinePhases",
       "seFrVoiceNoteTaker"
     ],
-    "AppPage": [
+    "HomePage": [
       "seFrActiveSegments",
+      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrFieldRepHome",
       "seFrKanbanBoard",

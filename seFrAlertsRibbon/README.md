@@ -23,7 +23,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Alerts Ribbon (`seFrAlertsRibbon`)
+# CCO FR - Alerts Ribbon (`seFrAlertsRibbon`)
 
 Configurable alerts ribbon. Two complementary sources for the alert list:
 

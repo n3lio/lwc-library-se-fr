@@ -459,7 +459,13 @@ h2.section-title .count { color: var(--text-muted); font-size: 11px; font-weight
 /* DETAIL PAGE */
 .detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 36px; align-items: start; }
 .detail-main { min-width: 0; }
-.detail-side { position: sticky; top: 76px; }
+/* Right pane: sticky to the top of the viewport AND scrollable on its own
+   when its content exceeds the viewport height. The left pane scrolls with
+   the page as usual. The two scrolls are visually independent. */
+.detail-side { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; padding-right: 4px; }
+.detail-side::-webkit-scrollbar { width: 6px; }
+.detail-side::-webkit-scrollbar-thumb { background: rgba(108, 99, 255, 0.18); border-radius: 3px; }
+.detail-side::-webkit-scrollbar-thumb:hover { background: rgba(108, 99, 255, 0.32); }
 .detail-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
 .detail-hero .emoji { width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg, var(--brand-light) 0%, var(--accent-light) 100%); display: grid; place-items: center; font-size: 26px; flex-shrink: 0; }
 .detail-hero h1 { font-size: 30px; margin-bottom: 4px; }

@@ -28,7 +28,7 @@ screenshots: []
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account
-- **App Builder label:** `SE FR - Account Health`
+- **App Builder label:** `CCO FR - Account Health`
 
 ## Apex dependency
 `SE_FR_AccountHealthController.getSnapshot(accountId)`. Schema-safe on optional custom fields (`NPS__c`, `SDO_MAPS_Days_Since_Last_Visit__c`).
@@ -58,7 +58,7 @@ Clamped to [0, 100]. Level thresholds: ≥85 Excellent, ≥65 Healthy, ≥45 Wat
 ## Install
 1. Deploy `classes/SE_FR_AccountHealthController.cls`.
 2. Unzip `seFrAccountHealth.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Account Health` on an Account record page.
+3. Drop `CCO FR - Account Health` on an Account record page.
 
 ## Data enrichment prerequisites
 The score is only as rich as the data. On a fresh SDO, many Accounts will score 50 (neutral — no signal fires). To get a varied demo:

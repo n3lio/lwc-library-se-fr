@@ -23,7 +23,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Metric Tile (`seFrMetricTile`)
+# CCO FR - Metric Tile (`seFrMetricTile`)
 
 Single-metric tile with a configurable inline trend chart. **4 chart styles** (line / area / bar / mini-donut), optional **comparison series**, **target line**, and **currency formatting** via `Intl.NumberFormat`.
 

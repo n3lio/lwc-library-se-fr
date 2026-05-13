@@ -26,7 +26,7 @@ Today's calendar for the running user, as a **vertical timeline** sized to fit a
 
 ## Where to drop it
 - **Targets:** Home Page, App Page, Record Page
-- **App Builder label:** `SE FR - My Events`
+- **App Builder label:** `CCO FR - My Events`
 
 ## Apex dependency
 `SE_FR_AgendaController.getMyEvents(daysAhead, maxRows)` — shared Apex class, standard fields only.
@@ -64,7 +64,7 @@ Today's calendar for the running user, as a **vertical timeline** sized to fit a
 ## Install
 1. Deploy `SE_FR_AgendaController` (bundled in `classes/` here; also lives in `_shared_apex/`).
 2. Unzip `seFrMyEvents.zip`, deploy the LWC bundle.
-3. Drop `SE FR - My Events` on the right column of a Home / App / Record page.
+3. Drop `CCO FR - My Events` on the right column of a Home / App / Record page.
 
 ## Prerequisites — user timezone
 

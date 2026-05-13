@@ -32,7 +32,7 @@ All values are **pre-filled from App Builder defaults** and **editable on the pa
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Object:** Account
-- **App Builder label:** `SE FR - Account Strategy Plan`
+- **App Builder label:** `CCO FR - Account Strategy Plan`
 
 ## Apex dependencies
 None.
@@ -64,7 +64,7 @@ None.
 
 ## Install
 1. Unzip `seFrAccountStrategyPlan.zip`, deploy the LWC bundle.
-2. Drop `SE FR - Account Strategy Plan` on an Account record page.
+2. Drop `CCO FR - Account Strategy Plan` on an Account record page.
 3. Configure the defaults to match the account you're showing.
 
 ## Legacy

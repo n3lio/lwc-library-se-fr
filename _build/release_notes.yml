@@ -43,7 +43,7 @@
     fr: Bilingue FR / EN sur l’ensemble de la lib
     en: Bilingual FR / EN across the board
   body:
-    fr: Tous les composants (sauf <code>seFrAgentforceHeader</code>) exposent désormais une prop <code>language</code> avec dictionnaires FR/EN complets. Les valeurs App Builder restent prioritaires — un SE FR peut démo en FR avec quelques labels en allemand sans changer de langue globale.
+    fr: Tous les composants (sauf <code>seFrAgentforceHeader</code>) exposent désormais une prop <code>language</code> avec dictionnaires FR/EN complets. Les valeurs App Builder restent prioritaires — un CCO FR peut démo en FR avec quelques labels en allemand sans changer de langue globale.
     en: Every component (except <code>seFrAgentforceHeader</code>) now exposes a <code>language</code> prop with full FR/EN dictionaries. App Builder values still win — a French SE demoing to a German prospect can override individual labels without switching the whole language.
 
 - version: "2.4"

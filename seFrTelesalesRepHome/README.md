@@ -28,7 +28,7 @@ screenshots: []
 
 ## Where to drop it
 - **Target:** Lightning Home Page, App Page (**not Record**)
-- **App Builder label:** `SE FR - Telesales — Rep Home`
+- **App Builder label:** `CCO FR - Telesales — Rep Home`
 
 ## Apex dependency
 `SE_FR_TelesalesController` (bundled in `classes/`):

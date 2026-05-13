@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - My Tasks</masterLabel>
+    <masterLabel>CCO FR - My Tasks</masterLabel>
     <description>B2B / B2C - Compact "My Tasks" panel for a sidebar column. Interactive completion checkbox, filter dropdown, auto-grouping by Overdue / Today / Tomorrow / This week / Later, optional quick actions, and "New task" shortcut.</description>
     <targets>
         <target>lightning__HomePage</target>

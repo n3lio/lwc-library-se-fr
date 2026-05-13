@@ -19,7 +19,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Timeline Phases (`seFrTimelinePhases`)
+# CCO FR - Timeline Phases (`seFrTimelinePhases`)
 
 Horizontal multi-phase timeline. Visualizes a journey, project, or sales-cycle with phases positioned on a date axis, a "Today" marker, and a done / pending state per phase.
 

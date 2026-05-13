@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Metric Tile</masterLabel>
+    <masterLabel>CCO FR - Metric Tile</masterLabel>
     <description>B2B / B2C - Single KPI tile with inline trend chart. 4 chart styles (line, area, bar, mini-donut), optional comparison series, target line, currency formatting. Bilingual FR / EN.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -39,7 +39,7 @@
             <property name="yMax" type="String" label="Y max (when scaling = fixed)" />
 
             <!-- Visual -->
-            <property name="accentColor" type="String" default="#0176d3" label="Accent color (hex)" description="Color of the primary chart series. Defaults to SE FR brand blue." />
+            <property name="accentColor" type="String" default="#0176d3" label="Accent color (hex)" description="Color of the primary chart series. Defaults to CCO FR brand blue." />
             <property name="donutTrack" type="String" default="#E5E5E5" label="Mini-donut track color (hex)" description="Background ring color. Used only when chartStyle = mini-donut." />
             <property name="height" type="Integer" default="70" label="Chart height (px)" description="Internal viewBox height. CSS scales the SVG to fit the column width." />
             <property name="width" type="Integer" default="0" label="Chart width override (px)" description="0 = auto (default ~600px viewBox). Set a fixed value for very narrow tiles." />

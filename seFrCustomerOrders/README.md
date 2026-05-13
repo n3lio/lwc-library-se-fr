@@ -29,7 +29,7 @@ screenshots: []
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account, Contact
-- **App Builder label:** `SE FR - Customer Orders`
+- **App Builder label:** `CCO FR - Customer Orders`
 
 ## What "linked to a customer" means
 When placed on an **Account** page, the component shows `Order.AccountId = recordId`.
@@ -82,7 +82,7 @@ Returns:
 ## Install
 1. Deploy `classes/SE_FR_CustomerOrdersController.cls`.
 2. Unzip `seFrCustomerOrders.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Customer Orders` on an Account or Contact record page.
+3. Drop `CCO FR - Customer Orders` on an Account or Contact record page.
 4. Adjust the `historyLimit`, `statusFilter`, `defaultSort`, `language` in App Builder as needed.
 
 ## Data enrichment prerequisites

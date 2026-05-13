@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SE FR Library — Knowledge Base</title>
+<title>CCO FR Library — Knowledge Base</title>
 <style>
   @page { size: A4; margin: 18mm 16mm; }
   body {
@@ -119,9 +119,9 @@
 <body>
 
 <div class="cover">
-  <h1>SE FR Component Library</h1>
+  <h1>CCO FR Component Library</h1>
   <div class="sub">Knowledge base — for the LWC_Library_Agent</div>
-  <div class="meta">Generated 2026-05-09 · Solution Engineering France</div>
+  <div class="meta">Generated 2026-05-13 · Solution Engineering France</div>
 </div>
 
 <div class="toc">
@@ -172,7 +172,7 @@
 
 <section id="canonical-table" class="component-section">
   <h1 class="section-title">Canonical component table</h1>
-  <div class="section-body"><p><strong>How to read this table:</strong> every row is a real component. Names follow the <code>seFr*</code> convention and are the only valid component identifiers — anything else (e.g. &quot;Account 360°&quot;, &quot;Performance&quot;) is a category or persona heading, not a component. When asked &quot;what components are there?&quot;, list rows from this table.</p><p><strong>Per-component details</strong> (full prose, key props, edge-cases, install steps, data prereqs) live further down in this document under the &quot;Component &middot; <code>seFrXxx</code>&quot; sections.</p><table><thead><tr><th>API name</th><th>Master label</th><th>Tagline</th><th>Categories</th><th>Personas</th><th>Surfaces</th><th>Objects</th><th>Data mode</th><th>Mobile-ready</th><th>Release status</th><th>Apex deps</th><th>Original author</th></tr></thead><tbody><tr><td><code>seFrAccountHealth</code></td><td>SE FR - Account Health</td><td>Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_AccountHealthController</td><td>Lionel Braun</td></tr><tr><td><code>seFrAccountStrategyPlan</code></td><td>SE FR - Account Strategy Plan</td><td>Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrActiveSegments</code></td><td>SE FR - Active Segments</td><td>Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</td><td>Marketing & Data</td><td>Marketing</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrActivityFeed</code></td><td>SE FR - Activity Feed</td><td>Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_ActivityFeedController</td><td>Lionel Braun</td></tr><tr><td><code>seFrAgentforceHeader</code></td><td>SE FR - Agentforce Header</td><td>Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</td><td>Agentforce & AI</td><td>All</td><td>HomePage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrAlertsRibbon</code></td><td>SE FR - Alerts Ribbon</td><td>Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.</td><td>Account 360°</td><td>Sales, Service</td><td>AppPage, HomePage, RecordPage</td><td>Account, Contact, Case, Opportunity, Lead, Order, Contract</td><td>mock</td><td>no</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrConsentManager</code></td><td>SE FR - Consent Manager</td><td>Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.</td><td>Marketing & Data</td><td>Marketing, Service</td><td>RecordPage</td><td>Contact, Lead, Account</td><td>live</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrContactCard</code></td><td>SE FR - Contact Card</td><td>Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</td><td>Account 360°, Agentforce & AI</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Contact, Account, Case, Opportunity, Order, Lead</td><td>hybrid</td><td>yes</td><td>new</td><td>SE_FR_ContactCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Charly Ansel</td></tr><tr><td><code>seFrContactsCarousel</code></td><td>SE FR - Contacts Carousel</td><td>Horizontal carousel of an Account's Contacts with avatars, role badges and quick Email / Call actions.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_ContactsCarouselController</td><td>Lionel Braun</td></tr><tr><td><code>seFrCustomerOrders</code></td><td>SE FR - Customer Orders</td><td>Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.</td><td>Account 360°</td><td>Sales, Telesales</td><td>RecordPage</td><td>Account, Contact</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_CustomerOrdersController</td><td>Lionel Braun</td></tr><tr><td><code>seFrCustomerSalesSummary</code></td><td>SE FR - Customer Sales Summary</td><td>B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.</td><td>Account 360°</td><td>Retail, Marketing</td><td>RecordPage</td><td>Contact, Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrFieldRepHome</code></td><td>SE FR - Field Sales - Rep Home</td><td>Field Sales rep home page with greeting, KPIs, priority accounts, hot leads, product penetration and campaign calendar.</td><td>Dashboards & KPIs</td><td>FieldSales</td><td>AppPage, HomePage</td><td>Any</td><td>hybrid</td><td>no</td><td>stable</td><td>SE_FR_FieldSalesController</td><td>Lionel Braun</td></tr><tr><td><code>seFrFilesGallery</code></td><td>SE FR - Files Gallery</td><td>Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</td><td>Transverse</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Any</td><td>live</td><td>yes</td><td>new</td><td>SE_FR_FilesGalleryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrKanbanBoard</code></td><td>SE FR - Kanban Board</td><td>Generic kanban board with native drag & drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).</td><td>Sales Productivity</td><td>Service, Telesales</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>new</td><td>SE_FR_KanbanBoardController</td><td>Lionel Braun</td></tr><tr><td><code>seFrKpiLauncher</code></td><td>SE FR - KPI Launcher</td><td>Configurable grid of 3-6 clickable KPI tiles with icon, value, color and link, ready out of the box.</td><td>Dashboards & KPIs</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrMetricTile</code></td><td>SE FR - Metric Tile</td><td>Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.</td><td>Dashboards & KPIs, Marketing & Data</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrMyEvents</code></td><td>SE FR - My Events</td><td>Today's calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</td><td>Sales Productivity</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_AgendaController, SE_FR_AgendaController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrMyTasks</code></td><td>SE FR - My Tasks</td><td>Compact 'My Tasks' sidebar panel grouped by due date with one-click completion.</td><td>Sales Productivity</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_AgendaController, SE_FR_AgendaController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrNearbyAccountsMap</code></td><td>SE FR - Nearby Accounts Map</td><td>Interactive map of nearby accounts using the browser's geolocation with Haversine distance sort.</td><td>Geo & Field</td><td>FieldSales</td><td>AppPage, HomePage</td><td>Any</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_NearbyAccountsController, SE_FR_NearbyAccountsController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrOrderEntry</code></td><td>SE FR - Order Entry</td><td>Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.</td><td>Sales Productivity</td><td>Telesales</td><td>RecordPage</td><td>Account, Case</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_OrderEntryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrOrderSummary</code></td><td>SE FR - Order Summary</td><td>Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.</td><td>Sales Productivity</td><td>Service</td><td>RecordPage</td><td>Case</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_OrderSummaryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrPipelineSnapshot</code></td><td>SE FR - Pipeline Snapshot</td><td>Account-level pipeline visualization with summary tiles and one column per Opportunity stage.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account, Opportunity</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_PipelineSnapshotController</td><td>Lionel Braun</td></tr><tr><td><code>seFrPromptLauncher</code></td><td>SE FR - Prompt Launcher</td><td>Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</td><td>Agentforce & AI</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>new</td><td>SE_FR_PromptLauncherController</td><td>Lionel Braun</td></tr><tr><td><code>seFrRecordHighlights</code></td><td>SE FR - Record Highlights</td><td>Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</td><td>Account 360°</td><td>All</td><td>RecordPage</td><td>Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_RecordHighlightsController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrRelatedRecordCard</code></td><td>SE FR - Related Record Card</td><td>Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact, Case, Opportunity, Order</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_RelatedRecordCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrRevenueDashboard</code></td><td>SE FR - Revenue Dashboard</td><td>3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.</td><td>Account 360°, Dashboards & KPIs</td><td>Sales, FieldSales, Telesales</td><td>RecordPage</td><td>Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrSmartRecommendations</code></td><td>SE FR - Smart Recommendations</td><td>Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.</td><td>Agentforce & AI</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact, Case, Order</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrSplashBanner</code></td><td>SE FR - Splash Banner</td><td>Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.</td><td>Transverse</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrTelesalesRepHome</code></td><td>SE FR - Telesales - Rep Home</td><td>Telesales rep home page with KPIs, live cases and orders tables, calls to make and 3 mini charts.</td><td>Dashboards & KPIs</td><td>Telesales</td><td>AppPage, HomePage</td><td>Any</td><td>hybrid</td><td>no</td><td>stable</td><td>SE_FR_TelesalesController</td><td>Lionel Braun</td></tr><tr><td><code>seFrTerritoryMap</code></td><td>SE FR - Territory Map</td><td>Interactive territory map with geocoded Accounts, pipeline color coding, sidebar filters and CSV export.</td><td>Geo & Field</td><td>FieldSales, Sales</td><td>AppPage, HomePage</td><td>Any</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_TerritoryMapController</td><td>Lionel Braun</td></tr><tr><td><code>seFrTimelinePhases</code></td><td>SE FR - Timeline Phases</td><td>Horizontal multi-phase timeline with date axis, 'Today' marker and done / pending state per phase.</td><td>Sales Productivity</td><td>Sales</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrVoiceNoteTaker</code></td><td>SE FR - Voice Note Taker</td><td>Dictate a voice note via the Web Speech API and save it as a completed Task linked to the current record.</td><td>Geo & Field</td><td>FieldSales</td><td>RecordPage</td><td>Account, Contact, Lead, Opportunity</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_VoiceNoteController, SE_FR_VoiceNoteController (shared)</td><td>Lionel Braun</td></tr></tbody></table></div>
+  <div class="section-body"><p><strong>How to read this table:</strong> every row is a real component. Names follow the <code>seFr*</code> convention and are the only valid component identifiers — anything else (e.g. &quot;Account 360°&quot;, &quot;Performance&quot;) is a category or persona heading, not a component. When asked &quot;what components are there?&quot;, list rows from this table.</p><p><strong>Per-component details</strong> (full prose, key props, edge-cases, install steps, data prereqs) live further down in this document under the &quot;Component &middot; <code>seFrXxx</code>&quot; sections.</p><table><thead><tr><th>API name</th><th>Master label</th><th>Tagline</th><th>Categories</th><th>Personas</th><th>Surfaces</th><th>Objects</th><th>Data mode</th><th>Mobile-ready</th><th>Release status</th><th>Apex deps</th><th>Original author</th></tr></thead><tbody><tr><td><code>seFrAccountHealth</code></td><td>CCO FR - Account Health</td><td>Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_AccountHealthController</td><td>Lionel Braun</td></tr><tr><td><code>seFrAccountStrategyPlan</code></td><td>CCO FR - Account Strategy Plan</td><td>Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrActiveSegments</code></td><td>CCO FR - Active Segments</td><td>Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</td><td>Marketing & Data</td><td>Marketing</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrActivityFeed</code></td><td>CCO FR - Activity Feed</td><td>Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_ActivityFeedController</td><td>Lionel Braun</td></tr><tr><td><code>seFrAgentforceHeader</code></td><td>CCO FR - Agentforce Header</td><td>Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</td><td>Agentforce & AI</td><td>All</td><td>HomePage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrAlertsRibbon</code></td><td>CCO FR - Alerts Ribbon</td><td>Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.</td><td>Account 360°</td><td>Sales, Service</td><td>AppPage, HomePage, RecordPage</td><td>Account, Contact, Case, Opportunity, Lead, Order, Contract</td><td>mock</td><td>no</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrConsentManager</code></td><td>CCO FR - Consent Manager</td><td>Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.</td><td>Marketing & Data</td><td>Marketing, Service</td><td>RecordPage</td><td>Contact, Lead, Account</td><td>live</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrContactCard</code></td><td>CCO FR - Contact Card</td><td>Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</td><td>Account 360°, Agentforce & AI</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Contact, Account, Case, Opportunity, Order, Lead</td><td>hybrid</td><td>yes</td><td>new</td><td>SE_FR_ContactCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Charly Ansel</td></tr><tr><td><code>seFrContactsCarousel</code></td><td>CCO FR - Contacts Carousel</td><td>Horizontal carousel of an Account's Contacts with avatars, role badges and quick Email / Call actions.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_ContactsCarouselController</td><td>Lionel Braun</td></tr><tr><td><code>seFrCustomerOrders</code></td><td>CCO FR - Customer Orders</td><td>Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.</td><td>Account 360°</td><td>Sales, Telesales</td><td>RecordPage</td><td>Account, Contact</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_CustomerOrdersController</td><td>Lionel Braun</td></tr><tr><td><code>seFrCustomerSalesSummary</code></td><td>CCO FR - Customer Sales Summary</td><td>B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.</td><td>Account 360°</td><td>Retail, Marketing</td><td>RecordPage</td><td>Contact, Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrFieldRepHome</code></td><td>CCO FR - Field Sales - Rep Home</td><td>Field Sales rep home page with greeting, KPIs, priority accounts, hot leads, product penetration and campaign calendar.</td><td>Dashboards & KPIs</td><td>FieldSales</td><td>AppPage, HomePage</td><td>Any</td><td>hybrid</td><td>no</td><td>stable</td><td>SE_FR_FieldSalesController</td><td>Lionel Braun</td></tr><tr><td><code>seFrFilesGallery</code></td><td>CCO FR - Files Gallery</td><td>Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</td><td>Transverse</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Any</td><td>live</td><td>yes</td><td>new</td><td>SE_FR_FilesGalleryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrKanbanBoard</code></td><td>CCO FR - Kanban Board</td><td>Generic kanban board with native drag & drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).</td><td>Sales Productivity</td><td>Service, Telesales</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>new</td><td>SE_FR_KanbanBoardController</td><td>Lionel Braun</td></tr><tr><td><code>seFrKpiLauncher</code></td><td>CCO FR - KPI Launcher</td><td>Configurable grid of 3-6 clickable KPI tiles with icon, value, color and link, ready out of the box.</td><td>Dashboards & KPIs</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrMetricTile</code></td><td>CCO FR - Metric Tile</td><td>Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.</td><td>Dashboards & KPIs, Marketing & Data</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrMyEvents</code></td><td>CCO FR - My Events</td><td>Today's calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</td><td>Sales Productivity</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_AgendaController, SE_FR_AgendaController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrMyTasks</code></td><td>CCO FR - My Tasks</td><td>Compact 'My Tasks' sidebar panel grouped by due date with one-click completion.</td><td>Sales Productivity</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_AgendaController, SE_FR_AgendaController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrNearbyAccountsMap</code></td><td>CCO FR - Nearby Accounts Map</td><td>Interactive map of nearby accounts using the browser's geolocation with Haversine distance sort.</td><td>Geo & Field</td><td>FieldSales</td><td>AppPage, HomePage</td><td>Any</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_NearbyAccountsController, SE_FR_NearbyAccountsController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrOrderEntry</code></td><td>CCO FR - Order Entry</td><td>Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.</td><td>Sales Productivity</td><td>Telesales</td><td>RecordPage</td><td>Account, Case</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_OrderEntryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrOrderSummary</code></td><td>CCO FR - Order Summary</td><td>Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.</td><td>Sales Productivity</td><td>Service</td><td>RecordPage</td><td>Case</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_OrderSummaryController</td><td>Lionel Braun</td></tr><tr><td><code>seFrPipelineSnapshot</code></td><td>CCO FR - Pipeline Snapshot</td><td>Account-level pipeline visualization with summary tiles and one column per Opportunity stage.</td><td>Account 360°</td><td>Sales</td><td>RecordPage</td><td>Account, Opportunity</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_PipelineSnapshotController</td><td>Lionel Braun</td></tr><tr><td><code>seFrPromptLauncher</code></td><td>CCO FR - Prompt Launcher</td><td>Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</td><td>Agentforce & AI</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>live</td><td>no</td><td>new</td><td>SE_FR_PromptLauncherController</td><td>Lionel Braun</td></tr><tr><td><code>seFrRecordHighlights</code></td><td>CCO FR - Record Highlights</td><td>Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</td><td>Account 360°</td><td>All</td><td>RecordPage</td><td>Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_RecordHighlightsController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrRelatedRecordCard</code></td><td>CCO FR - Related Record Card</td><td>Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.</td><td>Account 360°</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact, Case, Opportunity, Order</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_RelatedRecordCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</td><td>Lionel Braun</td></tr><tr><td><code>seFrRevenueDashboard</code></td><td>CCO FR - Revenue Dashboard</td><td>3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.</td><td>Account 360°, Dashboards & KPIs</td><td>Sales, FieldSales, Telesales</td><td>RecordPage</td><td>Account</td><td>mock</td><td>no</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrSmartRecommendations</code></td><td>CCO FR - Smart Recommendations</td><td>Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.</td><td>Agentforce & AI</td><td>Sales, FieldSales, Telesales, Service, Marketing</td><td>RecordPage</td><td>Account, Contact, Case, Order</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrSplashBanner</code></td><td>CCO FR - Splash Banner</td><td>Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.</td><td>Transverse</td><td>All</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>new</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrTelesalesRepHome</code></td><td>CCO FR - Telesales - Rep Home</td><td>Telesales rep home page with KPIs, live cases and orders tables, calls to make and 3 mini charts.</td><td>Dashboards & KPIs</td><td>Telesales</td><td>AppPage, HomePage</td><td>Any</td><td>hybrid</td><td>no</td><td>stable</td><td>SE_FR_TelesalesController</td><td>Lionel Braun</td></tr><tr><td><code>seFrTerritoryMap</code></td><td>CCO FR - Territory Map</td><td>Interactive territory map with geocoded Accounts, pipeline color coding, sidebar filters and CSV export.</td><td>Geo & Field</td><td>FieldSales, Sales</td><td>AppPage, HomePage</td><td>Any</td><td>live</td><td>no</td><td>stable</td><td>SE_FR_TerritoryMapController</td><td>Lionel Braun</td></tr><tr><td><code>seFrTimelinePhases</code></td><td>CCO FR - Timeline Phases</td><td>Horizontal multi-phase timeline with date axis, 'Today' marker and done / pending state per phase.</td><td>Sales Productivity</td><td>Sales</td><td>AppPage, HomePage, RecordPage</td><td>Any</td><td>mock</td><td>yes</td><td>stable</td><td>—</td><td>Lionel Braun</td></tr><tr><td><code>seFrVoiceNoteTaker</code></td><td>CCO FR - Voice Note Taker</td><td>Dictate a voice note via the Web Speech API and save it as a completed Task linked to the current record.</td><td>Geo & Field</td><td>FieldSales</td><td>RecordPage</td><td>Account, Contact, Lead, Opportunity</td><td>live</td><td>yes</td><td>stable</td><td>SE_FR_VoiceNoteController, SE_FR_VoiceNoteController (shared)</td><td>Lionel Braun</td></tr></tbody></table></div>
 </section>
 
 <section id="cookbook" class="component-section">
@@ -189,6 +189,8 @@
 <section id="release-notes" class="component-section">
   <h1 class="section-title">Release notes</h1>
   <div class="section-body"><p>Curated release history. Newest first.</p>
+<h3>v — </h3><p><strong>What's next on the roadmap</strong></p><p><ul class="release-bullets"><li><strong>🤖 Submit via org-connect (no-zip)</strong> — connect your org, tick the components, the site bundles and validates for you. No more manual uploads.</li><li><strong>🧪 Auto-deploy + validity check</strong> — each submission gets deployed to a sandbox to catch errors (broken components, missing deps, schema-unsafe). An MCP agent walks the contributor through fixes.</li><li><strong>👥 Contributor space</strong> — personal page per contributor: track components, downloads, deploys, user feedback, new submissions in a few clicks.</li><li><strong>🏆 Gamification</strong> — badges, leaderboard, per-component impact counters (downloads, deploys, likes). Make contributing rewarding and visible.</li><li><strong>📊 Admin / steering page</strong> — centralized dashboard: full analytics, submission and feedback review, contributor management, moderation.</li></ul></p>
+<h3>v2.9 — 2026-05-12</h3><p><strong>The site goes on Heroku, 1-click deploy to your demo org</strong></p><p>The site is now hosted on Heroku. Connect your org via OAuth, pick components or a cookbook, deploy in seconds — multi-select, bundles, confirmation modal, progress tracking and a persistent summary after deploy. New "See it live" button drops you in the showcase org read-only with no login. Full server-side usage tracking (Postgres) to steer the lib. Submit / Feedback / Contact forms persisted in DB and notified by email. Submit with attachment (.zip or .txt, 2 MB max).</p>
 <h3>v2.8 — 2026-05-08</h3><p><strong>Prompt Launcher rebuilt + manifest-driven pipeline</strong></p><p>The <code>seFrPromptLauncher</code> component replaces the old chat — it runs Salesforce Prompt Templates via Invocable Actions, with auto-injected record context and HTML / Markdown rendering. The library now runs on a central manifest that drives the README, deck, agent knowledge base and this site.</p>
 <h3>v2.7 — 2026-05-03</h3><p><strong>8 new components</strong></p><p>A big batch of generic, reusable components covering pipeline, timelines, contacts, kanban, KPIs, files and alerts — <code>seFrPipelineSnapshot</code>, <code>seFrTimelinePhases</code>, <code>seFrContactsCarousel</code>, <code>seFrAccountHealth</code>, <code>seFrKanbanBoard</code>, <code>seFrMetricTile</code>, <code>seFrFilesGallery</code>, <code>seFrAlertsRibbon</code>.</p>
 <h3>v2.6 — 2026-04-30</h3><p><strong>Bilingual FR / EN across the board</strong></p><p>Every component (except <code>seFrAgentforceHeader</code>) now exposes a <code>language</code> prop with full FR/EN dictionaries. App Builder values still win — a French SE demoing to a German prospect can override individual labels without switching the whole language.</p>
@@ -209,25 +211,30 @@
     <h2>Why this library</h2>
     <div class="about-4col">
       <div class="about-card v1">
-        <div class="about-emoji">⚡️</div>
-        <h3>Faster demos</h3>
+        <div class="about-card-head"><div class="about-emoji">⚡️</div><h3>Faster demos</h3></div>
         <p>Drop a vetted component on a page, configure via App Builder, demo in minutes — not days.</p>
       </div>
       <div class="about-card v2">
-        <div class="about-emoji">✨</div>
-        <h3>Prettier demos</h3>
+        <div class="about-card-head"><div class="about-emoji">✨</div><h3>Prettier demos</h3></div>
         <p>Easy wow. Components are visually polished — subtle animations, consistent palette, design care — so your demos go beyond the raw Lightning standard.</p>
       </div>
       <div class="about-card v3">
-        <div class="about-emoji">🧩</div>
-        <h3>Stay generic</h3>
+        <div class="about-card-head"><div class="about-emoji">🧩</div><h3>Stay generic</h3></div>
         <p>Every component is industry-neutral. Customize via properties, not by editing code.</p>
       </div>
       <div class="about-card v4">
-        <div class="about-emoji">🤝</div>
-        <h3>Share &amp; contribute</h3>
-        <p>One pool of components owned collectively by the SE France team.</p>
+        <div class="about-card-head"><div class="about-emoji">🤝</div><h3>Share &amp; contribute</h3></div>
+        <p>One pool of components, designed and maintained by the SE France team. Yours belongs here too.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="about-section about-cta">
+    <h2>Want to contribute?</h2>
+    <p>The library grows thanks to SEs who share their components. Add yours, or check out the SEs who already joined.</p>
+    <div>
+      
+      <a href="contributors.html" class="btn btn-ghost">See the contributors</a>
     </div>
   </section>
 
@@ -268,27 +275,6 @@
       <li><strong>Featured in cookbook</strong> — Cookbook recipes that bundle this component.</li>
       <li><strong>Often used with</strong> — components of the same category typically dropped together.</li>
     </ul>
-  </section>
-
-  <section class="about-section">
-    <h2>From browse to live demo in minutes</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Pick</h3>
-        <p>Browse the catalog, filter by persona / surface / data mode. Add multiple components to bundle.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Connect</h3>
-        <p>OAuth into your demo org. Tokens live in your browser session only.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Deploy</h3>
-        <p>Components land in your org. Drag-and-drop on the right page in App Builder. Tune props. Demo-ready.</p>
-      </div>
-    </div>
   </section></div>
 </section>
 
@@ -342,7 +328,7 @@ sf project deploy start \
         <li>Log in to your target org. Click the Lightning Studio icon in the Chrome toolbar.</li>
         <li>Create a new LWC with the same name (e.g. <code>seFrAccountHealth</code>). For each file in the bundle (<code>.js</code>, <code>.html</code>, <code>.css</code>, <code>.js-meta.xml</code>), open the local file, copy all content, paste it into the Lightning Studio editor, then <strong>Save</strong>.</li>
         <li>If the component has Apex dependencies, repeat the same flow for <em>Apex Class</em> (create the class, paste each <code>.cls</code>, save).</li>
-        <li>Open App Builder, drag the <code>SE FR - &lt;Name&gt;</code> component on the right page, configure the properties.</li>
+        <li>Open App Builder, drag the <code>CCO FR - &lt;Name&gt;</code> component on the right page, configure the properties.</li>
         <li><strong>Hard refresh</strong> the page (<code>Cmd</code>+<code>Shift</code>+<code>R</code> on Mac, <code>Ctrl</code>+<code>Shift</code>+<code>R</code> on Windows) to force the compiled bundle to reload.</li>
       </ol>
       <div class="callout">
@@ -350,12 +336,12 @@ sf project deploy start \
       </div>
 
       <h2 id="app-builder">Configure in App Builder</h2>
-      <p>Once the component is deployed, you find it in App Builder in the left palette under <code>SE FR - &lt;Name&gt;</code>. Drag it onto the page, the right panel exposes every <code>@api</code> property of the component.</p>
+      <p>Once the component is deployed, you find it in App Builder in the left palette under <code>CCO FR - &lt;Name&gt;</code>. Drag it onto the page, the right panel exposes every <code>@api</code> property of the component.</p>
 
       <h3>Palette naming conventions</h3>
       <ul>
         <li><strong>LWC API name</strong>: <code>seFr&lt;Name&gt;</code> (camelCase, no underscore). It’s the bundle folder name and internal HTML tag.</li>
-        <li><strong>App Builder master label</strong>: <code>SE FR - &lt;Human name&gt;</code>. This is what you see in the left palette and in the page title bar.</li>
+        <li><strong>App Builder master label</strong>: <code>CCO FR - &lt;Human name&gt;</code>. This is what you see in the left palette and in the page title bar.</li>
         <li><strong>Apex class</strong> (if applicable): <code>SE_FR_&lt;Name&gt;Controller</code>.</li>
       </ul>
 
@@ -393,8 +379,17 @@ LastActivityDate&lt;Today-30|info|utility:clock|Aucune activité depuis 30j||</p
       <p>This makes the components safe to drop on a brand-new org for a one-shot demo.</p>
 
       <h2 id="named-credential">Named Credential setup</h2>
-      <p>Some Agentforce-related components need a Named Credential called <code>Agentforce_API</code>. The full setup chain (Connected App + Auth Provider + External Credential + Permission Set Mapping + Named Credential) is in the technical user guide (FR).</p>
-      <p>👉 <a href="assets/user-guide-fr.md" target="_blank">Read the technical user guide (FR) →</a></p>
+      <p>A few Agentforce-related components — typically <code>seFrPromptLauncher</code>, and the "Summarize" button on <code>seFrContactCard</code> / <code>seFrSmartRecommendations</code> — make authenticated REST callouts to the org’s Salesforce API to run Prompt Templates. Without a Named Credential, these calls fail.</p>
+      <p>The expected Named Credential is <code>Agentforce_API</code> (library convention). It’s used to reach any <code>/services/data/...</code> endpoint of the org: Prompt Templates, Agent API, custom REST.</p>
+      <p>Setup ~10 minutes, done <strong>once per org</strong>. The chain: Connected App (scopes <code>api chatbot_api refresh_token einstein_gpt_api</code>) → <em>Salesforce</em>-type Auth Provider reusing the Connected App credentials → OAuth 2.0 / Browser Flow External Credential pointing to the Auth Provider → Permission Set mapping the External Credential principal to your user → Named Credential <code>Agentforce_API</code> pointing to <code>https://&lt;your-domain&gt;.my.salesforce.com</code> via the External Credential.</p>
+      <p class="note">Common pitfalls: <strong>PKCE</strong> is checked by default on both the Connected App AND the Auth Provider — uncheck on both. <strong>External Credential</strong> requires Spring ’23 or later. <strong>Permission Set mapping</strong> is done via the <em>External Credential Principal Access</em> section, not via Object/Field permissions. The <strong>Named Credential name</strong> must match <code>Agentforce_API</code> exactly (case-sensitive).</p>
+      <p>Quick test from the Developer Console:</p>
+      <pre>HttpRequest req = new HttpRequest();
+req.setEndpoint('callout:Agentforce_API/services/data/v62.0/actions/custom/generatePromptResponse');
+req.setMethod('GET');
+HttpResponse res = new Http().send(req);
+System.debug(res.getStatusCode() + ' ' + res.getBody().abbreviate(500));</pre>
+      <p class="note">Should return <strong>200</strong> + the prompt list. <strong>401/403</strong> = re-check External Credential / Permission Set. <strong>404</strong> = wrong URL. <em>"Named Credential not found"</em> = NC missing or misnamed.</p>
 
       <h2 id="data-compat">Compatibility with a standard SDO</h2>
       <p>Components run on the standard Salesforce data model with zero mandatory custom field. Everything they read (Account, Contact, Opportunity, Case, Order, Task, Event, ContentDocumentLink…) ships out of the box on any SDO.</p>
@@ -428,7 +423,7 @@ LastActivityDate&lt;Today-30|info|utility:clock|Aucune activité depuis 30j||</p
       <ul>
         <li><span>LWC folder / JS class</span> : <code>seFr</code> + PascalCase (ex : <code>seFrAccountStrategyPlan</code>)</li>
         <li><span>Apex class</span> : <code>SE_FR_</code> + PascalCase (ex : <code>SE_FR_AccountHealthController</code>)</li>
-        <li><span>App Builder master label</span> : <code>SE FR - &lt;Human name&gt;</code></li>
+        <li><span>App Builder master label</span> : <code>CCO FR - &lt;Human name&gt;</code></li>
         <li><span>Custom strings</span> : <span>French defaults, overridable via <code>language</code> or explicit prop</span></li>
       </ul>
 
@@ -454,7 +449,7 @@ LastActivityDate&lt;Today-30|info|utility:clock|Aucune activité depuis 30j||</p
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Account Health</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Account Health</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_AccountHealthController.getSnapshot(accountId)</code>. Schema-safe on optional custom fields (<code>NPS__c</code>, <code>SDO_MAPS_Days_Since_Last_Visit__c</code>).
@@ -489,7 +484,7 @@ Starts at 50 (neutral). Each signal adds / subtracts weighted points:
 <ol>
 <li>Deploy <code>classes/SE_FR_AccountHealthController.cls</code>.</li>
 <li>Unzip <code>seFrAccountHealth.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Account Health</code> on an Account record page.</li>
+<li>Drop <code>CCO FR - Account Health</code> on an Account record page.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
 The score is only as rich as the data. On a fresh SDO, many Accounts will score 50 (neutral — no signal fires). To get a varied demo:
@@ -510,7 +505,7 @@ The score is only as rich as the data. On a fresh SDO, many Accounts will score 
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Object:</strong> Account</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Account Strategy Plan</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Account Strategy Plan</code></li>
 </ul>
 <h2>Apex dependencies</h2>
 None.
@@ -548,7 +543,7 @@ None.
 <h2>Install</h2>
 <ol>
 <li>Unzip <code>seFrAccountStrategyPlan.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Account Strategy Plan</code> on an Account record page.</li>
+<li>Drop <code>CCO FR - Account Strategy Plan</code> on an Account record page.</li>
 <li>Configure the defaults to match the account you're showing.</li>
 </ol>
 <h2>Legacy</h2>
@@ -562,7 +557,7 @@ Props <code>logisticOptionsCsv</code>, <code>competitorOptionsCsv</code>, <code>
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Targets:</strong> Lightning Record Page, App Page, Home Page</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Active Segments</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Active Segments</code></li>
 </ul>
 <h2>Apex dependencies</h2>
 None.
@@ -582,7 +577,7 @@ None.
 <h2>Install</h2>
 <ol>
 <li>Unzip <code>seFrActiveSegments.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Active Segments</code> on any page and set <code>segmentsCsv</code> to the customer's segments.</li>
+<li>Drop <code>CCO FR - Active Segments</code> on any page and set <code>segmentsCsv</code> to the customer's segments.</li>
 </ol>
 <h2>Origin</h2>
 Genericized from the <code>krysActiveSegments</code> Krys demo component.</div>
@@ -596,7 +591,7 @@ Genericized from the <code>krysActiveSegments</code> Krys demo component.</div>
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account, Contact</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Activity Feed</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Activity Feed</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <ul>
@@ -659,7 +654,7 @@ On an <strong>Account</strong>, enabling <code>includeRelatedContacts</code> (de
 <ol>
 <li>Deploy <code>classes/SE_FR_ActivityFeedController.cls</code>.</li>
 <li>Unzip <code>seFrActivityFeed.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Activity Feed</code> on an Account or Contact record page.</li>
+<li>Drop <code>CCO FR - Activity Feed</code> on an Account or Contact record page.</li>
 <li>Verify that the Account/Contact page layout exposes the quick actions you listed in <code>enabledActionsCsv</code> — the toolbar buttons launch the standard quick actions of the object.</li>
 </ol>
 <h2>Prerequisites — user timezone</h2>
@@ -718,7 +713,7 @@ On an <strong>Account</strong>, enabling <code>includeRelatedContacts</code> (de
 
 <section id="seFrAlertsRibbon" class="component-section">
   <h1 class="section-title">Component · Alerts Ribbon (<code>seFrAlertsRibbon</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrAlertsRibbon</code> · <strong>Categories:</strong> Account 360° · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Account, Contact, Case, Opportunity, Lead, Order, Contract · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> none</p><h1>SE FR - Alerts Ribbon (<code>seFrAlertsRibbon</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrAlertsRibbon</code> · <strong>Categories:</strong> Account 360° · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Account, Contact, Case, Opportunity, Lead, Order, Contract · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> none</p><h1>CCO FR - Alerts Ribbon (<code>seFrAlertsRibbon</code>)</h1>
 <p>Configurable alerts ribbon. Two complementary sources for the alert list:</p>
 <ul>
 <li><strong>Rule-driven alerts</strong> (Record Page only) — declarative rules evaluated against the current record's fields.</li>
@@ -818,7 +813,7 @@ Industry=Banking|success||Banking — flag for compliance review||</code></pre>
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Contact (default), Lead, Account — works on any object that has the fields configured in <code>channelsCsv</code>.</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Consent Manager</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Consent Manager</code></li>
 </ul>
 <h2>Apex dependencies</h2>
 None.
@@ -865,7 +860,7 @@ With these defaults the component deploys on any Contact record page without cre
 <ol>
 <li>Unzip <code>seFrConsentManager.zip</code>, deploy the LWC bundle.</li>
 <li>If you use custom opt-in/opt-out fields, make sure they exist on the object and the running user has edit access.</li>
-<li>Drop <code>SE FR - Consent Manager</code> on a Contact / Lead / Account record page and set <code>channelsCsv</code> to match the customer's data model.</li>
+<li>Drop <code>CCO FR - Consent Manager</code> on a Contact / Lead / Account record page and set <code>channelsCsv</code> to match the customer's data model.</li>
 </ol>
 <h2>Known caveats</h2>
 <ul>
@@ -878,7 +873,7 @@ Genericized from the <code>krysConsentManager</code> Krys demo component.</div>
 
 <section id="seFrContactCard" class="component-section">
   <h1 class="section-title">Component · Contact Card (<code>seFrContactCard</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrContactCard</code> · <strong>Categories:</strong> Account 360°, Agentforce & AI · <strong>Surfaces:</strong> RecordPage · <strong>Objects:</strong> Contact, Account, Case, Opportunity, Order, Lead · <strong>Data mode:</strong> hybrid · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> SE_FR_ContactCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</p><h1>SE FR - Contact Card</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrContactCard</code> · <strong>Categories:</strong> Account 360°, Agentforce & AI · <strong>Surfaces:</strong> RecordPage · <strong>Objects:</strong> Contact, Account, Case, Opportunity, Order, Lead · <strong>Data mode:</strong> hybrid · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> SE_FR_ContactCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</p><h1>CCO FR - Contact Card</h1>
 <p><strong>Original author:</strong> Charly Ansel &lt;REDACTED&gt;<br><strong>Maintained in library by:</strong> Lionel Braun<br><strong>Genericized / library-integrated:</strong> 2026-05-05</p>
 <p>Visual contact card with an animated-waves background, avatar, name / email / phone, mailing address and up to 3 configurable gauges. Auto-resolves the Contact Id from the current record page (Contact → self, Account → Person/primary Contact, Case/Opportunity/Order → <code>ContactId</code>, Lead / custom objects → <code>Contact__c</code>).</p>
 <h2>Why SEs love it</h2>
@@ -934,7 +929,7 @@ Genericized from the <code>krysConsentManager</code> Krys demo component.</div>
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Contacts Carousel</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Contacts Carousel</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_ContactsCarouselController.getContacts(accountId, limitCount, orderBy)</code>.
@@ -958,7 +953,7 @@ Genericized from the <code>krysConsentManager</code> Krys demo component.</div>
 <ol>
 <li>Deploy <code>classes/SE_FR_ContactsCarouselController.cls</code>.</li>
 <li>Unzip <code>seFrContactsCarousel.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Contacts Carousel</code> on an Account record page.</li>
+<li>Drop <code>CCO FR - Contacts Carousel</code> on an Account record page.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
 <ul>
@@ -977,7 +972,7 @@ Genericized from the <code>krysConsentManager</code> Krys demo component.</div>
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account, Contact</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Customer Orders</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Customer Orders</code></li>
 </ul>
 <h2>What "linked to a customer" means</h2>
 When placed on an <strong>Account</strong> page, the component shows <code>Order.AccountId = recordId</code>.
@@ -1021,7 +1016,7 @@ When placed on an <strong>Account</strong> page, the component shows <code>Order
 <ol>
 <li>Deploy <code>classes/SE_FR_CustomerOrdersController.cls</code>.</li>
 <li>Unzip <code>seFrCustomerOrders.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Customer Orders</code> on an Account or Contact record page.</li>
+<li>Drop <code>CCO FR - Customer Orders</code> on an Account or Contact record page.</li>
 <li>Adjust the <code>historyLimit</code>, <code>statusFilter</code>, <code>defaultSort</code>, <code>language</code> in App Builder as needed.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
@@ -1047,7 +1042,7 @@ When placed on an <strong>Account</strong> page, the component shows <code>Order
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Contact, Account (works with Person Account since Person Account pages use the Account record page)</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Customer Sales Summary</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Customer Sales Summary</code></li>
 </ul>
 <h2>Apex dependency</h2>
 None — demo data provided via App Builder properties.
@@ -1068,7 +1063,7 @@ Renamed from <code>seFrRetailSalesDashboard</code> (v2.3 → v2.4). The old comp
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Target:</strong> Lightning Home Page, App Page (<strong>not Record</strong>)</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Field Sales — Rep Home</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Field Sales — Rep Home</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_FieldSalesController</code> — now exposes full filter arguments:
@@ -1106,7 +1101,7 @@ Renamed from <code>seFrFieldSalesDashboard</code> (v2.3 → v2.4). The old bundl
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> any record type — the component queries <code>ContentDocumentLink</code> by <code>LinkedEntityId</code>.</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Files Gallery</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Files Gallery</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_FilesGalleryController.getFiles(recordId, limitCount)</code>. Queries the latest <code>ContentVersion</code> for each document linked to the record.
@@ -1127,7 +1122,7 @@ Renamed from <code>seFrFieldSalesDashboard</code> (v2.3 → v2.4). The old bundl
 <ol>
 <li>Deploy <code>classes/SE_FR_FilesGalleryController.cls</code>.</li>
 <li>Unzip <code>seFrFilesGallery.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Files Gallery</code> on any record page.</li>
+<li>Drop <code>CCO FR - Files Gallery</code> on any record page.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
 <ul>
@@ -1139,7 +1134,7 @@ Renamed from <code>seFrFieldSalesDashboard</code> (v2.3 → v2.4). The old bundl
 
 <section id="seFrKanbanBoard" class="component-section">
   <h1 class="section-title">Component · Kanban Board (<code>seFrKanbanBoard</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrKanbanBoard</code> · <strong>Categories:</strong> Sales Productivity · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_KanbanBoardController</p><h1>SE FR - Kanban Board (<code>seFrKanbanBoard</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrKanbanBoard</code> · <strong>Categories:</strong> Sales Productivity · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_KanbanBoardController</p><h1>CCO FR - Kanban Board (<code>seFrKanbanBoard</code>)</h1>
 <p>Generic kanban board for <strong>any whitelisted SObject</strong> (Case · Opportunity · Lead · Order · Task · Account). Drag-and-drop updates the group-by field on the record. Auto-detects scoping when placed on a Record Page.</p>
 <h2>Targets</h2>
 <ul>
@@ -1213,7 +1208,7 @@ Leave empty to disable scoping (kanban shows all matching records, not bound to 
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Target:</strong> Lightning Home Page / App Page / Record Page</li>
-<li><strong>App Builder label:</strong> <code>SE FR - KPI Launcher</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - KPI Launcher</code></li>
 </ul>
 <h2>Apex dependency</h2>
 None (all values are static, driven by App Builder properties).
@@ -1248,14 +1243,14 @@ Plus:
 <h2>Install</h2>
 <ol>
 <li>Unzip <code>seFrKpiLauncher.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - KPI Launcher</code> on a Home, App or Record page.</li>
+<li>Drop <code>CCO FR - KPI Launcher</code> on a Home, App or Record page.</li>
 <li>Configure each KPI in App Builder. Start by filling KPI 1–3; add KPI 4–6 if needed.</li>
 </ol></div>
 </section>
 
 <section id="seFrMetricTile" class="component-section">
   <h1 class="section-title">Component · Metric Tile (<code>seFrMetricTile</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrMetricTile</code> · <strong>Categories:</strong> Dashboards & KPIs, Marketing & Data · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>SE FR - Metric Tile (<code>seFrMetricTile</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrMetricTile</code> · <strong>Categories:</strong> Dashboards & KPIs, Marketing & Data · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>CCO FR - Metric Tile (<code>seFrMetricTile</code>)</h1>
 <p>Single-metric tile with a configurable inline trend chart. <strong>4 chart styles</strong> (line / area / bar / mini-donut), optional <strong>comparison series</strong>, <strong>target line</strong>, and <strong>currency formatting</strong> via <code>Intl.NumberFormat</code>.</p>
 <p>Designed to stack horizontally on a Home Page or App Page (3-4 tiles per row), or to sit standalone on a Record Page sidebar.</p>
 <h2>Targets</h2>
@@ -1376,7 +1371,7 @@ chartStyle           = "line"</code></pre>
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Targets:</strong> Home Page, App Page, Record Page</li>
-<li><strong>App Builder label:</strong> <code>SE FR - My Events</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - My Events</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_AgendaController.getMyEvents(daysAhead, maxRows)</code> — shared Apex class, standard fields only.
@@ -1421,7 +1416,7 @@ chartStyle           = "line"</code></pre>
 <ol>
 <li>Deploy <code>SE_FR_AgendaController</code> (bundled in <code>classes/</code> here; also lives in <code>_shared_apex/</code>).</li>
 <li>Unzip <code>seFrMyEvents.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - My Events</code> on the right column of a Home / App / Record page.</li>
+<li>Drop <code>CCO FR - My Events</code> on the right column of a Home / App / Record page.</li>
 </ol>
 <h2>Prerequisites — user timezone</h2>
 <p><code>Date.today()</code> in Apex and <code>TODAY</code> / <code>THIS_WEEK</code> SOQL filters resolve against the <strong>running user's timezone</strong>, not the org timezone. Most Salesforce SDOs ship with the org set to <code>America/Los_Angeles</code> — if your user also inherits that timezone, a 09:00 Paris meeting stored as <code>07:00Z</code> will appear as <code>00:00</code> and today's events may be picked up under yesterday or tomorrow.</p>
@@ -1451,7 +1446,7 @@ Salesforce surfaces Gmail / Outlook events in the <strong>standard calendar</str
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Targets:</strong> Home Page, App Page, Record Page</li>
-<li><strong>App Builder label:</strong> <code>SE FR - My Tasks</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - My Tasks</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_AgendaController.getMyTasks(filter, maxRows)</code> — shared Apex class, standard fields only.
@@ -1487,7 +1482,7 @@ Salesforce surfaces Gmail / Outlook events in the <strong>standard calendar</str
 <ol>
 <li>Deploy <code>SE_FR_AgendaController</code> (bundled in <code>classes/</code> here; also lives in <code>_shared_apex/</code> if you need it for other components).</li>
 <li>Unzip <code>seFrMyTasks.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - My Tasks</code> on the right column of a Home / App / Record page.</li>
+<li>Drop <code>CCO FR - My Tasks</code> on the right column of a Home / App / Record page.</li>
 </ol>
 <h2>Prerequisites — user timezone</h2>
 <p>The <code>Today</code> / <code>Overdue</code> / <code>Upcoming</code> filters use SOQL date literals (<code>TODAY</code>, <code>&lt;</code>, <code>&gt;=</code>) that resolve against the <strong>running user's timezone</strong>. Most Salesforce SDOs ship with the org set to <code>America/Los_Angeles</code> — if your user also inherits that timezone, tasks due today in Paris may be bucketed as yesterday or tomorrow.</p>
@@ -1507,7 +1502,7 @@ Salesforce surfaces Gmail / Outlook events in the <strong>standard calendar</str
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Target:</strong> Lightning Home Page / App Page</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Nearby Accounts Map</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Nearby Accounts Map</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <ul>
@@ -1549,7 +1544,7 @@ This means the default deployment works out of the box for any SE: the first tim
 <ol>
 <li>Deploy <code>_shared_apex/classes/SE_FR_NearbyAccountsController.cls</code> first (if not already present in the org).</li>
 <li>Unzip <code>seFrNearbyAccountsMap.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Nearby Accounts Map</code> on a Home or App page.</li>
+<li>Drop <code>CCO FR - Nearby Accounts Map</code> on a Home or App page.</li>
 <li>First load: accept the browser geolocation prompt. The map re-centers on you. If you prefer a fixed origin, set <code>originMode = 'manual'</code> and tune the lat/lng.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
@@ -1679,7 +1674,7 @@ Beyond the auto-resolved order (latest order of the Case's account / contact's a
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account, Opportunity (on Opportunity, resolves the parent AccountId)</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Pipeline Snapshot</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Pipeline Snapshot</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_PipelineSnapshotController.getPipeline(recordId, objectApiName, limitCount, includeClosed)</code>.
@@ -1703,7 +1698,7 @@ Beyond the auto-resolved order (latest order of the Case's account / contact's a
 <ol>
 <li>Deploy <code>classes/SE_FR_PipelineSnapshotController.cls</code>.</li>
 <li>Unzip <code>seFrPipelineSnapshot.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Pipeline Snapshot</code> on an Account or Opportunity record page.</li>
+<li>Drop <code>CCO FR - Pipeline Snapshot</code> on an Account or Opportunity record page.</li>
 </ol>
 <h2>Data enrichment prerequisites</h2>
 The component is most impactful on an Account that owns <strong>several Opportunities at different stages</strong>. A fresh SDO often has:
@@ -1715,7 +1710,7 @@ The component is most impactful on an Account that owns <strong>several Opportun
 
 <section id="seFrPromptLauncher" class="component-section">
   <h1 class="section-title">Component · Prompt Launcher (<code>seFrPromptLauncher</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrPromptLauncher</code> · <strong>Categories:</strong> Agentforce & AI · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_PromptLauncherController</p><h1>SE FR - Prompt Launcher (<code>seFrPromptLauncher</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrPromptLauncher</code> · <strong>Categories:</strong> Agentforce & AI · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_PromptLauncherController</p><h1>CCO FR - Prompt Launcher (<code>seFrPromptLauncher</code>)</h1>
 <p>> ⚠️ The bundle is still named <code>seFrPromptLauncher</code> for backward compatibility with FlexiPages that already reference it. The component itself is now a <strong>Prompt Launcher</strong>: the chat surface was retired because the Agent API isn't provisioned on most demo orgs.</p>
 <p>A configurable AI panel that runs Salesforce <strong>Prompt Templates</strong> via the Invocable Actions endpoint. The SE picks which prompts to expose, the user clicks one, the response renders inline with HTML formatting.</p>
 <h2>Targets</h2>
@@ -1868,7 +1863,7 @@ System.debug(res.getBody());'</code></pre>
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Record Highlights</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Record Highlights</code></li>
 </ul>
 <h2>Record source — which record gets displayed</h2>
 <table>
@@ -1925,13 +1920,13 @@ Legacy <code>fieldsList</code> property is preserved (for v1 pages) but marked d
 <h2>Install</h2>
 <ol>
 <li>Unzip <code>seFrRecordHighlights.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Record Highlights</code> on an Account or Contact record page.</li>
+<li>Drop <code>CCO FR - Record Highlights</code> on an Account or Contact record page.</li>
 </ol></div>
 </section>
 
 <section id="seFrRelatedRecordCard" class="component-section">
   <h1 class="section-title">Component · Related Record Card (<code>seFrRelatedRecordCard</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrRelatedRecordCard</code> · <strong>Categories:</strong> Account 360° · <strong>Surfaces:</strong> RecordPage · <strong>Objects:</strong> Account, Contact, Case, Opportunity, Order · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> SE_FR_RelatedRecordCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</p><h1>SE FR - Related Record Card</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrRelatedRecordCard</code> · <strong>Categories:</strong> Account 360° · <strong>Surfaces:</strong> RecordPage · <strong>Objects:</strong> Account, Contact, Case, Opportunity, Order · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> SE_FR_RelatedRecordCardController, SE_FR_ImageFileController, SE_FR_ImageFileController (shared)</p><h1>CCO FR - Related Record Card</h1>
 <p>Vertical card (Contact / Account avatar + key fields) showing the counterpart of the current record. Designed for a narrow sidebar column on Account, Contact, Case, Opportunity or Order record pages.</p>
 <h2>Pick behaviour</h2>
 <table>
@@ -2063,7 +2058,7 @@ None.
 
 <section id="seFrSplashBanner" class="component-section">
   <h1 class="section-title">Component · Splash Banner (<code>seFrSplashBanner</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrSplashBanner</code> · <strong>Categories:</strong> Transverse · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>SE FR - Splash Banner (<code>seFrSplashBanner</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrSplashBanner</code> · <strong>Categories:</strong> Transverse · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>CCO FR - Splash Banner (<code>seFrSplashBanner</code>)</h1>
 <p>Bannière d'accueil / splash screen avec fond animé. <strong>8 styles de fond</strong> au choix, tous en pur CSS + SVG inline (zéro librairie externe). Le SE configure juste un titre, un sous-titre optionnel et le style de fond — tout le reste est paramétrable depuis App Builder (couleurs, hauteur, vitesse, alignement, bouton CTA).</p>
 <h2>Targets</h2>
 <ul>
@@ -2129,7 +2124,7 @@ Tous les fonds respectent <code>prefers-reduced-motion</code> (animations désac
 <h2>Where to drop it</h2>
 <ul>
 <li><strong>Target:</strong> Lightning Home Page, App Page (<strong>not Record</strong>)</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Telesales — Rep Home</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Telesales — Rep Home</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <code>SE_FR_TelesalesController</code> (bundled in <code>classes/</code>):
@@ -2164,7 +2159,7 @@ Renamed from <code>seFrTelesalesDashboard</code> (v2.3 → v2.4). The old bundle
 
 <section id="seFrTerritoryMap" class="component-section">
   <h1 class="section-title">Component · Territory Map (<code>seFrTerritoryMap</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrTerritoryMap</code> · <strong>Categories:</strong> Geo & Field · <strong>Surfaces:</strong> AppPage, HomePage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_TerritoryMapController</p><h1>SE FR - Territory Map (<code>seFrTerritoryMap</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrTerritoryMap</code> · <strong>Categories:</strong> Geo & Field · <strong>Surfaces:</strong> AppPage, HomePage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> live · <strong>Mobile-ready:</strong> no · <strong>Apex:</strong> SE_FR_TerritoryMapController</p><h1>CCO FR - Territory Map (<code>seFrTerritoryMap</code>)</h1>
 <p>Carte interactive du territoire commercial : Accounts géolocalisés via leur Billing Address, code couleur par tier de pipeline ouvert, filtres latéraux (Owner / RecordType / fourchette de montant ouvert / étapes opportunité), tuiles KPI et export CSV de la sélection visible.</p>
 <h2>Targets</h2>
 <ul>
@@ -2223,7 +2218,7 @@ Renamed from <code>seFrTelesalesDashboard</code> (v2.3 → v2.4). The old bundle
 
 <section id="seFrTimelinePhases" class="component-section">
   <h1 class="section-title">Component · Timeline Phases (<code>seFrTimelinePhases</code>)</h1>
-  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrTimelinePhases</code> · <strong>Categories:</strong> Sales Productivity · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>SE FR - Timeline Phases (<code>seFrTimelinePhases</code>)</h1>
+  <div class="section-body"><p class="kb-comp-lead"><strong>API name:</strong> <code>seFrTimelinePhases</code> · <strong>Categories:</strong> Sales Productivity · <strong>Surfaces:</strong> AppPage, HomePage, RecordPage · <strong>Objects:</strong> Any · <strong>Data mode:</strong> mock · <strong>Mobile-ready:</strong> yes · <strong>Apex:</strong> none</p><h1>CCO FR - Timeline Phases (<code>seFrTimelinePhases</code>)</h1>
 <p>Horizontal multi-phase timeline. Visualizes a journey, project, or sales-cycle with phases positioned on a date axis, a "Today" marker, and a done / pending state per phase.</p>
 <h2>Targets</h2>
 <ul>
@@ -2286,7 +2281,7 @@ Renamed from <code>seFrTelesalesDashboard</code> (v2.3 → v2.4). The old bundle
 <ul>
 <li><strong>Target:</strong> Lightning Record Page</li>
 <li><strong>Objects:</strong> Account, Contact, Lead, Opportunity</li>
-<li><strong>App Builder label:</strong> <code>SE FR - Voice Note Taker</code></li>
+<li><strong>App Builder label:</strong> <code>CCO FR - Voice Note Taker</code></li>
 </ul>
 <h2>Apex dependency</h2>
 <ul>
@@ -2332,7 +2327,7 @@ The activity feed component (to be built later) will display <code>Task.Descript
 <ol>
 <li>Deploy <code>_shared_apex/classes/SE_FR_VoiceNoteController.cls</code> first.</li>
 <li>Unzip <code>seFrVoiceNoteTaker.zip</code>, deploy the LWC bundle.</li>
-<li>Drop <code>SE FR - Voice Note Taker</code> on an Account / Contact / Lead / Opportunity record page.</li>
+<li>Drop <code>CCO FR - Voice Note Taker</code> on an Account / Contact / Lead / Opportunity record page.</li>
 </ol></div>
 </section>
 </body>

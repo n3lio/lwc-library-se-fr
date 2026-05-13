@@ -44,15 +44,15 @@ SOURCE_LOGO_LIB = ROOT / "_doc" / "_assets" / "logo-library-s.png"
 SOURCE_LOGO_SEFR = ROOT / "_doc" / "_assets" / "logo-sefr-s.png"
 SOURCE_USER_GUIDE = ROOT / "_doc" / "SE_FR_LIBRARY_USER_GUIDE_FR.md"
 
-# Component preview images (PNG / JPG / GIF / WebP) live on the SE FR
-# Drive — user drops them in `LWC Library SE FR/Previews/` via the
+# Component preview images (PNG / JPG / GIF / WebP) live on the CCO FR
+# Drive — user drops them in `LWC Library CCO FR/Previews/` via the
 # Google Drive Desktop mount. The builder scans this folder, copies
 # matched images into _site/assets/previews/ and wires them to cards
 # and detail pages.
 SOURCE_PREVIEWS = Path(
     "/Users/lionel.braun/Library/CloudStorage/"
     "GoogleDrive-lionel.braun@salesforce.com/Mon Drive/"
-    "LWC Library SE FR/Previews"
+    "LWC Library CCO FR/Previews"
 )
 PREVIEW_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
@@ -693,7 +693,13 @@ h2.section-title .count { color: var(--text-muted); font-size: 11px; font-weight
 /* DETAIL PAGE */
 .detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 36px; align-items: start; }
 .detail-main { min-width: 0; }
-.detail-side { position: sticky; top: 76px; }
+/* Right pane: sticky to the top of the viewport AND scrollable on its own
+   when its content exceeds the viewport height. The left pane scrolls with
+   the page as usual. The two scrolls are visually independent. */
+.detail-side { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; padding-right: 4px; }
+.detail-side::-webkit-scrollbar { width: 6px; }
+.detail-side::-webkit-scrollbar-thumb { background: rgba(108, 99, 255, 0.18); border-radius: 3px; }
+.detail-side::-webkit-scrollbar-thumb:hover { background: rgba(108, 99, 255, 0.32); }
 .detail-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
 .detail-hero .emoji { width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg, var(--brand-light) 0%, var(--accent-light) 100%); display: grid; place-items: center; font-size: 26px; flex-shrink: 0; }
 .detail-hero h1 { font-size: 30px; margin-bottom: 4px; }
@@ -1118,7 +1124,7 @@ footer { margin-top: 32px; padding: 36px 0 28px; border-top: 1px solid var(--bor
 # ----------------------------------------------------------------------
 # JS — i18n, Cmd+K, filters, cart, modals (tracking, showcase, submit, feedback)
 # ----------------------------------------------------------------------
-JS = r"""// SE FR Library — client UX
+JS = r"""// CCO FR Library — client UX
 // Public surface: window.__SE_T(key) for i18n; window.__SE_INDEX for search.
 (function () {
   const STORAGE_LANG = 'sefr.lang';
@@ -1231,7 +1237,7 @@ JS = r"""// SE FR Library — client UX
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
       'submitc.coming.pill': 'Bientôt',
       'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
-      'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets SE FR",
+      'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets CCO FR",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
       'channels.agent': "Le Library Agent (bouton en bas à droite)",
@@ -1360,7 +1366,7 @@ JS = r"""// SE FR Library — client UX
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
       'submitc.coming.pill': 'Coming soon',
       'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
-      'channels.slack': "Slack #cco-fr-assets — the SE FR shared-assets channel",
+      'channels.slack': "Slack #cco-fr-assets — the CCO FR shared-assets channel",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
       'channels.agent': "The Library Agent (bottom-right button)",
@@ -2398,7 +2404,7 @@ JS = r"""// SE FR Library — client UX
     const tab = window.open('about:blank', '_blank');
     if (tab) {
       try {
-        tab.document.title = 'SE FR Showcase — chargement…';
+        tab.document.title = 'CCO FR Showcase — chargement…';
         tab.document.body.style.cssText = 'background:#0a0e2a;color:#e6e9ff;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0';
         const wrap = tab.document.createElement('div');
         wrap.style.textAlign = 'center';
@@ -2957,7 +2963,7 @@ def nav_html(active: str, base: str = "") -> str:
     return f"""<nav class="nav">
   <div class="nav-inner">
     <a class="logo" href="{base}index.html">
-      <img src="{base}assets/logo-sefr.png" alt="Salesforce SE FR">
+      <img src="{base}assets/logo-sefr.png" alt="Salesforce CCO FR">
       <span>LWC Library</span>
     </a>
     <div class="nav-links">{nav_items}</div>
@@ -2985,7 +2991,7 @@ def footer_html(component_count: int, base: str = "") -> str:
     return f"""<footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="logos"><img src="{base}assets/logo-library.png" alt="LWC Library"><img src="{base}assets/logo-sefr.png" alt="Salesforce SE FR"></div>
+      <div class="logos"><img src="{base}assets/logo-library.png" alt="LWC Library"><img src="{base}assets/logo-sefr.png" alt="Salesforce CCO FR"></div>
       <p {pair('Une librairie de Lightning Web Components<br>faite par et pour les Solution Engineers 🇫🇷', 'A library of Lightning Web Components<br>built by &amp; for French Solution Engineers 🇫🇷')}>Une librairie de Lightning Web Components<br>faite par et pour les Solution Engineers 🇫🇷</p>
       <div class="footer-copy">© 2026 Solution Engineering France</div>
     </div>
@@ -3197,7 +3203,7 @@ def persona_chip(p: str) -> str:
 
 def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: bool = True) -> str:
     api = c["apiName"]
-    name = (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+    name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
     rs = c.get("releaseStatus", "stable")
     status = "● Stable" if rs == "stable" else "✨ New"
     status_cls = "stable" if rs == "stable" else "new"
@@ -3277,7 +3283,7 @@ def render_index(components: list[dict], recipes: list[dict], n_components: int,
         c = by_api.get(api)
         if not c:
             return api
-        return (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+        return (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
 
     recipes_html = ""
     for r in recipes[:4]:
@@ -3399,7 +3405,7 @@ def render_index(components: list[dict], recipes: list[dict], n_components: int,
 
   </div>
 </section>"""
-    return html_shell("LWC Library SE FR — composants must-have pour vos démos Salesforce", body,
+    return html_shell("LWC Library CCO FR — composants must-have pour vos démos Salesforce", body,
                       active="home", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -3487,7 +3493,7 @@ def render_components_page(components: list[dict], n_components: int, search_ind
   <button class="btn btn-ghost btn-sm" type="button" data-mock="download">⬇ Download .zip</button>
   <button class="btn btn-primary btn-sm" type="button" data-mock="deploy-bundle" data-count="0">🚀 Deploy to my org</button>
 </div>"""
-    return html_shell("Components — LWC Library SE FR", body,
+    return html_shell("Components — LWC Library CCO FR", body,
                       active="components", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -3500,7 +3506,7 @@ def render_component_detail(c: dict, all_components: list[dict], recipes: list[d
         s = json.dumps({"fr": fr, "en": en}, ensure_ascii=False).replace("'", "&#39;")
         return f"data-i18n-pair='{s}'"
     api = c["apiName"]
-    name = (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+    name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
     primary_cat = (c.get("categories") or ["—"])[0]
     rs = c.get("releaseStatus", "stable")
     is_ai = "Agentforce & AI" in (c.get("categories") or [])
@@ -3571,7 +3577,7 @@ def render_component_detail(c: dict, all_components: list[dict], recipes: list[d
     related_html = ""
     if cat_peers:
         items = "".join(
-            f'<a href="{x["apiName"]}.html"><span>{html_lib.escape((x.get("masterLabel") or x["apiName"]).replace("SE FR - ","").strip())}</span><span class="api">{x["apiName"]}</span></a>'
+            f'<a href="{x["apiName"]}.html"><span>{html_lib.escape((x.get("masterLabel") or x["apiName"]).replace("CCO FR - ","").strip())}</span><span class="api">{x["apiName"]}</span></a>'
             for x in cat_peers[:4]
         )
         related_html = f"""<div class="side-card">
@@ -3686,7 +3692,7 @@ sf project deploy start --source-dir {api} --target-org &lt;alias&gt;</pre>
     </aside>
   </div>
 </div>"""
-    return html_shell(f"{name} · seFr… — LWC Library SE FR", body,
+    return html_shell(f"{name} · seFr… — LWC Library CCO FR", body,
                       active="components", base="../", component_count=n_components,
                       search_index=search_index)
 
@@ -3749,7 +3755,7 @@ def render_cookbook(components: list[dict], recipes: list[dict], n_components: i
             stack_class = ""
             stack_items = []
             for cc in comps:
-                cname = (cc.get("masterLabel") or cc["apiName"]).replace("SE FR - ", "").strip()
+                cname = (cc.get("masterLabel") or cc["apiName"]).replace("CCO FR - ", "").strip()
                 stack_items.append(
                     f'<a class="item" href="components/{cc["apiName"]}.html">'
                     f'<span class="name">{html_lib.escape(cname)}</span>'
@@ -3810,7 +3816,7 @@ def render_cookbook(components: list[dict], recipes: list[dict], n_components: i
 {cards_html}
   </div>
 </div>"""
-    return html_shell("Cookbook — LWC Library SE FR", body,
+    return html_shell("Cookbook — LWC Library CCO FR", body,
                       active="cookbook", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -3899,7 +3905,7 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
   </section>
 
 </div>"""
-    return html_shell("À propos · LWC Library SE FR", body,
+    return html_shell("À propos · LWC Library CCO FR", body,
                       active="about", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -3992,7 +3998,7 @@ sf project deploy start \\
         <li {pair_attr('Connectez-vous à votre org cible. Cliquez l’icône Lightning Studio dans la barre Chrome.', 'Log in to your target org. Click the Lightning Studio icon in the Chrome toolbar.')}>Connectez-vous à votre org cible. Cliquez l’icône Lightning Studio dans la barre Chrome.</li>
         <li {pair_attr('Créez un nouveau LWC du même nom (ex : <code>seFrAccountHealth</code>). Pour chaque fichier du bundle (<code>.js</code>, <code>.html</code>, <code>.css</code>, <code>.js-meta.xml</code>), ouvrez le fichier local, copiez tout le contenu, collez-le dans l’éditeur Lightning Studio, puis <strong>Save</strong>.', 'Create a new LWC with the same name (e.g. <code>seFrAccountHealth</code>). For each file in the bundle (<code>.js</code>, <code>.html</code>, <code>.css</code>, <code>.js-meta.xml</code>), open the local file, copy all content, paste it into the Lightning Studio editor, then <strong>Save</strong>.')}>Créez un nouveau LWC du même nom (ex : <code>seFrAccountHealth</code>). Pour chaque fichier du bundle (<code>.js</code>, <code>.html</code>, <code>.css</code>, <code>.js-meta.xml</code>), ouvrez le fichier local, copiez tout le contenu, collez-le dans l’éditeur Lightning Studio, puis <strong>Save</strong>.</li>
         <li {pair_attr('Si le composant a des dépendances Apex, répétez l’opération côté <em>Apex Class</em> (créez la classe, copiez-collez le contenu de chaque <code>.cls</code>, save).', 'If the component has Apex dependencies, repeat the same flow for <em>Apex Class</em> (create the class, paste each <code>.cls</code>, save).')}>Si le composant a des dépendances Apex, répétez l’opération côté <em>Apex Class</em> (créez la classe, copiez-collez le contenu de chaque <code>.cls</code>, save).</li>
-        <li {pair_attr('Ouvrez App Builder, glissez le composant <code>SE FR - &lt;Name&gt;</code> sur la page voulue, configurez les propriétés.', 'Open App Builder, drag the <code>SE FR - &lt;Name&gt;</code> component on the right page, configure the properties.')}>Ouvrez App Builder, glissez le composant <code>SE FR - &lt;Name&gt;</code> sur la page voulue, configurez les propriétés.</li>
+        <li {pair_attr('Ouvrez App Builder, glissez le composant <code>CCO FR - &lt;Name&gt;</code> sur la page voulue, configurez les propriétés.', 'Open App Builder, drag the <code>CCO FR - &lt;Name&gt;</code> component on the right page, configure the properties.')}>Ouvrez App Builder, glissez le composant <code>CCO FR - &lt;Name&gt;</code> sur la page voulue, configurez les propriétés.</li>
         <li {pair_attr('<strong>Hard refresh</strong> de la page (<code>Cmd</code>+<code>Shift</code>+<code>R</code> sur Mac, <code>Ctrl</code>+<code>Shift</code>+<code>R</code> sur Windows) pour forcer le rechargement du bundle compilé.', '<strong>Hard refresh</strong> the page (<code>Cmd</code>+<code>Shift</code>+<code>R</code> on Mac, <code>Ctrl</code>+<code>Shift</code>+<code>R</code> on Windows) to force the compiled bundle to reload.')}><strong>Hard refresh</strong> de la page (<code>Cmd</code>+<code>Shift</code>+<code>R</code> sur Mac, <code>Ctrl</code>+<code>Shift</code>+<code>R</code> sur Windows) pour forcer le rechargement du bundle compilé.</li>
       </ol>
       <div class="callout">
@@ -4000,12 +4006,12 @@ sf project deploy start \\
       </div>
 
       <h2 id="app-builder" {pair_attr('Configurer dans Page Builder', 'Configure in App Builder')}>Configurer dans Page Builder</h2>
-      <p {pair_attr('Une fois le composant déployé, vous le retrouvez dans App Builder dans la palette gauche sous le nom <code>SE FR - &lt;Nom&gt;</code>. Glissez-le sur la page voulue, le panneau de droite expose toutes les propriétés <code>@api</code> du composant.', 'Once the component is deployed, you find it in App Builder in the left palette under <code>SE FR - &lt;Name&gt;</code>. Drag it onto the page, the right panel exposes every <code>@api</code> property of the component.')}>Une fois le composant déployé, vous le retrouvez dans App Builder dans la palette gauche sous le nom <code>SE FR - &lt;Nom&gt;</code>. Glissez-le sur la page voulue, le panneau de droite expose toutes les propriétés <code>@api</code> du composant.</p>
+      <p {pair_attr('Une fois le composant déployé, vous le retrouvez dans App Builder dans la palette gauche sous le nom <code>CCO FR - &lt;Nom&gt;</code>. Glissez-le sur la page voulue, le panneau de droite expose toutes les propriétés <code>@api</code> du composant.', 'Once the component is deployed, you find it in App Builder in the left palette under <code>CCO FR - &lt;Name&gt;</code>. Drag it onto the page, the right panel exposes every <code>@api</code> property of the component.')}>Une fois le composant déployé, vous le retrouvez dans App Builder dans la palette gauche sous le nom <code>CCO FR - &lt;Nom&gt;</code>. Glissez-le sur la page voulue, le panneau de droite expose toutes les propriétés <code>@api</code> du composant.</p>
 
       <h3 {pair_attr('Conventions de nommage côté palette', 'Palette naming conventions')}>Conventions de nommage côté palette</h3>
       <ul>
         <li {pair_attr('<strong>API name LWC</strong> : <code>seFr&lt;Name&gt;</code> (camelCase, sans underscore). C’est le nom du dossier de bundle et le tag HTML interne.', '<strong>LWC API name</strong>: <code>seFr&lt;Name&gt;</code> (camelCase, no underscore). It’s the bundle folder name and internal HTML tag.')}><strong>API name LWC</strong> : <code>seFr&lt;Name&gt;</code> (camelCase, sans underscore). C’est le nom du dossier de bundle et le tag HTML interne.</li>
-        <li {pair_attr('<strong>Master label App Builder</strong> : <code>SE FR - &lt;Human name&gt;</code>. C’est ce que vous voyez dans la palette de gauche et dans la barre de titre de la page.', '<strong>App Builder master label</strong>: <code>SE FR - &lt;Human name&gt;</code>. This is what you see in the left palette and in the page title bar.')}><strong>Master label App Builder</strong> : <code>SE FR - &lt;Human name&gt;</code>. C’est ce que vous voyez dans la palette de gauche et dans la barre de titre de la page.</li>
+        <li {pair_attr('<strong>Master label App Builder</strong> : <code>CCO FR - &lt;Human name&gt;</code>. C’est ce que vous voyez dans la palette de gauche et dans la barre de titre de la page.', '<strong>App Builder master label</strong>: <code>CCO FR - &lt;Human name&gt;</code>. This is what you see in the left palette and in the page title bar.')}><strong>Master label App Builder</strong> : <code>CCO FR - &lt;Human name&gt;</code>. C’est ce que vous voyez dans la palette de gauche et dans la barre de titre de la page.</li>
         <li {pair_attr('<strong>Classe Apex</strong> (si applicable) : <code>SE_FR_&lt;Name&gt;Controller</code>.', '<strong>Apex class</strong> (if applicable): <code>SE_FR_&lt;Name&gt;Controller</code>.')}><strong>Classe Apex</strong> (si applicable) : <code>SE_FR_&lt;Name&gt;Controller</code>.</li>
       </ul>
 
@@ -4087,7 +4093,7 @@ System.debug(res.getStatusCode() + ' ' + res.getBody().abbreviate(500));</pre>
       <ul>
         <li><span {pair_attr('Dossier LWC / classe JS', 'LWC folder / JS class')}>Dossier LWC / classe JS</span> : <code>seFr</code> + PascalCase (ex : <code>seFrAccountStrategyPlan</code>)</li>
         <li><span {pair_attr('Classe Apex', 'Apex class')}>Classe Apex</span> : <code>SE_FR_</code> + PascalCase (ex : <code>SE_FR_AccountHealthController</code>)</li>
-        <li><span {pair_attr('Master label App Builder', 'App Builder master label')}>Master label App Builder</span> : <code>SE FR - &lt;Human name&gt;</code></li>
+        <li><span {pair_attr('Master label App Builder', 'App Builder master label')}>Master label App Builder</span> : <code>CCO FR - &lt;Human name&gt;</code></li>
         <li><span {pair_attr('Strings custom', 'Custom strings')}>Strings custom</span> : <span {pair_attr('défauts en français, override par <code>language</code> ou prop explicite', 'French defaults, overridable via <code>language</code> or explicit prop')}>défauts en français, override par <code>language</code> ou prop explicite</span></li>
       </ul>
 
@@ -4104,7 +4110,7 @@ System.debug(res.getStatusCode() + ' ' + res.getBody().abbreviate(500));</pre>
     </article>
   </div>
 </div>"""
-    return html_shell("Docs — LWC Library SE FR", body,
+    return html_shell("Docs — LWC Library CCO FR", body,
                       active="docs", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -4166,7 +4172,7 @@ def render_whats_new(releases: list[dict], n_components: int, search_index: list
 <div class="container-narrow">
   <div class="timeline">{timeline}</div>
 </div>"""
-    return html_shell("Nouveautés — LWC Library SE FR", body,
+    return html_shell("Nouveautés — LWC Library CCO FR", body,
                       active="whats-new", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -4207,7 +4213,7 @@ def render_contributors(components: list[dict], n_components: int, search_index:
     lionel = by_author.pop("Lionel Braun", [])
     if lionel:
         items = "".join(
-            f'<a href="components/{c["apiName"]}.html"><span>{html_lib.escape((c.get("masterLabel") or c["apiName"]).replace("SE FR - ","").strip())}</span><span class="api">{c["apiName"]}</span></a>'
+            f'<a href="components/{c["apiName"]}.html"><span>{html_lib.escape((c.get("masterLabel") or c["apiName"]).replace("CCO FR - ","").strip())}</span><span class="api">{c["apiName"]}</span></a>'
             for c in sorted(lionel, key=lambda x: x["apiName"])[:6]
         )
         tdl, tlk = _author_totals(lionel)
@@ -4237,7 +4243,7 @@ def render_contributors(components: list[dict], n_components: int, search_index:
         email = sample.get("originalAuthorEmail")
         joined = sample.get("libraryIntegrationDate")
         items = "".join(
-            f'<a href="components/{c["apiName"]}.html"><span>{html_lib.escape((c.get("masterLabel") or c["apiName"]).replace("SE FR - ","").strip())}</span><span class="api">{c["apiName"]}</span></a>'
+            f'<a href="components/{c["apiName"]}.html"><span>{html_lib.escape((c.get("masterLabel") or c["apiName"]).replace("CCO FR - ","").strip())}</span><span class="api">{c["apiName"]}</span></a>'
             for c in sorted(comps, key=lambda x: x["apiName"])
         )
         gradient = AVATAR_GRADIENTS[grad_idx % len(AVATAR_GRADIENTS)]
@@ -4285,7 +4291,7 @@ def render_contributors(components: list[dict], n_components: int, search_index:
 {cards_html}
   </div>
 </div>"""
-    return html_shell("Contributors — LWC Library SE FR", body,
+    return html_shell("Contributors — LWC Library CCO FR", body,
                       active="contributors", base="", component_count=n_components,
                       search_index=search_index)
 
@@ -4377,7 +4383,7 @@ def build_search_index(components: list[dict], recipes: list[dict]) -> list[dict
     out: list[dict] = []
     for c in sorted(components, key=lambda x: x["apiName"]):
         api = c["apiName"]
-        name = (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+        name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
         haystack = " ".join([api, name, c.get("tagline","")] + (c.get("personas") or []) + (c.get("chips") or [])).lower()
         out.append({
             "name": name,
@@ -4468,7 +4474,7 @@ def main() -> int:
     if SOURCE_LOGO_SEFR.exists():
         shutil.copy(SOURCE_LOGO_SEFR, ASSETS_DIR / "logo-sefr.png")
     else:
-        for candidate in [ROOT.parent / "Salesforce SE FR logo.png"]:
+        for candidate in [ROOT.parent / "Salesforce CCO FR logo.png"]:
             if candidate.exists():
                 shutil.copy(candidate, ASSETS_DIR / "logo-sefr.png")
                 break

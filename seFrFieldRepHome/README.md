@@ -27,7 +27,7 @@ screenshots: []
 
 ## Where to drop it
 - **Target:** Lightning Home Page, App Page (**not Record**)
-- **App Builder label:** `SE FR - Field Sales — Rep Home`
+- **App Builder label:** `CCO FR - Field Sales — Rep Home`
 
 ## Apex dependency
 `SE_FR_FieldSalesController` — now exposes full filter arguments:

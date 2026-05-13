@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Agentforce Header</masterLabel>
+    <masterLabel>CCO FR - Agentforce Header</masterLabel>
     <description>Home page greeting banner with Astro mascot, a voice-dictation field and a send button. {name} is replaced with the running user's first name. Bilingual FR / EN.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -11,7 +11,7 @@
         <targetConfig targets="lightning__HomePage">
             <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls the default greeting, placeholders and speech locale." />
             <property name="greetingTemplate" type="String" label="Greeting text (override)" description="Use {name} to inject the running user's first name. Wrap any word with double asterisks for the highlighted colour, e.g. 'Bonjour **{name}**, comment puis-je vous aider ?'. Leave empty to use the language default." />
-            <property name="highlightColor" type="String" default="#0176d3" label="Highlight color (hex)" description="Applied to the **bold** segment of the greeting. Defaults to the SE FR brand blue." />
+            <property name="highlightColor" type="String" default="#0176d3" label="Highlight color (hex)" description="Applied to the **bold** segment of the greeting. Defaults to the CCO FR brand blue." />
             <property name="idlePlaceholder" type="String" label="Input placeholder - idle (override)" description="Leave empty to use the language default ('Posez-moi une question…' / 'Ask me a question…')." />
             <property name="listeningPlaceholder" type="String" label="Input placeholder - listening (override)" />
             <property name="speechLocale" type="String" label="Speech recognition locale (override)" description="BCP 47 tag (e.g. fr-FR, en-US). Leave empty to use the language default." />

@@ -20,7 +20,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Related Record Card
+# CCO FR - Related Record Card
 
 Vertical card (Contact / Account avatar + key fields) showing the counterpart of the current record. Designed for a narrow sidebar column on Account, Contact, Case, Opportunity or Order record pages.
 

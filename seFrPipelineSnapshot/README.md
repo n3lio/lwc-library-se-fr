@@ -27,7 +27,7 @@ screenshots: []
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account, Opportunity (on Opportunity, resolves the parent AccountId)
-- **App Builder label:** `SE FR - Pipeline Snapshot`
+- **App Builder label:** `CCO FR - Pipeline Snapshot`
 
 ## Apex dependency
 `SE_FR_PipelineSnapshotController.getPipeline(recordId, objectApiName, limitCount, includeClosed)`.
@@ -46,7 +46,7 @@ screenshots: []
 ## Install
 1. Deploy `classes/SE_FR_PipelineSnapshotController.cls`.
 2. Unzip `seFrPipelineSnapshot.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Pipeline Snapshot` on an Account or Opportunity record page.
+3. Drop `CCO FR - Pipeline Snapshot` on an Account or Opportunity record page.
 
 ## Data enrichment prerequisites
 The component is most impactful on an Account that owns **several Opportunities at different stages**. A fresh SDO often has:

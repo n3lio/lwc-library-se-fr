@@ -25,7 +25,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Prompt Launcher (`seFrPromptLauncher`)
+# CCO FR - Prompt Launcher (`seFrPromptLauncher`)
 
 > ⚠️ The bundle is still named `seFrPromptLauncher` for backward compatibility with FlexiPages that already reference it. The component itself is now a **Prompt Launcher**: the chat surface was retired because the Agent API isn't provisioned on most demo orgs.
 

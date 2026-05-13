@@ -30,7 +30,7 @@ Custom highlights panel for an **Account** or a **Contact** record page. Shows a
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote
-- **App Builder label:** `SE FR - Record Highlights`
+- **App Builder label:** `CCO FR - Record Highlights`
 
 ## Record source â€” which record gets displayed
 
@@ -80,4 +80,4 @@ Legacy `fieldsList` property is preserved (for v1 pages) but marked deprecated â
 
 ## Install
 1. Unzip `seFrRecordHighlights.zip`, deploy the LWC bundle.
-2. Drop `SE FR - Record Highlights` on an Account or Contact record page.
+2. Drop `CCO FR - Record Highlights` on an Account or Contact record page.

@@ -96,7 +96,7 @@ def render_nav(by_cat: dict[str, list[dict]]) -> str:
             f'            <a class="sb-link" href="#{divider_id(cat)}"><span class="sb-num">▸</span>Section opener</a>',
         ]
         for c in comps:
-            human = c.get("masterLabel", c["apiName"]).replace("SE FR - ", "").strip()
+            human = c.get("masterLabel", c["apiName"]).replace("CCO FR - ", "").strip()
             lines.append(
                 f'            <a class="sb-link" href="#{slide_id(c["apiName"])}">'
                 f'<span class="sb-num">·</span>{html_lib.escape(human)}</a>'
@@ -108,7 +108,7 @@ def render_nav(by_cat: dict[str, list[dict]]) -> str:
 
 def render_divider(idx: int, cat: str, comps: list[dict]) -> str:
     pieces = " · ".join(
-        c.get("masterLabel", c["apiName"]).replace("SE FR - ", "").strip()
+        c.get("masterLabel", c["apiName"]).replace("CCO FR - ", "").strip()
         for c in comps
     )
     lede = CATEGORY_LEDE.get(cat, "")
@@ -121,14 +121,14 @@ def render_divider(idx: int, cat: str, comps: list[dict]) -> str:
     <h2>{html_lib.escape(cat)}</h2>
     <div class="lede">{html_lib.escape(lede)}</div>
     <div class="pieces"><span>Includes</span>{html_lib.escape(pieces)}</div>
-    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-brand"><strong>CCO FR Component Library</strong></div>
     <div class="slide-num">section</div>
 </div>'''
 
 
 def render_component(c: dict, cat: str) -> str:
     api = c["apiName"]
-    human = c.get("masterLabel", api).replace("SE FR - ", "").strip()
+    human = c.get("masterLabel", api).replace("CCO FR - ", "").strip()
     tagline = c.get("tagline") or ""
     chips = c.get("chips") or []
     keyProps = c.get("keyProps") or []
@@ -211,7 +211,7 @@ def render_component(c: dict, cat: str) -> str:
         </div>
         <div style="display:flex;gap:6px"><span class="data-pill {data_mode}">{pill_label}</span>{mobile_pill}</div>
     </div>
-    <div class="slide-brand"><strong>SE FR Component Library</strong></div>
+    <div class="slide-brand"><strong>CCO FR Component Library</strong></div>
     <div class="slide-num">{api}</div>
 </div>'''
 

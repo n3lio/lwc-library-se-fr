@@ -28,7 +28,7 @@ This complements `seFrRevenueDashboard` (which is B2B, Account-centric, 3-year r
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Contact, Account (works with Person Account since Person Account pages use the Account record page)
-- **App Builder label:** `SE FR - Customer Sales Summary`
+- **App Builder label:** `CCO FR - Customer Sales Summary`
 
 ## Apex dependency
 None — demo data provided via App Builder properties.

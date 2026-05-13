@@ -27,7 +27,7 @@ Toggle panel to manage per-channel consent / GDPR opt-in on a record. Each chann
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Contact (default), Lead, Account — works on any object that has the fields configured in `channelsCsv`.
-- **App Builder label:** `SE FR - Consent Manager`
+- **App Builder label:** `CCO FR - Consent Manager`
 
 ## Apex dependencies
 None.
@@ -72,7 +72,7 @@ Examples:
 ## Install
 1. Unzip `seFrConsentManager.zip`, deploy the LWC bundle.
 2. If you use custom opt-in/opt-out fields, make sure they exist on the object and the running user has edit access.
-3. Drop `SE FR - Consent Manager` on a Contact / Lead / Account record page and set `channelsCsv` to match the customer's data model.
+3. Drop `CCO FR - Consent Manager` on a Contact / Lead / Account record page and set `channelsCsv` to match the customer's data model.
 
 ## Known caveats
 - **`HasOptedOutOfFax` re-purposed for WhatsApp** in the defaults — purely a demo convenience to avoid requiring a custom field. Replace with a real `WhatsApp_OptIn__c` in production demos if the customer has one.

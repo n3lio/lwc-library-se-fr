@@ -26,7 +26,7 @@ Compact "My Tasks" panel designed for a **sidebar column** on a Home / App / Rec
 
 ## Where to drop it
 - **Targets:** Home Page, App Page, Record Page
-- **App Builder label:** `SE FR - My Tasks`
+- **App Builder label:** `CCO FR - My Tasks`
 
 ## Apex dependency
 `SE_FR_AgendaController.getMyTasks(filter, maxRows)` — shared Apex class, standard fields only.
@@ -55,7 +55,7 @@ Compact "My Tasks" panel designed for a **sidebar column** on a Home / App / Rec
 ## Install
 1. Deploy `SE_FR_AgendaController` (bundled in `classes/` here; also lives in `_shared_apex/` if you need it for other components).
 2. Unzip `seFrMyTasks.zip`, deploy the LWC bundle.
-3. Drop `SE FR - My Tasks` on the right column of a Home / App / Record page.
+3. Drop `CCO FR - My Tasks` on the right column of a Home / App / Record page.
 
 ## Prerequisites — user timezone
 

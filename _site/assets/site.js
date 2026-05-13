@@ -1,4 +1,4 @@
-// SE FR Library — client UX
+// CCO FR Library — client UX
 // Public surface: window.__SE_T(key) for i18n; window.__SE_INDEX for search.
 (function () {
   const STORAGE_LANG = 'sefr.lang';
@@ -111,7 +111,7 @@
       'submitc.toast.badext': '✗ Format non supporté. Acceptés : .zip, .txt',
       'submitc.coming.pill': 'Bientôt',
       'submitc.coming.text': 'Connectez votre org et cochez directement les composants à soumettre — fini le zip manuel.',
-      'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets SE FR",
+      'channels.slack': "Slack #cco-fr-assets — le canal de partage des assets CCO FR",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
       'channels.agent': "Le Library Agent (bouton en bas à droite)",
@@ -240,7 +240,7 @@
       'submitc.toast.badext': '✗ Unsupported format. Accepted: .zip, .txt',
       'submitc.coming.pill': 'Coming soon',
       'submitc.coming.text': 'Connect your org and tick the components to submit — no more manual zip.',
-      'channels.slack': "Slack #cco-fr-assets — the SE FR shared-assets channel",
+      'channels.slack': "Slack #cco-fr-assets — the CCO FR shared-assets channel",
       'channels.qbranch': "Q Branch — Demo Components",
       'channels.email': "Email · lionel.braun@salesforce.com",
       'channels.agent': "The Library Agent (bottom-right button)",
@@ -1278,7 +1278,7 @@
     const tab = window.open('about:blank', '_blank');
     if (tab) {
       try {
-        tab.document.title = 'SE FR Showcase — chargement…';
+        tab.document.title = 'CCO FR Showcase — chargement…';
         tab.document.body.style.cssText = 'background:#0a0e2a;color:#e6e9ff;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0';
         const wrap = tab.document.createElement('div');
         wrap.style.textAlign = 'center';

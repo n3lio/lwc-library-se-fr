@@ -27,7 +27,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Contact Card
+# CCO FR - Contact Card
 
 **Original author:** Charly Ansel <REDACTED>
 **Maintained in library by:** Lionel Braun

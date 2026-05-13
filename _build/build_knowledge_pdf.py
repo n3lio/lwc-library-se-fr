@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build a single self-contained HTML file aggregating the SE FR Library docs
+Build a single self-contained HTML file aggregating the CCO FR Library docs
 for upload as a Data Library knowledge source.
 
 Output: _doc/SE_FR_Library_KnowledgeBase.html
@@ -534,7 +534,7 @@ def render_cookbook(recipes: list[dict], manifest: dict) -> str:
         c = by_api.get(api)
         if not c:
             return api
-        return (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+        return (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
 
     out = [
         "<p>Pre-built component bundles for typical demo scenarios. Each "
@@ -590,7 +590,7 @@ def render_contributors(manifest: dict) -> str:
     lionel = by_author.pop("Lionel Braun", None)
     if lionel:
         items = "".join(
-            f'<li><code>{c["apiName"]}</code> — {(c.get("masterLabel") or c["apiName"]).replace("SE FR - ","").strip()}</li>'
+            f'<li><code>{c["apiName"]}</code> — {(c.get("masterLabel") or c["apiName"]).replace("CCO FR - ","").strip()}</li>'
             for c in sorted(lionel, key=lambda x: x["apiName"])
         )
         out.append(
@@ -603,7 +603,7 @@ def render_contributors(manifest: dict) -> str:
         email = sample.get("originalAuthorEmail") or ""
         joined = sample.get("libraryIntegrationDate") or ""
         items = "".join(
-            f'<li><code>{c["apiName"]}</code> — {(c.get("masterLabel") or c["apiName"]).replace("SE FR - ","").strip()}</li>'
+            f'<li><code>{c["apiName"]}</code> — {(c.get("masterLabel") or c["apiName"]).replace("CCO FR - ","").strip()}</li>'
             for c in comps
         )
         meta_bits = []
@@ -628,7 +628,7 @@ def render_component_section(readme: Path, manifest_by_api: dict) -> str:
     # Add a small lead from the canonical record so the agent can match
     # the prose to a specific component without re-running the table.
     c = manifest_by_api.get(api, {})
-    name = (c.get("masterLabel") or api).replace("SE FR - ", "").strip()
+    name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
     cats = ", ".join(c.get("categories", [])) or "—"
     surfaces = ", ".join(c.get("surfaces", [])) or "—"
     objects = ", ".join(c.get("objects", [])) or "Any"
@@ -716,7 +716,7 @@ def main() -> None:
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SE FR Library — Knowledge Base</title>
+<title>CCO FR Library — Knowledge Base</title>
 <style>
   @page {{ size: A4; margin: 18mm 16mm; }}
   body {{
@@ -833,7 +833,7 @@ def main() -> None:
 <body>
 
 <div class="cover">
-  <h1>SE FR Component Library</h1>
+  <h1>CCO FR Component Library</h1>
   <div class="sub">Knowledge base — for the LWC_Library_Agent</div>
   <div class="meta">Generated {date.today().isoformat()} · Solution Engineering France</div>
 </div>

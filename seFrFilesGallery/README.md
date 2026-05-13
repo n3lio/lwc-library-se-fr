@@ -27,7 +27,7 @@ screenshots: []
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** any record type — the component queries `ContentDocumentLink` by `LinkedEntityId`.
-- **App Builder label:** `SE FR - Files Gallery`
+- **App Builder label:** `CCO FR - Files Gallery`
 
 ## Apex dependency
 `SE_FR_FilesGalleryController.getFiles(recordId, limitCount)`. Queries the latest `ContentVersion` for each document linked to the record.
@@ -43,7 +43,7 @@ screenshots: []
 ## Install
 1. Deploy `classes/SE_FR_FilesGalleryController.cls`.
 2. Unzip `seFrFilesGallery.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Files Gallery` on any record page.
+3. Drop `CCO FR - Files Gallery` on any record page.
 
 ## Data enrichment prerequisites
 - The record must have **at least one `ContentDocumentLink`** attached. On a fresh SDO, most records have none — the component shows an empty state.

@@ -28,7 +28,7 @@ Aggregated activity timeline for an Account or Contact. Shows **16+ record types
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account, Contact
-- **App Builder label:** `SE FR - Activity Feed`
+- **App Builder label:** `CCO FR - Activity Feed`
 
 ## Apex dependency
 - `SE_FR_ActivityFeedController.getActivityFeed(recordId, includeRelatedContacts, daysBack, daysForward)` — returns a unified `List<FeedEntry>`. Schema-safe: each object is queried only if present and accessible; any failure is caught per-source so a missing object never breaks the whole feed.
@@ -80,7 +80,7 @@ On an **Account**, enabling `includeRelatedContacts` (default) also pulls activi
 ## Install
 1. Deploy `classes/SE_FR_ActivityFeedController.cls`.
 2. Unzip `seFrActivityFeed.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Activity Feed` on an Account or Contact record page.
+3. Drop `CCO FR - Activity Feed` on an Account or Contact record page.
 4. Verify that the Account/Contact page layout exposes the quick actions you listed in `enabledActionsCsv` — the toolbar buttons launch the standard quick actions of the object.
 
 ## Prerequisites — user timezone

@@ -20,7 +20,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Kanban Board (`seFrKanbanBoard`)
+# CCO FR - Kanban Board (`seFrKanbanBoard`)
 
 Generic kanban board for **any whitelisted SObject** (Case · Opportunity · Lead · Order · Task · Account). Drag-and-drop updates the group-by field on the record. Auto-detects scoping when placed on a Record Page.
 

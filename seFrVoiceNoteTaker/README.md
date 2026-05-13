@@ -26,7 +26,7 @@ Dictate a voice note using the browser's Web Speech API, edit it manually if nee
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account, Contact, Lead, Opportunity
-- **App Builder label:** `SE FR - Voice Note Taker`
+- **App Builder label:** `CCO FR - Voice Note Taker`
 
 ## Apex dependency
 - `SE_FR_VoiceNoteController.saveVoiceNoteForRecord(recordId, noteText, taskSubject)` (in `_shared_apex/`).
@@ -63,4 +63,4 @@ The activity feed component (to be built later) will display `Task.Description` 
 ## Install
 1. Deploy `_shared_apex/classes/SE_FR_VoiceNoteController.cls` first.
 2. Unzip `seFrVoiceNoteTaker.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Voice Note Taker` on an Account / Contact / Lead / Opportunity record page.
+3. Drop `CCO FR - Voice Note Taker` on an Account / Contact / Lead / Opportunity record page.

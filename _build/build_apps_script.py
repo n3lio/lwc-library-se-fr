@@ -48,7 +48,7 @@ def build_payload(manifest: dict) -> dict:
         for cat in c.get("categories", []):
             by_cat.setdefault(cat, []).append({
                 "apiName": c["apiName"],
-                "name": (c.get("masterLabel") or c["apiName"]).replace("SE FR - ", "").strip(),
+                "name": (c.get("masterLabel") or c["apiName"]).replace("CCO FR - ", "").strip(),
                 "tagline": c.get("tagline") or "",
                 "chips": c.get("chips") or [],
                 "keyProps": c.get("keyProps") or [],
@@ -86,7 +86,7 @@ def main() -> int:
     n_components = sum(len(s["components"]) for s in payload["sections"])
 
     gs = f'''/**
- * SE FR Component Library — Google Slides generator
+ * CCO FR Component Library — Google Slides generator
  * --------------------------------------------------
  * AUTO-GENERATED from _build/manifest.json by _build/build_apps_script.py.
  * Do not hand-edit — regenerate via:
@@ -119,7 +119,7 @@ var MANIFEST = {payload_js};
 // ============================================================
 function generateDeck() {{
     var deck = buildDeckArray();
-    var presentation = SlidesApp.create('SE FR Component Library — Draft');
+    var presentation = SlidesApp.create('CCO FR Component Library — Draft');
     var firstSlide = presentation.getSlides()[0];
     if (firstSlide) firstSlide.remove();
 
@@ -147,8 +147,8 @@ function buildDeckArray() {{
 
     // ----- Intro -----
     deck.push({{
-        title: 'SE FR Component Library',
-        body: 'A reusable Lightning Web Components kit shared across the SE France team to speed up Salesforce demos.\\n\\nInternal asset · SE FR · 2026',
+        title: 'CCO FR Component Library',
+        body: 'A reusable Lightning Web Components kit shared across the SE France team to speed up Salesforce demos.\\n\\nInternal asset · CCO FR · 2026',
         notes: 'Cover slide. Apply your branded title master.'
     }});
 
@@ -258,7 +258,7 @@ function buildDeckArray() {{
     }});
 
     deck.push({{
-        title: 'Thanks for using the SE FR kit',
+        title: 'Thanks for using the CCO FR kit',
         body: [
             'Built by SE France, for SE France. Contributions and feedback welcome.',
             '',

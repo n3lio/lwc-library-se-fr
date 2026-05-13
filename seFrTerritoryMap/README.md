@@ -21,7 +21,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Territory Map (`seFrTerritoryMap`)
+# CCO FR - Territory Map (`seFrTerritoryMap`)
 
 Carte interactive du territoire commercial : Accounts géolocalisés via leur Billing Address, code couleur par tier de pipeline ouvert, filtres latéraux (Owner / RecordType / fourchette de montant ouvert / étapes opportunité), tuiles KPI et export CSV de la sélection visible.
 

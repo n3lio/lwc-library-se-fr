@@ -25,7 +25,7 @@ Displays a short, configurable list of marketing / Data Cloud segments as badges
 
 ## Where to drop it
 - **Targets:** Lightning Record Page, App Page, Home Page
-- **App Builder label:** `SE FR - Active Segments`
+- **App Builder label:** `CCO FR - Active Segments`
 
 ## Apex dependencies
 None.
@@ -40,7 +40,7 @@ None.
 
 ## Install
 1. Unzip `seFrActiveSegments.zip`, deploy the LWC bundle.
-2. Drop `SE FR - Active Segments` on any page and set `segmentsCsv` to the customer's segments.
+2. Drop `CCO FR - Active Segments` on any page and set `segmentsCsv` to the customer's segments.
 
 ## Origin
 Genericized from the `krysActiveSegments` Krys demo component.

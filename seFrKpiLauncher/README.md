@@ -26,7 +26,7 @@ Configurable grid of 3 to 6 clickable KPI tiles. Each tile accepts a label, valu
 
 ## Where to drop it
 - **Target:** Lightning Home Page / App Page / Record Page
-- **App Builder label:** `SE FR - KPI Launcher`
+- **App Builder label:** `CCO FR - KPI Launcher`
 
 ## Apex dependency
 None (all values are static, driven by App Builder properties).
@@ -56,5 +56,5 @@ Plus:
 
 ## Install
 1. Unzip `seFrKpiLauncher.zip`, deploy the LWC bundle.
-2. Drop `SE FR - KPI Launcher` on a Home, App or Record page.
+2. Drop `CCO FR - KPI Launcher` on a Home, App or Record page.
 3. Configure each KPI in App Builder. Start by filling KPI 1–3; add KPI 4–6 if needed.

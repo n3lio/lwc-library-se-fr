@@ -26,7 +26,7 @@ Interactive map showing nearby accounts from a configurable origin point. Uses t
 
 ## Where to drop it
 - **Target:** Lightning Home Page / App Page
-- **App Builder label:** `SE FR - Nearby Accounts Map`
+- **App Builder label:** `CCO FR - Nearby Accounts Map`
 
 ## Apex dependency
 - `SE_FR_NearbyAccountsController.getNearbyAccounts(limitCount, recordTypeName)` — located in `_shared_apex/`.
@@ -59,7 +59,7 @@ This means the default deployment works out of the box for any SE: the first tim
 ## Install
 1. Deploy `_shared_apex/classes/SE_FR_NearbyAccountsController.cls` first (if not already present in the org).
 2. Unzip `seFrNearbyAccountsMap.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Nearby Accounts Map` on a Home or App page.
+3. Drop `CCO FR - Nearby Accounts Map` on a Home or App page.
 4. First load: accept the browser geolocation prompt. The map re-centers on you. If you prefer a fixed origin, set `originMode = 'manual'` and tune the lat/lng.
 
 ## Data enrichment prerequisites

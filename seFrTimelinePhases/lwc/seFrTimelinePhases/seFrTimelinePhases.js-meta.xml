@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Timeline Phases</masterLabel>
+    <masterLabel>CCO FR - Timeline Phases</masterLabel>
     <description>B2B / B2C - Horizontal multi-phase timeline (e.g. customer journey / project steps). Phases are JSON-configured with labels, target dates and done flags. A vertical "Today" marker shows current position.</description>
     <targets>
         <target>lightning__RecordPage</target>

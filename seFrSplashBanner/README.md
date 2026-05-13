@@ -22,7 +22,7 @@ status: active
 screenshots: []
 ---
 
-# SE FR - Splash Banner (`seFrSplashBanner`)
+# CCO FR - Splash Banner (`seFrSplashBanner`)
 
 Bannière d'accueil / splash screen avec fond animé. **8 styles de fond** au choix, tous en pur CSS + SVG inline (zéro librairie externe). Le SE configure juste un titre, un sous-titre optionnel et le style de fond — tout le reste est paramétrable depuis App Builder (couleurs, hauteur, vitesse, alignement, bouton CTA).
 

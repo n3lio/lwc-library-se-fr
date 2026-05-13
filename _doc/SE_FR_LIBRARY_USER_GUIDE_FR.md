@@ -1,4 +1,4 @@
-# SE FR Component Library — Guide d'utilisation
+# CCO FR Component Library — Guide d'utilisation
 
 > **Audience** : Solution Engineers Salesforce qui souhaitent intégrer un ou plusieurs composants de la librairie dans leur org de démo (SDO, IDO, scratch).
 > **Format** : un seul document maître à coller dans un Google Doc.
@@ -51,7 +51,7 @@ SE_FR_Library/
 **Conventions** :
 - LWC : `seFr<Name>` (camelCase, pas d'underscore)
 - Apex : `SE_FR_<Name>Controller`
-- Master label App Builder : `SE FR - <Human name>`
+- Master label App Builder : `CCO FR - <Human name>`
 - Tirets simples uniquement (pas de en-dash / em-dash)
 - Texte FR par défaut, override via la prop `language`
 
@@ -90,7 +90,7 @@ Pointe ton assistant AI sur le dossier `seFr<Name>/` et demande-lui de déployer
 
 1. Setup → Lightning Components → cherche `seFr<Name>` dans la liste
 2. Setup → Apex Classes → cherche `SE_FR_<Name>Controller`
-3. App Builder → édite ta page → cherche le composant dans la liste à gauche (`SE FR - <Name>`)
+3. App Builder → édite ta page → cherche le composant dans la liste à gauche (`CCO FR - <Name>`)
 
 Si rien n'apparaît côté App Builder, vérifie le `<isExposed>true</isExposed>` dans le `js-meta.xml` du composant + la `apiVersion` (le projet utilise 59.0).
 
@@ -196,7 +196,45 @@ Setup ~10 min, mais quelques pièges (PKCE coché par défaut, External Credenti
 
 ### Composants nécessitant Einstein activé
 
-`seFrContactCard` (bouton "Résumer") et `seFrSmartRecommendations` (mode AI) appellent un Prompt Template. Mêmes prérequis que `seFrPromptLauncher` : Named Credential `Agentforce_API` configuré.
+`seFrContactCard` (bouton "Résumer") et `seFrSmartRecommendations` (mode AI) appellent un Prompt Template — soit via le Named Credential `Agentforce_API` (préféré, comme pour `seFrPromptLauncher`), soit via l'API Apex native `ConnectApi.EinsteinLLM`.
+
+**Permission Sets nécessaires côté user qui exécute le composant** (autres que celui qui a installé) :
+
+| Permset | Pourquoi | Utilisation |
+|---|---|---|
+| `EinsteinGPTPromptTemplateUser` | Exécution de Prompt Templates depuis l'UI | Tous les SE qui veulent tester l'AI |
+| `Agentforce_API_Access` (custom, créé via le guide ci-dessus) | Accès à l'External Credential pour le Named Credential | Tous les SE qui veulent tester l'AI |
+| `EinsteinGPTSalesSummaries` (optionnel) | Améliore certains résumés contact / opportunity | Bonus, pas requis |
+
+**Exemples de Prompt Template API names standards SDO** (à utiliser comme valeur de la prop `promptTemplateApiName` côté `seFrContactCard` / `seFrPromptLauncher`) :
+
+- `einstein_gpt__summarizeContact` — résumé Contact (mémo enrichi par AI)
+- `einstein_gpt__summarizeRecord` — résumé générique Account / Opportunity / Case
+- `einstein_gpt__draftEmailFromTemplate` — draft d'email depuis un template
+
+Les champs lus par le template doivent être visibles côté user (FLS Read), sinon le contexte arrive vide et le template renvoie une réponse vide. Si tu vois "Réponse du prompt vide" : check FLS sur `Contact.Title` / `Department` / `Email` / etc.
+
+**Galères classiques rencontrées pendant la conception** (et leurs résolutions) :
+- `We couldn't access the credential(s) Agentforce_External_Auth` → permset `Agentforce_API_Access` non assigné au user.
+- Réponse vide silencieuse → permset `EinsteinGPTPromptTemplateUser` non assigné, ou FLS bloquante sur les champs lus par le template.
+- `client_credentials only` token (scope `api`, sans `web`) → impossible d'utiliser le token sur frontdoor.jsp ou pour ouvrir une session UI ; passer en JWT Bearer Flow si besoin d'une session UI complète.
+- Sandbox.mailgun.org refusé par Gmail (`espblock`) si le mail mentionne un domaine externe (looks like spoofing). Mettre l'email du SE en `Reply-To` header, pas dans le body.
+
+### Composants nécessitant une Static Resource
+
+#### `seFrAgentforceHeader` — image `astro_agentforce`
+
+Le composant affiche l'image d'Astro (mascotte Salesforce) en background. Cette image doit exister comme **Static Resource** dans l'org sous le nom **exact** `astro_agentforce` (pas `astro_agentforce.png`, juste `astro_agentforce` côté Setup → Static Resources → Name field).
+
+**Bonne nouvelle** : depuis la version actuelle de la lib, l'image est **automatiquement embarquée dans le zip** `_zips/seFrAgentforceHeader.zip`. Si tu déploies via le bouton "Déployer dans mon org" du site web, ou via `sf project deploy start -d _deploy/`, l'image est créée automatiquement. **Aucune action manuelle nécessaire**.
+
+**Si tu déploies via une méthode alternative** (drag-drop dans VS Code par exemple) qui ignorerait le sous-dossier `staticresources/` :
+
+1. Setup → Static Resources → New
+2. Name : `astro_agentforce`
+3. Cache Control : `Public`
+4. File : upload une PNG d'Astro (la mascotte Salesforce — récupérable via `_zips/seFrAgentforceHeader.zip` qui contient l'image, ou `Original Assets/IMAGES/astro_agentforce.png` du repo)
+5. Save
 
 ### Composants utilisant des APIs browser
 
@@ -837,7 +875,7 @@ Pré-requis pour qu'un composant soit accepté dans la lib :
 - Schema-safe (aucun champ custom requis sauf override App Builder explicite)
 - Defaults industry-agnostic
 - README avec : purpose, targets, props table, demo notes, troubleshooting
-- Convention de nommage : `seFr<Name>` LWC, `SE_FR_<Name>Controller` Apex, `SE FR - <Name>` master label
+- Convention de nommage : `seFr<Name>` LWC, `SE_FR_<Name>Controller` Apex, `CCO FR - <Name>` master label
 
 ### Standards de code
 

@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Telesales - Rep Home</masterLabel>
+    <masterLabel>CCO FR - Telesales - Rep Home</masterLabel>
     <description>B2B - Telesales Home page. KPI tiles, incoming cases, orders to validate, mini-charts, calls, news. Bilingual EN/FR via the language property.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -14,7 +14,7 @@
 
             <property name="greetingTemplate" type="String" label="Greeting template (override)" description="Use {name} placeholder. Wrap any word with **…** to render it in the highlight color. Leave empty for dictionary default." />
             <property name="defaultUserName" type="String" label="Fallback user name (override)" />
-            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the SE FR brand blue." />
+            <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the CCO FR brand blue." />
 
             <property name="caseStatusesCsv" type="String" default="New,Working,Waiting on Customer,Escalated" label="Cases - statuses (comma-separated)" />
             <property name="caseOwnerScope" type="String" default="all" label="Cases - owner scope" description="'mine' | 'all'" />

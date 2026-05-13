@@ -27,7 +27,7 @@ screenshots: []
 ## Where to drop it
 - **Target:** Lightning Record Page
 - **Objects:** Account
-- **App Builder label:** `SE FR - Contacts Carousel`
+- **App Builder label:** `CCO FR - Contacts Carousel`
 
 ## Apex dependency
 `SE_FR_ContactsCarouselController.getContacts(accountId, limitCount, orderBy)`.
@@ -46,7 +46,7 @@ screenshots: []
 ## Install
 1. Deploy `classes/SE_FR_ContactsCarouselController.cls`.
 2. Unzip `seFrContactsCarousel.zip`, deploy the LWC bundle.
-3. Drop `SE FR - Contacts Carousel` on an Account record page.
+3. Drop `CCO FR - Contacts Carousel` on an Account record page.
 
 ## Data enrichment prerequisites
 - Contacts should have **Title** and **Department** filled in for the card to look complete. Blank fields display an empty line.
