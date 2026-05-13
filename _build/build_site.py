@@ -45,14 +45,16 @@ SOURCE_LOGO_SEFR = ROOT / "_doc" / "_assets" / "logo-sefr-s.png"
 SOURCE_USER_GUIDE = ROOT / "_doc" / "SE_FR_LIBRARY_USER_GUIDE_FR.md"
 
 # Component preview images (PNG / JPG / GIF / WebP) live on the CCO FR
-# Drive — user drops them in `LWC Library CCO FR/Previews/` via the
-# Google Drive Desktop mount. The builder scans this folder, copies
-# matched images into _site/assets/previews/ and wires them to cards
-# and detail pages.
+# Drive — user drops them in `LWC Library SE FR/Previews/` via the
+# Google Drive Desktop mount. NOTE: the Drive folder is still named
+# `LWC Library SE FR` (legacy name, not renamed during the SE FR → CCO FR
+# rebrand because the Drive folder itself is just storage, not user-facing).
+# The builder scans this folder, copies matched images into
+# _site/assets/previews/ and wires them to cards and detail pages.
 SOURCE_PREVIEWS = Path(
     "/Users/lionel.braun/Library/CloudStorage/"
     "GoogleDrive-lionel.braun@salesforce.com/Mon Drive/"
-    "LWC Library CCO FR/Previews"
+    "LWC Library SE FR/Previews"
 )
 PREVIEW_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
