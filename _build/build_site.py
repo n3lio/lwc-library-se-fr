@@ -1824,16 +1824,32 @@ JS = r"""// CCO FR Library — client UX
     },
   };
 
+  // Truncate long org hosts for the connect button so it doesn't push the nav.
+  // 'storm-ea9bc09d78eb59.my.salesforce.com' → 'storm-ea9bc0…'
+  // We strip the well-known '.my.salesforce.com' / '.lightning.force.com'
+  // suffix first (it's redundant and eats characters), then cap at ~14 chars.
+  function shortenHost(h) {
+    if (!h) return '';
+    const stripped = h
+      .replace(/\.my\.salesforce\.com$/i, '')
+      .replace(/\.lightning\.force\.com$/i, '')
+      .replace(/\.force\.com$/i, '')
+      .replace(/\.salesforce\.com$/i, '');
+    return stripped.length > 14 ? stripped.slice(0, 13) + '…' : stripped;
+  }
   function renderConnectButtons() {
     const a = auth.get();
     const buttons = document.querySelectorAll('[data-mock="connect"]');
     buttons.forEach(b => {
       if (a && a.accessToken) {
         const label = (a.name || a.username || '').split(' ')[0] || 'connecté';
-        b.textContent = '✓ ' + label + ' · ' + auth.instanceHost();
+        const fullHost = auth.instanceHost();
+        b.textContent = '✓ ' + label + ' · ' + shortenHost(fullHost);
+        b.title = label + ' · ' + fullHost;
         b.classList.add('is-connected');
       } else {
         b.textContent = t('connect.btn');
+        b.removeAttribute('title');
         b.classList.remove('is-connected');
       }
     });
