@@ -7,6 +7,7 @@ chips:
   - Relevance score badge
   - Inline title & reason override
 dataMode: mock
+requiresEinstein: optional
 mobileReady: true
 originalAuthor: Lionel Braun
 keyProps:

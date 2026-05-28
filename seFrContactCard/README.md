@@ -8,6 +8,7 @@ chips:
   - Up to 3 gauges
   - Inline avatar upload
 dataMode: hybrid
+requiresEinstein: optional
 mobileReady: true
 originalAuthor: Charly Ansel
 originalAuthorEmail: REDACTED

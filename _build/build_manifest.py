@@ -245,6 +245,7 @@ class ComponentRecord:
     staticResourceDeps: list[str]
     customFieldsOptional: list[str]
     customFieldsRequired: list[str]
+    requiresEinstein: str | None  # null | "true" | "optional"
     properties: list[dict]
 
 
@@ -346,6 +347,7 @@ def build_component(
         staticResourceDeps=fm.get("staticResourceDeps") or [],
         customFieldsOptional=fm.get("customFieldsOptional") or [],
         customFieldsRequired=fm.get("customFieldsRequired") or [],
+        requiresEinstein=fm.get("requiresEinstein"),
         properties=meta.properties,
     )
 

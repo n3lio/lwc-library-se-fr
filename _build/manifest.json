@@ -52,6 +52,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -142,6 +143,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -350,6 +352,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -455,6 +458,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -579,6 +583,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -682,6 +687,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -811,6 +817,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -933,6 +940,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": "optional",
       "properties": [
         {
           "name": "language",
@@ -1240,6 +1248,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -1349,6 +1358,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -1483,6 +1493,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -1671,6 +1682,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -1785,6 +1797,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -2054,6 +2067,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -2155,6 +2169,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -2316,6 +2331,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -2652,6 +2668,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -2880,6 +2897,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3045,6 +3063,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3160,6 +3179,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3289,6 +3309,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3473,6 +3494,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3602,6 +3624,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -3713,6 +3736,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": "required",
       "properties": [
         {
           "name": "language",
@@ -3888,6 +3912,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -4020,6 +4045,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -4140,6 +4166,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -4312,6 +4339,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -4388,6 +4416,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": "optional",
       "properties": [
         {
           "name": "language",
@@ -4712,6 +4741,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "title",
@@ -4857,6 +4887,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5005,6 +5036,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5322,6 +5354,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5475,6 +5508,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5579,6 +5613,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5675,12 +5710,6 @@
     }
   ],
   "byCategory": {
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory"
-    ],
     "Geo & Field": [
       "seFrNearbyAccountsMap",
       "seFrTerritoryMap",
@@ -5693,22 +5722,18 @@
       "seFrSmartRecommendations",
       "seFrTimelinePhases"
     ],
-    "Transverse": [
-      "seFrActivityFeed",
-      "seFrAgentforceHeader",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrRecordHighlights",
-      "seFrRelatedRecordCard",
-      "seFrSplashBanner"
-    ],
     "Service": [
       "seFrAlertsRibbon",
       "seFrKanbanBoard",
       "seFrOrderSummary",
       "seFrServiceContracts",
       "seFrSubscribersList"
+    ],
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -5723,9 +5748,33 @@
       "seFrMetricTile",
       "seFrRevenueDashboard",
       "seFrTelesalesRepHome"
+    ],
+    "Transverse": [
+      "seFrActivityFeed",
+      "seFrAgentforceHeader",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrRecordHighlights",
+      "seFrRelatedRecordCard",
+      "seFrSplashBanner"
     ]
   },
   "byPersona": {
+    "Telesales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderEntry",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTelesalesRepHome"
+    ],
     "Retail": [
       "seFrCustomerSalesSummary"
     ],
@@ -5743,6 +5792,19 @@
       "seFrServiceContracts",
       "seFrSmartRecommendations",
       "seFrSubscribersList"
+    ],
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrActivityFeed",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -5772,19 +5834,6 @@
       "seFrRecordHighlights",
       "seFrSplashBanner"
     ],
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrActivityFeed",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
-    ],
     "FieldSales": [
       "seFrActivityFeed",
       "seFrContactCard",
@@ -5800,20 +5849,6 @@
       "seFrSubscribersList",
       "seFrTerritoryMap",
       "seFrVoiceNoteTaker"
-    ],
-    "Telesales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderEntry",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTelesalesRepHome"
     ]
   },
   "bySurface": {
@@ -5849,8 +5884,9 @@
       "seFrTimelinePhases",
       "seFrVoiceNoteTaker"
     ],
-    "AppPage": [
+    "HomePage": [
       "seFrActiveSegments",
+      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrEngagementHistory",
       "seFrFieldRepHome",
@@ -5867,9 +5903,8 @@
       "seFrTerritoryMap",
       "seFrTimelinePhases"
     ],
-    "HomePage": [
+    "AppPage": [
       "seFrActiveSegments",
-      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrEngagementHistory",
       "seFrFieldRepHome",

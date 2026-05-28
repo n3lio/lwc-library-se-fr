@@ -711,6 +711,12 @@ h2.section-title .count { color: var(--text-muted); font-size: 11px; font-weight
 .badge.stable { background: rgba(46, 132, 74, 0.08); color: var(--success); border-color: rgba(46, 132, 74, 0.2); }
 .badge.new { background: rgba(254, 178, 26, 0.14); color: #8a5a00; border-color: rgba(254, 178, 26, 0.32); }
 .badge.ai { background: rgba(107, 78, 255, 0.08); color: var(--accent); border-color: rgba(107, 78, 255, 0.2); }
+.badge-live { background: rgba(46, 132, 74, 0.08); color: #1a7431; border-color: rgba(46, 132, 74, 0.2); }
+.badge-mock { background: rgba(1, 118, 211, 0.06); color: #0b5cab; border-color: rgba(1, 118, 211, 0.18); }
+.badge-noapex { background: rgba(46, 132, 74, 0.06); color: #1a7431; border-color: rgba(46, 132, 74, 0.15); }
+.badge-warn { background: rgba(200, 77, 16, 0.08); color: #8c3800; border-color: rgba(200, 77, 16, 0.2); }
+.badge-ai { background: rgba(124, 58, 237, 0.08); color: #5b21b6; border-color: rgba(124, 58, 237, 0.2); }
+.badge-ai-opt { background: rgba(124, 58, 237, 0.05); color: #6d28d9; border-color: rgba(124, 58, 237, 0.14); }
 .preview-large { position: relative; min-height: 240px; max-height: 480px; background: linear-gradient(135deg, var(--brand-light) 0%, var(--accent-light) 100%); border-radius: var(--r-lg); display: grid; place-items: center; margin-bottom: 24px; color: rgba(3, 45, 96, 0.18); font-size: 90px; font-weight: 800; border: 1px solid var(--border); overflow: hidden; }
 .preview-large.preview-image, .preview-large.preview-carousel { background: #f6f8fb; padding: 16px; }
 .preview-large.preview-image img { max-width: 100%; max-height: 448px; object-fit: contain; display: block; border-radius: 6px; cursor: zoom-in; }
@@ -3591,13 +3597,28 @@ def render_component_detail(c: dict, all_components: list[dict], recipes: list[d
     for cat in (c.get("categories") or []):
         emoji = CATEGORY_EMOJI.get(cat, "")
         badges.append(f'<span class="badge">{emoji} {html_lib.escape(cat)}</span>')
-    # AI-ready (from personas containing Agents or prompt-launcher-like)
-    is_ai = "Agents" in (c.get("personas") or [])
-    if is_ai:
-        badges.append('<span class="badge ai">🤖 AI-ready</span>')
-    # No Apex is a useful signal
-    if not (c.get("apexDeps") or c.get("sharedApexDeps")):
-        badges.append('<span class="badge">Zero Apex</span>')
+    # Data mode
+    data_mode = c.get("dataMode") or "mock"
+    if data_mode == "live":
+        badges.append('<span class="badge badge-live">⚡ Live Data</span>')
+    elif data_mode == "mock":
+        badges.append('<span class="badge badge-mock">🎨 Mock / Config</span>')
+    # Apex signals
+    has_apex = bool(c.get("apexDeps") or c.get("sharedApexDeps"))
+    has_shared = bool(c.get("sharedApexDeps"))
+    if not has_apex:
+        badges.append('<span class="badge badge-noapex">Zero Apex</span>')
+    elif has_shared:
+        badges.append('<span class="badge">Shared Apex</span>')
+    # Custom fields required
+    if c.get("customFieldsRequired"):
+        badges.append('<span class="badge badge-warn">⚙️ Custom Fields</span>')
+    # Einstein AI
+    einstein = c.get("requiresEinstein")
+    if einstein == "required":
+        badges.append('<span class="badge badge-ai">🧠 Requires Einstein AI</span>')
+    elif einstein == "optional":
+        badges.append('<span class="badge badge-ai-opt">🧠 Einstein AI (optional)</span>')
     # New release status
     if rs == "new":
         badges.append('<span class="badge new">✨ New</span>')

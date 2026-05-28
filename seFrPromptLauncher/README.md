@@ -8,6 +8,7 @@ chips:
   - Save as Note
   - HTML-formatted output
 dataMode: live
+requiresEinstein: required
 mobileReady: false
 originalAuthor: Lionel Braun
 keyProps:
