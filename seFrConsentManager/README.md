@@ -1,6 +1,6 @@
 ---
 tagline: Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.
-categories: [Marketing & Data]
+categories: [Marketing]
 personas: [Marketing, Service]
 chips:
   - Per-channel toggles

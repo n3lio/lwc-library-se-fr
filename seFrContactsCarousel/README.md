@@ -1,6 +1,6 @@
 ---
 tagline: Horizontal carousel of an Account's Contacts with avatars, role badges and quick Email / Call actions.
-categories: [Account 360°]
+categories: [Transverse]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - Champion / DMU role badges

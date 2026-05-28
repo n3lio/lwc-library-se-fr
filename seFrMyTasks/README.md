@@ -1,6 +1,6 @@
 ---
 tagline: Compact 'My Tasks' sidebar panel grouped by due date with one-click completion.
-categories: [Sales Productivity]
+categories: [Productivity]
 personas: [All]
 chips:
   - Grouped by due date

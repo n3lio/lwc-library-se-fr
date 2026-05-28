@@ -1,6 +1,6 @@
 ---
 tagline: Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.
-categories: [Sales Productivity]
+categories: [Sales]
 personas: [Telesales]
 chips:
   - AI-recommended qty + discount

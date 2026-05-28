@@ -1,6 +1,6 @@
 ---
 tagline: Generic kanban board with native drag & drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).
-categories: [Sales Productivity]
+categories: [Service]
 personas: [Service, Telesales]
 chips:
   - Drag & drop status updates

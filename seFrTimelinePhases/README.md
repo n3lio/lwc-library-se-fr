@@ -1,6 +1,6 @@
 ---
 tagline: Horizontal multi-phase timeline with date axis, 'Today' marker and done / pending state per phase.
-categories: [Sales Productivity]
+categories: [Productivity]
 personas: [Sales]
 chips:
   - Date-axis layout

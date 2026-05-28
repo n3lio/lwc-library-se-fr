@@ -33,13 +33,12 @@ NS = "{http://soap.sforce.com/2006/04/metadata}"
 # Allowed enum values
 # ----------------------------------------------------------------------
 ALLOWED_CATEGORIES = {
-    "Account 360°",
-    "Sales Productivity",
-    "Geo & Field",
-    "Marketing & Data",
-    "Agentforce & AI",
-    "Dashboards & KPIs",
+    "Sales",
     "Service",
+    "Productivity",
+    "Dashboards & KPIs",
+    "Marketing",
+    "Geo & Field",
     "Transverse",
 }
 ALLOWED_PERSONAS = {

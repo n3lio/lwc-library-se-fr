@@ -1,6 +1,6 @@
 ---
 tagline: Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.
-categories: [Account 360°]
+categories: [Service]
 personas: [Sales, Service]
 chips:
   - Rule-driven + static

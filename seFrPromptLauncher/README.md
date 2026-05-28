@@ -1,6 +1,6 @@
 ---
 tagline: Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.
-categories: [Agentforce & AI]
+categories: [Productivity]
 personas: [All]
 chips:
   - Pill switcher per prompt

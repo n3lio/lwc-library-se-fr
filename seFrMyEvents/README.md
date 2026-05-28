@@ -1,6 +1,6 @@
 ---
 tagline: Today's calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.
-categories: [Sales Productivity]
+categories: [Productivity]
 personas: [All]
 chips:
   - Side-by-side overlap

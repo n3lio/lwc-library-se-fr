@@ -1,6 +1,6 @@
 ---
 tagline: Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.
-categories: [Account 360°]
+categories: [Transverse]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - 16+ record types unified

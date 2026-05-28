@@ -1,6 +1,6 @@
 ---
 tagline: Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.
-categories: [Account 360°]
+categories: [Transverse]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - Auto picks counterpart

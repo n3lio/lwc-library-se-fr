@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-28",
+  "generatedAt": "2026-05-29",
   "componentCount": 35,
   "skippedCount": 0,
   "skipped": [],
@@ -10,7 +10,7 @@
       "description": "B2B - Quantitative account-health gauge (0-100) with a SVG donut, verdict level (Excellent / Healthy / Watch / At risk / Critical) and the list of weighted signals used in the computation.",
       "tagline": "Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.",
       "categories": [
-        "Account 360°"
+        "Sales"
       ],
       "personas": [
         "Sales"
@@ -103,7 +103,7 @@
       "description": "B2B - Narrative Account plan: KPIs, target progress, SWOT 2x2, action plan, strategic notes. Bilingual EN / FR.",
       "tagline": "Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.",
       "categories": [
-        "Account 360°"
+        "Sales"
       ],
       "personas": [
         "Sales"
@@ -312,7 +312,7 @@
       "description": "B2B / B2C - Configurable list of Data Cloud / marketing segments, rendered as badges. The card title auto-appends the segment count.",
       "tagline": "Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.",
       "categories": [
-        "Marketing & Data"
+        "Marketing"
       ],
       "personas": [
         "Marketing"
@@ -408,7 +408,7 @@
       "description": "Aggregated activity timeline showing Tasks, Events, Emails, SMS/Web, calls, messaging sessions, chats, Orders, Cases, Opportunities, Quotes, Contracts, Visits, Files, Chatter posts and Survey responses for an Account or Contact.",
       "tagline": "Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.",
       "categories": [
-        "Account 360°"
+        "Transverse"
       ],
       "personas": [
         "Sales",
@@ -541,7 +541,7 @@
       "description": "Home page greeting banner with Astro mascot, a voice-dictation field and a send button. {name} is replaced with the running user's first name. Bilingual FR / EN.",
       "tagline": "Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.",
       "categories": [
-        "Agentforce & AI"
+        "Transverse"
       ],
       "personas": [
         "All"
@@ -630,7 +630,7 @@
       "description": "Configurable alerts ribbon. Two sources: rule-driven alerts evaluated against the current record (Record Page), and static alerts always shown (Home / App Page friendly). 4 severities, 3 visual variants, 2 densities, optional sticky-on-scroll behavior.",
       "tagline": "Configurable alerts ribbon combining declarative record-driven rules with always-on static banners.",
       "categories": [
-        "Account 360°"
+        "Service"
       ],
       "personas": [
         "Sales",
@@ -768,7 +768,7 @@
       "description": "B2B / B2C - GDPR / contact-preferences toggle panel. Reads/writes opt-in/opt-out fields on the record. Bilingual EN / FR.",
       "tagline": "Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.",
       "categories": [
-        "Marketing & Data"
+        "Marketing"
       ],
       "personas": [
         "Marketing",
@@ -876,8 +876,7 @@
       "description": "B2B / B2C - Visual Contact card (avatar, details, up to 3 gauges) with animated waves + optional Einstein prompt summary. Original author: Charly Ansel.",
       "tagline": "Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.",
       "categories": [
-        "Account 360°",
-        "Agentforce & AI"
+        "Transverse"
       ],
       "personas": [
         "Sales",
@@ -1195,7 +1194,7 @@
       "description": "B2B - Visual carousel of the Contacts linked to an Account. Photo (or initials fallback), title, optional role badge and quick Email/Call actions. Arrows to navigate when there are more than the visible count.",
       "tagline": "Horizontal carousel of an Account's Contacts with avatars, role badges and quick Email / Call actions.",
       "categories": [
-        "Account 360°"
+        "Transverse"
       ],
       "personas": [
         "Sales",
@@ -1306,7 +1305,7 @@
       "description": "B2B / B2C - Lists the orders linked to an Account or Contact. Top block shows the latest order with its line items; bottom block is a compact history with search / sort / status filter / View all. Bilingual EN / FR.",
       "tagline": "Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.",
       "categories": [
-        "Account 360°"
+        "Sales"
       ],
       "personas": [
         "Sales",
@@ -1443,7 +1442,7 @@
       "description": "B2C - Customer-level sales summary for a Contact / Person Account / Account record page. Bilingual EN / FR.",
       "tagline": "B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.",
       "categories": [
-        "Account 360°"
+        "Marketing"
       ],
       "personas": [
         "Retail",
@@ -1624,9 +1623,9 @@
       "apiName": "seFrEngagementHistory",
       "masterLabel": "CCO FR - Engagement History",
       "description": "Marketing and Data - Configurable marketing engagement timeline (Email, SMS, Form, Page View) with live search and typed colored icons. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.",
-      "tagline": "Configurable marketing engagement timeline with colored typed icons and live search.",
+      "tagline": "Configurable marketing engagement timeline with colored typed icons and inline search.",
       "categories": [
-        "Marketing & Data"
+        "Marketing"
       ],
       "personas": [
         "Marketing",
@@ -1645,12 +1644,12 @@
       "chips": [
         "Timeline UI",
         "8 event types",
-        "Live search",
+        "Inline search",
         "Zero Apex"
       ],
       "keyProps": [
         "Event types, emails, lists, ages (pipe-separated)",
-        "Show/hide search",
+        "Show/hide search (toggle icon)",
         "Card title override"
       ],
       "seBenefit": "Demonstrates a Marketing Cloud-style engagement history without needing MCAE installed. Perfect for demos on scratch orgs or SDOs without Marketing Cloud connectivity.",
@@ -1678,7 +1677,7 @@
           "type": "String",
           "label": "UI language",
           "default": "fr",
-          "description": "'fr' (default) or 'en'. Controls card title, search placeholder and empty state text."
+          "description": "'fr' (default) or 'en'. Controls card title, search placeholder, event type labels and empty state text."
         },
         {
           "name": "cardTitle",
@@ -1691,7 +1690,7 @@
           "name": "cardIcon",
           "type": "String",
           "label": "Card icon",
-          "default": "standard:share",
+          "default": "standard:activations",
           "description": null
         },
         {
@@ -1712,28 +1711,28 @@
           "name": "eventTypes",
           "type": "String",
           "label": "Event types (pipe-separated)",
-          "default": "Email Open|Email Sent|Email Open|Email Open|Email Sent|SMS Sent|Email Open|Email Click",
-          "description": "Recognized types: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View."
+          "default": "Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique",
+          "description": "FR: Email ouvert, Email envoye, Email clique, Email rejete, SMS envoye, SMS clique, Formulaire, Page vue. EN: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View."
         },
         {
           "name": "eventEmails",
           "type": "String",
           "label": "Emails / subjects (pipe-separated)",
-          "default": "promo-summer@acme.com|promo-summer@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|Reminder - Demo appointment|install-offer@acme.com|install-offer@acme.com",
+          "default": "promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr",
           "description": null
         },
         {
           "name": "eventLists",
           "type": "String",
           "label": "Lists / campaigns (pipe-separated)",
-          "default": "Hot Lead - Q2 Campaign|Hot Lead - Q2 Campaign|Nurturing - Web Form|Nurturing - Web Form|Nurturing - Web Form|SMS Automation - Follow-up|Summer Campaign 2026|Summer Campaign 2026",
+          "default": "Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend",
           "description": null
         },
         {
           "name": "eventAges",
           "type": "String",
           "label": "Relative ages (pipe-separated)",
-          "default": "5 d. 19 h. ago|5 d. 21 h. ago|6 d. 20 h. ago|1 mo. 2 d. ago|1 mo. 2 d. ago|1 mo. 3 d. ago|1 mo. 5 d. ago|1 mo. 5 d. ago",
+          "default": "2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j.",
           "description": null
         }
       ]
@@ -2113,7 +2112,7 @@
       "description": "Generic kanban board. Any SObject + group-by picklist + display field. Optional drag & drop that updates the group-by field on the record. Whitelisted objects: Case, Opportunity, Lead, Order, Task, Account.",
       "tagline": "Generic kanban board with native drag & drop on any whitelisted SObject (Case, Opp, Lead, Order, Task, Account).",
       "categories": [
-        "Sales Productivity"
+        "Service"
       ],
       "personas": [
         "Service",
@@ -2606,8 +2605,7 @@
       "description": "B2B / B2C - Single KPI tile with inline trend chart. 4 chart styles (line, area, bar, mini-donut), optional comparison series, target line, currency formatting. Bilingual FR / EN.",
       "tagline": "Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.",
       "categories": [
-        "Dashboards & KPIs",
-        "Marketing & Data"
+        "Dashboards & KPIs"
       ],
       "personas": [
         "Sales",
@@ -2838,7 +2836,7 @@
       "description": "B2B / B2C - Today-timeline view of events for a sidebar column. Auto-trims empty hours, handles overlapping events side-by-side, live now-line, in-N-min badge, Join button for common web-meeting URLs, and a short Upcoming list.",
       "tagline": "Today's calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.",
       "categories": [
-        "Sales Productivity"
+        "Productivity"
       ],
       "personas": [
         "All"
@@ -3003,7 +3001,7 @@
       "description": "B2B / B2C - Compact \"My Tasks\" panel for a sidebar column. Interactive completion checkbox, filter dropdown, auto-grouping by Overdue / Today / Tomorrow / This week / Later, optional quick actions, and \"New task\" shortcut.",
       "tagline": "Compact 'My Tasks' sidebar panel grouped by due date with one-click completion.",
       "categories": [
-        "Sales Productivity"
+        "Productivity"
       ],
       "personas": [
         "All"
@@ -3248,7 +3246,7 @@
       "description": "",
       "tagline": "Full-grid order entry on an Account or Case with stock, AI-recommended quantities and discounts, persisted as real Order records.",
       "categories": [
-        "Sales Productivity"
+        "Sales"
       ],
       "personas": [
         "Telesales"
@@ -3433,7 +3431,7 @@
       "description": "",
       "tagline": "Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.",
       "categories": [
-        "Sales Productivity"
+        "Service"
       ],
       "personas": [
         "Service"
@@ -3561,7 +3559,7 @@
       "description": "B2B - Customer pipeline visualisation: open Opportunities grouped by Stage with per-column totals, unweighted and weighted totals at the top.",
       "tagline": "Account-level pipeline visualization with summary tiles and one column per Opportunity stage.",
       "categories": [
-        "Account 360°"
+        "Sales"
       ],
       "personas": [
         "Sales"
@@ -3669,7 +3667,7 @@
       "description": "Configurable AI panel that runs Salesforce Prompt Templates via Invocable Actions. Drop on any page, the SE picks which prompts to expose. Auto-fills record context, prompts requiring user input show a small form. HTML responses rendered with formatting.",
       "tagline": "Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.",
       "categories": [
-        "Agentforce & AI"
+        "Productivity"
       ],
       "personas": [
         "All"
@@ -3836,7 +3834,7 @@
       "description": "B2B / B2C - Custom highlights panel with round image and configurable fields/actions. Works on Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote - can display the current record or its parent Account (recordSource property).",
       "tagline": "Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.",
       "categories": [
-        "Account 360°"
+        "Transverse"
       ],
       "personas": [
         "All"
@@ -3969,7 +3967,7 @@
       "description": "B2B / B2C - Vertical card that displays a related record (the Account of a Contact/Case/Opp, or the primary Contact of an Account). Picks the counterpart automatically from the record's object type. Bilingual EN / FR. Industry-agnostic defaults.",
       "tagline": "Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.",
       "categories": [
-        "Account 360°"
+        "Transverse"
       ],
       "personas": [
         "Sales",
@@ -4101,7 +4099,6 @@
       "description": "B2B - Account-level 3-year revenue mini-dashboard. Bilingual EN / FR via the language property.",
       "tagline": "3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.",
       "categories": [
-        "Account 360°",
         "Dashboards & KPIs"
       ],
       "personas": [
@@ -4269,7 +4266,7 @@
       "apiName": "seFrServiceContracts",
       "masterLabel": "CCO FR - Service Contracts",
       "description": "Service / Field - Lists active service contracts for an Account with trade/category badge, SLA, contractor email, scope and open work order count. Live data mode (Apex wire). Bilingual EN / FR.",
-      "tagline": "Active service contracts per Account with trade badge, SLA, email and open work order counter.",
+      "tagline": "Active service contracts per Account with deadline countdown, trade badge, SLA and open work order counter.",
       "categories": [
         "Service"
       ],
@@ -4285,8 +4282,8 @@
       ],
       "chips": [
         "Live Apex wire",
+        "Deadline countdown",
         "Category badges",
-        "SLA formatting",
         "Open WO counter"
       ],
       "keyProps": [
@@ -4294,7 +4291,7 @@
         "Card title override",
         "Card icon override"
       ],
-      "seBenefit": "Shows the full contractor landscape for an account in one glance - SLAs, open interventions, contact emails. Ideal for Field Service, property management and B2B service demos.",
+      "seBenefit": "Shows the full contractor landscape for an account in one glance - deadlines, SLAs, open interventions, contact emails. Ideal for Field Service, property management and B2B service demos.",
       "dataMode": "live",
       "mobileReady": true,
       "featured": false,
@@ -4308,7 +4305,9 @@
       "deprecatedNote": null,
       "screenshots": [],
       "gif": null,
-      "apexDeps": [],
+      "apexDeps": [
+        "SE_FR_ServiceContractsController"
+      ],
       "sharedApexDeps": [],
       "staticResourceDeps": [],
       "customFieldsOptional": [],
@@ -4343,7 +4342,7 @@
       "description": "Context-aware recommended actions (Next Best Action).",
       "tagline": "Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.",
       "categories": [
-        "Agentforce & AI"
+        "Productivity"
       ],
       "personas": [
         "Sales",
@@ -4810,16 +4809,15 @@
     {
       "apiName": "seFrSubscribersList",
       "masterLabel": "CCO FR - Subscribers List",
-      "description": "Service / Marketing - Configurable list of notification subscribers with auto-generated colored avatars, channel badges (Email, SMS, WhatsApp, Push), relative subscription age and notification counter. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.",
-      "tagline": "Configurable notification subscribers list with auto-generated colored avatars and channel badges.",
+      "description": "Service - Account team panel showing Users linked to the current record (Owner, Opp Team) with profile photos, roles and navigation. Live Apex by default, mock fallback via props. Bilingual EN / FR.",
+      "tagline": "Live account team panel with profile photos, roles and record navigation.",
       "categories": [
         "Service"
       ],
       "personas": [
         "Service",
-        "Marketing",
-        "Telesales",
-        "FieldSales"
+        "FieldSales",
+        "Sales"
       ],
       "surfaces": [
         "AppPage",
@@ -4828,18 +4826,18 @@
       ],
       "objects": [],
       "chips": [
-        "Deterministic avatars",
-        "Channel badges",
-        "Auto footer",
-        "Zero Apex"
+        "Live Apex wire",
+        "Profile photos",
+        "Role badges",
+        "Multi-object"
       ],
       "keyProps": [
-        "Names, channels, ages, counts (pipe-separated)",
-        "Card title / subtitle / footer overrides",
-        "Show/hide footer"
+        "Language (FR/EN)",
+        "Source mode (live/mock)",
+        "Card title override"
       ],
-      "seBenefit": "Instant subscriber panel for any context - property management, campaign audiences, case watchers. Zero dependency, ready in seconds on any org.",
-      "dataMode": "mock",
+      "seBenefit": "Displays the team working on a record (Account owner, Opp team members) in one click - with photos, roles, and navigation to User profiles. Works out of the box on any SDO with no setup.",
+      "dataMode": "live",
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
@@ -4852,7 +4850,9 @@
       "deprecatedNote": null,
       "screenshots": [],
       "gif": null,
-      "apexDeps": [],
+      "apexDeps": [
+        "SE_FR_SubscribersListController"
+      ],
       "sharedApexDeps": [],
       "staticResourceDeps": [],
       "customFieldsOptional": [],
@@ -4863,70 +4863,98 @@
           "type": "String",
           "label": "UI language",
           "default": "fr",
-          "description": "'fr' (default) or 'en'. Controls card title, empty state, footer text and subscription label."
+          "description": "'fr' (default) or 'en'."
         },
         {
           "name": "cardTitle",
           "type": "String",
           "label": "Card title (override)",
           "default": null,
-          "description": "Leave empty for the language dictionary default."
+          "description": "Leave empty for auto (Equipe du compte / Account Team)."
         },
         {
           "name": "cardSubtitle",
           "type": "String",
           "label": "Subtitle (override)",
           "default": null,
-          "description": "Leave empty for auto-computed total."
+          "description": "Leave empty for auto count."
         },
         {
           "name": "cardIcon",
           "type": "String",
           "label": "Card icon",
-          "default": "standard:groups",
+          "default": "standard:team_member",
           "description": null
+        },
+        {
+          "name": "sourceMode",
+          "type": "String",
+          "label": "Data mode",
+          "default": "live",
+          "description": "'live' (Apex, default) or 'mock' (pipe-separated props below)."
+        },
+        {
+          "name": "avatarMode",
+          "type": "String",
+          "label": "Avatar mode (legacy)",
+          "default": "initials",
+          "description": "Deprecated - kept for backward compat. Live mode auto-detects photos."
         },
         {
           "name": "contactNames",
           "type": "String",
-          "label": "Names (pipe-separated)",
-          "default": "Lisa Andre|Quentin Lefevre|Justine Mercier|Romain Dupont|Clara Lambert",
-          "description": null
+          "label": "[Mock] Names (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock."
+        },
+        {
+          "name": "roles",
+          "type": "String",
+          "label": "[Mock] Roles (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock."
         },
         {
           "name": "channels",
           "type": "String",
-          "label": "Channels per name (pipe-separated)",
-          "default": "Email|SMS|WhatsApp|Email|SMS",
-          "description": "Accepted: Email, SMS, WhatsApp, Push. Aligned by index with names."
+          "label": "[Mock] Channels (pipe-separated)",
+          "default": null,
+          "description": "Legacy prop - kept for backward compat."
         },
         {
           "name": "subscribedAtRelative",
           "type": "String",
-          "label": "Subscription ages (pipe-separated)",
-          "default": "6 h ago|6 h ago|6 h ago|6 h ago|5 h ago",
-          "description": null
+          "label": "[Mock] Ages (pipe-separated)",
+          "default": null,
+          "description": "Legacy prop - kept for backward compat."
         },
         {
           "name": "notificationCounts",
           "type": "String",
-          "label": "Notification counts (pipe-separated)",
-          "default": "3|3|3|3|3",
-          "description": null
+          "label": "[Mock] Notification counts (pipe-separated)",
+          "default": null,
+          "description": "Legacy prop - kept for backward compat."
+        },
+        {
+          "name": "userIds",
+          "type": "String",
+          "label": "[Mock] User IDs (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock. Enables clickable names."
         },
         {
           "name": "footerLabel",
           "type": "String",
-          "label": "Footer text (override)",
+          "label": "Footer text (legacy)",
           "default": null,
-          "description": "Leave empty for auto-computed total."
+          "description": "Legacy prop - kept for backward compat."
         },
         {
           "name": "showFooter",
           "type": "Boolean",
-          "label": "Show footer",
-          "default": "true",
-          "description": null
+          "label": "Show footer (legacy)",
+          "default": "false",
+          "description": "Legacy prop - kept for backward compat."
         }
       ]
     },
@@ -5408,7 +5436,7 @@
       "description": "B2B / B2C - Horizontal multi-phase timeline (e.g. customer journey / project steps). Phases are JSON-configured with labels, target dates and done flags. A vertical \"Today\" marker shows current position.",
       "tagline": "Horizontal multi-phase timeline with date axis, 'Today' marker and done / pending state per phase.",
       "categories": [
-        "Sales Productivity"
+        "Productivity"
       ],
       "personas": [
         "Sales"
@@ -5647,30 +5675,47 @@
     }
   ],
   "byCategory": {
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory"
+    ],
     "Geo & Field": [
       "seFrNearbyAccountsMap",
       "seFrTerritoryMap",
       "seFrVoiceNoteTaker"
     ],
-    "Agentforce & AI": [
+    "Transverse": [
+      "seFrActivityFeed",
       "seFrAgentforceHeader",
       "seFrContactCard",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations"
-    ],
-    "Account 360°": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrContactCard",
       "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrCustomerSalesSummary",
-      "seFrPipelineSnapshot",
+      "seFrFilesGallery",
       "seFrRecordHighlights",
       "seFrRelatedRecordCard",
-      "seFrRevenueDashboard"
+      "seFrSplashBanner"
+    ],
+    "Service": [
+      "seFrAlertsRibbon",
+      "seFrKanbanBoard",
+      "seFrOrderSummary",
+      "seFrServiceContracts",
+      "seFrSubscribersList"
+    ],
+    "Sales": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
+      "seFrCustomerOrders",
+      "seFrOrderEntry",
+      "seFrPipelineSnapshot"
+    ],
+    "Productivity": [
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations",
+      "seFrTimelinePhases"
     ],
     "Dashboards & KPIs": [
       "seFrFieldRepHome",
@@ -5678,31 +5723,49 @@
       "seFrMetricTile",
       "seFrRevenueDashboard",
       "seFrTelesalesRepHome"
-    ],
-    "Transverse": [
-      "seFrFilesGallery",
-      "seFrSplashBanner"
-    ],
-    "Sales Productivity": [
-      "seFrKanbanBoard",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrOrderEntry",
-      "seFrOrderSummary",
-      "seFrTimelinePhases"
-    ],
-    "Marketing & Data": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrEngagementHistory",
-      "seFrMetricTile"
-    ],
-    "Service": [
-      "seFrServiceContracts",
-      "seFrSubscribersList"
     ]
   },
   "byPersona": {
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrActivityFeed",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
+    ],
+    "Service": [
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderSummary",
+      "seFrRelatedRecordCard",
+      "seFrServiceContracts",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList"
+    ],
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
+    ],
+    "Retail": [
+      "seFrCustomerSalesSummary"
+    ],
     "FieldSales": [
       "seFrActivityFeed",
       "seFrContactCard",
@@ -5734,22 +5797,9 @@
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard",
       "seFrSmartRecommendations",
+      "seFrSubscribersList",
       "seFrTerritoryMap",
       "seFrTimelinePhases"
-    ],
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrActivityFeed",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList"
     ],
     "Telesales": [
       "seFrActivityFeed",
@@ -5763,38 +5813,42 @@
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard",
       "seFrSmartRecommendations",
-      "seFrSubscribersList",
       "seFrTelesalesRepHome"
-    ],
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
-    ],
-    "Retail": [
-      "seFrCustomerSalesSummary"
-    ],
-    "Service": [
+    ]
+  },
+  "bySurface": {
+    "RecordPage": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
+      "seFrActiveSegments",
       "seFrActivityFeed",
       "seFrAlertsRibbon",
       "seFrConsentManager",
       "seFrContactCard",
       "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
       "seFrFilesGallery",
       "seFrKanbanBoard",
+      "seFrKpiLauncher",
       "seFrMetricTile",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrOrderEntry",
       "seFrOrderSummary",
+      "seFrPipelineSnapshot",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
       "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
       "seFrServiceContracts",
       "seFrSmartRecommendations",
-      "seFrSubscribersList"
-    ]
-  },
-  "bySurface": {
+      "seFrSplashBanner",
+      "seFrSubscribersList",
+      "seFrTimelinePhases",
+      "seFrVoiceNoteTaker"
+    ],
     "HomePage": [
       "seFrActiveSegments",
       "seFrAgentforceHeader",
@@ -5831,38 +5885,6 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases"
-    ],
-    "RecordPage": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
-      "seFrActiveSegments",
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrKpiLauncher",
-      "seFrMetricTile",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrOrderEntry",
-      "seFrOrderSummary",
-      "seFrPipelineSnapshot",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrServiceContracts",
-      "seFrSmartRecommendations",
-      "seFrSplashBanner",
-      "seFrSubscribersList",
-      "seFrTimelinePhases",
-      "seFrVoiceNoteTaker"
     ]
   }
 }

@@ -55,3 +55,7 @@ venv/
 
 # Claude Code session files (keep settings, ignore local logs)
 .claude/local/
+
+# Backups / original contributor assets — not distributed
+backups/
+original-assets/

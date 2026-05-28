@@ -1,6 +1,6 @@
 ---
 tagline: Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.
-categories: [Agentforce & AI]
+categories: [Transverse]
 personas: [All]
 chips:
   - Astro floating header

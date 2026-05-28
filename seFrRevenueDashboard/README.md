@@ -1,6 +1,6 @@
 ---
 tagline: 3-year revenue mini-dashboard with KPI tiles and a side-by-side monthly bar chart.
-categories: [Account 360°, Dashboards & KPIs]
+categories: [Dashboards & KPIs]
 personas: [Sales, FieldSales, Telesales]
 chips:
   - 3 years side-by-side

@@ -59,24 +59,22 @@ SOURCE_PREVIEWS = Path(
 PREVIEW_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
 CATEGORY_ORDER = [
-    "Account 360°",
-    "Sales Productivity",
-    "Geo & Field",
-    "Marketing & Data",
-    "Agentforce & AI",
-    "Dashboards & KPIs",
+    "Sales",
     "Service",
+    "Productivity",
+    "Dashboards & KPIs",
+    "Marketing",
+    "Geo & Field",
     "Transverse",
 ]
 
 CATEGORY_EMOJI = {
-    "Account 360°": "🏢",
-    "Sales Productivity": "📋",
-    "Geo & Field": "🚗",
-    "Marketing & Data": "🎯",
-    "Agentforce & AI": "🤖",
-    "Dashboards & KPIs": "📊",
+    "Sales": "💼",
     "Service": "🛠️",
+    "Productivity": "⚡",
+    "Dashboards & KPIs": "📊",
+    "Marketing": "🎯",
+    "Geo & Field": "🚗",
     "Transverse": "✨",
 }
 
@@ -945,6 +943,20 @@ code:not(pre code) { background: var(--bg-soft); padding: 1px 6px; border-radius
 .about-bullets li { margin-bottom: 8px; font-size: 14px; }
 /* Lead-in (the bold word at the start of each bullet) — sober brand-deep, not too heavy */
 .about-bullets li strong { font-weight: 600; color: var(--brand-deep); }
+/* Category map table */
+.cat-map-updated { font-size: 13px; color: var(--text-soft); margin-bottom: 16px; }
+.cat-map-table-wrap { overflow-x: auto; border-radius: var(--r-lg); border: 1px solid var(--border); }
+.cat-map-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.cat-map-table thead { background: var(--bg-card); }
+.cat-map-table th { text-align: left; padding: 10px 14px; font-weight: 600; color: var(--brand-deep); border-bottom: 2px solid var(--border); font-size: 13px; text-transform: uppercase; letter-spacing: 0.4px; }
+.cat-map-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.cat-map-table tr:last-child td { border-bottom: none; }
+.cat-map-table .cat-cell { white-space: nowrap; font-size: 14px; }
+.cat-map-table .cat-emoji { margin-right: 4px; }
+.cat-map-table .cat-count { text-align: center; font-weight: 700; color: var(--brand-primary); min-width: 32px; }
+.cat-map-table .cat-components { line-height: 1.7; }
+.cat-map-table .cat-components a { color: var(--brand-primary); text-decoration: none; font-weight: 500; }
+.cat-map-table .cat-components a:hover { text-decoration: underline; }
 /* Two-column CTA row — Releases & Roadmap | Want to contribute, side-by-side, aligned */
 .about-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
 .about-cta-row .about-cta { display: flex; flex-direction: column; margin-bottom: 0; padding: 24px 24px 22px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); }
@@ -3880,6 +3892,39 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
     def pair_attr(fr: str, en: str) -> str:
         s = json.dumps({"fr": fr, "en": en}, ensure_ascii=False).replace("'", "&#39;")
         return f"data-i18n-pair='{s}'"
+
+    # Build the dynamic category map table
+    manifest_data = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    cats_map: dict[str, list[dict]] = {}
+    for comp in manifest_data["components"]:
+        for cat in comp["categories"]:
+            cats_map.setdefault(cat, []).append(comp)
+    # Sort by CATEGORY_ORDER
+    from datetime import date as _date
+    last_update = _date.today().strftime("%d/%m/%Y")
+    cat_table_rows = []
+    for cat in CATEGORY_ORDER:
+        comps = sorted(cats_map.get(cat, []), key=lambda c: c["apiName"])
+        if not comps:
+            continue
+        emoji = CATEGORY_EMOJI.get(cat, "")
+        links_fr = ", ".join(
+            f'<a href="components/{c["apiName"]}.html">{c["masterLabel"].replace("CCO FR - ", "")}</a>'
+            for c in comps
+        )
+        links_en = ", ".join(
+            f'<a href="components/{c["apiName"]}.html">{c["masterLabel"].replace("CCO FR - ", "")}</a>'
+            for c in comps
+        )
+        cat_table_rows.append(
+            f'      <tr>'
+            f'<td class="cat-cell"><span class="cat-emoji">{emoji}</span> <strong>{html_lib.escape(cat)}</strong></td>'
+            f'<td class="cat-count">{len(comps)}</td>'
+            f'<td class="cat-components">{links_fr}</td>'
+            f'</tr>'
+        )
+    category_table_html = "\n".join(cat_table_rows)
+
     body = f"""<div class="container">
   <header class="page-header">
     <h1 {pair_attr('💡 À propos de la librairie', '💡 About the library')}>💡 À propos de la librairie</h1>
@@ -3940,7 +3985,26 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
   </section>
 
   <section class="about-section">
-    <h2 {pair_attr('Comment lire la fiche d’un composant', 'Reading a component page')}>Comment lire la fiche d'un composant</h2>
+    <h2 {pair_attr("Carte des composants par catégorie", "Component map by category")}>Carte des composants par catégorie</h2>
+    <p class="cat-map-updated" {pair_attr(f"Dernière mise à jour : {last_update} · {n_components} composants", f"Last updated: {last_update} · {n_components} components")}>Dernière mise à jour : {last_update} · {n_components} composants</p>
+    <div class="cat-map-table-wrap">
+      <table class="cat-map-table">
+        <thead>
+          <tr>
+            <th {pair_attr("Catégorie", "Category")}>Catégorie</th>
+            <th>#</th>
+            <th {pair_attr("Composants", "Components")}>Composants</th>
+          </tr>
+        </thead>
+        <tbody>
+{category_table_html}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <h2 {pair_attr("Comment lire la fiche d’un composant", "Reading a component page")}>Comment lire la fiche d’un composant</h2>
     <p {pair_attr('Chaque fiche composant contient :', 'Each component page carries:')}>Chaque fiche composant contient :</p>
     <ul class="about-bullets">
       <li {pair_attr('<strong>Nom</strong> — nom humain affiché dans le master label App Builder. Exemple : <code>Account Health</code>.', '<strong>Name</strong> — human name displayed in the App Builder master label. Example: <code>Account Health</code>.')}><strong>Nom</strong> — nom humain affiché dans le master label App Builder. Exemple : <code>Account Health</code>.</li>
@@ -3959,7 +4023,7 @@ def render_about(n_components: int, search_index: list[dict]) -> str:
       <li {pair_attr('<strong>Toutes les propriétés</strong> — table exhaustive (nom, type, défaut, description) lue directement depuis le <code>js-meta.xml</code> du composant.', '<strong>All properties</strong> — full table (name, type, default, description) read straight from the component’s <code>js-meta.xml</code>.')}><strong>Toutes les propriétés</strong> — table exhaustive (nom, type, défaut, description) lue directement depuis le <code>js-meta.xml</code> du composant.</li>
       <li {pair_attr('<strong>Installation rapide</strong> — les 4 méthodes de déploiement (Bouton Déployer, CLI, Assistant IA, Lightning Studio).', '<strong>Quick install</strong> — the 4 deploy methods (Deploy button, CLI, AI assistant, Lightning Studio).')}><strong>Installation rapide</strong> — les 4 méthodes de déploiement (Bouton Déployer, CLI, Assistant IA, Lightning Studio).</li>
       <li {pair_attr('<strong>Original author</strong> / <strong>Maintained by</strong> — auteur d’origine et mainteneur dans la lib (visible quand un contributeur externe a contribué au composant).', '<strong>Original author</strong> / <strong>Maintained by</strong> — original author and library maintainer (shown when an external contributor wrote the component).')}><strong>Original author</strong> / <strong>Maintained by</strong> — auteur d'origine et mainteneur dans la lib (visible quand un contributeur externe a contribué au composant).</li>
-      <li {pair_attr('<strong>Catégories</strong> — la ou les catégories de la lib auxquelles le composant appartient. Exemples : <code>Account 360°</code>, <code>Agentforce &amp; AI</code>.', '<strong>Categories</strong> — the library categories the component belongs to. Examples: <code>Account 360°</code>, <code>Agentforce &amp; AI</code>.')}><strong>Catégories</strong> — la ou les catégories de la lib auxquelles le composant appartient. Exemples : <code>Account 360°</code>, <code>Agentforce &amp; AI</code>.</li>
+      <li {pair_attr('<strong>Catégories</strong> — la catégorie de la lib à laquelle le composant appartient. Exemples : <code>Sales</code>, <code>Service</code>, <code>Productivity</code>.', '<strong>Categories</strong> — the library category the component belongs to. Examples: <code>Sales</code>, <code>Service</code>, <code>Productivity</code>.')}><strong>Catégories</strong> — la catégorie de la lib à laquelle le composant appartient. Exemples : <code>Sales</code>, <code>Service</code>, <code>Productivity</code>.</li>
       <li {pair_attr('<strong>Featured in cookbook</strong> — recettes du Cookbook qui incluent ce composant.', '<strong>Featured in cookbook</strong> — Cookbook recipes that bundle this component.')}><strong>Featured in cookbook</strong> — recettes du Cookbook qui incluent ce composant.</li>
       <li {pair_attr('<strong>Often used with</strong> — composants de la même catégorie souvent posés ensemble.', '<strong>Often used with</strong> — components of the same category typically dropped together.')}><strong>Often used with</strong> — composants de la même catégorie souvent posés ensemble.</li>
     </ul>

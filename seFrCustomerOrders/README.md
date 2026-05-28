@@ -1,6 +1,6 @@
 ---
 tagline: Last order detail card plus searchable, sortable, filterable order history for an Account or Contact.
-categories: [Account 360°]
+categories: [Sales]
 personas: [Sales, Telesales]
 chips:
   - Last order detail card

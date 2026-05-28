@@ -1,6 +1,6 @@
 ---
 tagline: Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.
-categories: [Agentforce & AI]
+categories: [Productivity]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - Context-aware per object

@@ -1,6 +1,6 @@
 ---
 tagline: Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.
-categories: [Marketing & Data]
+categories: [Marketing]
 personas: [Marketing]
 chips:
   - Segment count in title

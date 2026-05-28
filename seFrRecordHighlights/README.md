@@ -1,6 +1,6 @@
 ---
 tagline: Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.
-categories: [Account 360°]
+categories: [Transverse]
 personas: [All]
 chips:
   - Inline image upload

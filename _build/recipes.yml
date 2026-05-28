@@ -13,35 +13,40 @@
 - id: account-360
   emoji: 🏢
   title: Account 360°
-  description: Drop-in record page for B2B Sales — highlights, health gauge, pipeline, activity timeline, and AI recommendations.
+  description: Drop-in record page for B2B Sales — highlights, health gauge, pipeline, activity timeline, contacts carousel, related records and AI recommendations.
   primaryPersona: Sales
   components:
     - seFrRecordHighlights
     - seFrAccountHealth
     - seFrPipelineSnapshot
     - seFrActivityFeed
+    - seFrContactsCarousel
+    - seFrRelatedRecordCard
     - seFrSmartRecommendations
 
 - id: field-sales-cockpit
   emoji: 🚗
   title: Field Sales cockpit
-  description: Mobile-first Home page for reps in the field — map, agenda, voice notes and KPIs.
+  description: Mobile-first Home page for reps in the field — map, agenda, tasks, voice notes and KPIs.
   primaryPersona: FieldSales
   components:
     - seFrFieldRepHome
     - seFrNearbyAccountsMap
     - seFrTerritoryMap
     - seFrMyEvents
+    - seFrMyTasks
     - seFrVoiceNoteTaker
     - seFrKpiLauncher
 
 - id: service-desk
   emoji: 📞
   title: Service desk
-  description: Case-centric record page with order history, kanban, alerts and smart actions.
+  description: Case-centric record page with service contracts, account team, order history, kanban, alerts and smart actions.
   primaryPersona: Service
   components:
     - seFrAlertsRibbon
+    - seFrServiceContracts
+    - seFrSubscribersList
     - seFrCustomerOrders
     - seFrOrderSummary
     - seFrKanbanBoard
@@ -61,11 +66,12 @@
 - id: marketing-360
   emoji: 🎯
   title: Marketing 360°
-  description: Contact-centric page with consent management, segment membership and engagement signals.
+  description: Contact-centric page with engagement history, consent management, segment membership and signals.
   primaryPersona: Marketing
   components:
     - seFrActiveSegments
     - seFrConsentManager
+    - seFrEngagementHistory
     - seFrActivityFeed
     - seFrCustomerSalesSummary
 

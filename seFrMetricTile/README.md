@@ -1,6 +1,6 @@
 ---
 tagline: Single-metric tile with 4 chart styles (line / area / bar / mini-donut), comparison series, target line and currency formatting.
-categories: [Dashboards & KPIs, Marketing & Data]
+categories: [Dashboards & KPIs]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - 4 chart styles

@@ -1,6 +1,6 @@
 ---
 tagline: Most recent Order linked to a Case with products, total, delivery info and edit / delete / submit actions.
-categories: [Sales Productivity]
+categories: [Service]
 personas: [Service]
 chips:
   - Auto-resolves Account

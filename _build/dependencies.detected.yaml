@@ -152,7 +152,10 @@ seFrSplashBanner:
   classes: []
 
 seFrSubscribersList:
-  classes: []
+  classes:
+    - SE_FR_SubscribersListController  # local
+  imports_detected:
+    - SE_FR_SubscribersListController
 
 seFrTelesalesRepHome:
   classes:

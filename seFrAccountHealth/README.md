@@ -1,6 +1,6 @@
 ---
 tagline: Quantitative account health score (0-100) with verdict level and weighted positive / negative signals.
-categories: [Account 360°]
+categories: [Sales]
 personas: [Sales]
 chips:
   - SVG donut gauge

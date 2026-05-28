@@ -1,6 +1,6 @@
 ---
 tagline: Narrative account plan with editable KPIs, target gauge, SWOT 2x2 and quarterly action plan.
-categories: [Account 360°]
+categories: [Sales]
 personas: [Sales]
 chips:
   - Inline edit every block

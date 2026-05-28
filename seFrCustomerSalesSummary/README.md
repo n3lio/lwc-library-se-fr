@@ -1,6 +1,6 @@
 ---
 tagline: B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.
-categories: [Account 360°]
+categories: [Marketing]
 personas: [Retail, Marketing]
 chips:
   - 3 KPI + 3 breakdown charts

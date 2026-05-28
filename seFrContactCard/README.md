@@ -1,6 +1,6 @@
 ---
 tagline: Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.
-categories: [Account 360°, Agentforce & AI]
+categories: [Transverse]
 personas: [Sales, FieldSales, Telesales, Service, Marketing]
 chips:
   - Wow-effect animated waves

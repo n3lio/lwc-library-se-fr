@@ -1,6 +1,6 @@
 ---
 tagline: Account-level pipeline visualization with summary tiles and one column per Opportunity stage.
-categories: [Account 360°]
+categories: [Sales]
 personas: [Sales]
 chips:
   - Column per stage
