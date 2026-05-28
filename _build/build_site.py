@@ -1750,11 +1750,19 @@ JS = r"""// CCO FR Library — client UX
         fd.append('notes', f.notes.value.trim());
         if (file) fd.append('attachment', file, file.name);
         let ok = false;
+        let errDetail = '';
         try {
           const r = await fetch('/api/submit-component', { method: 'POST', body: fd });
           ok = r.ok;
+          if (!ok) {
+            const errBody = await r.json().catch(() => ({}));
+            errDetail = errBody.error || r.status;
+            console.error('[submit-component]', r.status, errBody);
+          }
         } catch (err) {
           ok = false;
+          errDetail = err.message || 'network';
+          console.error('[submit-component] fetch error:', err);
         }
         if (submitBtn) submitBtn.disabled = false;
         if (ok) {
@@ -1762,7 +1770,7 @@ JS = r"""// CCO FR Library — client UX
           f.reset();
           toast(t('submitc.toast.sent'), 4000);
         } else {
-          toast(t('submitc.toast.error'), 4500);
+          toast(t('submitc.toast.error') + (errDetail ? ' (' + errDetail + ')' : ''), 5000);
         }
       });
       applyLang();
