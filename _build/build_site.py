@@ -3273,6 +3273,11 @@ def persona_chip(p: str) -> str:
     return f'<span class="chip {cls}">{emoji} {html_lib.escape(label)}</span>'
 
 
+def category_chip(cat: str) -> str:
+    emoji = CATEGORY_EMOJI.get(cat, "")
+    return f'<span class="chip chip-cat">{emoji} {html_lib.escape(cat)}</span>'
+
+
 def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: bool = True) -> str:
     api = c["apiName"]
     name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
@@ -3281,9 +3286,9 @@ def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: boo
     status_cls = "stable" if rs == "stable" else "new"
     is_ai = "Agentforce & AI" in (c.get("categories") or [])
     ai_badge = '<span class="card-status ai">🤖 AI-ready</span>' if is_ai else ""
-    chip_personas = (c.get("personas") or [])[:2]
-    chip_html = "".join(persona_chip(p) for p in chip_personas)
-    haystack = " ".join([api, name, c.get("tagline", "")] + chip_personas + (c.get("chips") or [])).lower()
+    chip_cats = (c.get("categories") or [])[:2]
+    chip_html = "".join(category_chip(cat) for cat in chip_cats)
+    haystack = " ".join([api, name, c.get("tagline", "")] + chip_cats + (c.get("personas") or []) + (c.get("chips") or [])).lower()
     cb = '<div class="card-checkbox"></div>' if with_checkbox else ""
     extra_cls = " has-checkbox-slot" if with_checkbox else ""
     card_preview, _ = preview_for(api, base=base)
@@ -3333,7 +3338,7 @@ def card_html(c: dict, *, base: str, with_checkbox: bool = False, with_link: boo
 def render_index(components: list[dict], recipes: list[dict], n_components: int, search_index: list[dict]) -> str:
     # Featured = hand-picked default. Admins can override via /admin → site_settings.
     # Default kicks in if admin hasn't set anything (or DB unreachable).
-    HOME_FEATURED = ["seFrContactCard", "seFrActivityFeed", "seFrSmartRecommendations", "seFrMyEvents"]
+    HOME_FEATURED = ["seFrEngagementHistory", "seFrContactCard", "seFrActivityFeed", "seFrSmartRecommendations"]
     by_api_pre = {c["apiName"]: c for c in components}
     featured = [by_api_pre[a] for a in HOME_FEATURED if a in by_api_pre]
     mobile_count = sum(1 for c in components if c.get("mobileReady"))
