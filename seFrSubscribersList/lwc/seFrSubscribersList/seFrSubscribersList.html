@@ -1,0 +1,47 @@
+<template>
+    <lightning-card icon-name={cardIcon} title={resolvedCardTitle}>
+        <span slot="actions" class="slds-text-body_small slds-text-color_weak">
+            {computedSubtitle}
+        </span>
+
+        <template if:false={hasRows}>
+            <div class="slds-align_absolute-center slds-p-vertical_large slds-text-color_weak">
+                <lightning-icon icon-name="utility:groups" size="small" class="slds-m-right_x-small"></lightning-icon>
+                {resolvedEmptyState}
+            </div>
+        </template>
+
+        <template if:true={hasRows}>
+            <ul class="slds-has-dividers_bottom-space">
+                <template for:each={rows} for:item="r">
+                    <li key={r.key} class="slds-item slds-p-vertical_x-small slds-p-horizontal_small">
+                        <div class="slds-grid slds-grid_vertical-align-center">
+                            <div class="avatar slds-m-right_small" style={r.avatarStyle}>
+                                <span class="initials">{r.initials}</span>
+                            </div>
+                            <div class="slds-col slds-grow">
+                                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                                    <span class="slds-truncate"><strong>{r.name}</strong></span>
+                                    <span class="channel-tag" style={r.channelStyle}>{r.channel}</span>
+                                </div>
+                                <div class="slds-text-body_small slds-text-color_weak">
+                                    {resolvedSubscribedPrefix} {r.ageLabel}
+                                    &nbsp;·&nbsp;
+                                    <lightning-icon icon-name="utility:notification" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    {r.notif} {resolvedNotifSuffix}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+
+            <template if:true={showFooter}>
+                <div slot="footer" class="slds-text-body_small slds-text-align_center slds-text-color_weak">
+                    <lightning-icon icon-name="utility:trending" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                    {computedFooter}
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

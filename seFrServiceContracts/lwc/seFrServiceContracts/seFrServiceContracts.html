@@ -1,0 +1,68 @@
+<template>
+    <lightning-card icon-name={cardIcon} title={resolvedCardTitle}>
+        <span slot="actions" class="slds-text-body_small slds-text-color_weak">
+            {countLabel}
+        </span>
+
+        <template if:true={loading}>
+            <div class="slds-align_absolute-center slds-p-vertical_medium">
+                <lightning-spinner size="small" alternative-text={resolvedLoading}></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={error}>
+            <div class="slds-text-color_error slds-p-around_small">{error}</div>
+        </template>
+
+        <template if:false={loading}>
+            <template if:false={hasContracts}>
+                <div class="slds-align_absolute-center slds-p-vertical_large slds-text-color_weak">
+                    {resolvedEmptyState}
+                </div>
+            </template>
+
+            <template if:true={hasContracts}>
+                <ul class="slds-has-dividers_bottom-space">
+                    <template for:each={contracts} for:item="c">
+                        <li key={c.id} class="slds-item slds-p-around_small">
+                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-bottom_xx-small">
+                                <div>
+                                    <a href="#" data-id={c.id} onclick={handleOpenContract}>
+                                        <strong>{c.name}</strong>
+                                    </a>
+                                    <span class="slds-text-body_small slds-text-color_weak slds-m-left_x-small">{c.contractNumber}</span>
+                                </div>
+                                <span class="metier-badge" style={c.metierStyle}>{c.metier}</span>
+                            </div>
+
+                            <div class="slds-grid slds-text-body_small slds-text-color_weak slds-wrap" style="gap: 1rem;">
+                                <div>
+                                    <lightning-icon icon-name="utility:clock" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    {resolvedSlaPrefix} <strong>{c.slaLabel}</strong>
+                                </div>
+                                <template if:true={c.email}>
+                                    <div>
+                                        <lightning-icon icon-name="utility:email" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                        <a href={c.emailHref}>{c.email}</a>
+                                    </div>
+                                </template>
+                                <template if:true={c.openWorkOrders}>
+                                    <div class="slds-text-color_error">
+                                        <lightning-icon icon-name="utility:warning" size="xx-small" variant="error" class="slds-m-right_xx-small"></lightning-icon>
+                                        <strong>{c.openWorkOrders}</strong> {resolvedOpenWorkOrders}
+                                    </div>
+                                </template>
+                            </div>
+
+                            <template if:true={c.perimetre}>
+                                <div class="slds-text-body_small slds-text-color_weak slds-m-top_x-small perimetre">
+                                    {c.perimetre}
+                                </div>
+                            </template>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </template>
+    </lightning-card>
+</template>

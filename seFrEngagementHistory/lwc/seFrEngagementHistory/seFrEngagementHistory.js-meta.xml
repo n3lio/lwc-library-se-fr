@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Engagement History</masterLabel>
+    <description>Marketing and Data - Configurable marketing engagement timeline (Email, SMS, Form, Page View) with live search and typed colored icons. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Lead</object>
+                <object>Contact</object>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls card title, search placeholder and empty state text." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the language dictionary default." />
+            <property name="cardIcon" type="String" default="standard:share" label="Card icon" />
+            <property name="showSearch" type="Boolean" default="true" label="Show search bar" />
+            <property name="searchPlaceholder" type="String" label="Search placeholder (override)" />
+            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email Open|Email Sent|Email Open|Email Open|Email Sent|SMS Sent|Email Open|Email Click" description="Recognized types: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View." />
+            <property name="eventEmails" type="String" label="Emails / subjects (pipe-separated)" default="promo-summer@acme.com|promo-summer@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|Reminder - Demo appointment|install-offer@acme.com|install-offer@acme.com" />
+            <property name="eventLists" type="String" label="Lists / campaigns (pipe-separated)" default="Hot Lead - Q2 Campaign|Hot Lead - Q2 Campaign|Nurturing - Web Form|Nurturing - Web Form|Nurturing - Web Form|SMS Automation - Follow-up|Summer Campaign 2026|Summer Campaign 2026" />
+            <property name="eventAges" type="String" label="Relative ages (pipe-separated)" default="5 d. 19 h. ago|5 d. 21 h. ago|6 d. 20 h. ago|1 mo. 2 d. ago|1 mo. 2 d. ago|1 mo. 3 d. ago|1 mo. 5 d. ago|1 mo. 5 d. ago" />
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:share" label="Card icon" />
+            <property name="showSearch" type="Boolean" default="true" label="Show search bar" />
+            <property name="searchPlaceholder" type="String" label="Search placeholder (override)" />
+            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email Open|Email Sent" />
+            <property name="eventEmails" type="String" label="Emails / subjects (pipe-separated)" default="promo@acme.com|promo@acme.com" />
+            <property name="eventLists" type="String" label="Lists / campaigns (pipe-separated)" default="Campaign A|Campaign A" />
+            <property name="eventAges" type="String" label="Relative ages (pipe-separated)" default="1 d. ago|2 d. ago" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

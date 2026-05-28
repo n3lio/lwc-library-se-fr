@@ -51,6 +51,9 @@ seFrCustomerOrders:
 seFrCustomerSalesSummary:
   classes: []
 
+seFrEngagementHistory:
+  classes: []
+
 seFrFieldRepHome:
   classes:
     - SE_FR_FieldSalesController  # local
@@ -136,10 +139,19 @@ seFrRelatedRecordCard:
 seFrRevenueDashboard:
   classes: []
 
+seFrServiceContracts:
+  classes:
+    - SE_FR_ServiceContractsController  # local
+  imports_detected:
+    - SE_FR_ServiceContractsController
+
 seFrSmartRecommendations:
   classes: []
 
 seFrSplashBanner:
+  classes: []
+
+seFrSubscribersList:
   classes: []
 
 seFrTelesalesRepHome:

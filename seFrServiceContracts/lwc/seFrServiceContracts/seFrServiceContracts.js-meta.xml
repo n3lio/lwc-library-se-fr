@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Service Contracts</masterLabel>
+    <description>Service / Field - Lists active service contracts for an Account with trade/category badge, SLA, contractor email, scope and open work order count. Live data mode (Apex wire). Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls card title, empty state and row labels." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the language dictionary default." />
+            <property name="cardIcon" type="String" default="standard:service_contract" label="Card icon" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

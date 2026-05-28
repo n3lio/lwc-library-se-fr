@@ -39,6 +39,7 @@ ALLOWED_CATEGORIES = {
     "Marketing & Data",
     "Agentforce & AI",
     "Dashboards & KPIs",
+    "Service",
     "Transverse",
 }
 ALLOWED_PERSONAS = {

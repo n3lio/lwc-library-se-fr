@@ -1,0 +1,50 @@
+<template>
+    <lightning-card icon-name={cardIcon}>
+        <span slot="title" class="slds-grid slds-grid_vertical-align-center">
+            <span class="slds-text-heading_small">{resolvedCardTitle}</span>
+            <span class="slds-text-color_weak slds-m-left_xx-small">{countLabel}</span>
+        </span>
+
+        <div slot="actions" if:true={showSearch} class="slds-m-right_x-small">
+            <lightning-input
+                type="search"
+                variant="label-hidden"
+                placeholder={resolvedSearchPlaceholder}
+                value={searchTerm}
+                onchange={handleSearch}>
+            </lightning-input>
+        </div>
+
+        <template if:false={hasRows}>
+            <div class="slds-align_absolute-center slds-p-vertical_large slds-text-color_weak">
+                {resolvedEmptyState}
+            </div>
+        </template>
+
+        <template if:true={hasRows}>
+            <ul class="timeline">
+                <template for:each={rows} for:item="r">
+                    <li key={r.key} class="timeline-item slds-p-horizontal_small slds-p-vertical_x-small">
+                        <div class="event-icon" style={r.iconStyle}>
+                            <lightning-icon icon-name={r.icon} size="x-small" variant="inverse"></lightning-icon>
+                        </div>
+                        <div class="event-body">
+                            <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                                <strong class="event-type">{r.type}</strong>
+                                <span class="event-age slds-text-body_small slds-text-color_weak">{r.age}</span>
+                            </div>
+                            <div class="event-row slds-text-body_small">
+                                <span class="row-label">{resolvedEmailLabel}</span>
+                                <span class="row-pill">{r.email}</span>
+                            </div>
+                            <div class="event-row slds-text-body_small">
+                                <span class="row-label">{resolvedListLabel}</span>
+                                <span class="row-pill">{r.list}</span>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+    </lightning-card>
+</template>

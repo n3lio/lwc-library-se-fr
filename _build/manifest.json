@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-05-28",
-  "componentCount": 32,
+  "componentCount": 35,
   "skippedCount": 0,
   "skipped": [],
   "components": [
@@ -1616,6 +1616,124 @@
           "type": "String",
           "label": "Store visits suffix (override)",
           "default": null,
+          "description": null
+        }
+      ]
+    },
+    {
+      "apiName": "seFrEngagementHistory",
+      "masterLabel": "CCO FR - Engagement History",
+      "description": "Marketing and Data - Configurable marketing engagement timeline (Email, SMS, Form, Page View) with live search and typed colored icons. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.",
+      "tagline": "Configurable marketing engagement timeline with colored typed icons and live search.",
+      "categories": [
+        "Marketing & Data"
+      ],
+      "personas": [
+        "Marketing",
+        "Sales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Lead",
+        "Contact",
+        "Account"
+      ],
+      "chips": [
+        "Timeline UI",
+        "8 event types",
+        "Live search",
+        "Zero Apex"
+      ],
+      "keyProps": [
+        "Event types, emails, lists, ages (pipe-separated)",
+        "Show/hide search",
+        "Card title override"
+      ],
+      "seBenefit": "Demonstrates a Marketing Cloud-style engagement history without needing MCAE installed. Perfect for demos on scratch orgs or SDOs without Marketing Cloud connectivity.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": "REDACTED",
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title, search placeholder and empty state text."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:share",
+          "description": null
+        },
+        {
+          "name": "showSearch",
+          "type": "Boolean",
+          "label": "Show search bar",
+          "default": "true",
+          "description": null
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "String",
+          "label": "Search placeholder (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "eventTypes",
+          "type": "String",
+          "label": "Event types (pipe-separated)",
+          "default": "Email Open|Email Sent|Email Open|Email Open|Email Sent|SMS Sent|Email Open|Email Click",
+          "description": "Recognized types: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View."
+        },
+        {
+          "name": "eventEmails",
+          "type": "String",
+          "label": "Emails / subjects (pipe-separated)",
+          "default": "promo-summer@acme.com|promo-summer@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|welcome-onboard@acme.com|Reminder - Demo appointment|install-offer@acme.com|install-offer@acme.com",
+          "description": null
+        },
+        {
+          "name": "eventLists",
+          "type": "String",
+          "label": "Lists / campaigns (pipe-separated)",
+          "default": "Hot Lead - Q2 Campaign|Hot Lead - Q2 Campaign|Nurturing - Web Form|Nurturing - Web Form|Nurturing - Web Form|SMS Automation - Follow-up|Summer Campaign 2026|Summer Campaign 2026",
+          "description": null
+        },
+        {
+          "name": "eventAges",
+          "type": "String",
+          "label": "Relative ages (pipe-separated)",
+          "default": "5 d. 19 h. ago|5 d. 21 h. ago|6 d. 20 h. ago|1 mo. 2 d. ago|1 mo. 2 d. ago|1 mo. 3 d. ago|1 mo. 5 d. ago|1 mo. 5 d. ago",
           "description": null
         }
       ]
@@ -4148,6 +4266,78 @@
       ]
     },
     {
+      "apiName": "seFrServiceContracts",
+      "masterLabel": "CCO FR - Service Contracts",
+      "description": "Service / Field - Lists active service contracts for an Account with trade/category badge, SLA, contractor email, scope and open work order count. Live data mode (Apex wire). Bilingual EN / FR.",
+      "tagline": "Active service contracts per Account with trade badge, SLA, email and open work order counter.",
+      "categories": [
+        "Service"
+      ],
+      "personas": [
+        "Service",
+        "FieldSales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "Live Apex wire",
+        "Category badges",
+        "SLA formatting",
+        "Open WO counter"
+      ],
+      "keyProps": [
+        "Language (FR/EN)",
+        "Card title override",
+        "Card icon override"
+      ],
+      "seBenefit": "Shows the full contractor landscape for an account in one glance - SLAs, open interventions, contact emails. Ideal for Field Service, property management and B2B service demos.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": "REDACTED",
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title, empty state and row labels."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:service_contract",
+          "description": null
+        }
+      ]
+    },
+    {
       "apiName": "seFrSmartRecommendations",
       "masterLabel": "CCO FR - Smart Recommendations",
       "description": "Context-aware recommended actions (Next Best Action).",
@@ -4614,6 +4804,129 @@
           "label": "URL du bouton (optionnel)",
           "default": null,
           "description": "Lien activé par le bouton. URL relative Salesforce ('/lightning/...') ou absolue ('https://...')."
+        }
+      ]
+    },
+    {
+      "apiName": "seFrSubscribersList",
+      "masterLabel": "CCO FR - Subscribers List",
+      "description": "Service / Marketing - Configurable list of notification subscribers with auto-generated colored avatars, channel badges (Email, SMS, WhatsApp, Push), relative subscription age and notification counter. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.",
+      "tagline": "Configurable notification subscribers list with auto-generated colored avatars and channel badges.",
+      "categories": [
+        "Service"
+      ],
+      "personas": [
+        "Service",
+        "Marketing",
+        "Telesales",
+        "FieldSales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Deterministic avatars",
+        "Channel badges",
+        "Auto footer",
+        "Zero Apex"
+      ],
+      "keyProps": [
+        "Names, channels, ages, counts (pipe-separated)",
+        "Card title / subtitle / footer overrides",
+        "Show/hide footer"
+      ],
+      "seBenefit": "Instant subscriber panel for any context - property management, campaign audiences, case watchers. Zero dependency, ready in seconds on any org.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "stable",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": "REDACTED",
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title, empty state, footer text and subscription label."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language dictionary default."
+        },
+        {
+          "name": "cardSubtitle",
+          "type": "String",
+          "label": "Subtitle (override)",
+          "default": null,
+          "description": "Leave empty for auto-computed total."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:groups",
+          "description": null
+        },
+        {
+          "name": "contactNames",
+          "type": "String",
+          "label": "Names (pipe-separated)",
+          "default": "Lisa Andre|Quentin Lefevre|Justine Mercier|Romain Dupont|Clara Lambert",
+          "description": null
+        },
+        {
+          "name": "channels",
+          "type": "String",
+          "label": "Channels per name (pipe-separated)",
+          "default": "Email|SMS|WhatsApp|Email|SMS",
+          "description": "Accepted: Email, SMS, WhatsApp, Push. Aligned by index with names."
+        },
+        {
+          "name": "subscribedAtRelative",
+          "type": "String",
+          "label": "Subscription ages (pipe-separated)",
+          "default": "6 h ago|6 h ago|6 h ago|6 h ago|5 h ago",
+          "description": null
+        },
+        {
+          "name": "notificationCounts",
+          "type": "String",
+          "label": "Notification counts (pipe-separated)",
+          "default": "3|3|3|3|3",
+          "description": null
+        },
+        {
+          "name": "footerLabel",
+          "type": "String",
+          "label": "Footer text (override)",
+          "default": null,
+          "description": "Leave empty for auto-computed total."
+        },
+        {
+          "name": "showFooter",
+          "type": "Boolean",
+          "label": "Show footer",
+          "default": "true",
+          "description": null
         }
       ]
     },
@@ -5334,6 +5647,17 @@
     }
   ],
   "byCategory": {
+    "Geo & Field": [
+      "seFrNearbyAccountsMap",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
+    ],
+    "Agentforce & AI": [
+      "seFrAgentforceHeader",
+      "seFrContactCard",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations"
+    ],
     "Account 360°": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -5370,18 +5694,12 @@
     "Marketing & Data": [
       "seFrActiveSegments",
       "seFrConsentManager",
+      "seFrEngagementHistory",
       "seFrMetricTile"
     ],
-    "Geo & Field": [
-      "seFrNearbyAccountsMap",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
-    ],
-    "Agentforce & AI": [
-      "seFrAgentforceHeader",
-      "seFrContactCard",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations"
+    "Service": [
+      "seFrServiceContracts",
+      "seFrSubscribersList"
     ]
   },
   "byPersona": {
@@ -5395,22 +5713,11 @@
       "seFrNearbyAccountsMap",
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard",
+      "seFrServiceContracts",
       "seFrSmartRecommendations",
+      "seFrSubscribersList",
       "seFrTerritoryMap",
       "seFrVoiceNoteTaker"
-    ],
-    "Service": [
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderSummary",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -5420,6 +5727,7 @@
       "seFrContactCard",
       "seFrContactsCarousel",
       "seFrCustomerOrders",
+      "seFrEngagementHistory",
       "seFrFilesGallery",
       "seFrMetricTile",
       "seFrPipelineSnapshot",
@@ -5429,18 +5737,6 @@
       "seFrTerritoryMap",
       "seFrTimelinePhases"
     ],
-    "Retail": [
-      "seFrCustomerSalesSummary"
-    ],
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
-    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrActivityFeed",
@@ -5448,10 +5744,12 @@
       "seFrContactCard",
       "seFrContactsCarousel",
       "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
       "seFrFilesGallery",
       "seFrMetricTile",
       "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
+      "seFrSmartRecommendations",
+      "seFrSubscribersList"
     ],
     "Telesales": [
       "seFrActivityFeed",
@@ -5465,13 +5763,43 @@
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard",
       "seFrSmartRecommendations",
+      "seFrSubscribersList",
       "seFrTelesalesRepHome"
+    ],
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
+    ],
+    "Retail": [
+      "seFrCustomerSalesSummary"
+    ],
+    "Service": [
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderSummary",
+      "seFrRelatedRecordCard",
+      "seFrServiceContracts",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList"
     ]
   },
   "bySurface": {
-    "AppPage": [
+    "HomePage": [
       "seFrActiveSegments",
+      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
+      "seFrEngagementHistory",
       "seFrFieldRepHome",
       "seFrKanbanBoard",
       "seFrKpiLauncher",
@@ -5481,6 +5809,25 @@
       "seFrNearbyAccountsMap",
       "seFrPromptLauncher",
       "seFrSplashBanner",
+      "seFrSubscribersList",
+      "seFrTelesalesRepHome",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases"
+    ],
+    "AppPage": [
+      "seFrActiveSegments",
+      "seFrAlertsRibbon",
+      "seFrEngagementHistory",
+      "seFrFieldRepHome",
+      "seFrKanbanBoard",
+      "seFrKpiLauncher",
+      "seFrMetricTile",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrNearbyAccountsMap",
+      "seFrPromptLauncher",
+      "seFrSplashBanner",
+      "seFrSubscribersList",
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases"
@@ -5496,6 +5843,7 @@
       "seFrContactsCarousel",
       "seFrCustomerOrders",
       "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
       "seFrFilesGallery",
       "seFrKanbanBoard",
       "seFrKpiLauncher",
@@ -5509,27 +5857,12 @@
       "seFrRecordHighlights",
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard",
+      "seFrServiceContracts",
       "seFrSmartRecommendations",
       "seFrSplashBanner",
+      "seFrSubscribersList",
       "seFrTimelinePhases",
       "seFrVoiceNoteTaker"
-    ],
-    "HomePage": [
-      "seFrActiveSegments",
-      "seFrAgentforceHeader",
-      "seFrAlertsRibbon",
-      "seFrFieldRepHome",
-      "seFrKanbanBoard",
-      "seFrKpiLauncher",
-      "seFrMetricTile",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrNearbyAccountsMap",
-      "seFrPromptLauncher",
-      "seFrSplashBanner",
-      "seFrTelesalesRepHome",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases"
     ]
   }
 }

@@ -65,6 +65,7 @@ CATEGORY_ORDER = [
     "Marketing & Data",
     "Agentforce & AI",
     "Dashboards & KPIs",
+    "Service",
     "Transverse",
 ]
 
@@ -75,6 +76,7 @@ CATEGORY_EMOJI = {
     "Marketing & Data": "🎯",
     "Agentforce & AI": "🤖",
     "Dashboards & KPIs": "📊",
+    "Service": "🛠️",
     "Transverse": "✨",
 }
 

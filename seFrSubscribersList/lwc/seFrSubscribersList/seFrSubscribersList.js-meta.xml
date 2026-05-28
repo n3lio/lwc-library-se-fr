@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Subscribers List</masterLabel>
+    <description>Service / Marketing - Configurable list of notification subscribers with auto-generated colored avatars, channel badges (Email, SMS, WhatsApp, Push), relative subscription age and notification counter. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls card title, empty state, footer text and subscription label." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the language dictionary default." />
+            <property name="cardSubtitle" type="String" label="Subtitle (override)" description="Leave empty for auto-computed total." />
+            <property name="cardIcon" type="String" default="standard:groups" label="Card icon" />
+            <property name="contactNames" type="String" label="Names (pipe-separated)" default="Lisa Andre|Quentin Lefevre|Justine Mercier|Romain Dupont|Clara Lambert" />
+            <property name="channels" type="String" label="Channels per name (pipe-separated)" default="Email|SMS|WhatsApp|Email|SMS" description="Accepted: Email, SMS, WhatsApp, Push. Aligned by index with names." />
+            <property name="subscribedAtRelative" type="String" label="Subscription ages (pipe-separated)" default="6 h ago|6 h ago|6 h ago|6 h ago|5 h ago" />
+            <property name="notificationCounts" type="String" label="Notification counts (pipe-separated)" default="3|3|3|3|3" />
+            <property name="footerLabel" type="String" label="Footer text (override)" description="Leave empty for auto-computed total." />
+            <property name="showFooter" type="Boolean" default="true" label="Show footer" />
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="language" type="String" default="fr" label="UI language" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardSubtitle" type="String" label="Subtitle (override)" />
+            <property name="cardIcon" type="String" default="standard:groups" label="Card icon" />
+            <property name="contactNames" type="String" label="Names (pipe-separated)" default="Lisa Andre|Quentin Lefevre" />
+            <property name="channels" type="String" label="Channels (pipe-separated)" default="Email|SMS" />
+            <property name="subscribedAtRelative" type="String" label="Subscription ages (pipe-separated)" default="1 h ago|2 h ago" />
+            <property name="notificationCounts" type="String" label="Notification counts (pipe-separated)" default="3|3" />
+            <property name="footerLabel" type="String" label="Footer text (override)" />
+            <property name="showFooter" type="Boolean" default="true" label="Show footer" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

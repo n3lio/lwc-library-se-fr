@@ -1,0 +1,16 @@
+.metier-badge {
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+}
+.perimetre {
+    font-style: italic;
+    line-height: 1.4;
+    border-left: 3px solid #e5e7eb;
+    padding-left: 8px;
+}
