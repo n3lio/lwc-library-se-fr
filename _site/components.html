@@ -61,7 +61,7 @@ window.addEventListener('pageshow', function() {
   <div class="filter-bar">
     <details class="filter-dd" data-dd-for="category">
       <summary><span class="dd-label" data-i18n-pair='{"fr": "Famille", "en": "Family"}'>Famille</span><span class="dd-value" data-i18n-pair='{"fr": "Toutes", "en": "All"}'>Toutes</span><span class="dd-chevron">▾</span></summary>
-      <div class="filter-dd-panel"><button data-group="category" data-value="" data-label="Toutes" data-label-en="All" class="active" data-i18n-pair='{"fr": "Toutes", "en": "All"}'>Toutes</button><button data-group="category" data-value="Sales" data-label="💼 Sales" data-label-en="💼 Sales">💼 Sales</button><button data-group="category" data-value="Service" data-label="🛠️ Service" data-label-en="🛠️ Service">🛠️ Service</button><button data-group="category" data-value="Productivity" data-label="⚡ Productivity" data-label-en="⚡ Productivity">⚡ Productivity</button><button data-group="category" data-value="Dashboards &amp; KPIs" data-label="📊 Dashboards &amp; KPIs" data-label-en="📊 Dashboards &amp; KPIs">📊 Dashboards &amp; KPIs</button><button data-group="category" data-value="Marketing" data-label="🎯 Marketing" data-label-en="🎯 Marketing">🎯 Marketing</button><button data-group="category" data-value="Geo &amp; Field" data-label="🚗 Geo &amp; Field" data-label-en="🚗 Geo &amp; Field">🚗 Geo &amp; Field</button><button data-group="category" data-value="Transverse" data-label="✨ Transverse" data-label-en="✨ Transverse">✨ Transverse</button></div>
+      <div class="filter-dd-panel"><button data-group="category" data-value="" data-label="Toutes" data-label-en="All" class="active" data-i18n-pair='{"fr": "Toutes", "en": "All"}'>Toutes</button><button data-group="category" data-value="Transverse" data-label="✨ Transverse" data-label-en="✨ Transverse">✨ Transverse</button><button data-group="category" data-value="Productivity" data-label="⚡ Productivity" data-label-en="⚡ Productivity">⚡ Productivity</button><button data-group="category" data-value="Sales" data-label="💼 Sales" data-label-en="💼 Sales">💼 Sales</button><button data-group="category" data-value="Service" data-label="🛠️ Service" data-label-en="🛠️ Service">🛠️ Service</button><button data-group="category" data-value="Marketing" data-label="🎯 Marketing" data-label-en="🎯 Marketing">🎯 Marketing</button><button data-group="category" data-value="Dashboards &amp; KPIs" data-label="📊 Dashboards &amp; KPIs" data-label-en="📊 Dashboards &amp; KPIs">📊 Dashboards &amp; KPIs</button><button data-group="category" data-value="Geo &amp; Field" data-label="🚗 Geo &amp; Field" data-label-en="🚗 Geo &amp; Field">🚗 Geo &amp; Field</button></div>
     </details>
     <details class="filter-dd" data-dd-for="persona">
       <summary><span class="dd-label" data-i18n-pair='{"fr": "Persona", "en": "Persona"}'>Persona</span><span class="dd-value" data-i18n-pair='{"fr": "Tous", "en": "All"}'>Tous</span><span class="dd-chevron">▾</span></summary>
@@ -80,6 +80,428 @@ window.addEventListener('pageshow', function() {
 
   <div class="components-grid-host">
 
+  <h2 class="section-title" data-category="Transverse">✨ Transverse <span class="count" data-base-count="8" data-i18n-pair='{"fr": "8 composants", "en": "8 components"}'>8 composants</span></h2>
+  <div class="grid">
+<article class="card has-checkbox-slot"
+  data-api="seFrActivityFeed"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefractivityfeed activity feed unified activity timeline aggregating 16+ salesforce record types in a single feed with rich filtering. sales fieldsales 16+ record types unified rich filters + expand per-source error isolation">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrActivityFeed.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrActivityFeed-2.png" alt="seFrActivityFeed preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Activity Feed</span>
+      <span class="card-api">seFrActivityFeed</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrActivityFeed.tagline">Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrActivityFeed">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrActivityFeed" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrAgentforceHeader"
+  data-personas="All"
+  data-surfaces="HomePage"
+  data-categories="Transverse"
+  data-datamode="mock"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefragentforceheader agentforce header astro-themed home page header with a search / dictation box that forwards questions to the agentforce panel. all astro floating header voice dictation triggers agentforce panel">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrAgentforceHeader.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrAgentforceHeader-2.png" alt="seFrAgentforceHeader preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Agentforce Header</span>
+      <span class="card-api">seFrAgentforceHeader</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrAgentforceHeader.tagline">Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrAgentforceHeader">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrAgentforceHeader" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrContactCard"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="hybrid"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrcontactcard contact card visual contact card with animated waves, avatar, address, configurable gauges and optional einstein prompt summary. sales fieldsales wow-effect animated waves optional einstein summary up to 3 gauges inline avatar upload">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrContactCard.html">
+    <div class="card-preview has-image">
+      <span class="card-status new">✨ New</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrContactCard-2.png" alt="seFrContactCard preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Contact Card</span>
+      <span class="card-api">seFrContactCard</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrContactCard.tagline">Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrContactCard">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrContactCard" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrContactsCarousel"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrcontactscarousel contacts carousel horizontal carousel of an account&#x27;s contacts with avatars, role badges and quick email / call actions. sales fieldsales champion / dmu role badges initials avatar fallback email &amp; call shortcuts">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrContactsCarousel.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrContactsCarousel-2.png" alt="seFrContactsCarousel preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Contacts Carousel</span>
+      <span class="card-api">seFrContactsCarousel</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrContactsCarousel.tagline">Horizontal carousel of an Account&#x27;s Contacts with avatars, role badges and quick Email / Call actions.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrContactsCarousel">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrContactsCarousel" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrFilesGallery"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrfilesgallery files gallery visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload. sales fieldsales image thumbs + doctype icons drag &amp; drop upload click-to-preview">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrFilesGallery.html">
+    <div class="card-preview has-image">
+      <span class="card-status new">✨ New</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrFilesGallery.png" alt="seFrFilesGallery preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Files Gallery</span>
+      <span class="card-api">seFrFilesGallery</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrFilesGallery.tagline">Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrFilesGallery">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrFilesGallery" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrRecordHighlights"
+  data-personas="All"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrrecordhighlights record highlights custom highlights panel with round image, key fields and action buttons, working on 8 standard objects. all inline image upload works on 8 objects configurable field strip">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrRecordHighlights.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrRecordHighlights.png" alt="seFrRecordHighlights preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Record Highlights</span>
+      <span class="card-api">seFrRecordHighlights</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrRecordHighlights.tagline">Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrRecordHighlights">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrRecordHighlights" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrRelatedRecordCard"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Transverse"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrrelatedrecordcard related record card vertical sidebar card showing the counterpart record (contact / account) with key fields and avatar. sales fieldsales auto picks counterpart person account aware empty-state fallback">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrRelatedRecordCard.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrRelatedRecordCard.png" alt="seFrRelatedRecordCard preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Related Record Card</span>
+      <span class="card-api">seFrRelatedRecordCard</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrRelatedRecordCard.tagline">Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrRelatedRecordCard">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrRelatedRecordCard" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrSplashBanner"
+  data-personas="All"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Transverse"
+  data-datamode="mock"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrsplashbanner splash banner welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure css / svg. all 8 animated styles pure css / svg respects reduced-motion">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrSplashBanner.html">
+    <div class="card-preview has-image">
+      <span class="card-status new">✨ New</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrSplashBanner.png" alt="seFrSplashBanner preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Splash Banner</span>
+      <span class="card-api">seFrSplashBanner</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrSplashBanner.tagline">Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrSplashBanner">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrSplashBanner" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
+  <h2 class="section-title" data-category="Productivity">⚡ Productivity <span class="count" data-base-count="5" data-i18n-pair='{"fr": "5 composants", "en": "5 components"}'>5 composants</span></h2>
+  <div class="grid">
+<article class="card has-checkbox-slot"
+  data-api="seFrMyEvents"
+  data-personas="All"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Productivity"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrmyevents my events today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with google-calendar-style overlap. all side-by-side overlap auto-trims empty hours compact today view">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrMyEvents.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrMyEvents.png" alt="seFrMyEvents preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">My Events</span>
+      <span class="card-api">seFrMyEvents</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrMyEvents.tagline">Today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrMyEvents">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrMyEvents" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrMyTasks"
+  data-personas="All"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Productivity"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrmytasks my tasks compact &#x27;my tasks&#x27; sidebar panel grouped by due date with one-click completion. all grouped by due date one-click complete overdue highlighting">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrMyTasks.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrMyTasks-2.png" alt="seFrMyTasks preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">My Tasks</span>
+      <span class="card-api">seFrMyTasks</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrMyTasks.tagline">Compact &#x27;My Tasks&#x27; sidebar panel grouped by due date with one-click completion.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrMyTasks">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrMyTasks" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrPromptLauncher"
+  data-personas="All"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Productivity"
+  data-datamode="live"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrpromptlauncher prompt launcher configurable ai panel running salesforce prompt templates via invocable actions, with auto-filled record context. all pill switcher per prompt auto-fills record context save as note html-formatted output">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrPromptLauncher.html">
+    <div class="card-preview has-image">
+      <span class="card-status new">✨ New</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrPromptLauncher-2.png" alt="seFrPromptLauncher preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Prompt Launcher</span>
+      <span class="card-api">seFrPromptLauncher</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrPromptLauncher.tagline">Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip ">✨ All</span></div>
+      <div class="card-stats" data-stats-for="seFrPromptLauncher">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrPromptLauncher" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrSmartRecommendations"
+  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Productivity"
+  data-datamode="mock"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrsmartrecommendations smart recommendations context-aware next best action panel with 1-6 recommendations, relevance score and per-card overrides. sales fieldsales context-aware per object relevance score badge inline title &amp; reason override">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrSmartRecommendations.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrSmartRecommendations.png" alt="seFrSmartRecommendations preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Smart Recommendations</span>
+      <span class="card-api">seFrSmartRecommendations</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrSmartRecommendations.tagline">Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
+      <div class="card-stats" data-stats-for="seFrSmartRecommendations">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrSmartRecommendations" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrTimelinePhases"
+  data-personas="Sales"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Productivity"
+  data-datamode="mock"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrtimelinephases timeline phases horizontal multi-phase timeline with date axis, &#x27;today&#x27; marker and done / pending state per phase. sales date-axis layout &#x27;today&#x27; marker done / pending state">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrTimelinePhases.html">
+    <div class="card-preview has-image">
+      <span class="card-status stable">● Stable</span>
+      
+      <img class="card-preview-img" src="assets/previews/seFrTimelinePhases.png" alt="seFrTimelinePhases preview" loading="lazy">
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Timeline Phases</span>
+      <span class="card-api">seFrTimelinePhases</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrTimelinePhases.tagline">Horizontal multi-phase timeline with date axis, &#x27;Today&#x27; marker and done / pending state per phase.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-sales">📌 Sales</span></div>
+      <div class="card-stats" data-stats-for="seFrTimelinePhases">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrTimelinePhases" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+  </div>
   <h2 class="section-title" data-category="Sales">💼 Sales <span class="count" data-base-count="5" data-i18n-pair='{"fr": "5 composants", "en": "5 components"}'>5 composants</span></h2>
   <div class="grid">
 <article class="card has-checkbox-slot"
@@ -406,164 +828,132 @@ window.addEventListener('pageshow', function() {
   </div>
 </article>
   </div>
-  <h2 class="section-title" data-category="Productivity">⚡ Productivity <span class="count" data-base-count="5" data-i18n-pair='{"fr": "5 composants", "en": "5 components"}'>5 composants</span></h2>
+  <h2 class="section-title" data-category="Marketing">🎯 Marketing <span class="count" data-base-count="4" data-i18n-pair='{"fr": "4 composants", "en": "4 components"}'>4 composants</span></h2>
   <div class="grid">
 <article class="card has-checkbox-slot"
-  data-api="seFrMyEvents"
-  data-personas="All"
+  data-api="seFrActiveSegments"
+  data-personas="Marketing"
   data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Productivity"
-  data-datamode="live"
+  data-categories="Marketing"
+  data-datamode="mock"
   data-base-dl="0"
   data-base-lk="0"
-  data-haystack="sefrmyevents my events today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with google-calendar-style overlap. all side-by-side overlap auto-trims empty hours compact today view">
+  data-haystack="sefractivesegments active segments compact panel showing the marketing / data cloud segments the record belongs to, as colored badges. marketing segment count in title color-coded badges record / app / home page">
   <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrMyEvents.html">
+  <a class="card-preview-link" href="components/seFrActiveSegments.html">
     <div class="card-preview has-image">
       <span class="card-status stable">● Stable</span>
       
-      <img class="card-preview-img" src="assets/previews/seFrMyEvents.png" alt="seFrMyEvents preview" loading="lazy">
+      <img class="card-preview-img" src="assets/previews/seFrActiveSegments.png" alt="seFrActiveSegments preview" loading="lazy">
     </div>
   </a>
   <div class="card-body">
     <div class="card-title">
-      <span class="card-name">My Events</span>
-      <span class="card-api">seFrMyEvents</span>
+      <span class="card-name">Active Segments</span>
+      <span class="card-api">seFrActiveSegments</span>
     </div>
-    <p class="card-tagline" data-i18n-comp="seFrMyEvents.tagline">Today&#x27;s calendar as a compact vertical timeline that fits a sidebar column, with Google-Calendar-style overlap.</p>
+    <p class="card-tagline" data-i18n-comp="seFrActiveSegments.tagline">Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</p>
     <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrMyEvents">
+      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span></div>
+      <div class="card-stats" data-stats-for="seFrActiveSegments">
         <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrMyEvents" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+        <button type="button" class="like-btn" data-like-for="seFrActiveSegments" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
       </div>
     </div>
   </div>
 </article>
 <article class="card has-checkbox-slot"
-  data-api="seFrMyTasks"
-  data-personas="All"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Productivity"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrmytasks my tasks compact &#x27;my tasks&#x27; sidebar panel grouped by due date with one-click completion. all grouped by due date one-click complete overdue highlighting">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrMyTasks.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrMyTasks-2.png" alt="seFrMyTasks preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">My Tasks</span>
-      <span class="card-api">seFrMyTasks</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrMyTasks.tagline">Compact &#x27;My Tasks&#x27; sidebar panel grouped by due date with one-click completion.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrMyTasks">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrMyTasks" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrPromptLauncher"
-  data-personas="All"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Productivity"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrpromptlauncher prompt launcher configurable ai panel running salesforce prompt templates via invocable actions, with auto-filled record context. all pill switcher per prompt auto-fills record context save as note html-formatted output">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrPromptLauncher.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrPromptLauncher-2.png" alt="seFrPromptLauncher preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Prompt Launcher</span>
-      <span class="card-api">seFrPromptLauncher</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrPromptLauncher.tagline">Configurable AI panel running Salesforce Prompt Templates via Invocable Actions, with auto-filled record context.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrPromptLauncher">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrPromptLauncher" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrSmartRecommendations"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
+  data-api="seFrConsentManager"
+  data-personas="Marketing|Service"
   data-surfaces="RecordPage"
-  data-categories="Productivity"
-  data-datamode="mock"
+  data-categories="Marketing"
+  data-datamode="live"
   data-base-dl="0"
   data-base-lk="0"
-  data-haystack="sefrsmartrecommendations smart recommendations context-aware next best action panel with 1-6 recommendations, relevance score and per-card overrides. sales fieldsales context-aware per object relevance score badge inline title &amp; reason override">
+  data-haystack="sefrconsentmanager consent manager per-channel gdpr consent toggle panel binding each channel to a boolean field on the current record. marketing service per-channel toggles lds persistence inverted opt-out fields">
   <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrSmartRecommendations.html">
+  <a class="card-preview-link" href="components/seFrConsentManager.html">
     <div class="card-preview has-image">
       <span class="card-status stable">● Stable</span>
       
-      <img class="card-preview-img" src="assets/previews/seFrSmartRecommendations.png" alt="seFrSmartRecommendations preview" loading="lazy">
+      <img class="card-preview-img" src="assets/previews/seFrConsentManager.png" alt="seFrConsentManager preview" loading="lazy">
     </div>
   </a>
   <div class="card-body">
     <div class="card-title">
-      <span class="card-name">Smart Recommendations</span>
-      <span class="card-api">seFrSmartRecommendations</span>
+      <span class="card-name">Consent Manager</span>
+      <span class="card-api">seFrConsentManager</span>
     </div>
-    <p class="card-tagline" data-i18n-comp="seFrSmartRecommendations.tagline">Context-aware Next Best Action panel with 1-6 recommendations, relevance score and per-card overrides.</p>
+    <p class="card-tagline" data-i18n-comp="seFrConsentManager.tagline">Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.</p>
     <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrSmartRecommendations">
+      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span><span class="chip persona-service">🎧 Service</span></div>
+      <div class="card-stats" data-stats-for="seFrConsentManager">
         <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrSmartRecommendations" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+        <button type="button" class="like-btn" data-like-for="seFrConsentManager" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
       </div>
     </div>
   </div>
 </article>
 <article class="card has-checkbox-slot"
-  data-api="seFrTimelinePhases"
-  data-personas="Sales"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Productivity"
+  data-api="seFrCustomerSalesSummary"
+  data-personas="Retail|Marketing"
+  data-surfaces="RecordPage"
+  data-categories="Marketing"
   data-datamode="mock"
   data-base-dl="0"
   data-base-lk="0"
-  data-haystack="sefrtimelinephases timeline phases horizontal multi-phase timeline with date axis, &#x27;today&#x27; marker and done / pending state per phase. sales date-axis layout &#x27;today&#x27; marker done / pending state">
+  data-haystack="sefrcustomersalessummary customer sales summary b2c-leaning sales summary with kpi tiles and breakdowns by category, brand and store. retail marketing 3 kpi + 3 breakdown charts category / brand / store person account compatible">
   <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrTimelinePhases.html">
+  <a class="card-preview-link" href="components/seFrCustomerSalesSummary.html">
     <div class="card-preview has-image">
       <span class="card-status stable">● Stable</span>
       
-      <img class="card-preview-img" src="assets/previews/seFrTimelinePhases.png" alt="seFrTimelinePhases preview" loading="lazy">
+      <img class="card-preview-img" src="assets/previews/seFrCustomerSalesSummary.png" alt="seFrCustomerSalesSummary preview" loading="lazy">
     </div>
   </a>
   <div class="card-body">
     <div class="card-title">
-      <span class="card-name">Timeline Phases</span>
-      <span class="card-api">seFrTimelinePhases</span>
+      <span class="card-name">Customer Sales Summary</span>
+      <span class="card-api">seFrCustomerSalesSummary</span>
     </div>
-    <p class="card-tagline" data-i18n-comp="seFrTimelinePhases.tagline">Horizontal multi-phase timeline with date axis, &#x27;Today&#x27; marker and done / pending state per phase.</p>
+    <p class="card-tagline" data-i18n-comp="seFrCustomerSalesSummary.tagline">B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.</p>
     <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span></div>
-      <div class="card-stats" data-stats-for="seFrTimelinePhases">
+      <div class="chips"><span class="chip persona-marketing">🛍 Retail</span><span class="chip persona-marketing">🎯 Marketing</span></div>
+      <div class="card-stats" data-stats-for="seFrCustomerSalesSummary">
         <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrTimelinePhases" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+        <button type="button" class="like-btn" data-like-for="seFrCustomerSalesSummary" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
+      </div>
+    </div>
+  </div>
+</article>
+<article class="card has-checkbox-slot"
+  data-api="seFrEngagementHistory"
+  data-personas="Marketing|Sales"
+  data-surfaces="AppPage|HomePage|RecordPage"
+  data-categories="Marketing"
+  data-datamode="mock"
+  data-base-dl="0"
+  data-base-lk="0"
+  data-haystack="sefrengagementhistory engagement history configurable marketing engagement timeline with colored typed icons and inline search. marketing sales timeline ui 8 event types inline search zero apex">
+  <div class="card-checkbox"></div>
+  <a class="card-preview-link" href="components/seFrEngagementHistory.html">
+    <div class="card-preview">
+      <span class="card-status stable">● Stable</span>
+      
+      <div class="card-preview-mock">EH</div>
+    </div>
+  </a>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="card-name">Engagement History</span>
+      <span class="card-api">seFrEngagementHistory</span>
+    </div>
+    <p class="card-tagline" data-i18n-comp="seFrEngagementHistory.tagline">Configurable marketing engagement timeline with colored typed icons and inline search.</p>
+    <div class="card-foot">
+      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span><span class="chip persona-sales">📌 Sales</span></div>
+      <div class="card-stats" data-stats-for="seFrEngagementHistory">
+        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
+        <button type="button" class="like-btn" data-like-for="seFrEngagementHistory" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
       </div>
     </div>
   </div>
@@ -732,137 +1122,6 @@ window.addEventListener('pageshow', function() {
   </div>
 </article>
   </div>
-  <h2 class="section-title" data-category="Marketing">🎯 Marketing <span class="count" data-base-count="4" data-i18n-pair='{"fr": "4 composants", "en": "4 components"}'>4 composants</span></h2>
-  <div class="grid">
-<article class="card has-checkbox-slot"
-  data-api="seFrActiveSegments"
-  data-personas="Marketing"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Marketing"
-  data-datamode="mock"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefractivesegments active segments compact panel showing the marketing / data cloud segments the record belongs to, as colored badges. marketing segment count in title color-coded badges record / app / home page">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrActiveSegments.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrActiveSegments.png" alt="seFrActiveSegments preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Active Segments</span>
-      <span class="card-api">seFrActiveSegments</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrActiveSegments.tagline">Compact panel showing the marketing / Data Cloud segments the record belongs to, as colored badges.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span></div>
-      <div class="card-stats" data-stats-for="seFrActiveSegments">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrActiveSegments" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrConsentManager"
-  data-personas="Marketing|Service"
-  data-surfaces="RecordPage"
-  data-categories="Marketing"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrconsentmanager consent manager per-channel gdpr consent toggle panel binding each channel to a boolean field on the current record. marketing service per-channel toggles lds persistence inverted opt-out fields">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrConsentManager.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrConsentManager.png" alt="seFrConsentManager preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Consent Manager</span>
-      <span class="card-api">seFrConsentManager</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrConsentManager.tagline">Per-channel GDPR consent toggle panel binding each channel to a boolean field on the current record.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span><span class="chip persona-service">🎧 Service</span></div>
-      <div class="card-stats" data-stats-for="seFrConsentManager">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrConsentManager" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrCustomerSalesSummary"
-  data-personas="Retail|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Marketing"
-  data-datamode="mock"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrcustomersalessummary customer sales summary b2c-leaning sales summary with kpi tiles and breakdowns by category, brand and store. retail marketing 3 kpi + 3 breakdown charts category / brand / store person account compatible">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrCustomerSalesSummary.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrCustomerSalesSummary.png" alt="seFrCustomerSalesSummary preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Customer Sales Summary</span>
-      <span class="card-api">seFrCustomerSalesSummary</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrCustomerSalesSummary.tagline">B2C-leaning sales summary with KPI tiles and breakdowns by Category, Brand and Store.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-marketing">🛍 Retail</span><span class="chip persona-marketing">🎯 Marketing</span></div>
-      <div class="card-stats" data-stats-for="seFrCustomerSalesSummary">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrCustomerSalesSummary" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrEngagementHistory"
-  data-personas="Marketing|Sales"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Marketing"
-  data-datamode="mock"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrengagementhistory engagement history configurable marketing engagement timeline with colored typed icons and inline search. marketing sales timeline ui 8 event types inline search zero apex">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrEngagementHistory.html">
-    <div class="card-preview">
-      <span class="card-status stable">● Stable</span>
-      
-      <div class="card-preview-mock">EH</div>
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Engagement History</span>
-      <span class="card-api">seFrEngagementHistory</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrEngagementHistory.tagline">Configurable marketing engagement timeline with colored typed icons and inline search.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-marketing">🎯 Marketing</span><span class="chip persona-sales">📌 Sales</span></div>
-      <div class="card-stats" data-stats-for="seFrEngagementHistory">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrEngagementHistory" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-  </div>
   <h2 class="section-title" data-category="Geo &amp; Field">🚗 Geo &amp; Field <span class="count" data-base-count="3" data-i18n-pair='{"fr": "3 composants", "en": "3 components"}'>3 composants</span></h2>
   <div class="grid">
 <article class="card has-checkbox-slot"
@@ -957,265 +1216,6 @@ window.addEventListener('pageshow', function() {
       <div class="card-stats" data-stats-for="seFrVoiceNoteTaker">
         <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
         <button type="button" class="like-btn" data-like-for="seFrVoiceNoteTaker" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-  </div>
-  <h2 class="section-title" data-category="Transverse">✨ Transverse <span class="count" data-base-count="8" data-i18n-pair='{"fr": "8 composants", "en": "8 components"}'>8 composants</span></h2>
-  <div class="grid">
-<article class="card has-checkbox-slot"
-  data-api="seFrActivityFeed"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefractivityfeed activity feed unified activity timeline aggregating 16+ salesforce record types in a single feed with rich filtering. sales fieldsales 16+ record types unified rich filters + expand per-source error isolation">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrActivityFeed.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrActivityFeed-2.png" alt="seFrActivityFeed preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Activity Feed</span>
-      <span class="card-api">seFrActivityFeed</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrActivityFeed.tagline">Unified activity timeline aggregating 16+ Salesforce record types in a single feed with rich filtering.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrActivityFeed">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrActivityFeed" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrAgentforceHeader"
-  data-personas="All"
-  data-surfaces="HomePage"
-  data-categories="Transverse"
-  data-datamode="mock"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefragentforceheader agentforce header astro-themed home page header with a search / dictation box that forwards questions to the agentforce panel. all astro floating header voice dictation triggers agentforce panel">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrAgentforceHeader.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrAgentforceHeader-2.png" alt="seFrAgentforceHeader preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Agentforce Header</span>
-      <span class="card-api">seFrAgentforceHeader</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrAgentforceHeader.tagline">Astro-themed Home page header with a search / dictation box that forwards questions to the Agentforce panel.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrAgentforceHeader">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrAgentforceHeader" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrContactCard"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="hybrid"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrcontactcard contact card visual contact card with animated waves, avatar, address, configurable gauges and optional einstein prompt summary. sales fieldsales wow-effect animated waves optional einstein summary up to 3 gauges inline avatar upload">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrContactCard.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrContactCard-2.png" alt="seFrContactCard preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Contact Card</span>
-      <span class="card-api">seFrContactCard</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrContactCard.tagline">Visual contact card with animated waves, avatar, address, configurable gauges and optional Einstein prompt summary.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrContactCard">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrContactCard" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrContactsCarousel"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrcontactscarousel contacts carousel horizontal carousel of an account&#x27;s contacts with avatars, role badges and quick email / call actions. sales fieldsales champion / dmu role badges initials avatar fallback email &amp; call shortcuts">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrContactsCarousel.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrContactsCarousel-2.png" alt="seFrContactsCarousel preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Contacts Carousel</span>
-      <span class="card-api">seFrContactsCarousel</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrContactsCarousel.tagline">Horizontal carousel of an Account&#x27;s Contacts with avatars, role badges and quick Email / Call actions.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrContactsCarousel">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrContactsCarousel" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrFilesGallery"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrfilesgallery files gallery visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload. sales fieldsales image thumbs + doctype icons drag &amp; drop upload click-to-preview">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrFilesGallery.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrFilesGallery.png" alt="seFrFilesGallery preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Files Gallery</span>
-      <span class="card-api">seFrFilesGallery</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrFilesGallery.tagline">Visual gallery of files attached to any record with image thumbnails, doctype icons and drag-and-drop upload.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrFilesGallery">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrFilesGallery" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrRecordHighlights"
-  data-personas="All"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrrecordhighlights record highlights custom highlights panel with round image, key fields and action buttons, working on 8 standard objects. all inline image upload works on 8 objects configurable field strip">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrRecordHighlights.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrRecordHighlights.png" alt="seFrRecordHighlights preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Record Highlights</span>
-      <span class="card-api">seFrRecordHighlights</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrRecordHighlights.tagline">Custom highlights panel with round image, key fields and action buttons, working on 8 standard objects.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrRecordHighlights">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrRecordHighlights" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrRelatedRecordCard"
-  data-personas="Sales|FieldSales|Telesales|Service|Marketing"
-  data-surfaces="RecordPage"
-  data-categories="Transverse"
-  data-datamode="live"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrrelatedrecordcard related record card vertical sidebar card showing the counterpart record (contact / account) with key fields and avatar. sales fieldsales auto picks counterpart person account aware empty-state fallback">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrRelatedRecordCard.html">
-    <div class="card-preview has-image">
-      <span class="card-status stable">● Stable</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrRelatedRecordCard.png" alt="seFrRelatedRecordCard preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Related Record Card</span>
-      <span class="card-api">seFrRelatedRecordCard</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrRelatedRecordCard.tagline">Vertical sidebar card showing the counterpart record (Contact / Account) with key fields and avatar.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip persona-sales">📌 Sales</span><span class="chip persona-field">🚗 Field</span></div>
-      <div class="card-stats" data-stats-for="seFrRelatedRecordCard">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrRelatedRecordCard" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
-      </div>
-    </div>
-  </div>
-</article>
-<article class="card has-checkbox-slot"
-  data-api="seFrSplashBanner"
-  data-personas="All"
-  data-surfaces="AppPage|HomePage|RecordPage"
-  data-categories="Transverse"
-  data-datamode="mock"
-  data-base-dl="0"
-  data-base-lk="0"
-  data-haystack="sefrsplashbanner splash banner welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure css / svg. all 8 animated styles pure css / svg respects reduced-motion">
-  <div class="card-checkbox"></div>
-  <a class="card-preview-link" href="components/seFrSplashBanner.html">
-    <div class="card-preview has-image">
-      <span class="card-status new">✨ New</span>
-      
-      <img class="card-preview-img" src="assets/previews/seFrSplashBanner.png" alt="seFrSplashBanner preview" loading="lazy">
-    </div>
-  </a>
-  <div class="card-body">
-    <div class="card-title">
-      <span class="card-name">Splash Banner</span>
-      <span class="card-api">seFrSplashBanner</span>
-    </div>
-    <p class="card-tagline" data-i18n-comp="seFrSplashBanner.tagline">Welcome banner with 8 animated background styles (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) in pure CSS / SVG.</p>
-    <div class="card-foot">
-      <div class="chips"><span class="chip ">✨ All</span></div>
-      <div class="card-stats" data-stats-for="seFrSplashBanner">
-        <span class="stat-pill" title="Downloads"><span class="icon">⬇</span><span class="dl-count">0</span></span>
-        <button type="button" class="like-btn" data-like-for="seFrSplashBanner" aria-pressed="false" title="Like"><span class="icon">♡</span><span class="lk-count">0</span></button>
       </div>
     </div>
   </div>

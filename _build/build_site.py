@@ -59,13 +59,13 @@ SOURCE_PREVIEWS = Path(
 PREVIEW_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
 CATEGORY_ORDER = [
+    "Transverse",
+    "Productivity",
     "Sales",
     "Service",
-    "Productivity",
-    "Dashboards & KPIs",
     "Marketing",
+    "Dashboards & KPIs",
     "Geo & Field",
-    "Transverse",
 ]
 
 CATEGORY_EMOJI = {
