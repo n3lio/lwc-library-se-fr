@@ -3586,24 +3586,22 @@ def render_component_detail(c: dict, all_components: list[dict], recipes: list[d
     name = (c.get("masterLabel") or api).replace("CCO FR - ", "").strip()
     primary_cat = (c.get("categories") or ["—"])[0]
     rs = c.get("releaseStatus", "stable")
-    is_ai = "Agentforce & AI" in (c.get("categories") or [])
     badges = []
-    badges.append(f'<span class="badge {"new" if rs=="new" else "stable"}">{"✨ New" if rs=="new" else "● Stable"}</span>')
+    # Category badge(s)
+    for cat in (c.get("categories") or []):
+        emoji = CATEGORY_EMOJI.get(cat, "")
+        badges.append(f'<span class="badge">{emoji} {html_lib.escape(cat)}</span>')
+    # AI-ready (from personas containing Agents or prompt-launcher-like)
+    is_ai = "Agents" in (c.get("personas") or [])
     if is_ai:
         badges.append('<span class="badge ai">🤖 AI-ready</span>')
-    for p in (c.get("personas") or []):
-        emoji, label, _ = PERSONA_LABEL.get(p, ("", p, ""))
-        badges.append(f'<span class="badge">{emoji} {html_lib.escape(label)}</span>')
-    surfaces = c.get("surfaces") or []
-    if surfaces:
-        badges.append(f'<span class="badge">{" · ".join(SURFACE_LABEL.get(s,s) for s in surfaces)} page</span>')
-    if c.get("objects"):
-        badges.append(f'<span class="badge">{html_lib.escape(", ".join(c["objects"]))}</span>')
-    badges.append('<span class="badge">Bilingual FR / EN</span>')
+    # No Apex is a useful signal
     if not (c.get("apexDeps") or c.get("sharedApexDeps")):
-        badges.append('<span class="badge">No Apex</span>')
-    if c.get("mobileReady"):
-        badges.append('<span class="badge">📱 Mobile-ready</span>')
+        badges.append('<span class="badge">Zero Apex</span>')
+    # New release status
+    if rs == "new":
+        badges.append('<span class="badge new">✨ New</span>')
+    surfaces = c.get("surfaces") or []
 
     chip_html = "".join(
         f'<span class="chip" data-i18n-comp="{api}.chips.{i}">{html_lib.escape(ch)}</span>'
