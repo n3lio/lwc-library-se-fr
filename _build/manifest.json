@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13",
+  "generatedAt": "2026-05-28",
   "componentCount": 32,
   "skippedCount": 0,
   "skipped": [],
@@ -301,34 +301,6 @@
           "name": "strategyNotesDefault",
           "type": "String",
           "label": "Strategic notes - default text (override)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "logisticOptionsCsv",
-          "type": "String",
-          "label": "(deprecated - unused)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "competitorOptionsCsv",
-          "type": "String",
-          "label": "(deprecated - unused)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "riskOptionsCsv",
-          "type": "String",
-          "label": "(deprecated - unused)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "leversOptionsCsv",
-          "type": "String",
-          "label": "(deprecated - unused)",
           "default": null,
           "description": null
         }
@@ -2507,118 +2479,6 @@
           "label": "KPI 6 - Link",
           "default": null,
           "description": null
-        },
-        {
-          "name": "userType",
-          "type": "String",
-          "label": "(deprecated) User type",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile1Label",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile1Sub",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile1Value",
-          "type": "Integer",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile2Label",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile2Sub",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldTile2Value",
-          "type": "Integer",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile1Label",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile1Sub",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile1Value",
-          "type": "Integer",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile2Label",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile2Sub",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "insideTile2Value",
-          "type": "Integer",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "perfTileLabel",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "perfTileSub",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "perfTileValue",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
         }
       ]
     },
@@ -3982,27 +3842,6 @@
           "label": "Quick actions override (API names, comma-separated)",
           "default": null,
           "description": "Optional. Forces a specific list instead of the page-layout default. Example: 'Edit,SendEmail'. Leave empty to use the layout."
-        },
-        {
-          "name": "disableRealButtons",
-          "type": "Boolean",
-          "label": "(deprecated)",
-          "default": "false",
-          "description": null
-        },
-        {
-          "name": "fakeButtonLabels",
-          "type": "String",
-          "label": "(deprecated)",
-          "default": null,
-          "description": null
-        },
-        {
-          "name": "fieldsList",
-          "type": "String",
-          "label": "(deprecated - use accountFieldsList / contactFieldsList)",
-          "default": null,
-          "description": null
         }
       ]
     },
@@ -5495,37 +5334,6 @@
     }
   ],
   "byCategory": {
-    "Geo & Field": [
-      "seFrNearbyAccountsMap",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
-    ],
-    "Dashboards & KPIs": [
-      "seFrFieldRepHome",
-      "seFrKpiLauncher",
-      "seFrMetricTile",
-      "seFrRevenueDashboard",
-      "seFrTelesalesRepHome"
-    ],
-    "Agentforce & AI": [
-      "seFrAgentforceHeader",
-      "seFrContactCard",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations"
-    ],
-    "Sales Productivity": [
-      "seFrKanbanBoard",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrOrderEntry",
-      "seFrOrderSummary",
-      "seFrTimelinePhases"
-    ],
-    "Marketing & Data": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrMetricTile"
-    ],
     "Account 360°": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -5540,12 +5348,70 @@
       "seFrRelatedRecordCard",
       "seFrRevenueDashboard"
     ],
+    "Dashboards & KPIs": [
+      "seFrFieldRepHome",
+      "seFrKpiLauncher",
+      "seFrMetricTile",
+      "seFrRevenueDashboard",
+      "seFrTelesalesRepHome"
+    ],
     "Transverse": [
       "seFrFilesGallery",
       "seFrSplashBanner"
+    ],
+    "Sales Productivity": [
+      "seFrKanbanBoard",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrOrderEntry",
+      "seFrOrderSummary",
+      "seFrTimelinePhases"
+    ],
+    "Marketing & Data": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrMetricTile"
+    ],
+    "Geo & Field": [
+      "seFrNearbyAccountsMap",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
+    ],
+    "Agentforce & AI": [
+      "seFrAgentforceHeader",
+      "seFrContactCard",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations"
     ]
   },
   "byPersona": {
+    "FieldSales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFieldRepHome",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrNearbyAccountsMap",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
+    ],
+    "Service": [
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrMetricTile",
+      "seFrOrderSummary",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
+    ],
     "Sales": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -5563,6 +5429,18 @@
       "seFrTerritoryMap",
       "seFrTimelinePhases"
     ],
+    "Retail": [
+      "seFrCustomerSalesSummary"
+    ],
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
+    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrActivityFeed",
@@ -5574,20 +5452,6 @@
       "seFrMetricTile",
       "seFrRelatedRecordCard",
       "seFrSmartRecommendations"
-    ],
-    "FieldSales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFieldRepHome",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrNearbyAccountsMap",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
     ],
     "Telesales": [
       "seFrActivityFeed",
@@ -5602,31 +5466,6 @@
       "seFrRevenueDashboard",
       "seFrSmartRecommendations",
       "seFrTelesalesRepHome"
-    ],
-    "Retail": [
-      "seFrCustomerSalesSummary"
-    ],
-    "Service": [
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderSummary",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
-    ],
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
     ]
   },
   "bySurface": {

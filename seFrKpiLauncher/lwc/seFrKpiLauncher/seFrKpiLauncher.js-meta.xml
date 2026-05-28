@@ -58,23 +58,6 @@
             <property name="kpi6Color" type="String" label="KPI 6 - Color hex" />
             <property name="kpi6Link" type="String" label="KPI 6 - Link" />
 
-            <!-- Legacy properties kept for backwards compatibility with v1 pages. Not used. -->
-            <property name="userType" type="String" label="(deprecated) User type" />
-            <property name="fieldTile1Label" type="String" label="(deprecated)" />
-            <property name="fieldTile1Sub" type="String" label="(deprecated)" />
-            <property name="fieldTile1Value" type="Integer" label="(deprecated)" />
-            <property name="fieldTile2Label" type="String" label="(deprecated)" />
-            <property name="fieldTile2Sub" type="String" label="(deprecated)" />
-            <property name="fieldTile2Value" type="Integer" label="(deprecated)" />
-            <property name="insideTile1Label" type="String" label="(deprecated)" />
-            <property name="insideTile1Sub" type="String" label="(deprecated)" />
-            <property name="insideTile1Value" type="Integer" label="(deprecated)" />
-            <property name="insideTile2Label" type="String" label="(deprecated)" />
-            <property name="insideTile2Sub" type="String" label="(deprecated)" />
-            <property name="insideTile2Value" type="Integer" label="(deprecated)" />
-            <property name="perfTileLabel" type="String" label="(deprecated)" />
-            <property name="perfTileSub" type="String" label="(deprecated)" />
-            <property name="perfTileValue" type="String" label="(deprecated)" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

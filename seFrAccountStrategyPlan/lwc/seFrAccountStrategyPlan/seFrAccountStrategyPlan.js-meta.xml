@@ -40,12 +40,6 @@
             <property name="actionPlanCsv" type="String" label="Action plan (override)" description="Quarter|Action|Owner|Status, comma-separated. Status accepts English keys ('not started', 'in progress', 'on track', 'at risk', 'done') or French ('non commencé', 'en cours', 'dans les temps', 'à risque', 'terminé'). Leave empty for the language dictionary default." />
 
             <property name="strategyNotesDefault" type="String" label="Strategic notes - default text (override)" />
-
-            <!-- Deprecated - kept for backwards compatibility with pages that still reference them. No longer used by the new UI. -->
-            <property name="logisticOptionsCsv" type="String" label="(deprecated - unused)" />
-            <property name="competitorOptionsCsv" type="String" label="(deprecated - unused)" />
-            <property name="riskOptionsCsv" type="String" label="(deprecated - unused)" />
-            <property name="leversOptionsCsv" type="String" label="(deprecated - unused)" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
