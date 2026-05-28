@@ -18,7 +18,7 @@ keyProps:
   - Card title override
   - Card icon override
 seBenefit: Shows the full contractor landscape for an account in one glance - deadlines, SLAs, open interventions, contact emails. Ideal for Field Service, property management and B2B service demos.
-releaseStatus: stable
+releaseStatus: new
 status: active
 screenshots: []
 ---

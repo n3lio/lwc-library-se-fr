@@ -18,7 +18,7 @@ keyProps:
   - Show/hide search (toggle icon)
   - Card title override
 seBenefit: Demonstrates a Marketing Cloud-style engagement history without needing MCAE installed. Perfect for demos on scratch orgs or SDOs without Marketing Cloud connectivity.
-releaseStatus: stable
+releaseStatus: new
 status: active
 screenshots: []
 ---

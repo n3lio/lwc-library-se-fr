@@ -18,7 +18,7 @@ keyProps:
   - Source mode (live/mock)
   - Card title override
 seBenefit: Displays the team working on a record (Account owner, Opp team members) in one click - with photos, roles, and navigation to User profiles. Works out of the box on any SDO with no setup.
-releaseStatus: stable
+releaseStatus: new
 status: active
 screenshots: []
 ---

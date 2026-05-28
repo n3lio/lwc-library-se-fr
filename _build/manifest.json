@@ -1657,7 +1657,7 @@
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
-      "releaseStatus": "stable",
+      "releaseStatus": "new",
       "originalAuthor": "Thomas Plaindoux",
       "originalAuthorEmail": "REDACTED",
       "maintainedBy": "Lionel Braun",
@@ -4296,7 +4296,7 @@
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
-      "releaseStatus": "stable",
+      "releaseStatus": "new",
       "originalAuthor": "Thomas Plaindoux",
       "originalAuthorEmail": "REDACTED",
       "maintainedBy": "Lionel Braun",
@@ -4841,7 +4841,7 @@
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
-      "releaseStatus": "stable",
+      "releaseStatus": "new",
       "originalAuthor": "Thomas Plaindoux",
       "originalAuthorEmail": "REDACTED",
       "maintainedBy": "Lionel Braun",
@@ -5686,6 +5686,13 @@
       "seFrTerritoryMap",
       "seFrVoiceNoteTaker"
     ],
+    "Productivity": [
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations",
+      "seFrTimelinePhases"
+    ],
     "Transverse": [
       "seFrActivityFeed",
       "seFrAgentforceHeader",
@@ -5710,13 +5717,6 @@
       "seFrOrderEntry",
       "seFrPipelineSnapshot"
     ],
-    "Productivity": [
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations",
-      "seFrTimelinePhases"
-    ],
     "Dashboards & KPIs": [
       "seFrFieldRepHome",
       "seFrKpiLauncher",
@@ -5726,18 +5726,8 @@
     ]
   },
   "byPersona": {
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrActivityFeed",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
+    "Retail": [
+      "seFrCustomerSalesSummary"
     ],
     "Service": [
       "seFrActivityFeed",
@@ -5753,34 +5743,6 @@
       "seFrServiceContracts",
       "seFrSmartRecommendations",
       "seFrSubscribersList"
-    ],
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
-    ],
-    "Retail": [
-      "seFrCustomerSalesSummary"
-    ],
-    "FieldSales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFieldRepHome",
-      "seFrFilesGallery",
-      "seFrMetricTile",
-      "seFrNearbyAccountsMap",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrServiceContracts",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -5800,6 +5762,44 @@
       "seFrSubscribersList",
       "seFrTerritoryMap",
       "seFrTimelinePhases"
+    ],
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
+    ],
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrActivityFeed",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
+    ],
+    "FieldSales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFieldRepHome",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrNearbyAccountsMap",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrServiceContracts",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
     ],
     "Telesales": [
       "seFrActivityFeed",
@@ -5849,9 +5849,8 @@
       "seFrTimelinePhases",
       "seFrVoiceNoteTaker"
     ],
-    "HomePage": [
+    "AppPage": [
       "seFrActiveSegments",
-      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrEngagementHistory",
       "seFrFieldRepHome",
@@ -5868,8 +5867,9 @@
       "seFrTerritoryMap",
       "seFrTimelinePhases"
     ],
-    "AppPage": [
+    "HomePage": [
       "seFrActiveSegments",
+      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrEngagementHistory",
       "seFrFieldRepHome",
