@@ -14,6 +14,7 @@ const SPEED_MAP = {
 };
 
 export default class SeFrSplashBanner extends LightningElement {
+    @api language = 'fr';
     @api title = 'Bonjour 👋';
     @api subtitle = '';
     @api textSize = 'l';

@@ -2,12 +2,14 @@
  * Returns active service contracts for an Account, with the count of open work orders
  * per contract — used by the seFrServiceContracts LWC on Account record pages.
  *
- * Prerequisites (custom fields to deploy alongside this component):
- *   - ServiceContract.Metier__c (Picklist) — trade/category label
- *   - ServiceContract.SLA_Heures__c (Number) — SLA commitment in hours
- *   - ServiceContract.Email_Prestataire__c (Email) — contractor email
- *   - ServiceContract.Perimetre_Couvert__c (TextArea) — scope description
- *   - WorkOrder.Statut_Intervention__c (Picklist) — intervention status
+ * Works in two modes:
+ *   STANDARD (no custom fields needed) — queries Name, ContractNumber, StartDate, EndDate,
+ *   Description + WorkOrder.Status for open WO count. Ready to use on any SDO.
+ *
+ *   FULL (optional custom fields) — if Metier__c, SLA_Heures__c, Email_Prestataire__c,
+ *   Perimetre_Couvert__c exist on ServiceContract and Statut_Intervention__c exists on
+ *   WorkOrder, the component displays category badges, SLA formatting, contractor email
+ *   and scope. See README for setup instructions.
  */
 public with sharing class SE_FR_ServiceContractsController {
 
@@ -28,42 +30,68 @@ public with sharing class SE_FR_ServiceContractsController {
     public static List<ContractDTO> getContracts(Id accountId) {
         if (accountId == null) return new List<ContractDTO>();
 
-        List<ServiceContract> contracts = [
-            SELECT Id, Name, ContractNumber, Metier__c, SLA_Heures__c,
-                   Email_Prestataire__c, Perimetre_Couvert__c,
-                   StartDate, EndDate
-            FROM ServiceContract
-            WHERE AccountId = :accountId
-              AND Metier__c != null
-            ORDER BY Metier__c ASC
-        ];
+        // Detect custom fields on ServiceContract
+        Map<String, Schema.SObjectField> scFields = Schema.SObjectType.ServiceContract.fields.getMap();
+        Boolean hasMetier    = scFields.containsKey('metier__c');
+        Boolean hasSla       = scFields.containsKey('sla_heures__c');
+        Boolean hasEmail     = scFields.containsKey('email_prestataire__c');
+        Boolean hasPerimetre = scFields.containsKey('perimetre_couvert__c');
+
+        // Build dynamic SOQL for ServiceContract
+        List<String> fields = new List<String>{
+            'Id', 'Name', 'ContractNumber', 'StartDate', 'EndDate', 'Description'
+        };
+        if (hasMetier)    fields.add('Metier__c');
+        if (hasSla)       fields.add('SLA_Heures__c');
+        if (hasEmail)     fields.add('Email_Prestataire__c');
+        if (hasPerimetre) fields.add('Perimetre_Couvert__c');
+
+        String soql = 'SELECT ' + String.join(fields, ', ')
+            + ' FROM ServiceContract'
+            + ' WHERE AccountId = :accountId'
+            + ' ORDER BY ' + (hasMetier ? 'Metier__c ASC NULLS LAST, Name ASC' : 'Name ASC');
+
+        List<SObject> contracts = Database.query(soql);
         if (contracts.isEmpty()) return new List<ContractDTO>();
 
-        Set<Id> ids = new Map<Id, ServiceContract>(contracts).keySet();
+        // Count open work orders per contract
+        Set<Id> ids = new Map<Id, SObject>(contracts).keySet();
         Map<Id, Integer> openByContract = new Map<Id, Integer>();
-        for (AggregateResult ag : [
-            SELECT ServiceContractId scId, COUNT(Id) c
-            FROM WorkOrder
-            WHERE ServiceContractId IN :ids
-              AND Statut_Intervention__c IN ('Signalée','Mandatée','Planifiée','Reportée','Bloquée')
-            GROUP BY ServiceContractId
-        ]) {
+
+        Map<String, Schema.SObjectField> woFields = Schema.SObjectType.WorkOrder.fields.getMap();
+        Boolean hasStatutIntervention = woFields.containsKey('statut_intervention__c');
+
+        String woFilter;
+        if (hasStatutIntervention) {
+            woFilter = 'Statut_Intervention__c IN (\'Signalée\',\'Mandatée\',\'Planifiée\',\'Reportée\',\'Bloquée\')';
+        } else {
+            // Fallback to standard Status — count non-closed/non-completed
+            woFilter = 'Status NOT IN (\'Completed\',\'Closed\',\'Canceled\')';
+        }
+
+        String woSoql = 'SELECT ServiceContractId scId, COUNT(Id) c'
+            + ' FROM WorkOrder'
+            + ' WHERE ServiceContractId IN :ids AND ' + woFilter
+            + ' GROUP BY ServiceContractId';
+
+        for (AggregateResult ag : Database.query(woSoql)) {
             openByContract.put((Id) ag.get('scId'), Integer.valueOf(ag.get('c')));
         }
 
+        // Build DTOs
         List<ContractDTO> out = new List<ContractDTO>();
-        for (ServiceContract c : contracts) {
+        for (SObject c : contracts) {
             ContractDTO d = new ContractDTO();
-            d.id              = c.Id;
-            d.name            = c.Name;
-            d.contractNumber  = c.ContractNumber;
-            d.metier          = c.Metier__c;
-            d.slaHeures       = c.SLA_Heures__c;
-            d.email           = c.Email_Prestataire__c;
-            d.perimetre       = c.Perimetre_Couvert__c;
-            d.startDate       = c.StartDate;
-            d.endDate         = c.EndDate;
-            d.openWorkOrders  = openByContract.containsKey(c.Id) ? openByContract.get(c.Id) : 0;
+            d.id              = (Id) c.get('Id');
+            d.name            = (String) c.get('Name');
+            d.contractNumber  = (String) c.get('ContractNumber');
+            d.startDate       = (Date) c.get('StartDate');
+            d.endDate         = (Date) c.get('EndDate');
+            d.metier          = hasMetier ? (String) c.get('Metier__c') : null;
+            d.slaHeures       = hasSla ? (Decimal) c.get('SLA_Heures__c') : null;
+            d.email           = hasEmail ? (String) c.get('Email_Prestataire__c') : null;
+            d.perimetre       = hasPerimetre ? (String) c.get('Perimetre_Couvert__c') : (String) c.get('Description');
+            d.openWorkOrders  = openByContract.containsKey(d.id) ? openByContract.get(d.id) : 0;
             out.add(d);
         }
         return out;

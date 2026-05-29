@@ -11,6 +11,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'." />
             <property name="title" type="String" default="Bonjour 👋" label="Titre" description="Le grand texte affiché au centre. Émojis acceptés." />
             <property name="subtitle" type="String" label="Sous-titre (optionnel)" description="Texte plus petit affiché sous le titre." />
             <property name="textSize" type="String" datasource="s,m,l,xl" default="l" label="Taille du texte" description="s = petit, m = moyen, l = grand (défaut), xl = très grand." />
