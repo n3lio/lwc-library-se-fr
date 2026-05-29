@@ -3765,23 +3765,21 @@ sf project deploy start --source-dir {api} --target-org &lt;alias&gt;</pre>
       </div>
 
       <div class="side-card">
-        <h3>📋 At a glance</h3>
+        <h3>📍 Placement</h3>
+        <div class="meta-row"><span class="key">Targets</span><span class="val">{html_lib.escape(' · '.join(SURFACE_LABEL.get(s,s) + ' page' for s in surfaces) or '—')}</span></div>
+        <div class="meta-row"><span class="key">Objects</span><span class="val">{html_lib.escape(', '.join(c.get('objects',[]))) or 'Any'}</span></div>
+        <div class="meta-row"><span class="key">Mobile</span><span class="val">{'✓ Ready' if c.get('mobileReady') else '✗ Desktop only'}</span></div>
+      </div>
+
+      <div class="side-card">
+        <h3>⚙️ Technical</h3>
         <div class="meta-row"><span class="key">API name</span><span class="val"><code>{api}</code></span></div>
-        <div class="meta-row"><span class="key">Master label</span><span class="val">{html_lib.escape((c.get('masterLabel') or '—'))}</span></div>
-        <div class="meta-row"><span class="key">Status</span><span class="val">{'New' if rs=='new' else 'Stable'}</span></div>
-        <div class="meta-row"><span class="key">Targets</span><span class="val">{html_lib.escape(' · '.join(SURFACE_LABEL.get(s,s) for s in surfaces) or '—')}</span></div>
-        <div class="meta-row"><span class="key">Objects</span><span class="val">{html_lib.escape(' · '.join(c.get('objects',[])) or 'Any')}</span></div>
-        <div class="meta-row"><span class="key">Apex</span><span class="val">{apex_html}</span></div>
+        <div class="meta-row"><span class="key">App Builder</span><span class="val">{html_lib.escape((c.get('masterLabel') or '—'))}</span></div>
         <div class="meta-row"><span class="key">Data mode</span><span class="val">{html_lib.escape((c.get('dataMode') or 'mock').capitalize())}</span></div>
-        <div class="meta-row"><span class="key">Mobile</span><span class="val">{'Yes' if c.get('mobileReady') else 'No'}</span></div>
+        <div class="meta-row"><span class="key">Apex</span><span class="val">{apex_html}</span></div>
       </div>
 
       {contrib_html}
-
-      <div class="side-card">
-        <h3>🧩 Categories</h3>
-        <div class="meta-row"><span class="key">Primary</span><span class="val">{html_lib.escape(primary_cat)}</span></div>{''.join(f'<div class="meta-row"><span class="key">Also</span><span class="val">{html_lib.escape(cat)}</span></div>' for cat in (c.get('categories') or [])[1:])}
-      </div>
 
       {related_recipe_html}
       {related_html}
