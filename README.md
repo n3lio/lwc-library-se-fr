@@ -1,6 +1,15 @@
-# SE_FR Component Library
+# CCO FR Component Library
 
-A reusable catalog of Lightning Web Components and Apex controllers for Salesforce Solution Engineers. Every component is generic: titles, labels, values, filters, picklist options and demo data are exposed as App Builder properties so you can adapt them to any customer context without editing code.
+[![Live site](https://img.shields.io/badge/Site-live-brightgreen)](https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/)
+[![Repo](https://img.shields.io/badge/GitHub-public-blue)](https://github.com/n3lio/lwc-library-se-fr)
+[![Components](https://img.shields.io/badge/Components-35-blueviolet)](https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html)
+
+A reusable catalog of **35 Lightning Web Components** and Apex controllers for **Salesforce Solution Engineers**. Every component is generic: titles, labels, values, filters, picklist options and demo data are exposed as App Builder properties so you can adapt them to any customer context without editing code.
+
+> 🌐 Browse and download from the live site: **https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/**
+> 👥 Audience: Salesforce SE community (EMEA + worldwide). Public for transparency, sharing is welcome.
+
+> ⚠️ **Disclaimer**: maintained by a Salesforce SE on personal time as a community asset. Not an official Salesforce product, not supported by Salesforce. Use at your own risk on demo / SDO orgs.
 
 ## Language (EN / FR)
 
