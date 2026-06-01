@@ -21,6 +21,21 @@ const ZIPS_DIR = path.join(__dirname, '_zips');
 const SF_CLIENT_ID = process.env.SF_CLIENT_ID || '';
 const SF_CLIENT_SECRET = process.env.SF_CLIENT_SECRET || '';
 
+// HMAC secret used to sign submission-attachment download tokens. Falls back
+// to SF_CLIENT_SECRET (already random per Connected App) and finally to a
+// dev-only placeholder. In production, at least one of the two must be set.
+function resolveAttachmentSecret() {
+  const v = process.env.ATTACHMENT_TOKEN_SECRET || SF_CLIENT_SECRET;
+  if (v && v.length >= 16) return v;
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'ATTACHMENT_TOKEN_SECRET (or SF_CLIENT_SECRET) env var is required in production (>= 16 chars).'
+    );
+  }
+  return 'dev-only-placeholder-set-ATTACHMENT_TOKEN_SECRET-in-prod';
+}
+const ATTACHMENT_SECRET = resolveAttachmentSecret();
+
 // Showcase Connected App — JWT Bearer Token Flow, runs as the Showcase Visitor bot
 // user on the SE FR showcase org. We need a UI-capable session (web scope) so
 // frontdoor.jsp accepts it; client_credentials only mints api-only tokens which
@@ -974,7 +989,7 @@ app.post('/api/submit-component', async (req, reply) => {
   // stays in the DB (BYTEA) and is fetched via /api/admin/submission/:id/file
   // by the admin or directly here via a token-protected URL for V1.
   const downloadToken = attachmentBuf
-    ? crypto.createHmac('sha256', SF_CLIENT_SECRET || 'sefr-default')
+    ? crypto.createHmac('sha256', ATTACHMENT_SECRET)
         .update(`submission:${submissionId}`)
         .digest('hex').slice(0, 32)
     : null;
@@ -1022,7 +1037,7 @@ app.get('/api/submissions/:id/file', async (req, reply) => {
   const id = parseInt(req.params.id, 10);
   const token = req.query && req.query.token;
   if (!Number.isFinite(id) || !token) return reply.code(400).send({ error: 'invalid_request' });
-  const expected = crypto.createHmac('sha256', SF_CLIENT_SECRET || 'sefr-default')
+  const expected = crypto.createHmac('sha256', ATTACHMENT_SECRET)
     .update(`submission:${id}`)
     .digest('hex').slice(0, 32);
   if (token !== expected) return reply.code(403).send({ error: 'invalid_token' });

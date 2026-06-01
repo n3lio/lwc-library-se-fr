@@ -32,12 +32,12 @@
             <property name="ytdRevenueLabel" type="String" label="YTD revenue - label (override)" />
             <property name="ytdRevenueDefault" type="Integer" default="38550" label="YTD revenue - default value" />
 
-            <property name="strengthsCsv" type="String" label="Strengths - default bullets (override)" description="Comma- or newline-separated. Leave empty for the language dictionary default." />
-            <property name="weaknessesCsv" type="String" label="Weaknesses - default bullets (override)" />
-            <property name="opportunitiesCsv" type="String" label="Opportunities - default bullets (override)" />
-            <property name="threatsCsv" type="String" label="Threats - default bullets (override)" />
+            <property name="strengthsCsv" type="String" label="Strengths - default bullets (override)" placeholder="Partenariat historique,Adoption premium,NPS fort (72)" description="Comma- or newline-separated. Leave empty for the language dictionary default." />
+            <property name="weaknessesCsv" type="String" label="Weaknesses - default bullets (override)" placeholder="Gamme unique,Faible adoption digitale,Aucun plan de formation" />
+            <property name="opportunitiesCsv" type="String" label="Opportunities - default bullets (override)" placeholder="Extension de catégorie,Cross-sell sur produits adjacents,Nouveau décideur onboardé" />
+            <property name="threatsCsv" type="String" label="Threats - default bullets (override)" placeholder="Pression tarifaire concurrentielle,Réclamations service en hausse" />
 
-            <property name="actionPlanCsv" type="String" label="Action plan (override)" description="Quarter|Action|Owner|Status, comma-separated. Status accepts English keys ('not started', 'in progress', 'on track', 'at risk', 'done') or French ('non commencé', 'en cours', 'dans les temps', 'à risque', 'terminé'). Leave empty for the language dictionary default." />
+            <property name="actionPlanCsv" type="String" label="Action plan (override)" placeholder="T2 2026|Organiser démo on-site|Alice|in progress,T3 2026|Pilote extension catégorie|Bob|not started" description="Quarter|Action|Owner|Status, comma-separated. Status keys: 'not started', 'in progress', 'on track', 'at risk', 'done' (or FR 'non commencé', 'en cours', 'dans les temps', 'à risque', 'terminé')." />
 
             <property name="strategyNotesDefault" type="String" label="Strategic notes - default text (override)" />
         </targetConfig>

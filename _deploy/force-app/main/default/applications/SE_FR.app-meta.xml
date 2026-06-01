@@ -14,6 +14,34 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <type>Flexipage</type>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>SE_FR_Showcase_Contact</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Contact</pageOrSobjectType>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>SE_FR_Showcase_Lead</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>SE_FR_Showcase_Opportunity</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>SE_FR_Showcase_Order</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Order</pageOrSobjectType>
+        <type>Flexipage</type>
+    </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
@@ -31,5 +59,6 @@
     <tabs>standard-Case</tabs>
     <tabs>standard-Order</tabs>
     <tabs>standard-Lead</tabs>
+    <tabs>standard-Opportunity</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

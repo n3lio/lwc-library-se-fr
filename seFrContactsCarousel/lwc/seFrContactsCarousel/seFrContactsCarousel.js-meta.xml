@@ -18,7 +18,7 @@
             <property name="limitCount" type="Integer" default="24" label="Max contacts fetched" description="Server-side LIMIT (1-100)." />
             <property name="orderBy" type="String" default="LastActivityDate DESC NULLS LAST" label="Sort" description="Whitelisted: LastActivityDate DESC NULLS LAST | Name ASC | CreatedDate DESC | Title ASC NULLS LAST." />
             <property name="visibleCount" type="Integer" default="4" label="Cards visible at once" description="Number of cards shown per page in the carousel. Arrows paginate by this amount." />
-            <property name="badgesCsv" type="String" label="Role badges (name=label|color, CSV)" description="Per-contact badge overlay. Format: 'Eliott Mercier=Champion|#2e844a,Mathieu Bernard=Detractor|#ba0517'. Match is case-insensitive on Contact.Name." />
+            <property name="badgesCsv" type="String" label="Role badges (name=label|color, CSV)" placeholder="Eliott Mercier=Champion|#2e844a,Mathieu Bernard=Detractor|#ba0517" description="Per-contact badge overlay. Format: 'Name=Label|#hex,...'. Match is case-insensitive on Contact.Name." />
             <property name="hideNewContactButton" type="Boolean" default="false" label="Hide 'New contact' button" />
         </targetConfig>
     </targetConfigs>

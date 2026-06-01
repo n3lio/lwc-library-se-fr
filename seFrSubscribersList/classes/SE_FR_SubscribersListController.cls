@@ -45,17 +45,56 @@ public with sharing class SE_FR_SubscribersListController {
     }
 
     private static void addOwner(Id recordId, String objectType, Map<Id, TeamMemberDTO> memberMap) {
-        String soql = 'SELECT OwnerId, Owner.Name, Owner.UserRole.Name, Owner.SmallPhotoUrl'
+        // Owner is polymorphic on Case, Lead and a few others (User OR Queue). On most other
+        // SObjects (Contact, Account, Opportunity, Order...), Owner is User-only and the
+        // Owner relationship resolves to User — which has no `Type` field. We branch the
+        // query so we don't try to SELECT Owner.Type on User-only objects (would throw at
+        // runtime, leaving the panel empty silently).
+        Set<String> queueable = new Set<String>{'Case','Lead'};
+        String fields = 'Id, OwnerId, Owner.Name, Owner.UserRole.Name, Owner.SmallPhotoUrl';
+        if (queueable.contains(objectType)) {
+            fields += ', Owner.Type';
+        }
+        String soql = 'SELECT ' + fields
             + ' FROM ' + String.escapeSingleQuotes(objectType)
             + ' WHERE Id = :recordId LIMIT 1';
-        List<SObject> records = Database.query(soql);
-        if (records.isEmpty()) return;
+        List<SObject> records;
+        try {
+            records = Database.query(soql);
+        } catch (QueryException e) {
+            // Defensive: if SmallPhotoUrl / UserRole.Name are unsupported on a custom object's
+            // Owner relationship, retry with the bare minimum so we still surface the owner.
+            try {
+                records = Database.query('SELECT Id, OwnerId, Owner.Name FROM ' + String.escapeSingleQuotes(objectType) + ' WHERE Id = :recordId LIMIT 1');
+            } catch (Exception e2) {
+                return;
+            }
+        }
+        if (records == null || records.isEmpty()) return;
         SObject rec = records[0];
         Id ownerId = (Id) rec.get('OwnerId');
-        if (ownerId == null || String.valueOf(ownerId).startsWith('00G')) return; // skip queues
+        if (ownerId == null) return;
         SObject owner = rec.getSObject('Owner');
         if (owner == null) return;
-        addUser(ownerId, owner, memberMap);
+
+        if (String.valueOf(ownerId).startsWith('00G')) {
+            // Queue owner — render with queue icon + label.
+            addQueue(ownerId, owner, memberMap);
+        } else {
+            addUser(ownerId, owner, memberMap);
+        }
+    }
+
+    private static void addQueue(Id queueId, SObject queueRecord, Map<Id, TeamMemberDTO> memberMap) {
+        if (queueId == null || memberMap.containsKey(queueId)) return;
+        TeamMemberDTO dto = new TeamMemberDTO();
+        dto.userId   = queueId;
+        String qName = (String) queueRecord.get('Name');
+        dto.name     = String.isBlank(qName) ? 'Queue' : qName;
+        dto.role     = 'Queue';
+        dto.photoUrl = null;
+        dto.initials = computeInitials(dto.name);
+        memberMap.put(queueId, dto);
     }
 
     private static void addOppTeamForAccount(Id accountId, Map<Id, TeamMemberDTO> memberMap) {

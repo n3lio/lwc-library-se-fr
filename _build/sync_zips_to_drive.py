@@ -16,16 +16,20 @@ Behavior:
 
 from __future__ import annotations
 import hashlib
+import os
 import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC_ZIPS = ROOT / "_zips"
-DRIVE_SOURCES = Path(
-    "/Users/lionel.braun/Library/CloudStorage/"
-    "GoogleDrive-lionel.braun@salesforce.com/Mon Drive/"
-    "LWC Library SE FR/Sources"
+# Override the destination with the CCO_FR_SOURCES_DIR env var. Default
+# falls back to the maintainer's Google Drive Desktop mount.
+_sources_env = os.environ.get("CCO_FR_SOURCES_DIR")
+DRIVE_SOURCES = Path(_sources_env) if _sources_env else Path(
+    Path.home(),
+    "Library/CloudStorage/GoogleDrive-<owner>@example.com/Mon Drive/"
+    "LWC Library SE FR/Sources",
 )
 
 

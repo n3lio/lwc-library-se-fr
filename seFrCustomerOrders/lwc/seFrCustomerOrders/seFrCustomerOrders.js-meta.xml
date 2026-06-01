@@ -19,7 +19,7 @@
             <property name="historyLimit" type="Integer" default="10" label="Max orders in history" description="Server-side LIMIT (1-50)." />
             <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
             <property name="localeTag" type="String" default="fr-FR" label="Locale tag (date formatting)" />
-            <property name="statusFilter" type="String" label="Status whitelist (CSV, optional)" description="Comma-separated list of Order.Status values. When set, only orders matching these statuses are shown, and a status picker appears above the history list. Leave empty to allow every status." />
+            <property name="statusFilter" type="String" label="Status whitelist (CSV, optional)" placeholder="Draft,Activated,Shipped" description="Comma-separated list of Order.Status values. When set, only orders matching these statuses are shown, and a status picker appears above the history list. Leave empty to allow every status." />
             <property name="defaultSort" type="String" default="EffectiveDate DESC" label="Default sort" description="One of: EffectiveDate DESC | EffectiveDate ASC | TotalAmount DESC | TotalAmount ASC | OrderNumber ASC | OrderNumber DESC." />
             <property name="productImageFieldApiName" type="String" default="Image_URL__c" label="Product image field API name" description="Field on Product2 holding the image URL. Schema-safe - skipped if absent." />
             <property name="productImageFallbackUrl" type="String" label="Product image fallback URL" description="Used when the product image field is empty or absent." />

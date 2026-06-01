@@ -10,7 +10,7 @@ chips:
 dataMode: live
 mobileReady: true
 originalAuthor: Thomas Plaindoux
-originalAuthorEmail: REDACTED
+originalAuthorEmail: null
 maintainedBy: Lionel Braun
 libraryIntegrationDate: 2026-05-28
 keyProps:
@@ -27,16 +27,24 @@ screenshots: []
 
 Displays the team of Users linked to the current record — with profile photos (when available), Salesforce role badges, and clickable names that navigate to User record pages.
 
+## Where to drop it (and what shows)
+
+| Surface | What you see (live mode) | Default mode |
+|---|---|---|
+| **Account record page** ⭐ | Account Owner + Users on OpportunityTeamMembers of all child Opps (deduplicated) | live |
+| **Opportunity record page** ⭐ | Opp Owner + OpportunityTeamMembers | live |
+| **Case record page** | Case Owner + Account Owner (if different) | live |
+| **Lead / Contact / Order / any other record page** | Record Owner only (lean output, useful as a 1-line "owner" panel) | live |
+| **App page** | Mock data (pipe-separated names/roles via App Builder props) | mock |
+| **Home page** | Mock data (same as App page) | mock |
+
+⭐ = richest scenario (recommended for demos).
+
 ## How it works
 
 ### Live mode (default — zero setup, works on any org)
 
-The component queries Users related to the current record:
-
-- **Account page** → Account Owner + all Users on OpportunityTeamMembers of child Opportunities (deduplicated)
-- **Opportunity page** → Opp Owner + OpportunityTeamMembers
-- **Case page** → Case Owner + Account Owner (if different)
-- **Any other object** → Record Owner
+The component queries Users related to the current record. The recordId-less surfaces (App / Home) automatically fall back to mock mode using the configured pipe-separated props.
 
 Results are sorted by seniority (VP/Director first, then managers, then sales, then agents).
 

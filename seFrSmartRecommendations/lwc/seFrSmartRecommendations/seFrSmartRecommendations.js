@@ -31,6 +31,16 @@ const LABELS = {
                 { title: 'Marketing consent update', desc: 'Promotional email opt-in is missing. Request consent on the next call.', btn: 'Update' },
                 { title: 'Customer event invitation', desc: 'This contact is a key decision-maker. Invite them to the next customer event.', btn: 'Send invitation' }
             ],
+            Opportunity: [
+                { title: 'Engage decision-maker', desc: 'No exec contact mapped on this deal. Win rate drops 35% without C-level alignment.', btn: 'Map stakeholder' },
+                { title: 'Schedule mutual close plan', desc: 'Stage age above 30 days. A mutual close plan accelerates closing by 18 days on average.', btn: 'Send plan' },
+                { title: 'Trigger reference call', desc: 'Similar customer recently closed. A reference call is the highest-impact action at this stage.', btn: 'Request reference' }
+            ],
+            Lead: [
+                { title: 'Qualify with BANT', desc: 'Lead score is high but BANT incomplete. Run a 15-min discovery to confirm fit.', btn: 'Schedule discovery' },
+                { title: 'Convert to opportunity', desc: 'Engagement signals (3 page views + form fill) suggest readiness. Convert now.', btn: 'Convert' },
+                { title: 'Send tailored content', desc: 'Industry match with our top case study. Send the asset to nudge engagement.', btn: 'Send content' }
+            ],
             other: [
                 { title: 'Review the record', desc: 'Some information appears to be stale (>6 months).', btn: 'Review' }
             ]
@@ -64,6 +74,16 @@ const LABELS = {
             Contact: [
                 { title: 'Mise à jour consentement marketing', desc: "L'opt-in e-mail promotionnel manque. Demander le consentement lors du prochain échange.", btn: 'Mettre à jour' },
                 { title: 'Invitation événement client', desc: "Ce contact est un décideur clé. L'inviter au prochain événement client.", btn: "Envoyer l'invitation" }
+            ],
+            Opportunity: [
+                { title: 'Engager un décideur exec', desc: "Aucun contact C-level mappé sur ce deal. Le taux de closing chute de 35% sans alignement exécutif.", btn: 'Cartographier' },
+                { title: 'Plan de closing partagé', desc: "Étape ouverte depuis plus de 30 jours. Un plan de closing partagé accélère la signature de 18 jours en moyenne.", btn: 'Envoyer le plan' },
+                { title: 'Activer une référence client', desc: "Un client similaire a signé récemment. Un appel de référence est l'action la plus impactante à ce stade.", btn: 'Demander la référence' }
+            ],
+            Lead: [
+                { title: 'Qualifier en BANT', desc: "Score lead élevé mais BANT incomplet. Lancer un échange découverte de 15 min pour confirmer le fit.", btn: 'Planifier la découverte' },
+                { title: 'Convertir en opportunité', desc: "Signaux d'engagement (3 vues page + soumission de formulaire) confirment la maturité. Convertir maintenant.", btn: 'Convertir' },
+                { title: 'Envoyer du contenu ciblé', desc: "Secteur identique à notre meilleur cas client. Envoyer l'asset pour relancer l'engagement.", btn: 'Envoyer le contenu' }
             ],
             other: [
                 { title: "Vérifier l'enregistrement", desc: 'Certaines informations semblent anciennes (>6 mois).', btn: 'Vérifier' }

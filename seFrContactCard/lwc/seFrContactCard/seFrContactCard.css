@@ -9,11 +9,14 @@
     --slds-g-color-accent-container-1: var(--lwc-brandAccessible);
 }
 
-/* Card root with overflow hidden so the waves stay clipped inside the rounded corners. */
+/* Card root with overflow hidden so the waves stay clipped inside the rounded corners.
+   Border-radius uses the SLDS card token so the radius matches other library components
+   (ServiceContracts, SubscribersList, ActivityFeed...) which render via <lightning-card>.
+   Falls back to 0.5rem (SLDS2 default) when the token isn't resolved. */
 .can-root {
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: var(--slds-c-card-radius-border, 0.5rem);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     background: #ffffff;
 }
@@ -38,13 +41,15 @@
     padding: 12px 14px 8px 14px;
     gap: 8px;
 }
+/* Match the typography rendered by <lightning-card> header title:
+   1rem font-size, 700 font-weight, dark text. SLDS hooks first, fallbacks last. */
 .can-card-chrome-title {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #181818;
+    font-size: var(--slds-c-card-heading-font-size, 1rem);
+    font-weight: var(--slds-c-card-heading-font-weight, 700);
+    color: var(--slds-c-card-heading-color, #181818);
     min-width: 0;
 }
 .can-card-chrome-title span {

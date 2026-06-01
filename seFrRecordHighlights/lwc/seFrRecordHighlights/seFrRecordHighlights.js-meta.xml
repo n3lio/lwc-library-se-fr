@@ -28,7 +28,7 @@
             <property name="imageSize" type="Integer" default="90" label="Image size (px)" description="Diameter of the round image in pixels. Also sets the fallback icon circle size." />
             <property name="disableImageReplace" type="Boolean" default="false" label="Disable click-to-replace image" description="Off by default - clicking the image opens a file picker and uploads the new image as a standard File on the record. Turn ON to restore the legacy 'open image full size' behavior." />
             <property name="maxQuickActions" type="Integer" default="2" label="Max quick actions" description="Number of buttons displayed in the header. Picked from the active page layout's actions list (same source as the standard Highlights Panel)." />
-            <property name="quickActionsCsv" type="String" label="Quick actions override (API names, comma-separated)" description="Optional. Forces a specific list instead of the page-layout default. Example: 'Edit,SendEmail'. Leave empty to use the layout." />
+            <property name="quickActionsCsv" type="String" label="Quick actions override (API names, comma-separated)" placeholder="Edit,SendEmail,LogACall" description="Optional. Forces a specific list instead of the page-layout default. Leave empty to use the layout." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

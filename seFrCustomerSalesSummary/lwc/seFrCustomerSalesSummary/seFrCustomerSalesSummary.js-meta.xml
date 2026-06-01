@@ -26,15 +26,15 @@
 
             <property name="categoriesTitle" type="String" label="Categories column - title (override)" />
             <property name="categoriesIcon" type="String" default="standard:product" label="Categories column - icon" />
-            <property name="categoriesCsv" type="String" label="Categories rows (label|percent|color) (override)" />
+            <property name="categoriesCsv" type="String" label="Categories rows (label|percent|color) (override)" placeholder="Catégorie A|55|#005fb2,Catégorie B|25|#f2a900,Catégorie C|12|#00a1e0,Catégorie D|8|#4caf50" />
 
             <property name="brandsTitle" type="String" label="Brands column - title (override)" />
             <property name="brandsIcon" type="String" default="standard:brand" label="Brands column - icon" />
-            <property name="brandsCsv" type="String" label="Brands rows (label|percent|color) (override)" />
+            <property name="brandsCsv" type="String" label="Brands rows (label|percent|color) (override)" placeholder="Marque A|55|#005fb2,Marque B|25|#4a4a4a,Marque C|12|#e63946,Marque D|8|#4caf50" />
 
             <property name="storesTitle" type="String" label="Stores column - title (override)" />
             <property name="storesIcon" type="String" default="standard:store" label="Stores column - icon" />
-            <property name="storesCsv" type="String" label="Stores rows (label|visits|barWidthPercent|color) (override)" />
+            <property name="storesCsv" type="String" label="Stores rows (label|visits|barWidthPercent|color) (override)" placeholder="Paris|12|100|#005fb2,Lyon|4|33|#89b3e0,Bordeaux|2|16|#89b3e0" />
             <property name="storeVisitsSuffix" type="String" label="Store visits suffix (override)" />
         </targetConfig>
     </targetConfigs>

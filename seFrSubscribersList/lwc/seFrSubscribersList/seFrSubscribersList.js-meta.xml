@@ -17,12 +17,12 @@
             <property name="cardIcon" type="String" default="standard:team_member" label="Card icon" />
             <property name="sourceMode" type="String" default="live" label="Data mode" description="'live' (Apex, default) or 'mock' (pipe-separated props below)." />
             <property name="avatarMode" type="String" default="initials" label="Avatar mode (legacy)" description="Deprecated - kept for backward compat. Live mode auto-detects photos." />
-            <property name="contactNames" type="String" label="[Mock] Names (pipe-separated)" description="Only used when sourceMode=mock." />
-            <property name="roles" type="String" label="[Mock] Roles (pipe-separated)" description="Only used when sourceMode=mock." />
+            <property name="contactNames" type="String" label="[Mock] Names (pipe-separated)" placeholder="Kortney Cervantes|Brenda Service|Alan Reed" description="Only used when sourceMode=mock." />
+            <property name="roles" type="String" label="[Mock] Roles (pipe-separated)" placeholder="CEO|Service client|Commercial" description="Only used when sourceMode=mock." />
             <property name="channels" type="String" label="[Mock] Channels (pipe-separated)" description="Legacy prop - kept for backward compat." />
             <property name="subscribedAtRelative" type="String" label="[Mock] Ages (pipe-separated)" description="Legacy prop - kept for backward compat." />
             <property name="notificationCounts" type="String" label="[Mock] Notification counts (pipe-separated)" description="Legacy prop - kept for backward compat." />
-            <property name="userIds" type="String" label="[Mock] User IDs (pipe-separated)" description="Only used when sourceMode=mock. Enables clickable names." />
+            <property name="userIds" type="String" label="[Mock] User IDs (pipe-separated)" placeholder="005xx000001SvogAAC|005xx000001SwAyAAK|005xx000001Sx9aAAC" description="Only used when sourceMode=mock. Enables clickable names." />
             <property name="footerLabel" type="String" label="Footer text (legacy)" description="Legacy prop - kept for backward compat." />
             <property name="showFooter" type="Boolean" default="false" label="Show footer (legacy)" description="Legacy prop - kept for backward compat." />
         </targetConfig>

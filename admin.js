@@ -10,7 +10,21 @@ const fs = require('node:fs');
 const { query, hashIp, getPool } = require('./db');
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
-const SESSION_SECRET = process.env.SESSION_SECRET || process.env.IP_HASH_SALT || 'sefr-admin-default';
+// SESSION_SECRET must be set in production (or fall back to IP_HASH_SALT
+// which is itself enforced in db.js). In dev, accept a placeholder so a
+// contributor can spin up the server locally.
+function resolveSessionSecret() {
+  const v = process.env.SESSION_SECRET || process.env.IP_HASH_SALT;
+  if (v && v.length >= 16) return v;
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'SESSION_SECRET env var is required in production (>= 16 chars). ' +
+      'Generate one with: python3 -c "import secrets; print(secrets.token_urlsafe(48))"'
+    );
+  }
+  return 'dev-only-placeholder-set-SESSION_SECRET-in-prod';
+}
+const SESSION_SECRET = resolveSessionSecret();
 const SESSION_COOKIE = 'sefr_admin';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -429,7 +443,12 @@ async function loadFeatured() {
 // HMAC helper for submission file token (mirrors server.js)
 
 function submissionFileToken(id) {
-  return crypto.createHmac('sha256', process.env.SF_CLIENT_SECRET || 'sefr-default')
+  // Mirror server.js — ATTACHMENT_TOKEN_SECRET wins, SF_CLIENT_SECRET fallback.
+  // This module is loaded after server.js so the same env-var resolution applies.
+  const secret = process.env.ATTACHMENT_TOKEN_SECRET
+    || process.env.SF_CLIENT_SECRET
+    || 'dev-only-placeholder-set-ATTACHMENT_TOKEN_SECRET-in-prod';
+  return crypto.createHmac('sha256', secret)
     .update(`submission:${id}`)
     .digest('hex').slice(0, 32);
 }

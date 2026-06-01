@@ -1,11 +1,7 @@
 <template>
-    <lightning-card icon-name={cardIcon}>
-        <span slot="title" class="slds-text-heading_small">{resolvedCardTitle}
-            <span class="slds-text-color_weak slds-text-body_small slds-m-left_xx-small">{countLabel}</span>
-        </span>
-
-        <!-- Search toggle button (round icon in actions slot) -->
-        <div slot="actions">
+    <lightning-card icon-name={cardIcon} title={resolvedCardTitle}>
+        <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+            <span class="slds-text-body_small slds-text-color_weak slds-m-right_x-small">{countLabel}</span>
             <template if:true={showSearch}>
                 <lightning-button-icon
                     icon-name="utility:search"

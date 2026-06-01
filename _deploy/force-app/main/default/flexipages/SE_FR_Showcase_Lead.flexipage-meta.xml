@@ -57,6 +57,36 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:file</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideDeleteButton</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideUploadButton</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limitCount</name>
+                    <value>20</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>visibleCount</name>
+                    <value>4</value>
+                </componentInstanceProperties>
+                <componentName>seFrFilesGallery</componentName>
+                <identifier>c_seFrFilesGallery</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Lead.Id</value>
                 </componentInstanceProperties>
@@ -78,32 +108,6 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Lead.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-fbd5fbf4-29c9-415e-a883-bfbfca0ab9f4</name>
@@ -204,6 +208,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
             </componentInstance>
@@ -275,6 +283,39 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>autoRunFirstPrompt</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:bot</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxHeight</name>
+                    <value>0</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>namedCredential</name>
+                    <value>Agentforce_API</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>promptsJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>resultAccent</name>
+                    <value>blue</value>
+                </componentInstanceProperties>
+                <componentName>seFrAgentChat</componentName>
+                <identifier>c_seFrAgentChat</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-f0e5e1e9-0066-42f9-ae58-661c7f35f815</value>
                 </componentInstanceProperties>
@@ -282,21 +323,11 @@
                 <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>displayOption</name>
-                    <value>TOAST</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
-                <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Lead - Default</masterLabel>
+    <masterLabel>SE FR Showcase Lead</masterLabel>
     <parentFlexiPage>runtime_sales_lead__Lead_rec_L</parentFlexiPage>
     <sobjectType>Lead</sobjectType>
     <template>

@@ -24,8 +24,8 @@
 
             <!-- Chart -->
             <property name="chartStyle" type="String" datasource="line,area,bar,mini-donut" default="line" label="Chart style" description="'line' (curve only), 'area' (curve + filled area below), 'bar' (vertical bars), 'mini-donut' (radial gauge from currentValue / targetValue)." />
-            <property name="seriesJson" type="String" label="Series points - JSON array" description="Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style." />
-            <property name="secondarySeriesJson" type="String" label="Secondary series - JSON array (optional)" description="Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style." />
+            <property name="seriesJson" type="String" label="Series points - JSON array" placeholder="[8200,8900,9500,10200,11000,11800,12400,13100,13900,14600,15300,16000]" description="Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style." />
+            <property name="secondarySeriesJson" type="String" label="Secondary series - JSON array (optional)" placeholder="[9000,9500,10000,10500,11000,11500,12000,12500,13000,13500,14000,14500]" description="Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style." />
             <property name="secondarySeriesColor" type="String" default="#747474" label="Secondary series color (hex)" />
 
             <!-- Target line -->

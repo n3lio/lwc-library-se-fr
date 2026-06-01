@@ -29,7 +29,22 @@ async function query(text, params) {
   return p.query(text, params);
 }
 
-const SALT = process.env.IP_HASH_SALT || 'sefr-default-salt-change-me';
+// IP_HASH_SALT must be set in production. In dev, we tolerate a placeholder
+// so contributors can run the server locally without setting up secrets.
+function resolveSalt() {
+  const v = process.env.IP_HASH_SALT;
+  if (v && v.length >= 16) return v;
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'IP_HASH_SALT env var is required in production (>= 16 chars). ' +
+      'Generate one with: python3 -c "import secrets; print(secrets.token_urlsafe(48))"'
+    );
+  }
+  // Dev-only placeholder. Visitor IPs hashed with this salt are NOT safe
+  // to share — set a real IP_HASH_SALT before going to production.
+  return 'dev-only-placeholder-set-IP_HASH_SALT-in-prod';
+}
+const SALT = resolveSalt();
 function hashIp(ip) {
   if (!ip) return null;
   return crypto.createHash('sha256').update(ip + ':' + SALT).digest('hex').slice(0, 32);

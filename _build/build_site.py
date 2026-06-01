@@ -44,18 +44,19 @@ SOURCE_LOGO_LIB = ROOT / "_doc" / "_assets" / "logo-library-s.png"
 SOURCE_LOGO_SEFR = ROOT / "_doc" / "_assets" / "logo-sefr-s.png"
 SOURCE_USER_GUIDE = ROOT / "_doc" / "SE_FR_LIBRARY_USER_GUIDE_FR.md"
 
-# Component preview images (PNG / JPG / GIF / WebP) live on the CCO FR
-# Drive — user drops them in `LWC Library SE FR/Previews/` via the
-# Google Drive Desktop mount. NOTE: the Drive folder is still named
-# `LWC Library SE FR` (legacy name, not renamed during the SE FR → CCO FR
-# rebrand because the Drive folder itself is just storage, not user-facing).
+# Component preview images (PNG / JPG / GIF / WebP) live on the maintainer's
+# Google Drive — drop them in `LWC Library SE FR/Previews/` via the Drive
+# Desktop mount. NOTE: the Drive folder is still named `LWC Library SE FR`
+# (legacy name, not renamed during the SE FR → CCO FR rebrand because the
+# Drive folder itself is just storage, not user-facing).
 # The builder scans this folder, copies matched images into
 # _site/assets/previews/ and wires them to cards and detail pages.
-SOURCE_PREVIEWS = Path(
-    "/Users/lionel.braun/Library/CloudStorage/"
-    "GoogleDrive-lionel.braun@salesforce.com/Mon Drive/"
-    "LWC Library SE FR/Previews"
-)
+#
+# Override the path with the CCO_FR_PREVIEWS_DIR env var; otherwise the
+# builder falls back to a local `_previews/` folder under the repo root.
+import os
+_previews_env = os.environ.get("CCO_FR_PREVIEWS_DIR")
+SOURCE_PREVIEWS = Path(_previews_env) if _previews_env else (ROOT / "_previews")
 PREVIEW_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
 CATEGORY_ORDER = [

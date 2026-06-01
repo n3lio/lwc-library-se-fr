@@ -30,7 +30,7 @@
             <property name="kpi3Value" type="Integer" default="114200" label="KPI 3 - Value (currency)" />
 
             <property name="chartMaxScale" type="Integer" default="15000" label="Chart max scale (Y-axis top)" />
-            <property name="chartDataJson" type="String" label="Chart data JSON (override)" description="Leave empty for the language-appropriate default (12 months with EN or FR labels). Each item: { month:'Jan', y1: 8200, y2: 8900, y3: 9500 }." />
+            <property name="chartDataJson" type="String" label="Chart data JSON (override)" placeholder='[{"month":"Jan","y1":8200,"y2":8900,"y3":9500},{"month":"Fév","y1":7800,"y2":9100,"y3":9800},{"month":"Mar","y1":9200,"y2":9700,"y3":10200}]' description="Leave empty for the language-appropriate default (12 months with EN or FR labels). Each item: { month, y1, y2, y3 }." />
             <property name="currentYearColor" type="String" default="var(--slds-g-color-accent-base-50, #0176d3)" label="Current-year accent color" description="CSS color used for the current-year bars, legend chip and primary KPI tile. Defaults to the theme accent color." />
         </targetConfig>
     </targetConfigs>

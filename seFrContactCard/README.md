@@ -11,7 +11,7 @@ dataMode: hybrid
 requiresEinstein: optional
 mobileReady: true
 originalAuthor: Charly Ansel
-originalAuthorEmail: REDACTED
+originalAuthorEmail: null
 maintainedBy: Lionel Braun
 libraryIntegrationDate: 2026-05-05
 keyProps:
@@ -30,7 +30,7 @@ screenshots: []
 
 # CCO FR - Contact Card
 
-**Original author:** Charly Ansel <REDACTED>
+**Original author:** Charly Ansel
 **Maintained in library by:** Lionel Braun
 **Genericized / library-integrated:** 2026-05-05
 

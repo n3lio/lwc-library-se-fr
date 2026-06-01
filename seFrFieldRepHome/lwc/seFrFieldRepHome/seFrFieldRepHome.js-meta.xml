@@ -45,10 +45,10 @@
             <property name="kpi4Footer" type="String" label="KPI 4 - Footer (override)" />
             <property name="kpi4FooterClass" type="String" default="slds-text-color_success" label="KPI 4 - Footer CSS class" />
 
-            <property name="visitMotivesCsv" type="String" label="Visit motives (text|cssClass, CSV) (override)" description="Leave empty for language dictionary default." />
-            <property name="penetrationRowsCsv" type="String" label="Product penetration rows (label|percent) (override)" />
+            <property name="visitMotivesCsv" type="String" label="Visit motives (text|cssClass, CSV) (override)" placeholder="Présenter la nouvelle gamme|slds-text-color_success,Risque de churn élevé|slds-text-color_error,Revue trimestrielle|slds-text-color_default" description="Leave empty for language dictionary default." />
+            <property name="penetrationRowsCsv" type="String" label="Product penetration rows (label|percent) (override)" placeholder="Catégorie A|85,Catégorie B|45,Catégorie C|12" />
             <property name="penetrationTip" type="String" label="Product penetration tip (override)" />
-            <property name="eventsCsv" type="String" label="Calendar events (title|description) (override)" />
+            <property name="eventsCsv" type="String" label="Calendar events (title|description) (override)" placeholder="Promotion trimestrielle|Offre en cours ce mois-ci.,Lancement produit|Nouveau catalogue disponible.,Invitation événement partenaire|Invitez vos comptes prioritaires." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

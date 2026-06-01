@@ -17,7 +17,7 @@
             <property name="language" type="String" default="fr" label="UI language" description="'en' or 'fr'. Controls card title, toggle labels, toast messages, and default channel labels (E-mail / Téléphone / WhatsApp)." />
             <property name="cardTitle" type="String" label="Card title (override)" />
             <property name="cardIcon" type="String" default="standard:task2" label="Card icon" />
-            <property name="channelsCsv" type="String" label="Channels CSV (override)" description="One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty for the language dictionary default (maps Email / Phone / WhatsApp onto Contact standard opt-out fields)." />
+            <property name="channelsCsv" type="String" label="Channels CSV (override)" placeholder="Email|HasOptedOutOfEmail|true,Téléphone|DoNotCall|true,WhatsApp|SDO_WhatsApp_Opt_In__c|false" description="One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty for the language dictionary default (maps Email / Phone / WhatsApp onto Contact standard opt-out fields)." />
             <property name="toggleActiveLabel" type="String" label="Toggle active label (override)" />
             <property name="toggleInactiveLabel" type="String" label="Toggle inactive label (override)" />
             <property name="successMessage" type="String" label="Success toast message (override)" />

@@ -27,8 +27,40 @@ public with sharing class SE_FR_ServiceContractsController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<ContractDTO> getContracts(Id accountId) {
-        if (accountId == null) return new List<ContractDTO>();
+    public static List<ContractDTO> getContracts(Id recordId) {
+        if (recordId == null) return new List<ContractDTO>();
+
+        // Resolve the recordId to a list of ServiceContract Ids depending on the host object.
+        // Some hosts (Account, Case, Contact, Opportunity) walk to the parent Account; WorkOrder
+        // can either point directly to a ServiceContract OR carry an AccountId we walk to.
+        Id accountId = null;
+        Set<Id> directContractIds = new Set<Id>();
+        String objectType = recordId.getSObjectType().getDescribe().getName();
+
+        if (objectType == 'Account') {
+            accountId = recordId;
+        } else if (objectType == 'Case') {
+            for (Case c : [SELECT AccountId FROM Case WHERE Id = :recordId LIMIT 1]) accountId = c.AccountId;
+        } else if (objectType == 'Contact') {
+            for (Contact c : [SELECT AccountId FROM Contact WHERE Id = :recordId LIMIT 1]) accountId = c.AccountId;
+        } else if (objectType == 'Opportunity') {
+            for (Opportunity o : [SELECT AccountId FROM Opportunity WHERE Id = :recordId LIMIT 1]) accountId = o.AccountId;
+        } else if (objectType == 'WorkOrder') {
+            for (WorkOrder w : [SELECT AccountId, ServiceContractId FROM WorkOrder WHERE Id = :recordId LIMIT 1]) {
+                accountId = w.AccountId;
+                if (w.ServiceContractId != null) directContractIds.add(w.ServiceContractId);
+            }
+        } else {
+            // Future-friendly: try a generic OwnerId-less AccountId resolution if the object exposes one.
+            try {
+                List<SObject> generic = Database.query('SELECT AccountId FROM ' + String.escapeSingleQuotes(objectType) + ' WHERE Id = :recordId LIMIT 1');
+                if (!generic.isEmpty()) accountId = (Id) generic[0].get('AccountId');
+            } catch (Exception ignored) {
+                // Object has no AccountId field — return empty.
+            }
+        }
+
+        if (accountId == null && directContractIds.isEmpty()) return new List<ContractDTO>();
 
         // Detect custom fields on ServiceContract
         Map<String, Schema.SObjectField> scFields = Schema.SObjectType.ServiceContract.fields.getMap();
@@ -46,9 +78,19 @@ public with sharing class SE_FR_ServiceContractsController {
         if (hasEmail)     fields.add('Email_Prestataire__c');
         if (hasPerimetre) fields.add('Perimetre_Couvert__c');
 
+        // WHERE clause: AccountId match OR direct contract id match (for WorkOrder).
+        String whereClause;
+        if (accountId != null && !directContractIds.isEmpty()) {
+            whereClause = '(AccountId = :accountId OR Id IN :directContractIds)';
+        } else if (accountId != null) {
+            whereClause = 'AccountId = :accountId';
+        } else {
+            whereClause = 'Id IN :directContractIds';
+        }
+
         String soql = 'SELECT ' + String.join(fields, ', ')
             + ' FROM ServiceContract'
-            + ' WHERE AccountId = :accountId'
+            + ' WHERE ' + whereClause
             + ' ORDER BY ' + (hasMetier ? 'Metier__c ASC NULLS LAST, Name ASC' : 'Name ASC');
 
         List<SObject> contracts = Database.query(soql);

@@ -48,7 +48,7 @@ export default class SeFrServiceContracts extends NavigationMixin(LightningEleme
     get dict() { return DICT[this.language] || DICT.fr; }
     get resolvedCardTitle() { return this.cardTitle || this.dict.cardTitle; }
 
-    @wire(getContracts, { accountId: '$recordId' })
+    @wire(getContracts, { recordId: '$recordId' })
     wired({ data, error }) {
         this.loading = false;
         if (data) {

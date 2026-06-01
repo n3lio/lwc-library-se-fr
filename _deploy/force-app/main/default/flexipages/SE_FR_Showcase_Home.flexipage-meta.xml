@@ -4,66 +4,143 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:metrics</value>
+                    <name>callsJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>callsLimit</name>
+                    <value>5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>callsOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>callsRecordType</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>caseLimit</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>caseListView</name>
+                    <value>Recent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>caseOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>caseStatusesCsv</name>
+                    <value>New,Working,Waiting on Customer,Escalated</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>channelVolumeJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>currencyCode</name>
+                    <value>EUR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultUserName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>greetingTemplate</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>highlightColor</name>
+                    <value>#0176d3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi1Footer</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi1FooterClass</name>
+                    <value>slds-text-color_success</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi1Label</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi1Value</name>
+                    <value>18 / 25</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi2Footer</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi2FooterClass</name>
+                    <value>slds-text-color_weak</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi2Label</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi2Value</name>
+                    <value>8</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi3Footer</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi3FooterClass</name>
+                    <value>slds-text-color_weak</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi3Label</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi3Value</name>
+                    <value>38.4k</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi4Footer</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi4FooterClass</name>
+                    <value>slds-text-color_success</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi4Label</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpi4Value</name>
+                    <value>3m 15s</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>preset</name>
-                    <value>Standard</value>
-                </componentInstanceProperties>
-                <componentName>seFrKpiLauncher</componentName>
-                <identifier>c_seFrKpiLauncher</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>agentDisplayName</name>
+                    <name>localeTag</name>
+                    <value>en-US</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>agentRef</name>
+                    <name>monthlyClosedJson</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:bot</value>
+                    <name>newsJson</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>cardTitle</name>
+                    <name>orderLimit</name>
+                    <value>6</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>flowRulesCsv</name>
+                    <name>orderListView</name>
+                    <value>Recent</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>height</name>
-                    <value>560</value>
+                    <name>orderOwnerScope</name>
+                    <value>all</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>inputPlaceholder</name>
+                    <name>orderStatusesCsv</name>
+                    <value>Draft</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
+                    <name>subjectVolumeJson</name>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>mode</name>
-                    <value>mock</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>namedCredential</name>
-                    <value>Agentforce_API</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>quickFlowsCsv</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>scriptedRepliesJson</name>
-                </componentInstanceProperties>
-                <componentName>seFrPromptLauncher</componentName>
-                <identifier>c_seFrPromptLauncher</identifier>
+                <componentName>seFrTelesalesRepHome</componentName>
+                <identifier>c_seFrTelesalesRepHome</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -197,103 +274,6 @@
                 <identifier>c_seFrFieldRepHome</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>callsLimit</name>
-                    <value>5</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>callsOwnerScope</name>
-                    <value>all</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>callsRecordType</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>caseLimit</name>
-                    <value>6</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>caseListView</name>
-                    <value>Recent</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>caseOwnerScope</name>
-                    <value>all</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>caseStatusesCsv</name>
-                    <value>New,Working,Waiting on Customer,Escalated</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>currencyCode</name>
-                    <value>EUR</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>highlightColor</name>
-                    <value>#0176d3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi1FooterClass</name>
-                    <value>slds-text-color_success</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi1Value</name>
-                    <value>18 / 25</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi2FooterClass</name>
-                    <value>slds-text-color_weak</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi2Value</name>
-                    <value>8</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi3FooterClass</name>
-                    <value>slds-text-color_weak</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi3Value</name>
-                    <value>38.4k</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi4FooterClass</name>
-                    <value>slds-text-color_success</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpi4Value</name>
-                    <value>3m 15s</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>localeTag</name>
-                    <value>en-US</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderLimit</name>
-                    <value>6</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderListView</name>
-                    <value>Recent</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderOwnerScope</name>
-                    <value>all</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderStatusesCsv</name>
-                    <value>Draft</value>
-                </componentInstanceProperties>
-                <componentName>seFrTelesalesRepHome</componentName>
-                <identifier>c_seFrTelesalesRepHome</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>top</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -336,26 +316,18 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardIcon</name>
-                    <value>standard:timesheet</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideTodayMarker</name>
-                    <value>false</value>
+                    <value>standard:metrics</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>localeTag</name>
-                    <value>fr-FR</value>
+                    <name>preset</name>
+                    <value>Standard</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>scope</name>
-                    <value>home</value>
-                </componentInstanceProperties>
-                <componentName>seFrTimelinePhases</componentName>
-                <identifier>c_seFrTimelinePhases</identifier>
+                <componentName>seFrKpiLauncher</componentName>
+                <identifier>c_seFrKpiLauncher</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -456,6 +428,83 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>agentDisplayName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>agentRef</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>autoRunFirstPrompt</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:bot</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowRulesCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <value>560</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>inputPlaceholder</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>mode</name>
+                    <value>mock</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>namedCredential</name>
+                    <value>Agentforce_API</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>quickFlowsCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>scriptedRepliesJson</name>
+                </componentInstanceProperties>
+                <componentName>seFrPromptLauncher</componentName>
+                <identifier>c_seFrPromptLauncher</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:timesheet</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideTodayMarker</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>localeTag</name>
+                    <value>fr-FR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>scope</name>
+                    <value>home</value>
+                </componentInstanceProperties>
+                <componentName>seFrTimelinePhases</componentName>
+                <identifier>c_seFrTimelinePhases</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>accentColor</name>
                     <value>#0176d3</value>
                 </componentInstanceProperties>
@@ -468,6 +517,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>currentValueDisplay</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableTooltip</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>height</name>
@@ -486,6 +539,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>seriesJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showTargetLabel</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>trendDisplay</name>

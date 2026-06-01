@@ -29,7 +29,12 @@
                             </template>
                             <template if:false={r.hasPhoto}>
                                 <div class="avatar avatar-initials slds-m-right_small" style={r.avatarStyle}>
-                                    <span class="initials">{r.initials}</span>
+                                    <template if:true={r.isQueue}>
+                                        <lightning-icon icon-name="standard:groups" size="x-small" variant="inverse"></lightning-icon>
+                                    </template>
+                                    <template if:false={r.isQueue}>
+                                        <span class="initials">{r.initials}</span>
+                                    </template>
                                 </div>
                             </template>
 

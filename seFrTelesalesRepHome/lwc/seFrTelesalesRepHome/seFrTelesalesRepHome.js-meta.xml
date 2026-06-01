@@ -12,7 +12,7 @@
         <targetConfig targets="lightning__HomePage,lightning__AppPage">
             <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings including datatable column headers and the default demo JSON for calls / news / mini-charts. Explicit values on any *Json / kpi*Label property override the dictionary." />
 
-            <property name="greetingTemplate" type="String" label="Greeting template (override)" description="Use {name} placeholder. Wrap any word with **…** to render it in the highlight color. Leave empty for dictionary default." />
+            <property name="greetingTemplate" type="String" label="Greeting template (override)" placeholder="Bonjour **{name}**, bonne journée !" description="Use {name} placeholder. Wrap any word with **…** to render it in the highlight color. Leave empty for dictionary default." />
             <property name="defaultUserName" type="String" label="Fallback user name (override)" />
             <property name="highlightColor" type="String" default="#0176d3" label="Greeting highlight color (hex)" description="Applied to **bold** segments of the greeting. Defaults to the CCO FR brand blue." />
 
@@ -26,7 +26,7 @@
             <property name="orderLimit" type="Integer" default="6" label="Orders - max rows" />
             <property name="orderListView" type="String" default="Recent" label="Order list view API name" />
 
-            <property name="callsRecordType" type="String" label="Calls - Account.RecordType.DeveloperName filter" description="Empty = all record types. Example: 'SDO_Account_Simple'." />
+            <property name="callsRecordType" type="String" label="Calls - Account.RecordType.DeveloperName filter" placeholder="SDO_Account_Simple" description="Empty = all record types." />
             <property name="callsOwnerScope" type="String" default="all" label="Calls - owner scope" description="'mine' restricts to Accounts owned by the running user. 'all' (default) widens." />
             <property name="callsLimit" type="Integer" default="5" label="Calls - max rows" description="Max number of Contacts shown. Contacts from Accounts with an open Case or a Draft Order bubble up first." />
 
@@ -50,11 +50,11 @@
             <property name="kpi4Footer" type="String" label="KPI 4 - Footer (override)" />
             <property name="kpi4FooterClass" type="String" default="slds-text-color_success" label="KPI 4 - Footer CSS class" />
 
-            <property name="callsJson" type="String" label="Calls - JSON array (override)" description="Leave empty to use real Contacts (see Calls filters above). Any non-empty value overrides the live data. Fields: id, time, account, accountId, contact, contactId, phone, subject." />
-            <property name="newsJson" type="String" label="News / training - JSON array (override)" description="Fields: id, accent ('success' | 'info' | 'warning' | 'error'), title, desc, btnLabel, url." />
-            <property name="channelVolumeJson" type="String" label="Channel volume - JSON array (override)" description="Fields: label, percent." />
-            <property name="subjectVolumeJson" type="String" label="Subject volume - JSON array (override)" description="Fields: label, percent." />
-            <property name="monthlyClosedJson" type="String" label="Monthly closed - JSON array (override)" description="Fields: month, value, heightPct, highlight." />
+            <property name="callsJson" type="String" label="Calls - JSON array (override)" placeholder='[{"id":"1","time":"09:30","account":"Acme","accountId":"001...","contact":"Eliott Mercier","contactId":"003...","phone":"+33123456789","subject":"Relance commande"}]' description="Leave empty to use real Contacts (see Calls filters above). Fields: id, time, account, accountId, contact, contactId, phone, subject." />
+            <property name="newsJson" type="String" label="News / training - JSON array (override)" placeholder='[{"id":"1","accent":"success","title":"Nouveau script","desc":"Script de relance Q2 disponible.","btnLabel":"Ouvrir","url":"/lightning/n/Scripts"}]' description="Fields: id, accent ('success'|'info'|'warning'|'error'), title, desc, btnLabel, url." />
+            <property name="channelVolumeJson" type="String" label="Channel volume - JSON array (override)" placeholder='[{"label":"Téléphone","percent":62},{"label":"Email","percent":28},{"label":"Chat","percent":10}]' description="Fields: label, percent." />
+            <property name="subjectVolumeJson" type="String" label="Subject volume - JSON array (override)" placeholder='[{"label":"Facturation","percent":45},{"label":"Livraison","percent":30},{"label":"Produit","percent":25}]' description="Fields: label, percent." />
+            <property name="monthlyClosedJson" type="String" label="Monthly closed - JSON array (override)" placeholder='[{"month":"Jan","value":120,"heightPct":60,"highlight":false},{"month":"Fév","value":160,"heightPct":80,"highlight":true}]' description="Fields: month, value, heightPct, highlight." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

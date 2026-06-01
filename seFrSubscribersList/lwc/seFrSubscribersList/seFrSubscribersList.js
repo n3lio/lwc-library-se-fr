@@ -16,9 +16,31 @@ const GRADIENT_PALETTE = [
 
 const INITIAL_VISIBLE = 6;
 
+// Per-object localized titles. Used when no `cardTitle` override is set.
+// `default` covers Home / App pages (no objectApiName) and unmapped objects.
+const TITLES_BY_OBJECT = {
+    fr: {
+        Account:     'Équipe du compte',
+        Opportunity: 'Équipe opportunité',
+        Case:        'Propriétaires du dossier',
+        Contact:     'Propriétaire',
+        Lead:        'Propriétaire',
+        Order:       'Propriétaire',
+        default:     'Membres'
+    },
+    en: {
+        Account:     'Account Team',
+        Opportunity: 'Opportunity Team',
+        Case:        'Case Owners',
+        Contact:     'Owner',
+        Lead:        'Owner',
+        Order:       'Owner',
+        default:     'Team'
+    }
+};
+
 const DICT = {
     fr: {
-        cardTitle: 'Equipe du compte',
         emptyState: 'Aucun membre identifié.',
         showMore: 'Voir plus',
         showLess: 'Voir moins',
@@ -27,7 +49,6 @@ const DICT = {
         subtitleMany: 'membres'
     },
     en: {
-        cardTitle: 'Account Team',
         emptyState: 'No team members found.',
         showMore: 'Show more',
         showLess: 'Show less',
@@ -39,6 +60,7 @@ const DICT = {
 
 export default class SeFrSubscribersList extends NavigationMixin(LightningElement) {
     @api recordId;
+    @api objectApiName;   // auto-set by LWC on record pages; undefined on App/Home
     @api language = 'fr';
     @api cardTitle;
     @api cardSubtitle = '';
@@ -66,7 +88,14 @@ export default class SeFrSubscribersList extends NavigationMixin(LightningElemen
     @track liveLoading = true;
 
     get dict() { return DICT[this.language] || DICT.fr; }
-    get resolvedCardTitle() { return this.cardTitle || this.dict.cardTitle; }
+
+    get titleMap() { return TITLES_BY_OBJECT[this.language] || TITLES_BY_OBJECT.fr; }
+
+    get resolvedCardTitle() {
+        if (this.cardTitle) return this.cardTitle;
+        const map = this.titleMap;
+        return map[this.objectApiName] || map.default;
+    }
 
     get isLive() { return this.sourceMode === 'live'; }
 
@@ -126,27 +155,38 @@ export default class SeFrSubscribersList extends NavigationMixin(LightningElemen
     handleNameClick(event) {
         const userId = event.currentTarget.dataset.userid;
         if (!userId) return;
+        // Queue IDs start with '00G' — they're Group records, navigate as Group not User.
+        const isQueue = userId.startsWith('00G');
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
-            attributes: { recordId: userId, objectApiName: 'User', actionName: 'view' }
+            attributes: {
+                recordId: userId,
+                objectApiName: isQueue ? 'Group' : 'User',
+                actionName: 'view'
+            }
         });
     }
 
     // ─── Row builders ───
 
     _buildLiveRow(member, idx) {
-        const hasPhoto = !!member.photoUrl && !member.photoUrl.includes('/profilephoto/729');
+        const isQueue = !!member.userId && String(member.userId).startsWith('00G');
+        const hasPhoto = !isQueue && !!member.photoUrl && !member.photoUrl.includes('/profilephoto/729');
         return {
             key: `live-${member.userId}`,
             name: member.name,
-            role: member.role || '',
-            hasRole: !!member.role,
+            role: member.role || (isQueue ? 'Queue' : ''),
+            hasRole: !!member.role || isQueue,
             initials: member.initials || this._initials(member.name),
-            avatarStyle: hasPhoto ? '' : `background:${this._gradient(member.name)}`,
+            // Queue avatar uses a neutral slate gradient so it visually reads as "system" not human.
+            avatarStyle: hasPhoto
+                ? ''
+                : `background:${isQueue ? 'linear-gradient(135deg, #475569 0%, #64748b 100%)' : this._gradient(member.name)}`,
             hasPhoto,
             photoUrl: hasPhoto ? member.photoUrl : '',
             userId: member.userId,
-            isClickable: true
+            isClickable: true,
+            isQueue
         };
     }
 

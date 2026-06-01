@@ -947,7 +947,7 @@
       "featuredRank": 0,
       "releaseStatus": "new",
       "originalAuthor": "Charly Ansel",
-      "originalAuthorEmail": "REDACTED",
+      "originalAuthorEmail": null,
       "maintainedBy": "Lionel Braun",
       "libraryIntegrationDate": "2026-05-05",
       "status": "active",

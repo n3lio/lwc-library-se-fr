@@ -3,7 +3,7 @@
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>CCO FR - Timeline Phases</masterLabel>
-    <description>B2B / B2C - Horizontal multi-phase timeline (e.g. customer journey / project steps). Phases are JSON-configured with labels, target dates and done flags. A vertical "Today" marker shows current position.</description>
+    <description>Horizontal multi-phase timeline. Auto-adapts default phases to the host object (Case=resolution, WorkOrder=intervention, Account/Opp=sales cycle, Home=fiscal). Custom JSON override. Today marker.</description>
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
@@ -12,10 +12,10 @@
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
             <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls card title and the default phases when Phases JSON is empty." />
-            <property name="scope" type="String" datasource="record,home" default="record" label="Default phases scope" description="Seeds the default phases depending on where the component is used. 'record' = customer / deal cycle (Prospection → Découverte → Démo → Proposition → Closing). 'home' = global fiscal milestones (Q1/Q2/Q3/Q4 kick-off / ramp-up / expansion / year-end). Override with Phases JSON below to customise fully." />
+            <property name="scope" type="String" datasource="auto,record,case,service,onboarding,home" default="auto" label="Phases scope (default phases preset)" description="Picks which default phases preset is used when Phases JSON is empty. 'auto' (default) detects from the host object: Case → case resolution, WorkOrder/ServiceAppointment → field service, Account/Opportunity/Lead/Contact → sales cycle, Order/Contract → onboarding, Home/App → fiscal milestones. Override with a specific scope or paste your own JSON below." />
             <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the language default ('Parcours' / 'Journey')." />
             <property name="cardIcon" type="String" default="standard:timesheet" label="Card icon" />
-            <property name="phasesJson" type="String" label="Phases - JSON array (override)" description="Array of objects. Each item: { label, date (YYYY-MM-DD), done (boolean) }. Leave empty for the scope + language default." />
+            <property name="phasesJson" type="String" label="Phases - JSON array (override)" placeholder='[{"label":"Création","date":"2026-05-15","done":true},{"label":"Qualification","date":"2026-05-16","done":true},{"label":"Investigation","date":"2026-05-19","done":false},{"label":"Résolution","date":"2026-05-28","done":false},{"label":"Clôturé","date":"2026-06-05","done":false}]' description="JSON array — copy the placeholder shown in this field as a starting point. Each item needs: label (text), date (YYYY-MM-DD), done (true/false). Leave empty for the scope default." />
             <property name="localeTag" type="String" default="fr-FR" label="Locale tag (date formatting)" />
             <property name="hideTodayMarker" type="Boolean" default="false" label="Hide 'Today' marker" description="Off by default - the vertical dotted line showing today's position is displayed." />
         </targetConfig>

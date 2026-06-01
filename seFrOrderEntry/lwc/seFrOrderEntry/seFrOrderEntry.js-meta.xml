@@ -19,19 +19,19 @@
             <property name="currencyCode" type="String" default="EUR" label="Currency code (ISO 4217)" />
             <property name="currencySymbol" type="String" default="€" label="Currency symbol (displayed in grid)" />
             <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
-            <property name="fullScreenTitleTemplate" type="String" label="Full-screen title (override, {account} placeholder)" />
+            <property name="fullScreenTitleTemplate" type="String" label="Full-screen title (override, {account} placeholder)" placeholder="Saisie de commande - {account}" />
             <property name="noAccountMessage" type="String" label="Empty-state message (override)" />
             <!-- Kept for backwards compatibility with existing FlexiPages; the ERP checkbox was removed. -->
             <property name="erpCheckboxLabel" type="String" label="(deprecated) ERP checkbox label" description="No longer rendered - kept to avoid breaking existing page layouts." />
             <property name="salesChannelId" type="String" label="Default SalesChannel Id (optional)" description="18-char Id of a SalesChannel record. Set on Order.SalesChannelId when an order is created. Leave empty to skip." />
             <property name="productImageFieldApiName" type="String" default="Image_URL__c" label="Product image field API name" description="Field on Product2 holding an image URL. Schema-safe: skipped if absent." />
             <property name="productImageFallbackUrl" type="String" label="Product image fallback URL" description="Used when no image is found on Product2 or ProductMedia." />
-            <property name="filter1" type="String" label="Dynamic filter 1 (SOQL fragment)" />
-            <property name="filter2" type="String" label="Dynamic filter 2" />
+            <property name="filter1" type="String" label="Dynamic filter 1 (SOQL fragment)" placeholder="Family = 'Beverages'" />
+            <property name="filter2" type="String" label="Dynamic filter 2" placeholder="IsActive = true" />
             <property name="filter3" type="String" label="Dynamic filter 3" />
             <property name="filter4" type="String" label="Dynamic filter 4" />
             <property name="filter5" type="String" label="Dynamic filter 5" />
-            <property name="aiReasonsCsv" type="String" label="AI recommendation tooltips (override)" description="Optional. CSV of '&lt;rowStatus&gt;|&lt;message&gt;' entries. rowStatus: recent | old | promo | clearance | oos. Each row picks deterministically from the matching messages. Leave empty for the bilingual built-in pool that follows the language property." />
+            <property name="aiReasonsCsv" type="String" label="AI recommendation tooltips (override)" placeholder="recent|Lancement récent en hausse,old|Article en perte de vitesse,promo|Promo en cours -15%,clearance|Fin de série,oos|Risque de rupture imminent" description="Optional. CSV of '&lt;rowStatus&gt;|&lt;message&gt;' entries. rowStatus: recent | old | promo | clearance | oos. Leave empty for the bilingual built-in pool." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -23,7 +23,7 @@
             <property name="expandedByDefault" type="Boolean" default="false" label="Expand all items by default" />
             <property name="enabledActionsCsv" type="String" default="LogACall,Email,NewTask,NewEvent,NewVisit" label="Quick actions (CSV of API names)" description="Standard quick-action API names triggered from the toolbar. Adjust to match actions available on the object's page layout." />
             <property name="initialLimit" type="Integer" default="10" label="Initial items to display" description="Max total items shown (upcoming + past combined) before the 'Show more' button appears." />
-            <property name="defaultEnabledTypesCsv" type="String" label="Default enabled activity types (CSV of keys)" description="Comma-separated list of type keys enabled by default. Empty = all. Keys: Task, Event, Email, EmailMessage, ListEmail, Call, VoiceCall, MessagingSession, LiveChatTranscript, Cadence, Order, Case, Opportunity, Quote, Contract, Visit, File, FeedItem, SurveyResponse." />
+            <property name="defaultEnabledTypesCsv" type="String" label="Default enabled activity types (CSV of keys)" placeholder="Task,Event,Email,Call,Order,Case,Opportunity" description="Comma-separated list of type keys enabled by default. Empty = all. Keys: Task, Event, Email, EmailMessage, ListEmail, Call, VoiceCall, MessagingSession, LiveChatTranscript, Cadence, Order, Case, Opportunity, Quote, Contract, Visit, File, FeedItem, SurveyResponse." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

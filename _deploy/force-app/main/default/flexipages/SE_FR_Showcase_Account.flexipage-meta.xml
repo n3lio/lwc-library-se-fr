@@ -4,15 +4,45 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>alertVariant</name>
+                    <value>banner</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:announcement</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>density</name>
+                    <value>comfortable</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideDismissButton</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxAlerts</name>
+                    <value>0</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>rulesCsv</name>
-                    <value>AnnualRevenue&lt;500000|warning||Low revenue — prioritise upsell||,Industry=Banking|info||Banking account — standard playbook applies||</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>staticAlertsCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>stickyOnScroll</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>visualStyle</name>
+                    <value>inline</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
-                <identifier>seFrAlertsRibbon_top</identifier>
+                <identifier>c_seFrAlertsRibbon</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -24,6 +54,10 @@
                 <componentInstanceProperties>
                     <name>contactFieldsList</name>
                     <value>Title, Email, Phone, Department</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>disableImageReplace</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>disableRealButtons</name>
@@ -53,23 +87,6 @@
                 <identifier>c_seFrRecordHighlights</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>hideDismissButton</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rulesCsv</name>
-                </componentInstanceProperties>
-                <componentName>seFrAlertsRibbon</componentName>
-                <identifier>c_seFrAlertsRibbon2</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -77,31 +94,113 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>amountField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:kanban</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>currencyCode</name>
-                    <value>EUR</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>disableDragDrop</name>
+                    <name>autoRunFirstPrompt</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayField</name>
-                    <value>Subject</value>
+                    <name>cardIcon</name>
+                    <value>standard:bot</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>filterClause</name>
-                    <value>IsClosed = false</value>
+                    <name>language</name>
+                    <value>fr</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>groupByField</name>
-                    <value>Status</value>
+                    <name>maxHeight</name>
+                    <value>0</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>namedCredential</name>
+                    <value>Agentforce_API</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>promptsJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>resultAccent</name>
+                    <value>blue</value>
+                </componentInstanceProperties>
+                <componentName>seFrAgentChat</componentName>
+                <identifier>c_seFrAgentChat</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>alignment</name>
+                    <value>left</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>animationSpeed</name>
+                    <value>fast</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>bgStyle</name>
+                    <value>orbs</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>colorPrimary</name>
+                    <value>#0176d3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>colorSecondary</name>
+                    <value>#a445ff</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>colorTertiary</name>
+                    <value>#ff6ec7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>ctaLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>ctaUrl</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>darkText</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <value>50</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>subtitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>textSize</name>
+                    <value>s</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>📋 Détails du compte</value>
+                </componentInstanceProperties>
+                <componentName>seFrSplashBanner</componentName>
+                <identifier>c_seFrSplashBanner</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-271f7fe8-ef08-43a5-b928-2e6c7f9f239d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>badgesCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:contact</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideNewContactButton</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
@@ -109,90 +208,127 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>limitCount</name>
-                    <value>100</value>
+                    <value>24</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>localeTag</name>
-                    <value>en-US</value>
+                    <name>orderBy</name>
+                    <value>LastActivityDate DESC NULLS LAST</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>maxPerColumn</name>
-                    <value>6</value>
+                    <name>visibleCount</name>
+                    <value>4</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>objectApiName</name>
-                    <value>Case</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordScopeField</name>
-                    <value>AccountId</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>secondaryField</name>
-                    <value>Priority</value>
-                </componentInstanceProperties>
-                <componentName>seFrKanbanBoard</componentName>
-                <identifier>c_seFrKanbanBoard</identifier>
+                <componentName>seFrContactsCarousel</componentName>
+                <identifier>c_seFrContactsCarousel2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>annualTargetDefault</name>
-                    <value>55000</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>cardIcon</name>
-                    <value>standard:goals</value>
+                    <value>standard:file</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>currencyCode</name>
-                    <value>EUR</value>
+                    <name>hideDeleteButton</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>kpiPotentialValue</name>
-                    <value>80000</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpiPreviousYearValue</name>
-                    <value>45000</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpiRunRateValue</name>
-                    <value>3800</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>kpiShareValue</name>
-                    <value>56%</value>
+                    <name>hideUploadButton</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>localeTag</name>
-                    <value>en-US</value>
+                    <name>limitCount</name>
+                    <value>20</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>ytdRevenueDefault</name>
-                    <value>38000</value>
+                    <name>visibleCount</name>
+                    <value>4</value>
                 </componentInstanceProperties>
-                <componentName>seFrAccountStrategyPlan</componentName>
-                <identifier>c_seFrAccountStrategyPlan</identifier>
+                <componentName>seFrFilesGallery</componentName>
+                <identifier>c_seFrFilesGallery2</identifier>
             </componentInstance>
         </itemInstances>
+        <name>Facet-f65f21ee-3b1b-4eb3-9a2e-7bd8d99feb90</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:activations</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultDaysBack</name>
+                    <value>365</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultDaysForward</name>
+                    <value>90</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultEnabledTypesCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enabledActionsCsv</name>
+                    <value>LogACall,Email,NewTask,NewEvent,NewVisit</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>excludeRelatedContacts</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>expandedByDefault</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>initialLimit</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sortOldestFirst</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>seFrActivityFeed</componentName>
+                <identifier>c_seFrActivityFeed</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-f83353c3-c675-4315-a4c1-3c5add2f8bd0</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>brandsIcon</name>
+                    <value>standard:brand</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>cardIcon</name>
                     <value>standard:performance</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>categoriesIcon</name>
+                    <value>standard:product</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>storesIcon</name>
+                    <value>standard:store</value>
+                </componentInstanceProperties>
                 <componentName>seFrCustomerSalesSummary</componentName>
-                <identifier>c_seFrCustomerSalesSummary</identifier>
+                <identifier>c_seFrCustomerSalesSummary2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -286,6 +422,213 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>avatarMode</name>
+                    <value>initials</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:team_member</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardSubtitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>channels</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>contactNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>footerLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>notificationCounts</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>roles</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showFooter</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sourceMode</name>
+                    <value>live</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>subscribedAtRelative</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>userIds</name>
+                </componentInstanceProperties>
+                <componentName>seFrSubscribersList</componentName>
+                <identifier>c_seFrSubscribersList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3be9ad63-ccd9-4df5-a83c-cf2bf55bdb98</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:service_contract</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentName>seFrServiceContracts</componentName>
+                <identifier>c_seFrServiceContracts</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>amountField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:kanban</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>currencyCode</name>
+                    <value>EUR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>disableDragDrop</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayField</name>
+                    <value>Subject</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterClause</name>
+                    <value>IsClosed = false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>groupByField</name>
+                    <value>Status</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limitCount</name>
+                    <value>100</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>localeTag</name>
+                    <value>fr-FR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxPerColumn</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordScopeField</name>
+                    <value>AccountId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>secondaryField</name>
+                    <value>Priority</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sobjectApiName</name>
+                    <value>Case</value>
+                </componentInstanceProperties>
+                <componentName>seFrKanbanBoard</componentName>
+                <identifier>c_seFrKanbanBoard2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-85gawpqwgh4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:groups</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>colorMode</name>
+                    <value>random</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>singleColor</name>
+                    <value>#ecebea</value>
+                </componentInstanceProperties>
+                <componentName>seFrActiveSegments</componentName>
+                <identifier>c_seFrActiveSegments2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:task2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentName>seFrConsentManager</componentName>
+                <identifier>c_seFrConsentManager</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:activations</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>eventAges</name>
+                    <value>2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j.</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>eventEmails</name>
+                    <value>promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>eventLists</name>
+                    <value>Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>eventTypes</name>
+                    <value>Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showSearch</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>seFrEngagementHistory</componentName>
+                <identifier>c_seFrEngagementHistory</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e140e9e6-695a-4212-bcb9-78c62120d826</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>cardIcon</name>
                     <value>standard:orders</value>
                 </componentInstanceProperties>
@@ -329,61 +672,6 @@
                 </componentInstanceProperties>
                 <componentName>seFrCustomerOrders</componentName>
                 <identifier>c_seFrCustomerOrders</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>badgesCsv</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:contact</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideNewContactButton</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>limitCount</name>
-                    <value>24</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderBy</name>
-                    <value>LastActivityDate DESC NULLS LAST</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>visibleCount</name>
-                    <value>4</value>
-                </componentInstanceProperties>
-                <componentName>seFrContactsCarousel</componentName>
-                <identifier>c_seFrContactsCarousel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:file</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideUploadButton</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>limitCount</name>
-                    <value>20</value>
-                </componentInstanceProperties>
-                <componentName>seFrFilesGallery</componentName>
-                <identifier>c_seFrFilesGallery</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -438,6 +726,194 @@
                 <identifier>c_seFrOrderEntry</identifier>
             </componentInstance>
         </itemInstances>
+        <name>Facet-31b17a77-fe5c-405a-9112-ced99c835eff</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>annualTargetDefault</name>
+                    <value>55000</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:goals</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>currencyCode</name>
+                    <value>EUR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpiPotentialValue</name>
+                    <value>75000</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpiPreviousYearValue</name>
+                    <value>33800</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpiRunRateValue</name>
+                    <value>3200</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>kpiShareValue</name>
+                    <value>56%</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>localeTag</name>
+                    <value>en-US</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>ytdRevenueDefault</name>
+                    <value>38550</value>
+                </componentInstanceProperties>
+                <componentName>seFrAccountStrategyPlan</componentName>
+                <identifier>c_seFrAccountStrategyPlan2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-2fe11f2d-1b56-43ee-a66a-b215806082c2</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-271f7fe8-ef08-43a5-b928-2e6c7f9f239d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f65f21ee-3b1b-4eb3-9a2e-7bd8d99feb90</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.candidateRelatedLists</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f83353c3-c675-4315-a4c1-3c5add2f8bd0</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Feed</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab6</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-3be9ad63-ccd9-4df5-a83c-cf2bf55bdb98</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Sales</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-85gawpqwgh4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Service</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e140e9e6-695a-4212-bcb9-78c62120d826</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Marketing</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-31b17a77-fe5c-405a-9112-ced99c835eff</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Orders</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2fe11f2d-1b56-43ee-a66a-b215806082c2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>KAM</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e424f014-2eac-4c5e-9566-cd4cc74aaa8b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-e424f014-2eac-4c5e-9566-cd4cc74aaa8b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -474,51 +950,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:activations</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>defaultDaysBack</name>
-                    <value>365</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>defaultDaysForward</name>
-                    <value>90</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>defaultEnabledTypesCsv</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enabledActionsCsv</name>
-                    <value>LogACall,Email,NewTask,NewEvent,NewVisit</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>excludeRelatedContacts</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>expandedByDefault</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>initialLimit</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>sortOldestFirst</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>seFrActivityFeed</componentName>
-                <identifier>c_seFrActivityFeed</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>displayMode</name>
                     <value>Global</value>
                 </componentInstanceProperties>
@@ -533,47 +964,37 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>accentColor</name>
-                    <value>#0176d3</value>
+                    <name>accountImageFieldApiName</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:metrics</value>
+                    <name>contactImageFieldApiName</name>
+                    <value>SDO_Cust360_Contact_Picture_URL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>cardTitle</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>currentValueDisplay</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>height</name>
-                    <value>60</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideCardTitle</name>
+                    <name>disableImageReplace</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fieldsCsv</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>imageFieldApiName</name>
+                    <value>PhotoURL</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>imageMode</name>
+                    <value>field</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>metricLabel</name>
+                    <name>target</name>
+                    <value>auto</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>seriesJson</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>trendDisplay</name>
-                    <value>+14,2%</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>trendPositive</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>seFrMetricTile</componentName>
-                <identifier>c_seFrMetricTile</identifier>
+                <componentName>seFrRelatedRecordCard</componentName>
+                <identifier>c_seFrRelatedRecordCard</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -597,29 +1018,74 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>accentColor</name>
+                    <value>#0176d3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>cardIcon</name>
-                    <value>standard:groups</value>
+                    <value>standard:metrics</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>chartStyle</name>
+                    <value>line</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>currencyCode</name>
+                    <value>EUR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>donutTrack</name>
+                    <value>#E5E5E5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableTooltip</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>height</name>
+                    <value>70</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideCardTitle</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
-                <componentName>seFrActiveSegments</componentName>
-                <identifier>c_seFrActiveSegments</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardIcon</name>
-                    <value>standard:task2</value>
+                    <name>scalingMode</name>
+                    <value>auto</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
+                    <name>secondarySeriesColor</name>
+                    <value>#747474</value>
                 </componentInstanceProperties>
-                <componentName>seFrConsentManager</componentName>
-                <identifier>c_seFrConsentManager2</identifier>
+                <componentInstanceProperties>
+                    <name>secondarySeriesJson</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showTargetLabel</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>targetLineColor</name>
+                    <value>#FE9339</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>trendDisplay</name>
+                    <value>+14,2%</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>trendPositive</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>width</name>
+                    <value>0</value>
+                </componentInstanceProperties>
+                <componentName>seFrMetricSparkline</componentName>
+                <identifier>c_seFrMetricSparkline</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

@@ -10,7 +10,7 @@ chips:
 dataMode: mock
 mobileReady: true
 originalAuthor: Thomas Plaindoux
-originalAuthorEmail: REDACTED
+originalAuthorEmail: null
 maintainedBy: Lionel Braun
 libraryIntegrationDate: 2026-05-28
 keyProps:

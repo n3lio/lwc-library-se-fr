@@ -14,9 +14,11 @@
                 <object>Contact</object>
                 <object>Case</object>
                 <object>Order</object>
+                <object>Opportunity</object>
+                <object>Lead</object>
             </objects>
-            
-            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls card title, subtitle, empty state, Dismiss button, relevance badge prefix, toast messages and the per-object default recommendations (Case, Account, Order, Contact)." />
+
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls card title, subtitle, empty state, Dismiss button, relevance badge prefix, toast messages and per-object default recommendations (Case, Account, Order, Contact, Opportunity, Lead)." />
             <property name="cardTitle" type="String" label="Card title (override)" />
             <property name="displayMode" type="String" datasource="Global,Targeted" default="Global" label="Display mode" description="Global = show on every record. Targeted = only on the record IDs specified below."/>
 

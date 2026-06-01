@@ -21,8 +21,8 @@
                 <object>Contract</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
-            <property name="rulesCsv" type="String" label="Rule-driven alerts (one per line)" description="Format: '&lt;field&gt;&lt;op&gt;&lt;value&gt;|&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'. Operators: = | != | &gt; | &lt; | &gt;= | &lt;= | contains | startsWith | endsWith | isBlank | isNotBlank. Severity: info | success | warning | error. Icon and CTA fields are optional." />
-            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" description="Always shown. Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
+            <property name="rulesCsv" type="String" label="Rule-driven alerts (one per line)" placeholder="AnnualRevenue&lt;500000|warning|utility:warning|Revenue under target|Open plan|/lightning/r/Account/{Id}/view" description="Format: '&lt;field&gt;&lt;op&gt;&lt;value&gt;|&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'. Ops: = != &gt; &lt; &gt;= &lt;= contains startsWith endsWith isBlank isNotBlank. Severity: info|success|warning|error. Icon and CTA optional." />
+            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" placeholder="info|utility:info|Maintenance prévue dimanche 22h|Plus d'infos|https://status.acme.fr" description="Always shown. Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
             <property name="visualStyle" type="String" datasource="inline,card" default="inline" label="Visual style" description="'inline' (default) renders alerts directly above the page content. 'card' wraps them in a lightning-card chrome with a title and a count pill." />
             <property name="alertVariant" type="String" datasource="banner,solid,minimal" default="banner" label="Alert variant" description="'banner' (soft pastel + accent border-left), 'solid' (saturated background), 'minimal' (white background, accent bar only)." />
             <property name="density" type="String" datasource="comfortable,compact" default="comfortable" label="Layout density" description="'comfortable' allows wrap. 'compact' truncates the message with ellipsis." />
@@ -34,7 +34,7 @@
         </targetConfig>
         <targetConfig targets="lightning__HomePage,lightning__AppPage">
             <property name="language" type="String" default="fr" label="UI language" />
-            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" description="Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
+            <property name="staticAlertsCsv" type="String" label="Static alerts (one per line)" placeholder="info|utility:info|Maintenance prévue dimanche 22h|Plus d'infos|https://status.acme.fr" description="Format: '&lt;severity&gt;|&lt;icon&gt;|&lt;message&gt;|&lt;ctaLabel&gt;|&lt;ctaUrl&gt;'." />
             <property name="visualStyle" type="String" datasource="inline,card" default="inline" label="Visual style" />
             <property name="alertVariant" type="String" datasource="banner,solid,minimal" default="banner" label="Alert variant" />
             <property name="density" type="String" datasource="comfortable,compact" default="comfortable" label="Layout density" />
