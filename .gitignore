@@ -9,6 +9,7 @@ Icon
 _staging/
 _agent/_drafts/
 _agent/_tmp/
+.agents/
 FINAL_CLEANUP.md
 
 # Node / web app (future S1+)
