@@ -339,7 +339,7 @@ async function loadIntents() {
     '<tr><td>' + dt(row.ts) + '</td>' +
     '<td>' + esc(row.email || '—') + '</td>' +
     '<td style="max-width:380px"><div style="white-space:pre-wrap;font-size:12.5px">' + esc(row.reason || '—') + '</div></td>' +
-    '<td>' + esc(row.oppOrCustomer || '<span class="muted">—</span>') + '</td>' +
+    '<td>' + (row.oppOrCustomer ? esc(row.oppOrCustomer) : '<span class="muted">—</span>') + '</td>' +
     '<td><code>' + esc(row.sourcePage || '—') + '</code></td></tr>'
   ).join('');
 }
