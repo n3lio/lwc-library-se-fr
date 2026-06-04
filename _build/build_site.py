@@ -2906,6 +2906,24 @@ JS = r"""// CCO FR Library — client UX
       if (ic) ic.textContent = isLiked ? '♥' : '♡';
     });
   }
+  // Hydrate author stats on contributors page (sum across their components)
+  function applyAuthorCounts() {
+    document.querySelectorAll('[data-author-stats]').forEach(el => {
+      const compIdsStr = el.dataset.authorComponents;
+      if (!compIdsStr) return;
+      const compIds = compIdsStr.split(',').filter(Boolean);
+      let totalDl = 0, totalLk = 0;
+      compIds.forEach(id => {
+        const c = liveCounts[id] || {};
+        totalDl += c.dl || 0;
+        totalLk += c.lk || 0;
+      });
+      const dlEl = el.querySelector('.contrib-stat-dl .num');
+      const lkEl = el.querySelector('.contrib-stat-lk .num');
+      if (dlEl) dlEl.textContent = fmtCount(totalDl);
+      if (lkEl) lkEl.textContent = fmtCount(totalLk);
+    });
+  }
   // Hydrate counts from the server on page load
   fetch('/api/track/counts').then(r => r.ok ? r.json() : null).then(data => {
     if (!data) return;
@@ -2918,6 +2936,7 @@ JS = r"""// CCO FR Library — client UX
       liveCounts[k].dl = recs[id] || 0;
     });
     applyAllCounts();
+    applyAuthorCounts();
   }).catch(() => {});
   // Optimistic download bump (called from downloadComponents + deployComponents)
   function bumpDownload(id) {
@@ -4411,6 +4430,8 @@ def render_contributors(components: list[dict], n_components: int, search_index:
             for c in sorted(lionel, key=lambda x: x["apiName"])[:6]
         )
         tdl, tlk = _author_totals(lionel)
+        # Build comma-separated list of component apiNames for client-side hydration
+        comp_ids = ",".join(c["apiName"] for c in lionel)
         cards_html += f"""
     <article class="contributor">
       <div class="contrib-head">
@@ -4420,10 +4441,10 @@ def render_contributors(components: list[dict], n_components: int, search_index:
           <div class="contrib-role" {pair_attr('Mainteneur · Solution Engineer France', 'Maintainer · Solution Engineer France')}>Mainteneur · Solution Engineer France</div>
         </div>
       </div>
-      <div class="contrib-stats">
+      <div class="contrib-stats" data-author-stats data-author-components="{comp_ids}">
         <div class="contrib-stat"><span class="icon">🧩</span><span class="num">{len(lionel)}</span><div class="label" {pair_attr('Composants', 'Components')}>Composants</div></div>
-        <div class="contrib-stat"><span class="icon">⬇</span><span class="num">{fmt_count(tdl)}</span><div class="label" {pair_attr('Téléchargements', 'Downloads')}>Téléchargements</div></div>
-        <div class="contrib-stat"><span class="icon">♥</span><span class="num">{fmt_count(tlk)}</span><div class="label" {pair_attr('Likes', 'Likes')}>Likes</div></div>
+        <div class="contrib-stat contrib-stat-dl"><span class="icon">⬇</span><span class="num">{fmt_count(tdl)}</span><div class="label" {pair_attr('Téléchargements', 'Downloads')}>Téléchargements</div></div>
+        <div class="contrib-stat contrib-stat-lk"><span class="icon">♥</span><span class="num">{fmt_count(tlk)}</span><div class="label" {pair_attr('Likes', 'Likes')}>Likes</div></div>
       </div>
       <div class="contrib-list">
         <h4 {pair_attr('Sélection', 'Featured authored')}>Sélection</h4>
@@ -4445,10 +4466,12 @@ def render_contributors(components: list[dict], n_components: int, search_index:
         comp_label_fr = 'Composant' if len(comps) == 1 else 'Composants'
         comp_label_en = 'Component' if len(comps) == 1 else 'Components'
         tdl, tlk = _author_totals(comps)
+        # Build comma-separated list of component apiNames for client-side hydration
+        comp_ids = ",".join(c["apiName"] for c in comps)
         meta_rows = (
             f'<div class="contrib-stat"><span class="icon">🧩</span><span class="num">{len(comps)}</span><div class="label" {pair_attr(comp_label_fr, comp_label_en)}>{comp_label_fr}</div></div>'
-            f'<div class="contrib-stat"><span class="icon">⬇</span><span class="num">{fmt_count(tdl)}</span><div class="label" {pair_attr("Téléchargements", "Downloads")}>Téléchargements</div></div>'
-            f'<div class="contrib-stat"><span class="icon">♥</span><span class="num">{fmt_count(tlk)}</span><div class="label" {pair_attr("Likes", "Likes")}>Likes</div></div>'
+            f'<div class="contrib-stat contrib-stat-dl"><span class="icon">⬇</span><span class="num">{fmt_count(tdl)}</span><div class="label" {pair_attr("Téléchargements", "Downloads")}>Téléchargements</div></div>'
+            f'<div class="contrib-stat contrib-stat-lk"><span class="icon">♥</span><span class="num">{fmt_count(tlk)}</span><div class="label" {pair_attr("Likes", "Likes")}>Likes</div></div>'
         )
         is_se = 'salesforce.com' in (email or '')
         role_fr = 'Contributeur · Solution Engineer France' if is_se else 'Contributeur externe'
@@ -4462,7 +4485,7 @@ def render_contributors(components: list[dict], n_components: int, search_index:
           <div class="contrib-role" {pair_attr(role_fr, role_en)}>{role_fr}</div>
         </div>
       </div>
-      <div class="contrib-stats">{meta_rows}</div>
+      <div class="contrib-stats" data-author-stats data-author-components="{comp_ids}">{meta_rows}</div>
       <div class="contrib-list">
         <h4 {pair_attr('Auteur original', 'Original author')}>Auteur original</h4>
         {items}

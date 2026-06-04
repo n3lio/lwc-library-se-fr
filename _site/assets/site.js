@@ -1750,6 +1750,24 @@
       if (ic) ic.textContent = isLiked ? '♥' : '♡';
     });
   }
+  // Hydrate author stats on contributors page (sum across their components)
+  function applyAuthorCounts() {
+    document.querySelectorAll('[data-author-stats]').forEach(el => {
+      const compIdsStr = el.dataset.authorComponents;
+      if (!compIdsStr) return;
+      const compIds = compIdsStr.split(',').filter(Boolean);
+      let totalDl = 0, totalLk = 0;
+      compIds.forEach(id => {
+        const c = liveCounts[id] || {};
+        totalDl += c.dl || 0;
+        totalLk += c.lk || 0;
+      });
+      const dlEl = el.querySelector('.contrib-stat-dl .num');
+      const lkEl = el.querySelector('.contrib-stat-lk .num');
+      if (dlEl) dlEl.textContent = fmtCount(totalDl);
+      if (lkEl) lkEl.textContent = fmtCount(totalLk);
+    });
+  }
   // Hydrate counts from the server on page load
   fetch('/api/track/counts').then(r => r.ok ? r.json() : null).then(data => {
     if (!data) return;
@@ -1762,6 +1780,7 @@
       liveCounts[k].dl = recs[id] || 0;
     });
     applyAllCounts();
+    applyAuthorCounts();
   }).catch(() => {});
   // Optimistic download bump (called from downloadComponents + deployComponents)
   function bumpDownload(id) {
