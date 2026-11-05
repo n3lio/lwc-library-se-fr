@@ -117,21 +117,32 @@ export default class SeFrVisitRestockOrder extends NavigationMixin(LightningElem
     @track lastOrderNumber;
     @track skippedCount = 0;
 
-    _storageHandler;
+    _pollTimer;
+    _lastRaw;
 
     // ---------------------- lifecycle ----------------------
 
     connectedCallback() {
-        this._storageHandler = (e) => {
-            if (!e || !e.key) return;
-            if (e.key === this._storageKey) this._reloadFromLocalStorage();
-        };
-        window.addEventListener('storage', this._storageHandler);
         this._loadAll();
+        // Lightning Web Security forbids window.addEventListener('storage') (and that event only
+        // fires across tabs anyway). The product check lives on the same page, so poll the key.
+        this._pollTimer = setInterval(() => this._checkStorage(), 1500);
     }
 
     disconnectedCallback() {
-        if (this._storageHandler) window.removeEventListener('storage', this._storageHandler);
+        if (this._pollTimer) clearInterval(this._pollTimer);
+        this._pollTimer = null;
+    }
+
+    _checkStorage() {
+        const key = this._storageKey;
+        if (!key) return;
+        let raw = null;
+        try { raw = window.localStorage.getItem(key); } catch (e) { return; }
+        if (raw !== this._lastRaw) {
+            this._lastRaw = raw;
+            this._reloadFromLocalStorage();
+        }
     }
 
     // ---------------------- getters ----------------------

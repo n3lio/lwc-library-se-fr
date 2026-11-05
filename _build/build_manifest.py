@@ -372,6 +372,10 @@ def main() -> int:
 
     folders = sorted(p for p in ROOT.iterdir() if p.is_dir() and p.name.startswith("seFr"))
     for folder in folders:
+        # Schema/data-only bundles (e.g. seFrRetailExecSchema: objects + permset, no LWC) are
+        # not catalogue components — skip them silently instead of reporting a missing meta.xml.
+        if not (folder / "lwc").is_dir():
+            continue
         rec = build_component(folder, deps, errors)
         if rec is None:
             skipped.append(folder.name)
