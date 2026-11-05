@@ -13,7 +13,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>recordSource</name>
-                    <value>current</value>
+                    <value>parent</value>
                 </componentInstanceProperties>
                 <componentName>seFrRecordHighlights</componentName>
                 <identifier>c_seFrRecordHighlights_header</identifier>
@@ -44,8 +44,12 @@
                     <value>Client commande</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>gauge1Direction</name>
+                    <value>higher-better</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>gauge1FieldApiName</name>
-                    <value>LastActivityDate</value>
+                    <value>CCO_Activity_Recency__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge1Icon</name>
@@ -53,7 +57,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge1Label</name>
-                    <value>Last activity</value>
+                    <value>Activité récente</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>

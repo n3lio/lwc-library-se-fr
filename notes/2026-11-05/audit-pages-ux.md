@@ -88,3 +88,9 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - RelatedRecordCard : valeurs numériques brutes (ex. 85000000000) formatées en FR (85 Md €).
 - Case : jauges branchées sur les scores du contact (Activité récente / Engagement).
 - À traiter : en-tête de la page Case vide (Record Highlights sans titre ni champs), Lead, Order, Visit, Field Sales/Retail, Accueil, icônes d'onglets Marketing/Territoire.
+
+## 7e passe
+- Case : en-tête (recordSource=parent) et jauges Activité récente / Engagement corrigés.
+- Lead : contacts miroir créés (carte contact OK), bandeau Hot=warning / Non contacté=info.
+- Order : flexipage `CCO_FR_Showcase_Order` mise à jour (parent + jauge « Activité récente ») et déployée, mais le rendu affiche encore « Last activity 0% » et un en-tête vide. Cause probable : assignation de page au niveau org/profil qui prend le dessus sur l'override de l'app. À vérifier dans Setup > Lightning App Builder > Activation. Non bloquant.
+- Restant : Visit (dates passées, placeholders facings), Field Sales home (cartes vides), Accueil (tuile sans icône), Territoire (filtres tronqués), Contact (titres tronqués), motifs d'onglets Marketing/Territoire.
