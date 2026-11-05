@@ -1800,7 +1800,7 @@
           "name": "eventTypes",
           "type": "String",
           "label": "Event types (pipe-separated)",
-          "default": "Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique",
+          "default": "Email ouvert|SMS envoyé|Formulaire|Email cliqué|Page vue|Email rejeté|Email envoyé|SMS cliqué",
           "description": "FR: Email ouvert, Email envoye, Email clique, Email rejete, SMS envoye, SMS clique, Formulaire, Page vue. EN: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View."
         },
         {
@@ -6707,32 +6707,11 @@
     }
   ],
   "byCategory": {
-    "Service": [
-      "seFrAlertsRibbon",
-      "seFrKanbanBoard",
-      "seFrOrderSummary",
-      "seFrServiceContracts",
-      "seFrSubscribersList"
-    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrConsentManager",
       "seFrCustomerSalesSummary",
       "seFrEngagementHistory"
-    ],
-    "Productivity": [
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations",
-      "seFrTimelinePhases"
-    ],
-    "Dashboards & KPIs": [
-      "seFrFieldRepHome",
-      "seFrKpiLauncher",
-      "seFrMetricTile",
-      "seFrRevenueDashboard",
-      "seFrTelesalesRepHome"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -6745,6 +6724,20 @@
       "seFrVisitQuickOrder",
       "seFrVisitRestockOrder",
       "seFrVisitShelfCompliance"
+    ],
+    "Service": [
+      "seFrAlertsRibbon",
+      "seFrKanbanBoard",
+      "seFrOrderSummary",
+      "seFrServiceContracts",
+      "seFrSubscribersList"
+    ],
+    "Dashboards & KPIs": [
+      "seFrFieldRepHome",
+      "seFrKpiLauncher",
+      "seFrMetricTile",
+      "seFrRevenueDashboard",
+      "seFrTelesalesRepHome"
     ],
     "Transverse": [
       "seFrActivityFeed",
@@ -6768,17 +6761,29 @@
       "seFrVisitShelfSpace",
       "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
-    ]
-  },
-  "byPersona": {
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
+    ],
+    "Productivity": [
       "seFrMyEvents",
       "seFrMyTasks",
       "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
+      "seFrSmartRecommendations",
+      "seFrTimelinePhases"
+    ]
+  },
+  "byPersona": {
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrActivityFeed",
+      "seFrBusinessCardScanner",
+      "seFrConsentManager",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrMetricTile",
+      "seFrRelatedRecordCard",
+      "seFrSmartRecommendations"
     ],
     "Service": [
       "seFrActivityFeed",
@@ -6796,23 +6801,50 @@
       "seFrSmartRecommendations",
       "seFrSubscribersList"
     ],
-    "Marketing": [
-      "seFrActiveSegments",
+    "Sales": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
       "seFrActivityFeed",
+      "seFrAlertsRibbon",
       "seFrBusinessCardScanner",
-      "seFrConsentManager",
       "seFrContactCard",
       "seFrContactsCarousel",
-      "seFrCustomerSalesSummary",
+      "seFrCustomerOrders",
       "seFrEngagementHistory",
       "seFrFilesGallery",
+      "seFrLeadFirstTouch",
       "seFrMetricTile",
+      "seFrPipelineSnapshot",
+      "seFrRecordActions",
       "seFrRelatedRecordCard",
-      "seFrSmartRecommendations"
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitKanban",
+      "seFrVisitQuickOrder",
+      "seFrVisitRestockOrder"
     ],
     "Retail": [
       "seFrBusinessCardScanner",
       "seFrCustomerSalesSummary"
+    ],
+    "Telesales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrOrderEntry",
+      "seFrRecordActions",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTelesalesRepHome"
     ],
     "FieldSales": [
       "seFrActivityFeed",
@@ -6842,51 +6874,20 @@
       "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
     ],
-    "Sales": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrBusinessCardScanner",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrPipelineSnapshot",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases",
-      "seFrVisitKanban",
-      "seFrVisitQuickOrder",
-      "seFrVisitRestockOrder"
-    ],
-    "Telesales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrOrderEntry",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTelesalesRepHome"
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
     ]
   },
   "bySurface": {
-    "AppPage": [
+    "HomePage": [
       "seFrActiveSegments",
+      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrBusinessCardScanner",
       "seFrEngagementHistory",
@@ -6904,7 +6905,6 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases",
-      "seFrVisitQuickOrder",
       "seFrVisitSummaryAI"
     ],
     "RecordPage": [
@@ -6949,9 +6949,8 @@
       "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
     ],
-    "HomePage": [
+    "AppPage": [
       "seFrActiveSegments",
-      "seFrAgentforceHeader",
       "seFrAlertsRibbon",
       "seFrBusinessCardScanner",
       "seFrEngagementHistory",
@@ -6969,6 +6968,7 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases",
+      "seFrVisitQuickOrder",
       "seFrVisitSummaryAI"
     ]
   }
