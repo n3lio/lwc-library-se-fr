@@ -84,6 +84,19 @@ public with sharing class SE_FR_ProductCheckController {
             }
         }
 
+        // Product2.Image_URL__c (static resource / external URL) wins over DisplayUrl when present.
+        if (!out.isEmpty() && Schema.SObjectType.Product2.fields.getMap().containsKey('image_url__c')) {
+            Set<Id> imgIds = new Set<Id>();
+            for (ProductDto d : out) imgIds.add(d.productId);
+            Map<Id, Product2> withImg = new Map<Id, Product2>((List<Product2>) Database.query(
+                'SELECT Id, Image_URL__c FROM Product2 WHERE Id IN :imgIds'));
+            for (ProductDto d : out) {
+                Product2 p2 = withImg.get(d.productId);
+                Object u = p2 == null ? null : p2.get('Image_URL__c');
+                if (u != null && String.valueOf(u) != '') d.imageUrl = String.valueOf(u);
+            }
+        }
+
         // Overlay Files-based image URLs for any product that has an attached ContentDocument.
         // No CSP needed: served from the Salesforce domain via Shepherd.
         if (!out.isEmpty()) {

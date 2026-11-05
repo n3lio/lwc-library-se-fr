@@ -47,3 +47,15 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - KPI Marketing : valeurs "12" et "34" coupées en 2 lignes (chiffre par chiffre), "OPPORTU NITÉS" coupé, "Portefeuill e" coupé → même défaut de wrap que Télévente (tuiles trop étroites : réduire la police / `word-break: keep-all` / grille auto-fit).
 - Timeline d'engagement : OK, lisible. Ruban INFO correct ici.
 - Défaut transverse prioritaire : `seFrMetricTile`/KPI en colonne étroite → wrap des chiffres et libellés.
+
+## Corrections appliquées (2e passe)
+- seFrKpiLauncher : chiffres/libellés sans coupure (nowrap + keep-all, police du libellé adaptative). Vérifié sur Marketing : 12 / 34 / Portefeuille OK.
+- seFrMyEvents : parsing de date robuste (offset Apex +0000), re-fetch si le cache wire renvoie vide, log d'erreur. Vérifié : "Tournée du jour" affiche les 4 visites.
+- SE_FR_ProductCheckController : lit Product2.Image_URL__c (Relevé produits affichait des initiales B/C/D/E). Vérifié : 12 images.
+
+## Fiche Visite (V-0005)
+- Check-In : OK, plan de visite lisible. "Début planifié 28/10/2026 19:04" = date passée pour une visite "Planifiée" (seed historique).
+- Relevé Linéaire : OK ; PDL actuelle "—", champs de saisie vides sans placeholder.
+- Relevé Produits : OK après fix images.
+- Compte-Rendu : textes anglais mélangés dans la carte Agentforce ("Summarize text", "Refine text", "Text to summarize") ; icône téléphone orange pour la "Note vocale" (micro attendu) ; bouton "Enregistrer sur l'enregistrement" au libellé confus → "Enregistrer dans la visite".
+- Onglet Commande (menu Plus) : non audité (le clic ouvre le menu mais ne change pas d'onglet à la 1re tentative).

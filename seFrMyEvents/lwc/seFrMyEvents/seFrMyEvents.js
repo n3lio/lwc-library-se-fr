@@ -52,6 +52,15 @@ function parseTypeColors(csv) {
     return map;
 }
 
+// Robust ISO parsing: Apex serialises Datetime as 2026-11-05T08:00:00.000+0000 (no colon in the
+// offset), which some engines reject. Normalise to a strict ISO string first.
+function toDate(v) {
+    if (v instanceof Date) return v;
+    if (typeof v === 'number') return new Date(v);
+    const str = String(v || '').replace(/([+-]\d{2})(\d{2})$/, '$1:$2');
+    return new Date(str);
+}
+
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
 function formatTime(d, localeTag) {
@@ -152,7 +161,17 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
     @wire(getMyEvents, { daysAhead: '$daysAhead', maxRows: '$maxEvents' })
     wiredEvents(result) {
         this.wiredResult = result;
-        if (result.data) this.rawEvents = result.data;
+        if (result.data) {
+            this.rawEvents = result.data;
+            // A cacheable wire can serve a stale empty payload from the client cache: re-fetch once.
+            if (!result.data.length && !this._retried) {
+                this._retried = true;
+                refreshApex(result);
+            }
+        } else if (result.error) {
+            // eslint-disable-next-line no-console
+            console.error('seFrMyEvents: getMyEvents failed', result.error);
+        }
     }
 
     get typeColors() { return parseTypeColors(this.typeColorsCsv); }
@@ -186,7 +205,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
         return (this.rawEvents || [])
             .filter(e => !e.IsAllDayEvent)
             .filter(e => this.isTypeAllowed(e.Type))
-            .map(e => ({ raw: e, s: new Date(e.StartDateTime), en: new Date(e.EndDateTime) }))
+            .map(e => ({ raw: e, s: toDate(e.StartDateTime), en: toDate(e.EndDateTime) }))
             // Clip the end-of-day edge case: an event ending at 00:00 next day should count as ending at 24:00 today.
             .map(o => {
                 // If endDateTime is exactly at or past midnight of the next day, stop it at 23:59:59 of today.
@@ -298,7 +317,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
         const { start, end } = this.todayBounds;
         return (this.rawEvents || [])
             .filter(e => e.IsAllDayEvent)
-            .filter(e => new Date(e.StartDateTime) < end && new Date(e.EndDateTime) >= start)
+            .filter(e => toDate(e.StartDateTime) < end && toDate(e.EndDateTime) >= start)
             .map(e => this.shapeAllDay(e));
     }
 
@@ -368,7 +387,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
         return (this.rawEvents || [])
             .filter(e => !e.IsAllDayEvent)
             .filter(e => this.isTypeAllowed(e.Type))
-            .map(e => ({ raw: e, s: new Date(e.StartDateTime) }))
+            .map(e => ({ raw: e, s: toDate(e.StartDateTime) }))
             .filter(o => o.s >= end)
             .slice(0, UPCOMING_LIMIT)
             .map(o => this.shapeUpcoming(o, now));
@@ -386,7 +405,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
             const allow = this.allowedTypes;
             const key = String(e.Type || '').toLowerCase();
             if (allow && !allow.has(key)) continue;
-            const s = new Date(e.StartDateTime);
+            const s = toDate(e.StartDateTime);
             if (!(s < end && s >= start)) continue;
             if (!seen.has(key)) seen.set(key, e.Type || this.labels.noType || 'Other');
         }
@@ -446,7 +465,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
 
     shapeUpcoming(o, now) {
         const { raw, s } = o;
-        const end = new Date(raw.EndDateTime);
+        const end = toDate(raw.EndDateTime);
         const isTomorrow = (() => {
             const t = new Date(); t.setHours(0, 0, 0, 0); t.setDate(t.getDate() + 1);
             return sameDay(s, t);
