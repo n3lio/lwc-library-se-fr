@@ -68,3 +68,10 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - **seFrVoiceNoteTaker** : bouton « Enregistrer dans la visite », icône utility:unmuted.
 - **Visite > Commande** : audité, OK (état vide « Aucune rupture détectée », cadencier avec images/stock).
 - Reste : 13 comptes sans géocodage (carte limitée à 3 pins), défauts listés dans les sections précédentes (Télévente, Contact, Account stale logic, Lead contact card, Case historique).
+
+## 4e passe
+- Géocodage des 12 comptes US/UK/SG restants (Billing lat/long) → carte : 15 comptes, 2,6 M€ pipeline, 19 opps, 9 cases.
+- Fiche Lead : `SE_FR_ContactCardController.resolveContactId` retombe sur `ConvertedContactId` puis sur un Contact de même email (le champ `Contact__c` n'existe pas sur Lead).
+- Tabs : motifs resynchronisés depuis l'org (les libellés diffèrent du repo, seul le numéro compte). Micro retiré de Territoire (maintenant Custom57) ; Marketing = Custom66 (dés — à remplacer par une icône plus pertinente).
+- seFrKpiLauncher : label sur une ligne avec ellipsis (plus de coupure au milieu d'un mot).
+- Reste : Télévente, Contact (titres tronqués, préférences vides), logique « stale » Account, Case « Historique 0% », Order « Type de commande ».

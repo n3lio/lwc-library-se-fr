@@ -2,5 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPage>CCO_FR_Showcase_Telesales_Home</flexiPage>
     <label>Télévente</label>
-    <motif>Custom21: Phone</motif>
+    <motif>Custom21: Computer</motif>
 </CustomTab>

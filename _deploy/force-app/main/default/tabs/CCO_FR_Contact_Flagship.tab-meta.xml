@@ -2,5 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPage>CCO_FR_Contact_Flagship_Page</flexiPage>
     <label>A. Dupont</label>
-    <motif>Custom40: Caduceus</motif>
+    <motif>Custom40: Credit card</motif>
 </CustomTab>

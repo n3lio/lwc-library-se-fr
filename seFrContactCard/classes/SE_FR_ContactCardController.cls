@@ -41,7 +41,16 @@ public with sharing class SE_FR_ContactCardController {
                 return queryLookup('Contact__c', objectApiName, recordId);
             }
             if (objectApiName == 'Lead') {
-                return queryLookup('Contact__c', 'Lead', recordId);
+                Id lc = queryLookup('Contact__c', 'Lead', recordId);
+                if (lc != null) return lc;
+                lc = queryLookup('ConvertedContactId', 'Lead', recordId);
+                if (lc != null) return lc;
+                List<Lead> ld = [SELECT Email FROM Lead WHERE Id = :recordId LIMIT 1];
+                if (!ld.isEmpty() && String.isNotBlank(ld[0].Email)) {
+                    List<Contact> byMail = [SELECT Id FROM Contact WHERE Email = :ld[0].Email ORDER BY CreatedDate ASC LIMIT 1];
+                    if (!byMail.isEmpty()) return byMail[0].Id;
+                }
+                return null;
             }
             if (objectApiName.endsWith('__c')) {
                 return queryLookup('Contact__c', objectApiName, recordId);

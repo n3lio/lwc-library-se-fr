@@ -29,7 +29,11 @@
 .tile-label {
     font-size: clamp(0.5rem, 1.6vw, 0.65rem);
     font-weight: 800;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-transform: uppercase;
     color: var(--tile-color);
     line-height: 1.2;

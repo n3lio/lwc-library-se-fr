@@ -2,5 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPage>CCO_FR_Case_Flagship_Page</flexiPage>
     <label>Case Monoprix</label>
-    <motif>Custom18: Phone</motif>
+    <motif>Custom18: Form</motif>
 </CustomTab>
