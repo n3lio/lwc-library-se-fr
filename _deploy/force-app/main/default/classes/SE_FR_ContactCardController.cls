@@ -20,8 +20,22 @@ public with sharing class SE_FR_ContactCardController {
                 List<Contact> cs = [SELECT Id FROM Contact WHERE AccountId = :recordId ORDER BY CreatedDate ASC LIMIT 1];
                 return cs.isEmpty() ? null : cs[0].Id;
             }
-            if (objectApiName == 'Case' || objectApiName == 'Opportunity' || objectApiName == 'Order') {
-                return queryLookup('ContactId', objectApiName, recordId);
+            if (objectApiName == 'Order') {
+                // Order has no ContactId: use the authorized customer, else the first Contact of its Account.
+                Id authId = queryLookup('CustomerAuthorizedById', 'Order', recordId);
+                if (authId != null) return authId;
+                Id accId = queryLookup('AccountId', 'Order', recordId);
+                if (accId == null) return null;
+                List<Contact> oc = [SELECT Id FROM Contact WHERE AccountId = :accId ORDER BY CreatedDate ASC LIMIT 1];
+                return oc.isEmpty() ? null : oc[0].Id;
+            }
+            if (objectApiName == 'Case' || objectApiName == 'Opportunity') {
+                Id cid = queryLookup('ContactId', objectApiName, recordId);
+                if (cid != null) return cid;
+                Id accId2 = queryLookup('AccountId', objectApiName, recordId);
+                if (accId2 == null) return null;
+                List<Contact> fc = [SELECT Id FROM Contact WHERE AccountId = :accId2 ORDER BY CreatedDate ASC LIMIT 1];
+                return fc.isEmpty() ? null : fc[0].Id;
             }
             if (objectApiName == 'VoiceCall' || objectApiName == 'VideoCall') {
                 return queryLookup('Contact__c', objectApiName, recordId);
