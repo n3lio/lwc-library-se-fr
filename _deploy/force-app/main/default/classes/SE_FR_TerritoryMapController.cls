@@ -160,7 +160,7 @@ public with sharing class SE_FR_TerritoryMapController {
             t.ownerId = a.OwnerId;
             t.ownerName = a.Owner != null ? a.Owner.Name : null;
             // Access RecordType dynamically — guarded for orgs with no Account record types.
-            SObject rt = a.getSObject('RecordType');
+            SObject rt = accountHasRecordType ? a.getSObject('RecordType') : null;
             t.recordTypeName = rt != null ? (String) rt.get('Name') : null;
             t.recordTypeDeveloperName = rt != null ? (String) rt.get('DeveloperName') : null;
             t.openOpportunityCount = r != null ? r.openCount : 0;

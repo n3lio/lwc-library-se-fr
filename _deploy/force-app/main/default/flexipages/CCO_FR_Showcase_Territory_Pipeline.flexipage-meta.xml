@@ -139,6 +139,10 @@
                     <name>mapHeight</name>
                     <value>500</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
                 <componentName>seFrTerritoryMap</componentName>
                 <identifier>c_seFrTerritoryMap_main</identifier>
             </componentInstance>

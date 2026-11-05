@@ -150,9 +150,7 @@
 /* ====================================================================
    Density modifier: COMPACT — single line, message truncated
 ==================================================================== */
-.alert_compact .alert-message {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+.alert_compact { flex-wrap: wrap; }
+.alert_compact .alert-message { flex: 1 1 10rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }
+.alert_compact .alert-dismiss { margin-left: auto; }
 .alert_compact { padding: 6px 12px; }

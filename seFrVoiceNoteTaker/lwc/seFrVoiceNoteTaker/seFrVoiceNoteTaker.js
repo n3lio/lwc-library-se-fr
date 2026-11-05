@@ -27,7 +27,7 @@ const LABELS = {
         textareaPlaceholder: 'Appuyez sur le bouton ci-dessus pour dicter, ou saisissez votre note ici…',
         startButton: 'Démarrer la dictée',
         stopButton: "Arrêter l'enregistrement",
-        saveButton: "Enregistrer sur l'enregistrement",
+        saveButton: 'Enregistrer dans la visite',
         unsupportedBrowser: "La reconnaissance vocale n'est pas prise en charge par votre navigateur. Utilisez Google Chrome.",
         successMessage: 'Note enregistrée comme Tâche.',
         toastSuccess: 'Succès',
@@ -42,7 +42,7 @@ export default class SeFrVoiceNoteTaker extends LightningElement {
 
     @api language = 'fr';
     @api cardTitle;
-    @api cardIcon = 'standard:call';  // standard:voice_call isn't in the SLDS sprite
+    @api cardIcon = 'utility:unmuted';  // standard:voice_call isn't in the SLDS sprite
     @api speechLocale = 'fr-FR';
     @api taskSubject;
     @api recordingHint;

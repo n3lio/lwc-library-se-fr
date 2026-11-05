@@ -59,3 +59,12 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Relevé Produits : OK après fix images.
 - Compte-Rendu : textes anglais mélangés dans la carte Agentforce ("Summarize text", "Refine text", "Text to summarize") ; icône téléphone orange pour la "Note vocale" (micro attendu) ; bouton "Enregistrer sur l'enregistrement" au libellé confus → "Enregistrer dans la visite".
 - Onglet Commande (menu Plus) : non audité (le clic ouvre le menu mais ne change pas d'onglet à la 1re tentative).
+
+## Corrections appliquées (3e passe)
+- **seFrAlertsRibbon** (compact) : message sur 2 lignes max au lieu de s'effondrer à 0 de large ; bouton fermer à droite. Vérifié sur Territoire & Pipeline.
+- **Carte du territoire** : `SE_FR_TerritoryMapController` plantait (`Invalid relationship RecordType for Account`) dans les orgs sans RecordType Account → 0 compte. Corrigé (garde `accountHasRecordType`) ; 3 comptes géocodés (Carrefour, Monoprix, Franprix) affichés, KPI 3 / 135 k€ / 3 / 6. Flexipage : `defaultOwnerScope=all`.
+- **Icônes d'onglets** : Territoire & Pipeline Globe→Map (Custom57), Marketing Envelope→Megaphone (Custom66) (le micro venait du motif Custom35 partagé avec Visite).
+- **seFrPromptLauncher** : catalogue par défaut traduit en FR (Synthèse du compte, Résumer un texte, Texte à résumer…).
+- **seFrVoiceNoteTaker** : bouton « Enregistrer dans la visite », icône utility:unmuted.
+- **Visite > Commande** : audité, OK (état vide « Aucune rupture détectée », cadencier avec images/stock).
+- Reste : 13 comptes sans géocodage (carte limitée à 3 pins), défauts listés dans les sections précédentes (Télévente, Contact, Account stale logic, Lead contact card, Case historique).

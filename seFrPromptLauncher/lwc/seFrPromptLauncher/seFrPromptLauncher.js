@@ -49,7 +49,7 @@ const LABELS = {
 const DEFAULT_CATALOG = [
     {
         apiName: 'einstein_gpt__summarizeAccountDefault',
-        label: 'Account summary',
+        label: 'Synthèse du compte',
         icon: 'utility:summarydetail',
         objects: ['Account'],
         recordInputName: 'Input:Account',
@@ -57,7 +57,7 @@ const DEFAULT_CATALOG = [
     },
     {
         apiName: 'CCO_FR_SummarizeContact',
-        label: 'Contact summary',
+        label: 'Synthèse du contact',
         icon: 'utility:summarydetail',
         objects: ['Contact'],
         recordInputName: 'Input:objectToSummarize',
@@ -65,7 +65,7 @@ const DEFAULT_CATALOG = [
     },
     {
         apiName: 'einstein_gpt__summarizeDeal',
-        label: 'Deal summary',
+        label: "Synthèse de l'opportunité",
         icon: 'utility:summarydetail',
         objects: ['Opportunity'],
         recordInputName: 'Input:Opportunity',
@@ -73,7 +73,7 @@ const DEFAULT_CATALOG = [
     },
     {
         apiName: 'einstein_gpt__summarizeLead',
-        label: 'Lead summary',
+        label: 'Synthèse du lead',
         icon: 'utility:summarydetail',
         objects: ['Lead'],
         recordInputName: 'Input:Lead',
@@ -81,7 +81,7 @@ const DEFAULT_CATALOG = [
     },
     {
         apiName: 'svc_emp_intelligence__SummarizeRecord',
-        label: 'Case summary',
+        label: 'Synthèse de la requête',
         icon: 'utility:summarydetail',
         objects: ['Case'],
         recordInputName: 'Input:recordId',
@@ -90,7 +90,7 @@ const DEFAULT_CATALOG = [
     },
     {
         apiName: 'einstein_gpt__summarizeText',
-        label: 'Summarize text',
+        label: 'Résumer un texte',
         icon: 'utility:edit_form',
         objects: [],
         // Both inputs are tagged required server-side. We expose only the text to summarize and
@@ -98,17 +98,17 @@ const DEFAULT_CATALOG = [
         // rejects empty strings as "missing" for required inputs, so a placeholder is needed.
         extraInputs: { 'Input:conversationTranscript': 'N/A — standalone summarization, no chat context.' },
         userInputs: [
-            { name: 'Input:textToRephrase', label: 'Text to summarize', type: 'textarea', required: true }
+            { name: 'Input:textToRephrase', label: 'Texte à résumer', type: 'textarea', required: true }
         ]
     },
     {
         apiName: 'einstein_gpt__refineText',
-        label: 'Refine text',
+        label: 'Reformuler un texte',
         icon: 'utility:magicwand',
         objects: [],
         extraInputs: { 'Input:conversationTranscript': 'N/A — standalone refinement, no chat context.' },
         userInputs: [
-            { name: 'Input:textToRephrase', label: 'Text to refine', type: 'textarea', required: true }
+            { name: 'Input:textToRephrase', label: 'Texte à reformuler', type: 'textarea', required: true }
         ]
     }
 ];
