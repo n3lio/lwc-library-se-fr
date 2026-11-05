@@ -49,7 +49,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge2Label</name>
-                    <value>Last activity</value>
+                    <value>Dernière activité</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge3Direction</name>
@@ -65,7 +65,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge3Label</name>
-                    <value>Opt-in Email</value>
+                    <value>Opt-in e-mail</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideHeaderOnContact</name>

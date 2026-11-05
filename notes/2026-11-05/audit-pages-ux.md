@@ -75,3 +75,9 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Tabs : motifs resynchronisés depuis l'org (les libellés diffèrent du repo, seul le numéro compte). Micro retiré de Territoire (maintenant Custom57) ; Marketing = Custom66 (dés — à remplacer par une icône plus pertinente).
 - seFrKpiLauncher : label sur une ligne avec ellipsis (plus de coupure au milieu d'un mot).
 - Reste : Télévente, Contact (titres tronqués, préférences vides), logique « stale » Account, Case « Historique 0% », Order « Type de commande ».
+
+## 5e passe
+- Marketing : accents de la timeline d'engagement vérifiés en org (SMS envoyé / Email cliqué / Email rejeté).
+- Télévente : libellés KPI raccourcis (CAS, CDES) pour éviter la troncature.
+- Contact : jauges Score / Dernière activité / Opt-in e-mail alimentées (29 contacts seedés) et libellés FR.
+- Restant : Télévente (tableau, Rappels), Account (logique « stale »), Opportunity (CA brut), Order, Lead, Case, Visit, Field Sales/Retail, Accueil, icônes d'onglets Marketing/Territoire.
