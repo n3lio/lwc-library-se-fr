@@ -44,8 +44,12 @@
                     <value>Client</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>gauge1Direction</name>
+                    <value>higher-better</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>gauge1FieldApiName</name>
-                    <value>LastActivityDate</value>
+                    <value>CCO_Activity_Recency__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge1Icon</name>
@@ -53,7 +57,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge1Label</name>
-                    <value>Historique</value>
+                    <value>Activité récente</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>gauge2FieldApiName</name>
+                    <value>CCO_Engagement_Score__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge2Icon</name>
@@ -61,7 +69,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge2Label</name>
-                    <value>VIP</value>
+                    <value>Engagement</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>

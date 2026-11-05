@@ -81,3 +81,10 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Télévente : libellés KPI raccourcis (CAS, CDES) pour éviter la troncature.
 - Contact : jauges Score / Dernière activité / Opt-in e-mail alimentées (29 contacts seedés) et libellés FR.
 - Restant : Télévente (tableau, Rappels), Account (logique « stale »), Opportunity (CA brut), Order, Lead, Case, Visit, Field Sales/Retail, Accueil, icônes d'onglets Marketing/Territoire.
+
+## 6e passe
+- Télévente : tableaux Cas/Commandes en largeurs auto + retour à la ligne, titre « Rappels » raccourci.
+- Account : signal « commande récente 90 j » compte désormais les commandes non annulées (brouillons inclus) ; tuile Run rate sans retour à la ligne.
+- RelatedRecordCard : valeurs numériques brutes (ex. 85000000000) formatées en FR (85 Md €).
+- Case : jauges branchées sur les scores du contact (Activité récente / Engagement).
+- À traiter : en-tête de la page Case vide (Record Highlights sans titre ni champs), Lead, Order, Visit, Field Sales/Retail, Accueil, icônes d'onglets Marketing/Territoire.
