@@ -37,8 +37,8 @@ const PRESETS = {
         //   standard:orders → brand blue (#0176d3)
         fr: [
             { label: 'APPELS',      sublabel: 'Aujourd\'hui',icon: 'standard:call',      color: '#fe9339', link: '/lightning/o/VoiceCall/list',                  value: '18' },
-            { label: 'CAS OUVERTS', sublabel: 'À traiter',   icon: 'standard:case',      color: '#c13975', link: '/lightning/o/Case/list?filterName=Recent',     value: '6'  },
-            { label: 'COMMANDES',   sublabel: 'À valider',   icon: 'standard:orders',    color: '#0176d3', link: '/lightning/o/Order/list?filterName=Recent',    value: '4'  }
+            { label: 'CAS',         sublabel: 'À traiter',   icon: 'standard:case',      color: '#c13975', link: '/lightning/o/Case/list?filterName=Recent',     value: '6'  },
+            { label: 'CDES',        sublabel: 'À valider',   icon: 'standard:orders',    color: '#0176d3', link: '/lightning/o/Order/list?filterName=Recent',    value: '4'  }
         ],
         en: [
             { label: 'CALLS',      sublabel: 'Today',       icon: 'standard:call',   color: '#fe9339', link: '/lightning/o/VoiceCall/list',                  value: '18' },

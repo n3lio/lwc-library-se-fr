@@ -27,6 +27,13 @@ const TYPE_META = {
     'SMS envoye':     { icon: 'utility:chat',      color: '#7c3aed' },
     'SMS clique':     { icon: 'utility:link',      color: '#7c3aed' }
 };
+const ACCENT_FIX = [
+    [/envoye\b/g, 'envoyé'], [/clique\b/g, 'cliqué'], [/rejete\b/g, 'rejeté'],
+    [/\bEte\b/g, 'Été'], [/\bRentree\b/g, 'Rentrée'], [/\bTelecharg/g, 'Télécharg']
+];
+function fixAccents(v) {
+    return ACCENT_FIX.reduce((acc, [re, rep]) => acc.replace(re, rep), v || '');
+}
 const DEFAULT_META = { icon: 'utility:notification', color: '#64748b' };
 
 const INITIAL_VISIBLE = 6;
@@ -35,9 +42,9 @@ const INITIAL_VISIBLE = 6;
 // set the properties passes empty strings — the meta-xml `default` only applies in App Builder).
 const SAMPLE = {
     fr: {
-        types:  'Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique',
+        types:  'Email ouvert|SMS envoyé|Formulaire|Email cliqué|Page vue|Email rejeté|Email envoyé|SMS cliqué',
         emails: 'promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr',
-        lists:  'Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend',
+        lists:  'Campagne Été 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentrée|Promo Weekend',
         ages:   '2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j.'
     },
     en: {
@@ -109,11 +116,11 @@ export default class SeFrEngagementHistory extends LightningElement {
             const meta = TYPE_META[type] || DEFAULT_META;
             return {
                 key: `${i}-${type}`,
-                type,
+                type: fixAccents(type),
                 icon: meta.icon,
                 iconStyle: `background:${meta.color}`,
                 email: emails[i] || '',
-                list: lists[i] || '',
+                list: fixAccents(lists[i] || ''),
                 age: ages[i] || ''
             };
         }).filter((r) => {

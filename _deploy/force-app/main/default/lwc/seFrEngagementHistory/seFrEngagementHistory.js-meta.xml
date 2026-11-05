@@ -21,7 +21,7 @@
             <property name="cardIcon" type="String" default="standard:activations" label="Card icon" />
             <property name="showSearch" type="Boolean" default="true" label="Show search bar" />
             <property name="searchPlaceholder" type="String" label="Search placeholder (override)" />
-            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique" description="FR: Email ouvert, Email envoye, Email clique, Email rejete, SMS envoye, SMS clique, Formulaire, Page vue. EN: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View." />
+            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email ouvert|SMS envoyé|Formulaire|Email cliqué|Page vue|Email rejeté|Email envoyé|SMS cliqué" description="FR: Email ouvert, Email envoye, Email clique, Email rejete, SMS envoye, SMS clique, Formulaire, Page vue. EN: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View." />
             <property name="eventEmails" type="String" label="Emails / subjects (pipe-separated)" default="promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr" />
             <property name="eventLists" type="String" label="Lists / campaigns (pipe-separated)" default="Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend" />
             <property name="eventAges" type="String" label="Relative ages (pipe-separated)" default="2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j." />
@@ -32,7 +32,7 @@
             <property name="cardIcon" type="String" default="standard:activations" label="Card icon" />
             <property name="showSearch" type="Boolean" default="true" label="Show search bar" />
             <property name="searchPlaceholder" type="String" label="Search placeholder (override)" />
-            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email ouvert|Email envoye|SMS envoye|Formulaire" />
+            <property name="eventTypes" type="String" label="Event types (pipe-separated)" default="Email ouvert|Email envoyé|SMS envoyé|Formulaire" />
             <property name="eventEmails" type="String" label="Emails / subjects (pipe-separated)" default="promo@acme.fr|promo@acme.fr|alerte@acme.fr|formulaire@acme.fr" />
             <property name="eventLists" type="String" label="Lists / campaigns (pipe-separated)" default="Campagne A|Campagne A|Relance SMS|Webinaire" />
             <property name="eventAges" type="String" label="Relative ages (pipe-separated)" default="1 j.|2 j.|5 j.|1 sem." />
