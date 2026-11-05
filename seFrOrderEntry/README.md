@@ -64,3 +64,6 @@ Full-grid order entry component for an Account (or for a Case linked to an Accou
 2. Unzip `seFrOrderEntry.zip`, deploy the LWC bundle.
 3. Drop `SE_FR — Order Entry` on an Account or Case record page.
 4. Configure card title, currency, filters.
+
+## Images produits (showcase)
+Le tooltip du Cadencier lit `Product2.Image_URL__c`. Dans le showcase CCO FR, le champ, le permission set `CCO_FR_Product_Image` et la static resource `cpg_products` (15 packshots SVG) sont dans `_deploy/`, et `scripts/apex/seed-showcase-orders.apex` renseigne `Image_URL__c` (`/resource/cpg_products/<CODE>.svg`).

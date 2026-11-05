@@ -109,6 +109,18 @@ for (PricebookEntry pbe : [SELECT Id, Product2Id, UnitPrice FROM PricebookEntry 
 }
 System.debug('PBE ready: ' + pbeByProductId.size() + ' (new: ' + pbesToInsert.size() + ', upd: ' + pbesToUpdate.size() + ')');
 
+
+// Images produits : SVG du static resource cpg_products (champ Product2.Image_URL__c).
+if (Schema.SObjectType.Product2.fields.getMap().containsKey('image_url__c')) {
+    List<Product2> withImg = new List<Product2>();
+    for (Product2 p : [SELECT Id, ProductCode FROM Product2 WHERE ProductCode IN :cpgCodes]) {
+        p.put('Image_URL__c', '/resource/cpg_products/' + p.ProductCode + '.svg');
+        withImg.add(p);
+    }
+    if (!withImg.isEmpty()) update withImg;
+    System.debug('Product images set: ' + withImg.size());
+}
+
 // Désactive les Products par défaut Dev Edition.
 List<Product2> toHide = new List<Product2>();
 for (Product2 p : [SELECT Id, IsActive FROM Product2 WHERE IsActive = true AND (ProductCode LIKE 'GC%' OR ProductCode LIKE 'IN70%' OR ProductCode LIKE 'SL90%')]) {
