@@ -99,6 +99,7 @@ const I18N = {
 
 export default class SeFrVisitRestockOrder extends NavigationMixin(LightningElement) {
     @api recordId;
+    ctxVisitId;
     @api language = 'fr';
     @api cardTitle;
     @api cardIcon = 'standard:product_item';
@@ -140,7 +141,7 @@ export default class SeFrVisitRestockOrder extends NavigationMixin(LightningElem
     get resolvedCardTitle() { return this.cardTitle || this.t.cardTitleDefault; }
     get resolvedCardIcon() { return this.cardIcon || 'standard:product_item'; }
 
-    get _storageKey() { return this.recordId ? LS_PREFIX + this.recordId : null; }
+    get _storageKey() { const id = this.ctxVisitId || this.recordId; return id ? LS_PREFIX + id : null; }
 
     get hasLines() { return this.lines && this.lines.length > 0; }
     get isEmpty() { return !this.loading && !this.hasLines; }
@@ -194,6 +195,7 @@ export default class SeFrVisitRestockOrder extends NavigationMixin(LightningElem
                 const ctx = await getVisitContext({ visitId: this.recordId });
                 this.accountId = ctx && ctx.accountId;
                 this.accountName = ctx && ctx.accountName;
+                this.ctxVisitId = ctx && ctx.visitId;   // on an Account page: latest visit of the account
             }
             await this._reloadFromLocalStorage();
         } catch (e) {

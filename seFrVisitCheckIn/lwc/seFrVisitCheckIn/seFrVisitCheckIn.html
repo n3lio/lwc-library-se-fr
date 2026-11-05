@@ -7,7 +7,7 @@
                 <template lwc:if={isPlanned}>
                     <div class="sefrci-state sefrci-state--planned">
                         <div class="sefrci-state__head">
-                            <lightning-icon icon-name="utility:date_time" size="small" class="sefrci-state__badge sefrci-state__badge--planned"></lightning-icon>
+                            <lightning-icon icon-name="utility:date_time" size="small" variant="inverse" class="sefrci-state__badge sefrci-state__badge--planned"></lightning-icon>
                             <div class="sefrci-state__text">
                                 <p class="sefrci-state__title">{t.planned}</p>
                                 <p class="sefrci-state__hint">{t.plannedHint}</p>
@@ -21,7 +21,7 @@
                 <template lwc:elseif={isInProgress}>
                     <div class="sefrci-state sefrci-state--inprogress">
                         <div class="sefrci-state__head">
-                            <lightning-icon icon-name="utility:clock" size="small" class="sefrci-state__badge sefrci-state__badge--inprogress"></lightning-icon>
+                            <lightning-icon icon-name="utility:clock" size="small" variant="inverse" class="sefrci-state__badge sefrci-state__badge--inprogress"></lightning-icon>
                             <div class="sefrci-state__text">
                                 <p class="sefrci-state__title">{t.inProgress}</p>
                                 <template lwc:if={hasCheckIn}>
@@ -42,7 +42,7 @@
                 <!-- COMPLETED : ligne compacte "durée · timestamp · bouton rouvrir". -->
                 <template lwc:elseif={isCompleted}>
                     <div class="sefrci-state sefrci-state--completed">
-                        <lightning-icon icon-name="utility:success" size="small" class="sefrci-state__badge sefrci-state__badge--completed"></lightning-icon>
+                        <lightning-icon icon-name="utility:success" size="small" variant="inverse" class="sefrci-state__badge sefrci-state__badge--completed"></lightning-icon>
                         <div class="sefrci-state__text">
                             <p class="sefrci-state__title">{t.completed}</p>
                             <p class="sefrci-state__hint">{t.closedOn} {closedOnText}</p>
@@ -60,7 +60,7 @@
                 <!-- CANCELLED : même ligne compacte en gris. -->
                 <template lwc:elseif={isCancelled}>
                     <div class="sefrci-state sefrci-state--cancelled">
-                        <lightning-icon icon-name="utility:close" size="small" class="sefrci-state__badge sefrci-state__badge--cancelled"></lightning-icon>
+                        <lightning-icon icon-name="utility:close" size="small" variant="inverse" class="sefrci-state__badge sefrci-state__badge--cancelled"></lightning-icon>
                         <div class="sefrci-state__text">
                             <p class="sefrci-state__title">{t.cancelled}</p>
                             <p class="sefrci-state__hint">{t.cancelledHint}</p>

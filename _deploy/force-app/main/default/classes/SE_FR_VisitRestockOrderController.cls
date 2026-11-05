@@ -44,19 +44,34 @@ public with sharing class SE_FR_VisitRestockOrderController {
     public class VisitContext {
         @AuraEnabled public Id accountId;
         @AuraEnabled public String accountName;
+        @AuraEnabled public Id visitId;   // the Visit whose ruptures are read (latest one when launched from an Account)
     }
 
     // ----------------------- Visit → Account resolution -----------------------
 
+    /** Accepts a Visit__c Id (Visit record page) or an Account Id (Account record page). */
     @AuraEnabled(cacheable=true)
     public static VisitContext getVisitContext(Id visitId) {
         VisitContext ctx = new VisitContext();
         if (visitId == null) return ctx;
+        if (visitId.getSObjectType() == Schema.Account.SObjectType) {
+            Account a = [SELECT Id, Name FROM Account WHERE Id = :visitId LIMIT 1];
+            ctx.accountId = a.Id;
+            ctx.accountName = a.Name;
+            if (Schema.getGlobalDescribe().containsKey('Visit__c')) {
+                List<SObject> latest = Database.query(
+                    'SELECT Id FROM Visit__c WHERE Account__c = :visitId ORDER BY PlannedStartDateTime__c DESC NULLS LAST LIMIT 1'
+                );
+                if (!latest.isEmpty()) ctx.visitId = (Id) latest[0].get('Id');
+            }
+            return ctx;
+        }
         if (!Schema.getGlobalDescribe().containsKey('Visit__c')) return ctx;
         List<SObject> rows = Database.query(
             'SELECT Account__c, Account__r.Name FROM Visit__c WHERE Id = :visitId LIMIT 1'
         );
         if (rows.isEmpty()) return ctx;
+        ctx.visitId = visitId;
         ctx.accountId = (Id) rows[0].get('Account__c');
         SObject accRef = (SObject) rows[0].getSObject('Account__r');
         if (accRef != null) ctx.accountName = (String) accRef.get('Name');
@@ -164,10 +179,11 @@ public with sharing class SE_FR_VisitRestockOrderController {
         ord.Pricebook2Id = stdPbId;
         ord.EffectiveDate = Date.today();
         ord.Status = 'Draft';
-        ord.Description = 'Réassort automatique suite au relevé produits (visite ' + visitId + ').';
+        ord.Description = 'Réassort automatique suite au relevé produits'
+            + (ctx.visitId != null ? ' (visite ' + ctx.visitId + ')' : '') + '.';
         // Optional lookup to Visit__c if the custom field exists.
-        if (Schema.SObjectType.Order.fields.getMap().containsKey('visit__c')) {
-            ord.put('Visit__c', visitId);
+        if (ctx.visitId != null && Schema.SObjectType.Order.fields.getMap().containsKey('visit__c')) {
+            ord.put('Visit__c', ctx.visitId);
         }
         insert ord;
 

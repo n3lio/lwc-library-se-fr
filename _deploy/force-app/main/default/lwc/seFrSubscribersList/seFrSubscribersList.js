@@ -106,7 +106,12 @@ export default class SeFrSubscribersList extends NavigationMixin(LightningElemen
 
     get allRows() {
         if (this.isLive && this.liveMembers.length > 0) {
-            return this.liveMembers.map((m, i) => this._buildLiveRow(m, i));
+            const live = this.liveMembers.map((m, i) => this._buildLiveRow(m, i));
+            // Complete the live list with the override props (people not already listed) —
+            // useful when Account Teams are disabled and only the owner is returned.
+            const seen = new Set(live.map((r) => (r.name || '').toLowerCase()));
+            const extra = this._buildMockRows().filter((r) => !seen.has((r.name || '').toLowerCase()));
+            return live.concat(extra);
         }
         // Fallback to mock props
         return this._buildMockRows();
@@ -164,7 +169,7 @@ export default class SeFrSubscribersList extends NavigationMixin(LightningElemen
 
     _buildLiveRow(member, idx) {
         const isQueue = !!member.userId && String(member.userId).startsWith('00G');
-        const hasPhoto = !isQueue && !!member.photoUrl && !member.photoUrl.includes('/profilephoto/729');
+        const hasPhoto = !isQueue && !!member.photoUrl && !/\/profilephoto\/005\//.test(member.photoUrl);
         return {
             key: `live-${member.userId}`,
             name: member.name,

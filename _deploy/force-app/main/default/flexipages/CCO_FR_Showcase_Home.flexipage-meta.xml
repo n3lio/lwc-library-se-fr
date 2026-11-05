@@ -35,8 +35,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>staticAlertsCsv</name>
-                    <value>success|utility:announcement|Nouveau : CCO FR Showcase est en ligne — 37 composants, 12 pages.|Voir le catalogue|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html
-info|utility:info|Pattern Retail Execution : essayez l&apos;onglet Field Sales.|Ouvrir Field Sales|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html</value>
+                    <value>info|utility:info|Composants de la lib sur cette page : Splash Banner · KPI Launcher · Timeline Phases · Engagement History · Active Segments · Metric Tile + 5 autres|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
                 <identifier>c_seFrAlertsRibbon_top</identifier>

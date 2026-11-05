@@ -31,7 +31,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>staticAlertsCsv</name>
-                    <value>info|utility:info|Fiche Opportunité Showcase CCO FR.|Voir les composants|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Sales&amp;surface=RecordPage</value>
+                    <value>info|utility:info|Composants de la lib sur cette page : Record Highlights · Pipeline Snapshot · Contact Card · Timeline Phases · Service Contracts · Record Actions + 4 autres|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Sales&amp;surface=RecordPage</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
                 <identifier>c_seFrAlertsRibbon_header</identifier>

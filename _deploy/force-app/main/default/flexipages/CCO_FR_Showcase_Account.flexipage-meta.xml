@@ -47,7 +47,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>staticAlertsCsv</name>
-                    <value>info|utility:info|Showcase CCO FR : page conçue pour illustrer la lib complète.|En savoir plus|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Sales&amp;surface=RecordPage</value>
+                    <value>info|utility:info|Composants de la lib sur cette page : Record Highlights · Account Strategy Plan · Customer Sales Summary · Revenue Dashboard · Timeline Phases · Metric Tile + 17 autres|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Sales&amp;surface=RecordPage</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>stickyOnScroll</name>
@@ -299,6 +299,42 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardIcon</name>
+                    <value>standard:product</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                    <value>Commande visuelle (catalogue)</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentName>seFrVisitQuickOrder</componentName>
+                <identifier>c_seFrVisitQuickOrder_main</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:product_item</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                    <value>Réassort auto (ruptures du dernier relevé)</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentName>seFrVisitRestockOrder</componentName>
+                <identifier>c_seFrVisitRestockOrder_main</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
                     <value>standard:note</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -391,6 +427,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>contactNames</name>
+                    <value>Showcase Admin|OrgFarm EPIC|Visiteur Showcase</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>
@@ -398,6 +435,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>roles</name>
+                    <value>Account Manager|Solution Engineer|Support client</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sourceMode</name>
@@ -405,6 +443,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>userIds</name>
+                    <value>005gK00008DWbdxQAD|005gK00007zkI1QQAU|005gK00008wZRlNQAW</value>
                 </componentInstanceProperties>
                 <componentName>seFrSubscribersList</componentName>
                 <identifier>c_seFrSubscribersList_sidebar</identifier>
@@ -419,10 +458,6 @@
                 <componentInstanceProperties>
                     <name>cardTitle</name>
                     <value>Consentements RGPD compte</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>channelsCsv</name>
-                    <value>Email,SMS,Phone,Postal,WhatsApp</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>

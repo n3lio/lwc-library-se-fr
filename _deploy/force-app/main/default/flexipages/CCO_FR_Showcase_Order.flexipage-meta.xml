@@ -27,7 +27,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>staticAlertsCsv</name>
-                    <value>info|utility:info|Commande Showcase CCO FR.|Voir les composants|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Sales&amp;q=order</value>
+                    <value>info|utility:info|Composants de la lib sur cette page : Record Highlights · Contact Card · Related Record Card · Files Gallery · Prompt Launcher · Smart Recommendations · Timeline Phases|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Sales&amp;q=order</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
                 <identifier>c_seFrAlertsRibbon_header</identifier>

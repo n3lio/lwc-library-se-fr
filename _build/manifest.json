@@ -6204,7 +6204,8 @@
         "RecordPage"
       ],
       "objects": [
-        "Visit__c"
+        "Visit__c",
+        "Account"
       ],
       "chips": [
         "Ruptures → Draft Order",
@@ -6634,18 +6635,12 @@
     }
   ],
   "byCategory": {
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory"
-    ],
-    "Service": [
-      "seFrAlertsRibbon",
-      "seFrKanbanBoard",
-      "seFrOrderSummary",
-      "seFrServiceContracts",
-      "seFrSubscribersList"
+    "Productivity": [
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations",
+      "seFrTimelinePhases"
     ],
     "Dashboards & KPIs": [
       "seFrFieldRepHome",
@@ -6654,23 +6649,16 @@
       "seFrRevenueDashboard",
       "seFrTelesalesRepHome"
     ],
-    "Productivity": [
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations",
-      "seFrTimelinePhases"
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory"
     ],
-    "Transverse": [
-      "seFrActivityFeed",
-      "seFrAgentforceHeader",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrRecordActions",
-      "seFrRecordHighlights",
-      "seFrRelatedRecordCard",
-      "seFrSplashBanner"
+    "Geo & Field": [
+      "seFrNearbyAccountsMap",
+      "seFrTerritoryMap",
+      "seFrVoiceNoteTaker"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -6683,10 +6671,23 @@
       "seFrVisitQuickOrder",
       "seFrVisitRestockOrder"
     ],
-    "Geo & Field": [
-      "seFrNearbyAccountsMap",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
+    "Transverse": [
+      "seFrActivityFeed",
+      "seFrAgentforceHeader",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrRecordActions",
+      "seFrRecordHighlights",
+      "seFrRelatedRecordCard",
+      "seFrSplashBanner"
+    ],
+    "Service": [
+      "seFrAlertsRibbon",
+      "seFrKanbanBoard",
+      "seFrOrderSummary",
+      "seFrServiceContracts",
+      "seFrSubscribersList"
     ],
     "Retail Execution": [
       "seFrVisitCheckIn",
@@ -6701,6 +6702,22 @@
     ]
   },
   "byPersona": {
+    "Telesales": [
+      "seFrActivityFeed",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrFilesGallery",
+      "seFrKanbanBoard",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrOrderEntry",
+      "seFrRecordActions",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrTelesalesRepHome"
+    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrActivityFeed",
@@ -6740,9 +6757,30 @@
       "seFrRecordHighlights",
       "seFrSplashBanner"
     ],
-    "Retail": [
+    "Sales": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
       "seFrBusinessCardScanner",
-      "seFrCustomerSalesSummary"
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrPipelineSnapshot",
+      "seFrRecordActions",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitKanban",
+      "seFrVisitQuickOrder",
+      "seFrVisitRestockOrder"
     ],
     "FieldSales": [
       "seFrActivityFeed",
@@ -6769,46 +6807,9 @@
       "seFrVisitShelfSpace",
       "seFrVoiceNoteTaker"
     ],
-    "Telesales": [
-      "seFrActivityFeed",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrOrderEntry",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrTelesalesRepHome"
-    ],
-    "Sales": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
+    "Retail": [
       "seFrBusinessCardScanner",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrEngagementHistory",
-      "seFrFilesGallery",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrPipelineSnapshot",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases",
-      "seFrVisitKanban",
-      "seFrVisitQuickOrder",
-      "seFrVisitRestockOrder"
+      "seFrCustomerSalesSummary"
     ],
     "Field": [
       "seFrVisitQuickOrder",
@@ -6836,27 +6837,6 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases"
-    ],
-    "AppPage": [
-      "seFrActiveSegments",
-      "seFrAlertsRibbon",
-      "seFrBusinessCardScanner",
-      "seFrEngagementHistory",
-      "seFrFieldRepHome",
-      "seFrKanbanBoard",
-      "seFrKpiLauncher",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrNearbyAccountsMap",
-      "seFrPromptLauncher",
-      "seFrSplashBanner",
-      "seFrSubscribersList",
-      "seFrTelesalesRepHome",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases",
-      "seFrVisitQuickOrder"
     ],
     "RecordPage": [
       "seFrAccountHealth",
@@ -6898,6 +6878,27 @@
       "seFrVisitShelfCompliance",
       "seFrVisitShelfSpace",
       "seFrVoiceNoteTaker"
+    ],
+    "AppPage": [
+      "seFrActiveSegments",
+      "seFrAlertsRibbon",
+      "seFrBusinessCardScanner",
+      "seFrEngagementHistory",
+      "seFrFieldRepHome",
+      "seFrKanbanBoard",
+      "seFrKpiLauncher",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrNearbyAccountsMap",
+      "seFrPromptLauncher",
+      "seFrSplashBanner",
+      "seFrSubscribersList",
+      "seFrTelesalesRepHome",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitQuickOrder"
     ]
   }
 }

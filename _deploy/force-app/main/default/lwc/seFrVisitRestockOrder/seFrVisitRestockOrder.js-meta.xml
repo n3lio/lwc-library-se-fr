@@ -11,6 +11,7 @@
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Visit__c</object>
+                <object>Account</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language (fr | en)" />
             <property name="cardTitle" type="String" label="Card title (override)" />

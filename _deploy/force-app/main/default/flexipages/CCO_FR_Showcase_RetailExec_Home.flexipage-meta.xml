@@ -36,7 +36,7 @@
                 <componentInstanceProperties>
                     <name>staticAlertsCsv</name>
                     <value>warning|utility:warning|3 contrats de référencement arrivent à échéance dans les 30 j|Voir le détail|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=FieldSales
-info|utility:announcement|Nouveauté lib : Business Card Scanner disponible — scan carte → Lead en 2 clics.|Essayer le scanner|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=FieldSales</value>
+info|utility:info|Composants de la lib sur cette page : Splash Banner · My Events · My Tasks · Field Sales - Rep Home · Nearby Accounts Map · Business Card Scanner · Lead First Touch|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=FieldSales</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
                 <identifier>c_seFrAlertsRibbon_header</identifier>

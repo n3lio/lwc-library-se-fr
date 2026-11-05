@@ -42,15 +42,12 @@
                 <template lwc:if={isCompleted}>
                     <div class="sefrvp-completed">
                         <lightning-icon icon-name="utility:success" size="small" variant="success"></lightning-icon>
-                        <div>
+                        <div class="sefrvp-completed__text">
                             <p class="sefrvp-completed__title">{labels.completedTitle}</p>
                             <p class="sefrvp-completed__sub">{completedSummary}</p>
                         </div>
+                        <lightning-button class="sefrvp-completed__action" variant="neutral" size="small" label={labels.btnReopen} icon-name="utility:undo" disabled={isLoading} onclick={handleReopenVisit}></lightning-button>
                     </div>
-                    <button class="sefrvp-btn sefrvp-btn--ghost sefrvp-reopen" onclick={handleReopenVisit} disabled={isLoading} type="button">
-                        <lightning-icon icon-name="utility:back" size="xx-small"></lightning-icon>
-                        <span>{labels.btnReopen}</span>
-                    </button>
                 </template>
             </div>
 

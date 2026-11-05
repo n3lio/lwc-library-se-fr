@@ -4,54 +4,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>disableImageReplace</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>maxQuickActions</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordSource</name>
-                    <value>current</value>
-                </componentInstanceProperties>
-                <componentName>seFrRecordHighlights</componentName>
-                <identifier>c_seFrRecordHighlights_header</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>hideDismissButton</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>language</name>
-                    <value>fr</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>staticAlertsCsv</name>
-                    <value>info|utility:info|Fiche Contact Showcase CCO FR.|Voir les composants|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Marketing&amp;surface=RecordPage</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>stickyOnScroll</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>seFrAlertsRibbon</componentName>
-                <identifier>c_seFrAlertsRibbon_header</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>header</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>autoPromptOnLoad</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -70,6 +22,10 @@
                 <componentInstanceProperties>
                     <name>gauge1Direction</name>
                     <value>higher-better</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>gauge1FieldApiName</name>
+                    <value>CCO_Engagement_Score__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>gauge1Icon</name>
@@ -135,10 +91,6 @@
                     <name>showCustomerId</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>gauge1FieldApiName</name>
-                    <value>CCO_Engagement_Score__c</value>
-                </componentInstanceProperties>
                 <componentName>seFrContactCard</componentName>
                 <identifier>c_seFrContactCard_main</identifier>
             </componentInstance>
@@ -173,10 +125,62 @@
                 <identifier>c_seFrRelatedRecordCard_sidebar</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:team_member</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardSubtitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>contactNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>roles</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>sourceMode</name>
+                    <value>live</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>userIds</name>
+                </componentInstanceProperties>
+                <componentName>seFrSubscribersList</componentName>
+                <identifier>c_seFrSubscribersList</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>leftsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>hideDismissButton</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>staticAlertsCsv</name>
+                    <value>info|utility:info|Composants de la lib sur cette page : Contact Card · Related Record Card · Subscribers List · Customer Sales Summary · Activity Feed · Engagement History + 8 autres|Voir dans la lib|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?category=Marketing&amp;surface=RecordPage</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>stickyOnScroll</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>seFrAlertsRibbon</componentName>
+                <identifier>c_seFrAlertsRibbon_header</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -350,6 +354,10 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>disablePrimaryAction</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>language</name>
                     <value>fr</value>
                 </componentInstanceProperties>
@@ -501,13 +509,30 @@
                 <identifier>c_seFrPromptLauncher_sidebar</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardIcon</name>
+                    <value>standard:service_contract</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>language</name>
+                    <value>fr</value>
+                </componentInstanceProperties>
+                <componentName>seFrServiceContracts</componentName>
+                <identifier>c_seFrServiceContracts</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>rightsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>CCO FR Showcase — Contact</masterLabel>
     <sobjectType>Contact</sobjectType>
     <template>
-        <name>flexipage:recordHomeThreeColHeaderTemplateDesktop</name>
+        <name>flexipage:recordHomeThreeColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>
