@@ -51,14 +51,14 @@
         <lightning-card title={labels.incomingCases} icon-name="standard:case" class="card-spacing">
             <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToCasesList}></lightning-button>
             <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                <lightning-datatable key-field="id" data={caseRows} columns={caseColumns} hide-checkbox-column="true"></lightning-datatable>
+                <lightning-datatable key-field="id" data={caseRows} columns={caseColumns} hide-checkbox-column="true" column-widths-mode="auto"></lightning-datatable>
             </div>
         </lightning-card>
 
         <lightning-card title={labels.ordersToValidate} icon-name="standard:orders" class="card-spacing">
             <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToOrdersList}></lightning-button>
             <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                <lightning-datatable key-field="id" data={orderRows} columns={orderColumns} hide-checkbox-column="true"></lightning-datatable>
+                <lightning-datatable key-field="id" data={orderRows} columns={orderColumns} hide-checkbox-column="true" column-widths-mode="auto"></lightning-datatable>
             </div>
         </lightning-card>
 

@@ -294,9 +294,9 @@ export default class SeFrTelesalesRepHome extends NavigationMixin(LightningEleme
         return [
             { label: l.col_caseNumber, fieldName: 'caseNumberUrl', type: 'url', initialWidth: 120, typeAttributes: { label: { fieldName: 'caseNumber' }, target: '_self' } },
             { label: l.col_date, fieldName: 'createdDate', type: 'text', initialWidth: 100 },
-            { label: l.col_account, fieldName: 'accountUrl', type: 'url', typeAttributes: { label: { fieldName: 'account' }, target: '_self' } },
+            { label: l.col_account, fieldName: 'accountUrl', type: 'url', wrapText: true, typeAttributes: { label: { fieldName: 'account' }, target: '_self' } },
             { label: l.col_channel, fieldName: 'origin', type: 'text', initialWidth: 120 },
-            { label: l.col_subject, fieldName: 'subject', type: 'text' },
+            { label: l.col_subject, fieldName: 'subject', type: 'text', wrapText: true },
             { label: l.col_status, fieldName: 'status', type: 'text', initialWidth: 160 }
         ];
     }
@@ -306,7 +306,7 @@ export default class SeFrTelesalesRepHome extends NavigationMixin(LightningEleme
         return [
             { label: l.col_orderNumber, fieldName: 'orderNumberUrl', type: 'url', initialWidth: 120, typeAttributes: { label: { fieldName: 'orderNumber' }, target: '_self' } },
             { label: l.col_date, fieldName: 'createdDate', type: 'text', initialWidth: 100 },
-            { label: l.col_account, fieldName: 'accountUrl', type: 'url', typeAttributes: { label: { fieldName: 'account' }, target: '_self' } },
+            { label: l.col_account, fieldName: 'accountUrl', type: 'url', wrapText: true, typeAttributes: { label: { fieldName: 'account' }, target: '_self' } },
             { label: l.col_channel, fieldName: 'channel', type: 'text', initialWidth: 130 },
             { label: l.col_status, fieldName: 'status', type: 'text', initialWidth: 120 },
             { label: l.col_amount, fieldName: 'amount', type: 'currency', typeAttributes: { currencyCode: this.currencyCode }, initialWidth: 130 }

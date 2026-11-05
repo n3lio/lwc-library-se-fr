@@ -141,7 +141,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
-                    <value>Rappels &amp; relances</value>
+                    <value>Rappels</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>defaultFilter</name>
