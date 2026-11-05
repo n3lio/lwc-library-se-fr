@@ -27,7 +27,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rulesCsv</name>
-                    <value>Rating=Hot|success|utility:warning|Lead chaud — rappeler sous 24h.|Rappeler|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Telesales&amp;surface=RecordPage,Status=Open - Not Contacted|warning|utility:info|Lead non contacté.|Voir les composants|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Telesales&amp;surface=RecordPage</value>
+                    <value>Rating=Hot|warning|utility:warning|Lead chaud — rappeler sous 24h.|Rappeler|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Telesales&amp;surface=RecordPage,Status=Open - Not Contacted|info|utility:info|Lead non contacté.|Voir les composants|https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com/components.html?persona=Telesales&amp;surface=RecordPage</value>
                 </componentInstanceProperties>
                 <componentName>seFrAlertsRibbon</componentName>
                 <identifier>c_seFrAlertsRibbon_header</identifier>
