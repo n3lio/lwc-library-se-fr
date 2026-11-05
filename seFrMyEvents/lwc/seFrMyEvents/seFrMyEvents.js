@@ -173,7 +173,7 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
         const key = String(rawType || '').toLowerCase();
         // Prop filter (static) — if set, whitelist wins
         const allow = this.allowedTypes;
-        if (allow && !allow.has(key)) return false;
+        if (allow && key && !allow.has(key)) return false; // untyped events (Type absent/empty) are always kept
         // In-UI toggles (dynamic) — muted set wins
         if (this.mutedTypes.has(key)) return false;
         return true;

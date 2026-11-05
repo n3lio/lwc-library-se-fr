@@ -28,3 +28,22 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Titres tronqués ("Comptes priorit…", "Nouveaux leads …", "À faire sur le …") : boutons "Voir tout" prennent la place → passer les actions sous le titre en vue étroite.
 - Home Accueil : tuile Retail Execution sans icône (carré bleu vide) ; carte assistant et Agentforce coupées à droite (débordement horizontal en fenêtre étroite).
 ## Restant à auditer : Retail Execution, Télévente, Territoire & Pipeline, Marketing, onglets Visit.
+
+## Retail Execution
+- Chargement lent (page vide ~10 s avant affichage du contenu) → prévoir un skeleton / spinner.
+- Checklist terrain OK après seed `seed-showcase-today.apex` (4 tâches).
+- "Tournée du jour" (seFrMyEvents) reste vide malgré 4 Event du jour : `getMyEvents` renvoie bien 4 lignes en Apex, filtre `typesFilterCsv=Visit,Meeting,Call` contourné (fix déployé : events sans Type conservés) mais carte toujours vide → à investiguer (cache wire client ? fuseau horaire : events à 8h-15h UTC, il est 21h30 → le composant ne montre peut-être que les créneaux restants). Test à refaire demain matin ou avec des events en soirée.
+## Télévente
+- Carte "KPI Télévente" : valeur "18" coupée en 2 lignes ("1" / "8"), libellé "COMMAND ES" coupé au milieu du mot, "Aujourd'h ui" coupé → colonnes trop étroites, passer en grille auto-fit / `overflow-wrap:normal` + `word-break:keep-all`.
+- Carte "Rappels & rel…" titre tronqué par le sélecteur "Aujourd'hui".
+- Tableau "Cas entrants" : colonnes Compte / Sujet tronquées ("Mono…", "Dema…") → élargir ou tooltip.
+## Territoire & Pipeline
+- Incohérence : "Indicateurs clés" = 12 leads / 7 opps / 34 comptes mais "Carte du territoire" = 0 compte, 0 €, 0 opp, 0 cas (filtre Propriétaire "Mes c…" par défaut ?). Mettre "Tous" par défaut.
+- Icône de page = micro (inadaptée), ruban ATTENTION "Voir les composants →" sans message.
+- Marketing : navigation par clic sans effet à la 1re tentative (à retester).
+
+## Marketing (vu OK à la 2e tentative)
+- Icône de page = clé à molette (inadaptée pour Marketing) ; bandeau hero OK.
+- KPI Marketing : valeurs "12" et "34" coupées en 2 lignes (chiffre par chiffre), "OPPORTU NITÉS" coupé, "Portefeuill e" coupé → même défaut de wrap que Télévente (tuiles trop étroites : réduire la police / `word-break: keep-all` / grille auto-fit).
+- Timeline d'engagement : OK, lisible. Ruban INFO correct ici.
+- Défaut transverse prioritaire : `seFrMetricTile`/KPI en colonne étroite → wrap des chiffres et libellés.
