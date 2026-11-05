@@ -1568,6 +1568,23 @@
         }
       }
     }
+    // Deep-link: components.html?persona=FieldSales&category=Sales&surface=RecordPage&dataMode=live&q=visit
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      ['category', 'persona', 'surface', 'dataMode'].forEach(g => {
+        const v = sp.get(g);
+        if (!v) return;
+        const btn = Array.from(filterBar.querySelectorAll('.filter-dd-panel button[data-group="' + g + '"]'))
+          .find(b => (b.dataset.value || '') === v);
+        if (btn) btn.click();
+      });
+      const qv = sp.get('q');
+      if (qv) {
+        state.q = qv;
+        const qi = document.querySelector('.filter-bar input[type="search"], .filter-bar input[type="text"], .filter-bar input:not([type])');
+        if (qi) qi.value = qv;
+      }
+    } catch (e) { /* ignore malformed query strings */ }
     apply();
   }
 

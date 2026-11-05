@@ -95,7 +95,7 @@ export default class SeFrCustomerSalesSummary extends LightningElement {
     @api brandsCsv;
 
     @api storesTitle;
-    @api storesIcon = 'standard:store';
+    @api storesIcon = 'standard:merchandising';  // standard:store doesn't exist in SLDS sprite
     @api storesCsv;
 
     @api storeVisitsSuffix;

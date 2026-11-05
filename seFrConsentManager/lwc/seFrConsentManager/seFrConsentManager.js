@@ -16,6 +16,14 @@ const DEFAULTS_BY_OBJECT_FR = {
     Account: ''
 };
 
+// Sample channels (label|state) shown when no real field mapping is available (no channelsCsv
+// and an object without built-in opt-out fields, e.g. Account). Toggles stay local to the
+// component. Provide channelsCsv (label|fieldApiName|inverted) to bind real fields instead.
+const SAMPLE_CHANNELS = {
+    fr: [['E-mail', true], ['Téléphone', true], ['SMS', false], ['WhatsApp', true], ['Courrier postal', false]],
+    en: [['Email', true], ['Phone', true], ['SMS', false], ['WhatsApp', true], ['Postal mail', false]]
+};
+
 const LABELS = {
     en: {
         cardTitle: 'Contact Preferences & GDPR',
@@ -97,9 +105,10 @@ export default class SeFrConsentManager extends LightningElement {
         const map = this.language === 'fr' ? DEFAULTS_BY_OBJECT_FR : DEFAULTS_BY_OBJECT_EN;
         return map[this.objectApiName] || '';
     }
-    get needsMapping() {
+    get isSample() {
         return !this.channelsCsv && !(DEFAULTS_BY_OBJECT_EN[this.objectApiName]);
     }
+    get needsMapping() { return false; }
     get needsMappingMessage() {
         return this.labels.needsMapping.replace('{object}', this.objectApiName || '');
     }
@@ -110,10 +119,15 @@ export default class SeFrConsentManager extends LightningElement {
     get loadingText() { return this.labels.loading; }
 
     get channels() {
+        if (this.isSample) {
+            const rows = SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr;
+            return rows.map((r, i) => ({ key: `ch${i}`, label: r[0], fieldApiName: `__sample${i}`, inverted: false }));
+        }
         return parseChannels(this.resolvedChannelsCsv);
     }
 
     get channelFieldsForWire() {
+        if (this.isSample) return [];
         const prefix = this.objectApiName || 'Contact';
         return this.channels.map(c => `${prefix}.${c.fieldApiName}`);
     }
@@ -121,7 +135,9 @@ export default class SeFrConsentManager extends LightningElement {
     get displayChannels() {
         return this.channels.map(c => ({
             ...c,
-            checked: !!this.channelStates[c.fieldApiName]
+            checked: this.isSample && !(c.fieldApiName in this.channelStates)
+                ? !!(SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr)[Number(c.key.slice(2))][1]
+                : !!this.channelStates[c.fieldApiName]
         }));
     }
 
@@ -153,6 +169,16 @@ export default class SeFrConsentManager extends LightningElement {
         const fieldApiName = event.target.dataset.field;
         const invertedAttr = event.target.dataset.inverted === 'true';
         const isOptedIn = event.target.checked;
+
+        if (this.isSample) {
+            this.channelStates = { ...this.channelStates, [fieldApiName]: isOptedIn };
+            this.dispatchEvent(new ShowToastEvent({
+                title: this.labels.toastSuccessTitle,
+                message: this.resolvedSuccessMessage,
+                variant: 'success'
+            }));
+            return;
+        }
 
         const fields = { Id: this.recordId };
         fields[fieldApiName] = invertedAttr ? !isOptedIn : isOptedIn;

@@ -5,9 +5,13 @@
     /* Prevent labels from bleeding past the card border in narrow column layouts. */
     overflow-x: hidden;
 }
+/* The track must pass THROUGH the center of the phase dots, not below them.
+   Dot stack: wrapper padding-top = 24px, dot = 14px tall → dot vertical center sits at
+   24 + 7 = 31px from the wrapper top. Track height = 2px → position its top at 30px so
+   it visually crosses the dots horizontally through the middle. */
 .timeline-track {
     position: absolute;
-    top: 38px;
+    top: 30px;
     left: 24px;
     right: 24px;
     height: 2px;

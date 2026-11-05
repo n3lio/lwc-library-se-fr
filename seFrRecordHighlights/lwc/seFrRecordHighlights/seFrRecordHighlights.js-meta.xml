@@ -17,7 +17,6 @@
                 <object>Lead</object>
                 <object>Order</object>
                 <object>Contract</object>
-                <object>Quote</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls button labels (Edit / Modifier, View Account Hierarchy / Voir la hiérarchie) and empty-state messages." />
             <property name="recordSource" type="String" datasource="current,parent" default="current" label="Record source" description="current = show the record on the current page. parent = show the linked Account (Contact/Opportunity/Case/Order/Contract/Quote/Lead) or the Parent Account (when on an Account page)." />

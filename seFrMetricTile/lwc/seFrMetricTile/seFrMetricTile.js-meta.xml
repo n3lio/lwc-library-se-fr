@@ -49,8 +49,6 @@
 
             <property name="enableTooltip" type="Boolean" default="false" label="Enable hover tooltip" description="Off by default. Turn ON to show value-on-point on hover (line / area / bar)." />
 
-            <!-- Deprecated: kept so existing FlexiPages don't break on upgrade. -->
-            <property name="trendPositive" type="Boolean" default="false" label="(deprecated) Trend is positive" description="No longer used - the color is auto-derived from the sign of trendDisplay." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

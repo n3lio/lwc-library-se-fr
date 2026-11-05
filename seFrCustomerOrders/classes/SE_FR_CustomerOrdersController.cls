@@ -116,8 +116,27 @@ public with sharing class SE_FR_CustomerOrdersController {
                 'ShipToContactId = :recordId'
             };
             if (hasContactCustomField) clauses.add('Contact__c = :recordId');
-            if (contactAccountId != null) clauses.add('AccountId = :contactAccountId');
+            // Literal (Id type is enforced): the bind variable would be out of scope in the caller's dynamic SOQL.
+            if (contactAccountId != null) clauses.add('AccountId = \'' + String.valueOf(contactAccountId) + '\'');
             return '(' + String.join(clauses, ' OR ') + ')';
+        }
+        if (objectApiName == 'Visit__c') {
+            // Resolve the visit's Account__c so the orders list shows the retailer's history
+            // during the visit itself (useful on the "Commande" tab of the Visit record page).
+            // Schema-safe: skip if Visit__c isn't deployed in the org.
+            if (!Schema.getGlobalDescribe().containsKey('Visit__c')) return null;
+            List<SObject> rows = Database.query(
+                'SELECT Account__c FROM Visit__c WHERE Id = :recordId LIMIT 1'
+            );
+            if (rows.isEmpty()) return null;
+            Id visitAccountId = (Id) rows[0].get('Account__c');
+            if (visitAccountId == null) return null;
+            // Bind as a shared variable so the main query can `:recordId`-style reference it.
+            // We can't bind a local var to the outer SOQL from here, so return a bind-safe form:
+            // the outer query already binds :recordId; we substitute :recordId with the account.
+            // Simplest: return a literal clause using the resolved Id (quoted) — safe because Id
+            // type is enforced before concatenation.
+            return 'AccountId = \'' + String.escapeSingleQuotes(String.valueOf(visitAccountId)) + '\'';
         }
         return null;
     }

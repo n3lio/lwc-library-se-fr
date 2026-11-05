@@ -7,10 +7,9 @@
     <targets>
         <target>lightning__HomePage</target>
         <target>lightning__AppPage</target>
-        <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
-        <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
+        <targetConfig targets="lightning__HomePage,lightning__AppPage">
             <property name="language" type="String" default="fr" label="UI language" description="Two-letter code - 'en' (default) or 'fr'. Controls all built-in UI strings (headings, buttons, badges). Explicit values set on cardTitle / emptyStateMessage still override the dictionary." />
             <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default (‘My Day’ / ‘Ma journée’)." />
             <property name="cardIcon" type="String" default="standard:event" label="Card icon" />

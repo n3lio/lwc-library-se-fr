@@ -1,0 +1,171 @@
+/* CCO FR — Visit Check-In. Compact single-row layouts, no wasted space. */
+:host {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+lightning-card {
+    --slds-c-card-radius-border: 12px;
+    --sds-c-card-radius-border: 12px;
+    border-radius: 12px;
+    display: block;
+}
+
+.sefrci-body {
+    padding: 0.75rem 1rem 1rem;
+}
+
+/* ---------- State row — one horizontal strip per state ---------- */
+.sefrci-state {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    background: #ffffff;
+    flex-wrap: wrap;
+}
+
+/* Variant tints — subtle 1-px colored left border + matching badge. */
+.sefrci-state--planned   { border-left: 3px solid #0176d3; background: #f3f8ff; }
+.sefrci-state--inprogress{ border-left: 3px solid #ba6e00; background: #fff6ea; }
+.sefrci-state--completed { border-left: 3px solid #2e844a; background: #f1faf4; }
+.sefrci-state--cancelled { border-left: 3px solid #747474; background: #f6f6f6; }
+
+/* The planned & inprogress states can wrap vertically on narrow columns so the CTA
+   button sits on its own line below the headline + chrono. On completed/cancelled
+   we keep everything inline. */
+.sefrci-state--planned,
+.sefrci-state--inprogress {
+    gap: 0.75rem;
+}
+
+.sefrci-state__head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.sefrci-state__badge {
+    flex: 0 0 auto;
+    padding: 0.35rem;
+    border-radius: 999px;
+    --sds-c-icon-color-foreground-default: #ffffff;
+    --sds-c-icon-color-foreground: #ffffff;
+}
+.sefrci-state__badge--planned    { background: #0176d3; }
+.sefrci-state__badge--inprogress { background: #ba6e00; }
+.sefrci-state__badge--completed  { background: #2e844a; }
+.sefrci-state__badge--cancelled  { background: #747474; }
+
+.sefrci-state__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+.sefrci-state__title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #16325c;
+    margin: 0;
+}
+.sefrci-state__hint {
+    font-size: 0.78rem;
+    color: #5b5b5b;
+    margin: 0;
+}
+
+/* Big elapsed-time clock (inprogress state only). */
+.sefrci-clock {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #f0d2a3;
+    min-width: 7rem;
+}
+.sefrci-clock__label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #8b5a00;
+    font-weight: 600;
+}
+.sefrci-clock__value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #8b5a00;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+/* Completed-state duration pill — compact chip next to the hint line. */
+.sefrci-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #c3e3ce;
+    color: #0b6a35;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+.sefrci-chip__icon {
+    --sds-c-icon-color-foreground-default: #2e844a;
+    --sds-c-icon-color-foreground: #2e844a;
+}
+.sefrci-chip__value {
+    letter-spacing: 0.3px;
+}
+
+/* CTA button in planned / inprogress states — stretches on narrow columns. */
+.sefrci-cta {
+    display: inline-block;
+    flex: 0 0 auto;
+}
+.sefrci-cta::part(button) {
+    min-height: 2.5rem;
+    padding: 0 1.4rem;
+    font-weight: 600;
+}
+
+.sefrci-action {
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.sefrci-loading {
+    position: relative;
+    min-height: 3rem;
+}
+
+/* Narrow column fallback — stack content below ~360px. */
+@media (max-width: 24em) {
+    .sefrci-state {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+    }
+    .sefrci-action,
+    .sefrci-cta {
+        margin-left: 0;
+        width: 100%;
+    }
+    .sefrci-cta::part(button) {
+        width: 100%;
+    }
+    .sefrci-chip {
+        align-self: flex-start;
+    }
+}

@@ -25,13 +25,16 @@ seFrAgentforceHeader:
 seFrAlertsRibbon:
   classes: []
 
+seFrBusinessCardScanner:
+  classes: []
+
 seFrConsentManager:
   classes: []
 
 seFrContactCard:
   classes:
     - SE_FR_ContactCardController  # local
-    - SE_FR_ImageFileController  # shared
+    - SE_FR_ImageFileController  # local
   imports_detected:
     - SE_FR_ContactCardController
     - SE_FR_ImageFileController
@@ -39,6 +42,7 @@ seFrContactCard:
 seFrContactsCarousel:
   classes:
     - SE_FR_ContactsCarouselController  # local
+    - SE_FR_ImageFileController  # local
   imports_detected:
     - SE_FR_ContactsCarouselController
 
@@ -75,24 +79,27 @@ seFrKanbanBoard:
 seFrKpiLauncher:
   classes: []
 
+seFrLeadFirstTouch:
+  classes: []
+
 seFrMetricTile:
   classes: []
 
 seFrMyEvents:
   classes:
-    - SE_FR_AgendaController  # shared
+    - SE_FR_AgendaController  # local
   imports_detected:
     - SE_FR_AgendaController
 
 seFrMyTasks:
   classes:
-    - SE_FR_AgendaController  # shared
+    - SE_FR_AgendaController  # local
   imports_detected:
     - SE_FR_AgendaController
 
 seFrNearbyAccountsMap:
   classes:
-    - SE_FR_NearbyAccountsController  # shared
+    - SE_FR_NearbyAccountsController  # local
   imports_detected:
     - SE_FR_NearbyAccountsController
 
@@ -120,9 +127,15 @@ seFrPromptLauncher:
   imports_detected:
     - SE_FR_PromptLauncherController
 
+seFrRecordActions:
+  classes:
+    - SE_FR_AccountActionsController  # local
+  imports_detected:
+    - SE_FR_AccountActionsController
+
 seFrRecordHighlights:
   classes:
-    - SE_FR_ImageFileController  # shared
+    - SE_FR_ImageFileController  # local
     - SE_FR_RecordHighlightsController  # local
   imports_detected:
     - SE_FR_ImageFileController
@@ -130,7 +143,7 @@ seFrRecordHighlights:
 
 seFrRelatedRecordCard:
   classes:
-    - SE_FR_ImageFileController  # shared
+    - SE_FR_ImageFileController  # local
     - SE_FR_RelatedRecordCardController  # local
   imports_detected:
     - SE_FR_ImageFileController
@@ -172,8 +185,50 @@ seFrTerritoryMap:
 seFrTimelinePhases:
   classes: []
 
+seFrVisitCheckIn:
+  classes: []
+
+seFrVisitKanban:
+  classes:
+    - SE_FR_VisitKanbanController  # local
+  imports_detected:
+    - SE_FR_VisitKanbanController
+
+seFrVisitPlan:
+  classes: []
+
+seFrVisitProductCheck:
+  classes:
+    - SE_FR_ProductCheckController  # local
+  imports_detected:
+    - SE_FR_ProductCheckController
+
+seFrVisitQuickOrder:
+  classes: []
+
+seFrVisitRestockOrder:
+  classes:
+    - SE_FR_VisitRestockOrderController  # local
+  imports_detected:
+    - SE_FR_VisitRestockOrderController
+
+seFrVisitShelfCompliance:
+  classes:
+    - SE_FR_ShelfComplianceController  # local
+  imports_detected:
+    - SE_FR_ShelfComplianceController
+
+seFrVisitShelfSpace:
+  classes: []
+
+seFrVisitSummaryAI:
+  classes:
+    - SE_FR_VisitSummaryController  # local
+  imports_detected:
+    - SE_FR_VisitSummaryController
+
 seFrVoiceNoteTaker:
   classes:
-    - SE_FR_VoiceNoteController  # shared
+    - SE_FR_VoiceNoteController  # local
   imports_detected:
     - SE_FR_VoiceNoteController

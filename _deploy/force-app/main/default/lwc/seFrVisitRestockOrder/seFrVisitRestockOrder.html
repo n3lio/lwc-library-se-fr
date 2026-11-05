@@ -1,0 +1,150 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={resolvedCardIcon}>
+        <template lwc:if={hasLines}>
+            <lightning-button-icon
+                slot="actions"
+                icon-name="utility:refresh"
+                alternative-text={t.refresh}
+                title={t.refresh}
+                size="small"
+                variant="bare"
+                onclick={handleRefresh}>
+            </lightning-button-icon>
+        </template>
+
+        <div class="sefrro-body">
+            <template lwc:if={loading}>
+                <div class="sefrro-loading">
+                    <lightning-spinner alternative-text={t.loading} size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:elseif={isEmpty}>
+                <div class="sefrro-empty">
+                    <lightning-icon icon-name="utility:info_alt" size="small" class="sefrro-empty__icon"></lightning-icon>
+                    <div class="sefrro-empty__text">
+                        <p class="sefrro-empty__title">{t.emptyTitle}</p>
+                        <p class="sefrro-empty__hint">{t.emptyHint}</p>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <!-- Headline + toolbar -->
+                <div class="sefrro-header">
+                    <div class="sefrro-headline">
+                        <lightning-icon icon-name="utility:warning" size="x-small" class="sefrro-headline__icon"></lightning-icon>
+                        <span class="sefrro-headline__text">{headlineText}</span>
+                    </div>
+                    <div class="sefrro-toolbar">
+                        <lightning-button variant="base" size="small" label={t.selectAll} icon-name="utility:check" onclick={handleSelectAll}></lightning-button>
+                        <lightning-button variant="base" size="small" label={t.clearAll} icon-name="utility:clear" onclick={handleClearAll}></lightning-button>
+                    </div>
+                </div>
+
+                <!-- Grid of rupture lines -->
+                <div class="sefrro-grid" role="table">
+                    <div class="sefrro-grid__row sefrro-grid__row--head" role="row">
+                        <div class="sefrro-cell sefrro-cell--select" role="columnheader"></div>
+                        <div class="sefrro-cell sefrro-cell--product" role="columnheader">{t.colProduct}</div>
+                        <div class="sefrro-cell sefrro-cell--qty" role="columnheader">{t.colQty}</div>
+                        <div class="sefrro-cell sefrro-cell--price" role="columnheader">{t.colPrice}</div>
+                        <div class="sefrro-cell sefrro-cell--total" role="columnheader">{t.colTotal}</div>
+                    </div>
+
+                    <template for:each={lines} for:item="line">
+                        <div key={line.productId} class="sefrro-grid__row" role="row">
+                            <div class="sefrro-cell sefrro-cell--select" role="cell">
+                                <input type="checkbox"
+                                       class="sefrro-checkbox"
+                                       data-id={line.productId}
+                                       checked={line.selected}
+                                       onchange={handleSelect} />
+                            </div>
+                            <div class="sefrro-cell sefrro-cell--product" role="cell">
+                                <p class="sefrro-product__name">{line.name}</p>
+                                <p class="sefrro-product__meta">
+                                    <span class="sefrro-code">{line.code}</span>
+                                    <template lwc:if={line.isAlert}>
+                                        <span class="sefrro-tag sefrro-tag--alert">{t.tagPriceAlert}</span>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="sefrro-tag sefrro-tag--rupture">{t.tagRupture}</span>
+                                    </template>
+                                </p>
+                            </div>
+                            <div class="sefrro-cell sefrro-cell--qty" role="cell">
+                                <lightning-input type="number"
+                                                 variant="label-hidden"
+                                                 label={t.colQty}
+                                                 min="0"
+                                                 step="1"
+                                                 class="sefrro-input"
+                                                 data-id={line.productId}
+                                                 value={line.qty}
+                                                 onchange={handleQtyChange}>
+                                </lightning-input>
+                            </div>
+                            <div class="sefrro-cell sefrro-cell--price" role="cell">
+                                <lightning-input type="number"
+                                                 variant="label-hidden"
+                                                 label={t.colPrice}
+                                                 min="0"
+                                                 step="0.01"
+                                                 class="sefrro-input"
+                                                 data-id={line.productId}
+                                                 value={line.unitPrice}
+                                                 onchange={handlePriceChange}>
+                                </lightning-input>
+                            </div>
+                            <div class="sefrro-cell sefrro-cell--total" role="cell">
+                                <span class="sefrro-total">{line.lineTotalText}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer: selected count, total, convert CTA -->
+                <div class="sefrro-footer">
+                    <div class="sefrro-footer__left">
+                        <p class="sefrro-footer__selected">{selectedCountText}</p>
+                        <template lwc:if={skippedText}>
+                            <p class="sefrro-footer__skipped">
+                                <lightning-icon icon-name="utility:info_alt" size="xx-small"></lightning-icon>
+                                <span>{skippedText}</span>
+                            </p>
+                        </template>
+                    </div>
+                    <div class="sefrro-footer__right">
+                        <div class="sefrro-total-pill">
+                            <span class="sefrro-total-pill__label">{t.totalLabel}</span>
+                            <span class="sefrro-total-pill__value">{totalText}</span>
+                        </div>
+                        <lightning-button
+                            variant="brand"
+                            label={convertLabel}
+                            icon-name="utility:forward"
+                            icon-position="right"
+                            disabled={disableConvert}
+                            onclick={handleConvert}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={hasLastOrder}>
+                <div class="sefrro-last-order">
+                    <lightning-icon icon-name="utility:success" size="x-small" class="sefrro-last-order__icon"></lightning-icon>
+                    <span class="sefrro-last-order__text">{lastOrderNumber}</span>
+                    <lightning-button
+                        variant="neutral"
+                        size="small"
+                        label={t.openOrder}
+                        icon-name="utility:new_window"
+                        onclick={handleOpenOrder}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

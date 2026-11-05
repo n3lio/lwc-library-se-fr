@@ -1,0 +1,128 @@
+/* CCO FR — Visit Summary AI
+   Standard lightning-card wrapper (homogène avec les autres cards sefr*). Only the inner
+   layout is themed — the card chrome stays SLDS-native so it blends into any FlexiPage
+   the admin drops it on. */
+
+.sefrvs-body {
+    min-height: 6rem;
+}
+
+.sefrvs-section + .sefrvs-section {
+    border-top: 1px solid var(--slds-g-color-border-base-1, #e5e5e5);
+    padding-top: 0.75rem;
+}
+
+.sefrvs-section__title {
+    color: #3e3e3c;
+    letter-spacing: 0.0625rem;
+}
+
+/* --- Synthèse --- */
+.sefrvs-headline {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #16325c;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+}
+
+.sefrvs-narrative {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.sefrvs-narrative__item {
+    position: relative;
+    padding: 0.5rem 0.625rem 0.5rem 0.9rem;
+    background: #fbfbfd;
+    border: 1px solid #ececec;
+    border-radius: 6px;
+    border-left: 3px solid #0176d3;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    color: #3e3e3c;
+}
+
+.sefrvs-summary-text {
+    white-space: pre-line;
+}
+
+/* --- Points clés --- */
+.sefrvs-kp {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem 1rem;
+    margin: 0;
+}
+
+@media (max-width: 560px) {
+    .sefrvs-kp {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sefrvs-kp__row {
+    display: grid;
+    grid-template-columns: minmax(6rem, max-content) 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 0.25rem 0;
+    border-bottom: 1px dotted #eaeaea;
+}
+
+.sefrvs-kp__label {
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03rem;
+    color: #706e6b;
+}
+
+.sefrvs-kp__value {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #16325c;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* --- Actions --- */
+.sefrvs-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.sefrvs-actions__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-left: 3px solid #0176d3;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #16325c;
+}
+
+.sefrvs-actions__icon {
+    --sds-c-icon-color-foreground-default: #0176d3;
+    margin-top: 0.15rem;
+    flex: 0 0 auto;
+}
+
+/* --- Empty state --- */
+.sefrvs-context-signals {
+    color: var(--slds-g-color-neutral-base-50, #747474);
+    font-style: italic;
+}

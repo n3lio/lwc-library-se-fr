@@ -13,7 +13,65 @@ const SPEED_MAP = {
     fast: 0.55
 };
 
+/**
+ * Lightweight inline-markdown parser.
+ *
+ * Supports (longest-match first so **bold** doesn't collide with *italic*):
+ *   **bold**      → segment type 'bold'
+ *   __underline__ → segment type 'underline'
+ *   *italic*      → segment type 'italic'
+ *   _italic_      → segment type 'italic'
+ *   `code`        → segment type 'code'
+ *   ~~strike~~    → segment type 'strike'
+ *
+ * Returns an array of { id, text, type } where type ∈
+ *   'plain' | 'bold' | 'italic' | 'underline' | 'code' | 'strike'.
+ *
+ * No HTML is produced — segments are rendered via lwc:if in the template,
+ * which keeps the component XSS-safe (no innerHTML / lwc:dom="manual").
+ */
+function parseInlineMarkdown(input) {
+    const str = input == null ? '' : String(input);
+    if (!str) return [];
+    // Order matters: **…** before *…*, __…__ before _…_, ~~…~~ before anything.
+    const RX = /(\*\*[^*\n]+\*\*)|(__[^_\n]+__)|(~~[^~\n]+~~)|(\*[^*\n]+\*)|(_[^_\n]+_)|(`[^`\n]+`)/g;
+    const tokens = [];
+    let last = 0;
+    let id = 0;
+    let m;
+    while ((m = RX.exec(str)) !== null) {
+        if (m.index > last) {
+            tokens.push({ id: id++, text: str.slice(last, m.index), type: 'plain' });
+        }
+        const match = m[0];
+        let type = 'plain';
+        let inner = match;
+        if (match.startsWith('**') && match.endsWith('**'))      { type = 'bold'; inner = match.slice(2, -2); }
+        else if (match.startsWith('__') && match.endsWith('__')) { type = 'underline'; inner = match.slice(2, -2); }
+        else if (match.startsWith('~~') && match.endsWith('~~')) { type = 'strike'; inner = match.slice(2, -2); }
+        else if (match.startsWith('*')  && match.endsWith('*'))  { type = 'italic'; inner = match.slice(1, -1); }
+        else if (match.startsWith('_')  && match.endsWith('_'))  { type = 'italic'; inner = match.slice(1, -1); }
+        else if (match.startsWith('`')  && match.endsWith('`'))  { type = 'code'; inner = match.slice(1, -1); }
+        tokens.push({ id: id++, text: inner, type });
+        last = m.index + match.length;
+    }
+    if (last < str.length) {
+        tokens.push({ id: id++, text: str.slice(last), type: 'plain' });
+    }
+    // Flag booleans for the template's lwc:if chain.
+    return tokens.map(t => ({
+        ...t,
+        isPlain:     t.type === 'plain',
+        isBold:      t.type === 'bold',
+        isItalic:    t.type === 'italic',
+        isUnderline: t.type === 'underline',
+        isCode:      t.type === 'code',
+        isStrike:    t.type === 'strike'
+    }));
+}
+
 export default class SeFrSplashBanner extends LightningElement {
+    @api language = 'fr';
     @api title = 'Bonjour 👋';
     @api subtitle = '';
     @api textSize = 'l';
@@ -63,6 +121,10 @@ export default class SeFrSplashBanner extends LightningElement {
 
     get hasSubtitle() { return !!this.subtitle && this.subtitle.trim().length > 0; }
     get hasCta() { return !!this.ctaLabel && !!this.ctaUrl; }
+
+    // Markdown-parsed segments for title + subtitle. See parseInlineMarkdown docs above.
+    get titleSegments()    { return parseInlineMarkdown(this.title); }
+    get subtitleSegments() { return parseInlineMarkdown(this.subtitle); }
 
     handleCtaClick(event) {
         if (!this.ctaUrl) return;

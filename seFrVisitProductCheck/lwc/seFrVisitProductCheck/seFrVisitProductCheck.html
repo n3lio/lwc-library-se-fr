@@ -1,0 +1,78 @@
+<template>
+    <lightning-card title={effectiveTitle} icon-name={effectiveIcon}>
+        <div slot="actions" class="sefrvpc-counter" lwc:if={hasProducts}>
+            <span class="sefrvpc-counter__num">{doneCount}/{totalCount}</span>
+            <span class="sefrvpc-counter__lbl">{labels.progressDone}</span>
+        </div>
+
+        <div class="sefrvpc-wrap">
+            <template lwc:if={isLoading}>
+                <div class="sefrvpc-loading">
+                    <lightning-spinner alternative-text={labels.loading} size="small"></lightning-spinner>
+                    <span>{labels.loading}</span>
+                </div>
+            </template>
+
+            <template lwc:if={error}>
+                <div class="slds-text-color_error sefrvpc-error">{error}</div>
+            </template>
+
+            <template lwc:if={isEmpty}>
+                <div class="sefrvpc-empty">{labels.empty}</div>
+            </template>
+
+            <template lwc:if={hasProducts}>
+                <p class="sefrvpc-hint">{labels.hint}</p>
+                <ul class="sefrvpc-list">
+                    <template for:each={products} for:item="p">
+                        <li key={p.productId} class="sefrvpc-row">
+                            <div class="sefrvpc-row__head">
+                                <div class="sefrvpc-row__thumb">
+                                    <template lwc:if={p.hasImage}>
+                                        <img src={p.imageUrl} alt={p.name} loading="lazy" />
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="sefrvpc-row__thumb-fallback">{p.initial}</span>
+                                    </template>
+                                </div>
+                                <div class="sefrvpc-row__title">
+                                    <strong>{p.name}</strong>
+                                    <span class="sefrvpc-row__code" lwc:if={p.productCode}> · {p.productCode}</span>
+                                </div>
+                                <div class="sefrvpc-row__price" lwc:if={p.displayPrice}>
+                                    <span class="sefrvpc-row__price-lbl">{labels.unitPriceLabel}</span>
+                                    <span class="sefrvpc-row__price-val">{p.displayPrice}</span>
+                                </div>
+                            </div>
+
+                            <div class="sefrvpc-row__controls">
+                                <div class="sefrvpc-pills">
+                                    <button type="button" class={p.presentClass} data-id={p.productId} onclick={handlePresent}>
+                                        <lightning-icon icon-name="utility:check" size="xx-small"></lightning-icon>
+                                        <span>{labels.presentLabel}</span>
+                                    </button>
+                                    <button type="button" class={p.oosClass} data-id={p.productId} onclick={handleOos}>
+                                        <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                                        <span>{labels.oosLabel}</span>
+                                    </button>
+                                </div>
+                                <input type="text"
+                                       class="sefrvpc-input sefrvpc-input--price"
+                                       placeholder={labels.observedPricePh}
+                                       data-id={p.productId}
+                                       value={p.observedPrice}
+                                       onchange={handlePriceChange} />
+                                <input type="text"
+                                       class="sefrvpc-input sefrvpc-input--note"
+                                       placeholder={labels.notePh}
+                                       data-id={p.productId}
+                                       value={p.note}
+                                       onchange={handleNoteChange} />
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -19,19 +19,7 @@
             <property name="autoRunFirstPrompt" type="Boolean" default="false" label="Auto-run first prompt on load" description="When ON, the first applicable prompt runs automatically as soon as the page loads. Skips silently if any required user input is empty." />
             <property name="resultAccent" type="String" datasource="blue,purple,green" default="blue" label="Result panel accent color" />
             <property name="maxHeight" type="Integer" default="0" label="Maximum component height (px)" description="0 (default) = no cap, the component grows with the AI response. Set a number (e.g. 600) to cap the vertical footprint and enable scroll inside the component when the response is very long." />
-            <!-- Legacy: replaced by maxHeight. Kept so existing FlexiPages don't break. -->
-            <property name="height" type="Integer" label="(deprecated)" />
 
-            <!-- Legacy properties kept so existing FlexiPages don't break on upgrade. The component
-                 used to be a chat surface for a real Agentforce agent — the refactor replaces it
-                 with a Prompt Launcher. None of the props below are read by the new code. -->
-            <property name="mode" type="String" label="(deprecated)" />
-            <property name="agentRef" type="String" label="(deprecated)" />
-            <property name="agentDisplayName" type="String" label="(deprecated)" />
-            <property name="scriptedRepliesJson" type="String" label="(deprecated)" />
-            <property name="flowRulesCsv" type="String" label="(deprecated)" />
-            <property name="quickFlowsCsv" type="String" label="(deprecated)" />
-            <property name="inputPlaceholder" type="String" label="(deprecated)" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

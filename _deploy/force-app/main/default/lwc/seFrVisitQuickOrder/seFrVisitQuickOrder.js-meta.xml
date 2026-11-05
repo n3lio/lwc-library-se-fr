@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Commande rapide (catalogue visuel)</masterLabel>
+    <description>Catalogue produit visuel avec recommandations contextualisées sur les relevés terrain. Panier avec remise ligne + globale, suggestions issues des ruptures / produits manquants / PDL basse. Alternative visuelle au cadencier.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Visit__c</object>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language (fr | en)" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:order_item" label="Card icon" />
+            <property name="brandName" type="String" default="Ma marque" label="Brand name (badges &amp; recos)" />
+            <property name="currencySymbol" type="String" default="€" label="Currency symbol" />
+            <property name="seedProductsJson" type="String" label="Seed products JSON (override)" description="Optional JSON array of products { id, code, name, family, price, imageUrl, stock, badge? }. Falls back to a generic CPG catalog if blank." />
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage">
+            <property name="language" type="String" default="fr" />
+            <property name="cardTitle" type="String" />
+            <property name="cardIcon" type="String" default="standard:order_item" />
+            <property name="brandName" type="String" default="Ma marque" />
+            <property name="currencySymbol" type="String" default="€" />
+            <property name="seedProductsJson" type="String" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

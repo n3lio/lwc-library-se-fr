@@ -3,7 +3,7 @@
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>CCO FR - Customer Orders</masterLabel>
-    <description>B2B / B2C - Lists the orders linked to an Account or Contact. Top block shows the latest order with its line items; bottom block is a compact history with search / sort / status filter / View all. Bilingual EN / FR.</description>
+    <description>B2B / B2C - Lists the orders linked to an Account, Contact or Visit__c. Top block shows the latest order with its line items; bottom block is a compact history with search / sort / status filter / View all. Bilingual EN / FR.</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
@@ -12,6 +12,7 @@
             <objects>
                 <object>Account</object>
                 <object>Contact</object>
+                <object>Visit__c</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls every built-in string (headers, buttons, sort labels, empty states)." />
             <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the dictionary default ('Orders' / 'Commandes')." />

@@ -104,13 +104,18 @@
     margin-top: 4px;
 }
 .next-badge {
-    display: inline-block;
-    padding: 1px 6px;
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    z-index: 2;
+    padding: 1px 8px;
     font-size: 0.7rem;
     font-weight: bold;
     color: #fff;
     background: #d00000;
     border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
 }
 
 .upcoming-section ul {

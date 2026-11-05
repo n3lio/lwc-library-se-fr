@@ -12,7 +12,7 @@ const LABELS = {
         viewAllOrders: 'View all',
         refresh: 'Refresh',
         search: 'Search',
-        searchPlaceholder: 'Search by order number…',
+        searchPlaceholder: 'Search by order #, account, contact…',
         sortLabel: 'Sort by',
         statusLabel: 'Status',
         statusAny: 'All statuses',
@@ -20,6 +20,8 @@ const LABELS = {
         emptyHistory: 'No previous orders.',
         emptyState: 'No order yet for this customer.',
         emptyStateCta: 'Create the first order',
+        noSearchMatch: 'No order matches your search.',
+        clearSearch: 'Clear search',
         openOrder: 'Open order',
         orderNumber: 'Order number',
         orderName: 'Order name',
@@ -47,7 +49,7 @@ const LABELS = {
         viewAllOrders: 'Voir tout',
         refresh: 'Actualiser',
         search: 'Rechercher',
-        searchPlaceholder: 'Rechercher par n° de commande…',
+        searchPlaceholder: 'Rechercher par n°, compte, contact…',
         sortLabel: 'Trier par',
         statusLabel: 'Statut',
         statusAny: 'Tous les statuts',
@@ -55,6 +57,8 @@ const LABELS = {
         emptyHistory: 'Aucune commande précédente.',
         emptyState: 'Aucune commande pour ce client.',
         emptyStateCta: 'Créer la première commande',
+        noSearchMatch: 'Aucune commande ne correspond à votre recherche.',
+        clearSearch: 'Effacer la recherche',
         openOrder: 'Ouvrir la commande',
         orderNumber: 'N° commande',
         orderName: 'Nom de la commande',
@@ -139,7 +143,13 @@ export default class SeFrCustomerOrders extends NavigationMixin(LightningElement
     })
     wiredOrders(result) {
         this.wiredResult = result;
-        if (result.data) this.rawResult = result.data;
+        if (result.data) {
+            this.rawResult = result.data;
+        } else if (result.error) {
+            // Apex error — keep the previous result on screen instead of letting templates crash on undefined.
+            // eslint-disable-next-line no-console
+            console.error('seFrCustomerOrders — getCustomerOrders error', result.error);
+        }
     }
 
     // If the SE picked a status via the dropdown, use it; else fall back to the static prop whitelist.
@@ -230,7 +240,19 @@ export default class SeFrCustomerOrders extends NavigationMixin(LightningElement
 
     // ---------------- Handlers ----------------
 
-    handleSearchChange(event) { this.searchTerm = event.target.value; }
+    handleSearchChange(event) {
+        const value = event.target.value || '';
+        // Debounce so we don't fire an Apex call on every keystroke (was the source of brittle UI updates).
+        if (this._searchTimer) window.clearTimeout(this._searchTimer);
+        this._searchTimer = window.setTimeout(() => { this.searchTerm = value.trim(); }, 220);
+    }
+    handleClearSearch() {
+        this.searchTerm = '';
+        const input = this.template.querySelector('lightning-input[data-id="search"]');
+        if (input) input.value = '';
+    }
+    get isSearchActive() { return !!(this.searchTerm && this.searchTerm.length); }
+    get currentEmptyLabel() { return this.isSearchActive ? this.labels.noSearchMatch : this.labels.emptyState; }
     handleSortChange(event)   { this.currentSort = event.detail.value; }
     handleStatusChange(event) { this.currentStatus = event.detail.value; }
 

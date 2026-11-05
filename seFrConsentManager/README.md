@@ -41,13 +41,16 @@ None.
 
 With these defaults the component deploys on any Contact record page without creating a single custom field.
 
+## Sample mode (no config needed)
+When `channelsCsv` is left empty, the component renders a **sample set of channels** (Email / SMS / Phone / WhatsApp… with realistic allowed/refused states, localised via `language`) so the card is never empty on a fresh page. Toggles are read-only in this mode. Set `channelsCsv` to bind the real fields.
+
 ## Properties
 
 | Name | Type | Default | Description |
 |---|---|---|---|
 | `cardTitle` | String | `Contact Preferences & GDPR` | Card header title. |
 | `cardIcon` | String | `standard:task2` | Card header icon. |
-| `channelsCsv` | String | `Email|HasOptedOutOfEmail|true,Phone|DoNotCall|true,WhatsApp|HasOptedOutOfFax|true` | One channel per comma-separated item. Format: `label|fieldApiName|inverted`. |
+| `channelsCsv` | String | *(empty → sample channels)* | One channel per comma-separated item. Format: `label|fieldApiName|inverted`. |
 | `toggleActiveLabel` | String | `Allowed` | Shown when a toggle is on. |
 | `toggleInactiveLabel` | String | `Refused` | Shown when a toggle is off. |
 | `successMessage` | String | `Contact preferences updated.` | Success toast text. |

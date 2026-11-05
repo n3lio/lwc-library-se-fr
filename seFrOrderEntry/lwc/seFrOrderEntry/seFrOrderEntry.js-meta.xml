@@ -11,6 +11,7 @@
             <objects>
                 <object>Account</object>
                 <object>Case</object>
+                <object>Visit__c</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls every visible string (toolbar, grid headers, status filters, modal)." />
             <property name="cardTitle" type="String" label="Card title (override)" />
@@ -21,8 +22,6 @@
             <property name="localeTag" type="String" default="fr-FR" label="Locale tag" />
             <property name="fullScreenTitleTemplate" type="String" label="Full-screen title (override, {account} placeholder)" placeholder="Saisie de commande - {account}" />
             <property name="noAccountMessage" type="String" label="Empty-state message (override)" />
-            <!-- Kept for backwards compatibility with existing FlexiPages; the ERP checkbox was removed. -->
-            <property name="erpCheckboxLabel" type="String" label="(deprecated) ERP checkbox label" description="No longer rendered - kept to avoid breaking existing page layouts." />
             <property name="salesChannelId" type="String" label="Default SalesChannel Id (optional)" description="18-char Id of a SalesChannel record. Set on Order.SalesChannelId when an order is created. Leave empty to skip." />
             <property name="productImageFieldApiName" type="String" default="Image_URL__c" label="Product image field API name" description="Field on Product2 holding an image URL. Schema-safe: skipped if absent." />
             <property name="productImageFallbackUrl" type="String" label="Product image fallback URL" description="Used when no image is found on Product2 or ProductMedia." />

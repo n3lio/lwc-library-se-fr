@@ -10,13 +10,18 @@
 
         <div class="slds-p-horizontal_medium slds-p-bottom_medium">
 
-            <!-- ======================= Empty state (no order at all) ======================= -->
+            <!-- ======================= Empty state (no order at all OR no search match) ======================= -->
             <template if:false={hasAnyOrder}>
                 <div class="empty-state slds-text-align_center slds-p-vertical_large">
                     <lightning-icon icon-name="standard:orders" size="medium" class="slds-m-bottom_small"></lightning-icon>
-                    <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_medium">{labels.emptyState}</p>
-                    <template if:false={hideNewOrderButton}>
-                        <lightning-button label={labels.emptyStateCta} icon-name="utility:new" variant="brand" onclick={handleNewOrder}></lightning-button>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_medium">{currentEmptyLabel}</p>
+                    <template if:true={isSearchActive}>
+                        <lightning-button label={labels.clearSearch} variant="neutral" onclick={handleClearSearch}></lightning-button>
+                    </template>
+                    <template if:false={isSearchActive}>
+                        <template if:false={hideNewOrderButton}>
+                            <lightning-button label={labels.emptyStateCta} icon-name="utility:new" variant="brand" onclick={handleNewOrder}></lightning-button>
+                        </template>
                     </template>
                 </div>
             </template>
@@ -107,7 +112,7 @@
 
                 <div class="slds-grid slds-gutters_x-small slds-m-bottom_small">
                     <div class="slds-col">
-                        <lightning-input type="search" label={labels.search} variant="label-hidden" placeholder={labels.searchPlaceholder} value={searchTerm} onchange={handleSearchChange}></lightning-input>
+                        <lightning-input type="search" data-id="search" label={labels.search} variant="label-hidden" placeholder={labels.searchPlaceholder} value={searchTerm} onchange={handleSearchChange}></lightning-input>
                     </div>
                     <div class="slds-col slds-grow-none" style="min-width: 180px;">
                         <lightning-combobox label={labels.sortLabel} variant="label-hidden" options={sortOptions} value={currentSort} onchange={handleSortChange}></lightning-combobox>

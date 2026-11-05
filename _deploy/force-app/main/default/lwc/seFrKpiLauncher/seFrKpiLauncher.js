@@ -77,13 +77,6 @@ export default class SeFrKpiLauncher extends NavigationMixin(LightningElement) {
     @api kpi6Label; @api kpi6Value; @api kpi6Sublabel;
     @api kpi6Icon; @api kpi6Color; @api kpi6Link;
 
-    // Legacy props kept so previously-placed FlexiPages still deploy. Ignored by the new grid logic.
-    @api userType;
-    @api fieldTile1Label; @api fieldTile1Sub; @api fieldTile1Value;
-    @api fieldTile2Label; @api fieldTile2Sub; @api fieldTile2Value;
-    @api insideTile1Label; @api insideTile1Sub; @api insideTile1Value;
-    @api insideTile2Label; @api insideTile2Sub; @api insideTile2Value;
-    @api perfTileLabel; @api perfTileSub; @api perfTileValue;
 
     get resolvedCardTitle() {
         return this.cardTitle || DEFAULT_TITLE[this.language] || DEFAULT_TITLE.fr;

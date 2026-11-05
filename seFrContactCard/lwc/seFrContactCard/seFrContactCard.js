@@ -64,9 +64,6 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     @api imageFieldApiName = 'SDO_Cust360_Contact_Picture_URL__c';
     @api disableImageReplace = false;
     get allowImageReplace() { return !this.disableImageReplace; }
-    // Legacy prop — kept so existing FlexiPages don't break. The component now reads the image
-    // from BOTH the URL field (priority) AND the File attached to the contact (fallback).
-    @api imageMode = 'field';
 
     // --- Customer ID --------------------------------------------------------------------------
     @api showCustomerId = false;
@@ -99,7 +96,6 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     // prop (default=false) is kept so existing FlexiPages don't break on deploy; when it's
     // explicitly toggled ON, it still turns waves on, but `hideWaves` wins when set.
     @api hideWaves = false;
-    @api showWaves = false;
     get wavesVisible() {
         if (this.hideWaves) return false;
         return true; // on by default; `hideWaves` is the only way to turn them off.
@@ -117,11 +113,10 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     // (default false). The legacy `enablePromptSummary` prop is kept (a deployed FlexiPage
     // references it) but no longer drives the rendering — we read `disablePromptSummary` only.
     @api disablePromptSummary = false;
-    @api enablePromptSummary = false;       // legacy — see comment above
     get isPromptSummaryEnabled() { return !this.disablePromptSummary; }
     @api promptButtonLabel;                          // defaults to dictionary "Summarize"
-    @api promptTemplateApiName = 'einstein_gpt__summarizeContact';
-    @api promptInputApiName = 'Input:Contact';
+    @api promptTemplateApiName = 'CCO_FR_SummarizeContact';
+    @api promptInputApiName = 'Input:objectToSummarize';
     @api autoPromptOnLoad = false;
 
     // --- Internal state -----------------------------------------------------------------------

@@ -116,9 +116,27 @@
 
         <!-- Foreground content -->
         <div class="sb-content" style={textStyle}>
-            <div class="sb-title">{title}</div>
+            <div class="sb-title">
+                <template for:each={titleSegments} for:item="seg">
+                    <template lwc:if={seg.isBold}><strong key={seg.id} class="sb-md sb-md_bold">{seg.text}</strong></template>
+                    <template lwc:elseif={seg.isItalic}><em key={seg.id} class="sb-md sb-md_italic">{seg.text}</em></template>
+                    <template lwc:elseif={seg.isUnderline}><u key={seg.id} class="sb-md sb-md_underline">{seg.text}</u></template>
+                    <template lwc:elseif={seg.isCode}><code key={seg.id} class="sb-md sb-md_code">{seg.text}</code></template>
+                    <template lwc:elseif={seg.isStrike}><s key={seg.id} class="sb-md sb-md_strike">{seg.text}</s></template>
+                    <template lwc:else><span key={seg.id}>{seg.text}</span></template>
+                </template>
+            </div>
             <template lwc:if={hasSubtitle}>
-                <div class="sb-sub">{subtitle}</div>
+                <div class="sb-sub">
+                    <template for:each={subtitleSegments} for:item="seg">
+                        <template lwc:if={seg.isBold}><strong key={seg.id} class="sb-md sb-md_bold">{seg.text}</strong></template>
+                        <template lwc:elseif={seg.isItalic}><em key={seg.id} class="sb-md sb-md_italic">{seg.text}</em></template>
+                        <template lwc:elseif={seg.isUnderline}><u key={seg.id} class="sb-md sb-md_underline">{seg.text}</u></template>
+                        <template lwc:elseif={seg.isCode}><code key={seg.id} class="sb-md sb-md_code">{seg.text}</code></template>
+                        <template lwc:elseif={seg.isStrike}><s key={seg.id} class="sb-md sb-md_strike">{seg.text}</s></template>
+                        <template lwc:else><span key={seg.id}>{seg.text}</span></template>
+                    </template>
+                </div>
             </template>
             <template lwc:if={hasCta}>
                 <a class="sb-cta" href={ctaUrl} onclick={handleCtaClick}>{ctaLabel}</a>

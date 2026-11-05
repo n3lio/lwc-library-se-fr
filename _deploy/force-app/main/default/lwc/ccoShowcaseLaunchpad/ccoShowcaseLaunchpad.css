@@ -1,0 +1,27 @@
+:host { display: block; }
+.lp { background: linear-gradient(135deg, #f3f8fd 0%, #ffffff 60%); border: 1px solid #e5e5e5; border-radius: .75rem; padding: 1.25rem 1.5rem 1.5rem; }
+.lp-head { margin-bottom: 1rem; }
+.lp-title { font-size: 1.5rem; font-weight: 700; color: #032d60; margin: 0; }
+.lp-intro { margin: .25rem 0 0; color: #5c5c5c; font-size: .9rem; }
+.lp-section { margin-top: 1.25rem; }
+.lp-sec-head { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .6rem; }
+.lp-sec-title { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #444; margin: 0; }
+.lp-sec-sub { font-size: .8rem; color: #747474; }
+.lp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
+.lp-tile {
+    position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .6rem;
+    text-align: left; cursor: pointer; padding: 1rem 1rem .9rem; background: #fff;
+    border: 1px solid #e5e5e5; border-top: 4px solid var(--tile-accent, #0176d3); border-radius: .6rem;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.lp-tile:hover, .lp-tile:focus-visible {
+    transform: translateY(-3px); box-shadow: 0 8px 20px rgba(3, 45, 96, .14);
+    border-color: var(--tile-accent, #0176d3); outline: none;
+}
+.lp-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: .6rem; background: color-mix(in srgb, var(--tile-accent, #0176d3) 14%, #fff); }
+.lp-body { display: flex; flex-direction: column; gap: .2rem; min-height: 3.6rem; }
+.lp-name { font-size: 1rem; font-weight: 700; color: #181818; }
+.lp-desc { font-size: .8rem; line-height: 1.35; color: #5c5c5c; }
+.lp-go { margin-top: auto; display: inline-flex; align-items: center; gap: .3rem; font-size: .8rem; font-weight: 600; color: var(--tile-accent, #0176d3); }
+.lp-go-icon { --slds-c-icon-color-foreground-default: var(--tile-accent, #0176d3); transition: transform .15s ease; }
+.lp-tile:hover .lp-go-icon { transform: translateX(3px); }

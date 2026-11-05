@@ -51,8 +51,8 @@ Tous les fonds respectent `prefers-reduced-motion` (animations désactivées si 
 
 | Propriété | Description |
 |---|---|
-| `title` | Titre principal (centré, gros). Émojis acceptés. |
-| `subtitle` | Sous-titre optionnel sous le titre. |
+| `title` | Titre principal (centré, gros). Émojis acceptés. **Supporte le markdown inline** (voir ci-dessous). |
+| `subtitle` | Sous-titre optionnel sous le titre. **Supporte le markdown inline**. |
 | `textSize` | `s` / `m` / `l` (défaut) / `xl` |
 | `bgStyle` | Voir tableau ci-dessus. Défaut : `waves`. |
 | `colorPrimary` | Couleur 1 (CSS hex, rgb, named). Défaut bleu Lightning `#0176d3`. |
@@ -64,6 +64,25 @@ Tous les fonds respectent `prefers-reduced-motion` (animations désactivées si 
 | `alignment` | `center` (défaut) / `left` / `right` |
 | `ctaLabel` | Label du bouton optionnel sous le texte. |
 | `ctaUrl` | URL du bouton (Salesforce relative ou absolue). |
+
+## Markdown inline dans `title` / `subtitle`
+
+Un parseur léger (XSS-safe, aucune `innerHTML`) interprète 5 marqueurs dans `title` et `subtitle`.
+
+| Syntaxe | Rendu | HTML produit |
+|---|---|---|
+| `**gras**` | **gras** | `<strong>` |
+| `*italique*` ou `_italique_` | *italique* | `<em>` |
+| `__souligné__` | <u>souligné</u> | `<u>` |
+| `` `code` `` | `code` | `<code>` (fond translucide, police mono) |
+| `~~barré~~` | ~~barré~~ | `<s>` |
+
+Exemples :
+- `Bonjour, bienvenue sur **CCO FR Showcase**` → *Bonjour, bienvenue sur* **CCO FR Showcase**
+- `Déploiement \`CCO_FR_Showcase\` **réussi**` → mixe code + gras
+- `Alerte __critique__ : service dégradé` → underline + emphase
+
+Chaque segment est rendu comme un élément HTML natif via `template for:each` + `lwc:if` → aucun risque d'injection (zéro `innerHTML`, zéro `lwc:dom="manual"`).
 
 ## Conseils visuels
 

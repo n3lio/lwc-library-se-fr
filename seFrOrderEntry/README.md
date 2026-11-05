@@ -27,7 +27,7 @@ Full-grid order entry component for an Account (or for a Case linked to an Accou
 
 ## Where to drop it
 - **Target:** Lightning Record Page
-- **Object:** Account *or* Case (works on either — uses the Account when on an Account page, the Case's `AccountId` when on a Case page).
+- **Object:** Account, Case, or Visit__c (uses the Account when on an Account page, the Case's `AccountId` on a Case page, and the Visit's `Account__c` on a Visit__c page). On a Visit record, placing an order also publishes `order:done` to `sefr-visit-progress::<visitId>` in `localStorage` so `seFrVisitPlan` ticks its "Prise de commande" checklist step.
 - **App Builder label:** `SE_FR — Order Entry`
 
 ## Apex dependencies

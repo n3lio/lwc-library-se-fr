@@ -65,7 +65,6 @@ export default class SeFrMetricTile extends LightningElement {
     @api enableTooltip = false;
 
     // Kept for backwards compatibility with existing FlexiPages — no longer read.
-    @api trendPositive = false;
 
     _hovered = -1;
 

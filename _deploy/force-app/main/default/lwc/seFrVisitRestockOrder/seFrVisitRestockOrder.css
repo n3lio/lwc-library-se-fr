@@ -1,0 +1,275 @@
+/* CCO FR — Réassort rupture → commande.
+   Tight grid, no wasted vertical space, SLDS tokens. Matches the lib's warm/alert palette. */
+
+:host {
+    display: block;
+}
+
+lightning-card {
+    --slds-c-card-radius-border: 12px;
+    --sds-c-card-radius-border: 12px;
+    border-radius: 12px;
+    display: block;
+}
+
+.sefrro-body {
+    padding: 0.75rem 1rem 1rem;
+}
+
+.sefrro-loading {
+    position: relative;
+    min-height: 3rem;
+}
+
+/* ---------- empty state ---------- */
+.sefrro-empty {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    background: #f7f9fb;
+    border: 1px dashed #d4dbe3;
+}
+.sefrro-empty__icon {
+    --sds-c-icon-color-foreground-default: #747474;
+    --sds-c-icon-color-foreground: #747474;
+    flex: 0 0 auto;
+    margin-top: 0.15rem;
+}
+.sefrro-empty__text { min-width: 0; }
+.sefrro-empty__title {
+    font-weight: 600;
+    color: #16325c;
+    margin: 0 0 0.2rem 0;
+    font-size: 0.95rem;
+}
+.sefrro-empty__hint {
+    color: #5b5b5b;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+/* ---------- header ---------- */
+.sefrro-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid #eef1f5;
+    margin-bottom: 0.6rem;
+}
+.sefrro-headline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.sefrro-headline__icon {
+    --sds-c-icon-color-foreground-default: #ba6e00;
+    --sds-c-icon-color-foreground: #ba6e00;
+    flex: 0 0 auto;
+}
+.sefrro-headline__text {
+    font-weight: 600;
+    color: #16325c;
+    font-size: 0.92rem;
+}
+.sefrro-toolbar {
+    display: inline-flex;
+    gap: 0.25rem;
+    flex: 0 0 auto;
+}
+
+/* ---------- grid ---------- */
+.sefrro-grid {
+    display: block;
+    border: 1px solid #eef1f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.sefrro-grid__row {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr) 4.5rem 6rem 6.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    border-top: 1px solid #eef1f5;
+    background: #ffffff;
+}
+.sefrro-grid__row:first-child { border-top: 0; }
+.sefrro-grid__row--head {
+    background: #f7f9fb;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #5b5b5b;
+    font-weight: 600;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}
+
+.sefrro-cell { min-width: 0; }
+.sefrro-cell--qty { text-align: left; }
+.sefrro-cell--price { text-align: left; }
+.sefrro-cell--total { text-align: right; }
+
+.sefrro-checkbox {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: #0176d3;
+    cursor: pointer;
+}
+
+.sefrro-product__name {
+    margin: 0;
+    font-weight: 600;
+    color: #16325c;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sefrro-product__meta {
+    margin: 0.1rem 0 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: #747474;
+}
+.sefrro-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.2px;
+}
+
+.sefrro-tag {
+    display: inline-block;
+    padding: 0.08rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+.sefrro-tag--rupture {
+    background: #fdecea;
+    color: #a81e1e;
+    border: 1px solid #f4b7b1;
+}
+.sefrro-tag--alert {
+    background: #fff6ea;
+    color: #8b5a00;
+    border: 1px solid #f0d2a3;
+}
+
+.sefrro-input {
+    --slds-c-input-sizing-min-height: 1.9rem;
+    --sds-c-input-sizing-min-height: 1.9rem;
+    display: block;
+    width: 100%;
+}
+
+.sefrro-total {
+    font-weight: 600;
+    color: #16325c;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+}
+
+/* ---------- footer ---------- */
+.sefrro-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid #eef1f5;
+    flex-wrap: wrap;
+}
+.sefrro-footer__left { min-width: 0; }
+.sefrro-footer__selected {
+    margin: 0;
+    color: #5b5b5b;
+    font-size: 0.82rem;
+}
+.sefrro-footer__skipped {
+    margin: 0.1rem 0 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #8b5a00;
+    font-size: 0.75rem;
+}
+.sefrro-footer__right {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.sefrro-total-pill {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 10px;
+    background: #f1faf4;
+    border: 1px solid #c3e3ce;
+}
+.sefrro-total-pill__label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #0b6a35;
+    font-weight: 600;
+}
+.sefrro-total-pill__value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0b6a35;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- last-order chip ---------- */
+.sefrro-last-order {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    margin-top: 0.75rem;
+    border-radius: 999px;
+    background: #f1faf4;
+    border: 1px solid #c3e3ce;
+    color: #0b6a35;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+.sefrro-last-order__icon {
+    --sds-c-icon-color-foreground-default: #2e844a;
+    --sds-c-icon-color-foreground: #2e844a;
+}
+.sefrro-last-order__text {
+    letter-spacing: 0.3px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- narrow fallback ---------- */
+@media (max-width: 36em) {
+    .sefrro-grid__row {
+        grid-template-columns: 1.6rem minmax(0, 1fr) 4rem 5rem;
+    }
+    .sefrro-cell--total { display: none; }
+    .sefrro-grid__row--head .sefrro-cell--total { display: none; }
+    .sefrro-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .sefrro-footer__right { justify-content: space-between; }
+}

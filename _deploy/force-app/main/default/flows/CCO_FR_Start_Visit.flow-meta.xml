@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>CCO FR lib — Démarre une visite en créant un record `Visit__c` (shipped par le composant seFrRetailExecSchema) rattaché à l'Account courant, status Planned. L'utilisateur est redirigé vers la fiche Visite après création. Si l'org a le managed package Retail Execution (sObject Visit standard), cloner ce Flow et pointer sur Visit à la place.</description>
+    <environments>Default</environments>
+    <interviewLabel>Démarrer une visite {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CCO FR - Démarrer une visite</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>createVisit</name>
+        <label>Créer la visite (Visit__c)</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignRecordIdToReference>newVisitId</assignRecordIdToReference>
+        <faultConnector>
+            <targetReference>errorScreen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VisitState__c</field>
+            <value>
+                <stringValue>Planned</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PlannedStartDateTime__c</field>
+            <value>
+                <elementReference>VisitStartTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PlannedEndDateTime__c</field>
+            <value>
+                <elementReference>VisitEndTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location__c</field>
+            <value>
+                <elementReference>VisitLocation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>VisitNotes</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Visit__c</object>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordCreates>
+    <screens>
+        <name>visitScreen</name>
+        <label>Nouvelle visite</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>createVisit</targetReference>
+        </connector>
+        <fields>
+            <name>intro</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;Démarrer une visite sur ce compte. Une &lt;strong&gt;Visite&lt;/strong&gt; sera créée (status &lt;em&gt;Planifiée&lt;/em&gt;), puis sa fiche s'ouvrira directement.&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>VisitStartTime</name>
+            <fieldType>InputField</fieldType>
+            <dataType>DateTime</dataType>
+            <defaultValue>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </defaultValue>
+            <fieldText>Date et heure de début prévues</fieldText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>VisitEndTime</name>
+            <fieldType>InputField</fieldType>
+            <dataType>DateTime</dataType>
+            <fieldText>Date et heure de fin prévues</fieldText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>VisitLocation</name>
+            <fieldType>InputField</fieldType>
+            <dataType>String</dataType>
+            <fieldText>Lieu (optionnel)</fieldText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>VisitNotes</name>
+            <fieldType>LargeTextArea</fieldType>
+            <fieldText>Notes / préparation (optionnel)</fieldText>
+            <isRequired>false</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Démarrer la visite</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>errorScreen</name>
+        <label>Erreur</label>
+        <locationX>400</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;❌ &lt;strong&gt;Impossible de créer la visite.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;&lt;em&gt;Causes fréquentes : permset CCO_FR_Retail_Exec non assigné, record source non-Account (lancez depuis une page Account), ou validation rule custom sur Visit__c.&lt;/em&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <nextOrFinishButtonLabel>Fermer</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>visitScreen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Id du record source — attendu : Account (le Flow fait Account__c = recordId sur Visit__c). Passed in par le LWC lanceur (seFrRecordActions).</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Output : Id de la Visit__c créée. Le LWC parent lit cette var et navigue dessus.</description>
+        <name>newVisitId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

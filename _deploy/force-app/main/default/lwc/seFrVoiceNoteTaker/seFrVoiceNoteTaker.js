@@ -42,7 +42,7 @@ export default class SeFrVoiceNoteTaker extends LightningElement {
 
     @api language = 'fr';
     @api cardTitle;
-    @api cardIcon = 'standard:voice_call';
+    @api cardIcon = 'standard:call';  // standard:voice_call isn't in the SLDS sprite
     @api speechLocale = 'fr-FR';
     @api taskSubject;
     @api recordingHint;
@@ -53,6 +53,12 @@ export default class SeFrVoiceNoteTaker extends LightningElement {
     @api saveButtonLabel;
     @api unsupportedBrowserMessage;
     @api successMessage;
+    /**
+     * Si défini, publie `<progressStepKey>:done` dans localStorage
+     * `sefr-visit-progress::<recordId>` au save. Utilisé sur la page Visit__c
+     * pour cocher automatiquement l'étape "Compte-rendu" du seFrVisitPlan.
+     */
+    @api progressStepKey;
 
     @track transcript = '';
     @track isRecording = false;
@@ -144,6 +150,17 @@ export default class SeFrVoiceNoteTaker extends LightningElement {
         this.transcript = event.target.value;
     }
 
+    _publishProgress() {
+        if (!this.recordId || !this.progressStepKey) return;
+        try {
+            const key = 'sefr-visit-progress::' + this.recordId;
+            const raw = window.localStorage.getItem(key);
+            const obj = raw ? JSON.parse(raw) : {};
+            obj[this.progressStepKey] = { done: true, at: new Date().toISOString() };
+            window.localStorage.setItem(key, JSON.stringify(obj));
+        } catch (e) { /* ignore */ }
+    }
+
     handleSave() {
         this.isSaving = true;
 
@@ -153,6 +170,7 @@ export default class SeFrVoiceNoteTaker extends LightningElement {
             taskSubject: this.resolvedTaskSubject
         })
             .then(() => {
+                this._publishProgress();
                 this.dispatchEvent(new ShowToastEvent({
                     title: this.labels.toastSuccess,
                     message: this.resolvedSuccessMessage,

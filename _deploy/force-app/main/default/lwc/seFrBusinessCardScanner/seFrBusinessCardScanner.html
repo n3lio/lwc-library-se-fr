@@ -1,0 +1,103 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={cardIcon}>
+        <template if:true={hasCards}>
+            <div slot="actions">
+                <lightning-badge label={counterLabel}></lightning-badge>
+            </div>
+        </template>
+
+        <input type="file" accept="image/*" multiple lwc:ref="fileInput" class="slds-hide" onchange={handleFileChange} />
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_small" ondragover={handleDragOver} ondragleave={handleDragLeave} ondrop={handleDrop}>
+
+            <!-- EMPTY STATE: dropzone -->
+            <template if:false={hasCards}>
+                <div class={dropClass} role="button" tabindex="0" aria-label={labels.zoneLabel} onclick={handleZoneClick} onkeydown={handleZoneKey}>
+                    <div>
+                        <lightning-icon icon-name="utility:upload" size="large" alternative-text={labels.dropTitle}></lightning-icon>
+                        <p class="slds-text-heading_small slds-m-top_small">{labels.dropTitle}</p>
+                        <p class="slds-text-color_weak slds-m-top_xx-small">{labels.dropHint}</p>
+                    </div>
+                </div>
+            </template>
+
+            <!-- WITH CARDS -->
+            <template if:true={hasCards}>
+                <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                    <lightning-button label={labels.add} icon-name="utility:add" onclick={handleZoneClick} disabled={addDisabled}></lightning-button>
+                    <lightning-button label={labels.clear} icon-name="utility:delete" variant="neutral" onclick={handleClear} disabled={isCreating}></lightning-button>
+                </div>
+
+                <div class={gridClass}>
+                    <template for:each={viewCards} for:item="c">
+                        <div key={c.id} class={c.tileClass}>
+                            <div class={c.inner}>
+                                <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_x-small">
+                                    <div class="sebcs-thumb slds-align_absolute-center slds-m-right_small">
+                                        <template if:true={c.hasPreview}>
+                                            <img src={c.previewUrl} alt={labels.thumbAlt} class="sebcs-thumb-img" />
+                                        </template>
+                                        <template if:false={c.hasPreview}>
+                                            <lightning-icon icon-name="utility:image" size="small" alternative-text={labels.thumbAlt}></lightning-icon>
+                                        </template>
+                                    </div>
+                                    <div class="slds-col slds-truncate">
+                                        <p class="slds-truncate slds-text-body_small slds-text-color_weak" title={c.fileName}>{c.fileName}</p>
+                                        <span class={c.badgeClass}>{c.statusLabel}</span>
+                                    </div>
+                                    <lightning-button-icon icon-name="utility:close" variant="bare" size="small" alternative-text={labels.remove} title={labels.remove} data-id={c.id} onclick={handleRemove} disabled={isCreating}></lightning-button-icon>
+                                </div>
+
+                                <template if:true={c.isProcessing}>
+                                    <div class="sebcs-skeleton" aria-busy="true">
+                                        <div class="sebcs-skeleton-line"></div>
+                                        <div class="sebcs-skeleton-line"></div>
+                                        <div class="sebcs-skeleton-line sebcs-skeleton-line_short"></div>
+                                    </div>
+                                </template>
+
+                                <template if:true={c.isError}>
+                                    <div class="slds-text-color_error slds-m-bottom_x-small">
+                                        <lightning-icon icon-name="utility:error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                        {labels.errorText}
+                                    </div>
+                                    <lightning-button label={labels.retry} icon-name="utility:refresh" data-id={c.id} onclick={handleRetry}></lightning-button>
+                                </template>
+
+                                <template if:true={c.showForm}>
+                                    <div class="slds-grid slds-wrap slds-gutters_xx-small">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input label={labels.firstName} value={c.firstName} data-id={c.id} data-field="firstName" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input label={labels.lastName} value={c.lastName} required data-id={c.id} data-field="lastName" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input label={labels.company} value={c.company} required data-id={c.id} data-field="company" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input label={labels.title} value={c.title} data-id={c.id} data-field="title" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <lightning-input type="email" label={labels.email} value={c.email} data-id={c.id} data-field="email" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input type="tel" label={labels.mobile} value={c.mobile} data-id={c.id} data-field="mobile" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <lightning-input type="tel" label={labels.phone} value={c.phone} data-id={c.id} data-field="phone" onchange={handleFieldChange} disabled={c.disabled}></lightning-input>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="slds-m-top_small slds-text-align_right">
+                    <lightning-button class={createButtonClass} variant="brand" icon-name="utility:send" label={createLabel} onclick={handleCreate} disabled={createDisabled}></lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Business Card Scanner</masterLabel>
+    <description>Drop business card images, get editable lead cards with simulated OCR extraction, then bulk-create the leads. Mock mode: no Apex, no Einstein dependency.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property name="language" type="String" datasource="fr,en" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" default="" label="Card title (override)" description="Leave empty for the dictionary default ('Scanner de cartes de visite' / 'Business Card Scanner')." />
+            <property name="cardIcon" type="String" default="standard:lead" label="Card icon" description="A standard:* icon name, e.g. standard:lead, standard:person_account, standard:identity." />
+            <property name="simulatedDelayMs" type="Integer" default="1200" label="Simulated OCR delay (ms)" description="Delay before the fake extracted data appears on each card." />
+            <property name="maxCards" type="Integer" default="10" label="Maximum cards" description="Maximum number of cards in the list at once." />
+            <property name="autoCreate" type="Boolean" default="false" label="Highlight create button" description="When ON, the create button pulses as soon as at least one card is ready." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

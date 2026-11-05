@@ -54,28 +54,9 @@ export default class SeFrKanbanBoard extends NavigationMixin(LightningElement) {
     @api language = 'fr';
     @api cardTitle;
     @api cardIcon = 'standard:kanban';
-    // The host Record Page's own objectApiName is auto-injected by Salesforce when we declare a
-    // prop literally named `objectApiName`. That would silently replace our "object to query"
-    // with the current page's object (e.g. 'Account' on an Account page). To keep the Kanban's
-    // query object independent, we use `sobjectApiName` as the real prop and treat the legacy
-    // `objectApiName` prop as a FlexiPage-only alias that ONLY applies when it carries a
-    // whitelisted query object.
     @api sobjectApiName = 'Case';
-
-    // Legacy alias — kept so existing FlexiPages with `objectApiName=Case` still deploy. BUT the
-    // platform also auto-populates this with the host Record Page's object on a Record Page, which
-    // would overwrite our query target. We only cascade into `sobjectApiName` when the incoming
-    // value is one of the safe query-only objects (Case/Opportunity/Lead/Order/Task). Account is
-    // deliberately excluded here because it is the most common host-page object — to use Account
-    // as the Kanban query target, set the new `sobjectApiName` prop explicitly instead.
-    _legacyObjectApiName;
-    @api
-    get objectApiName() { return this._legacyObjectApiName; }
-    set objectApiName(v) {
-        this._legacyObjectApiName = v;
-        const legacyAllowed = new Set(['Case', 'Opportunity', 'Lead', 'Order', 'Task']);
-        if (legacyAllowed.has(v)) this.sobjectApiName = v;
-    }
+    // Host page object, auto-injected by the platform (read-only context, not a setting).
+    @api objectApiName;
     @api groupByField = 'Status';
     @api displayField = 'Subject';
     @api secondaryField = 'Priority';

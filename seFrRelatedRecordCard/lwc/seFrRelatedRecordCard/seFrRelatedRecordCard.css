@@ -1,4 +1,8 @@
 :host { display: block; }
+/* INTENTIONAL: we never override --slds-c-card-radius-border / --slds-c-card-shadow /
+   --slds-c-card-color-background on :host. These tokens cascade INTO the <lightning-card>
+   shadow DOM — any value set here will FORCE the native card to that value, breaking
+   consistency with sibling <lightning-card>s on the same page. Let the SLDS theme win. */
 
 /* Header row: avatar left, name right. Clickable on the name side to open the record. */
 .rrc-header {

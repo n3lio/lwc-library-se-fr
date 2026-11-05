@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>SE FR lib - Utilitaire. Place-le sur une AppPage pour en faire un tab "quick-access" qui ouvre directement un record signature (via NavigationMixin, pas d'iframe).</description>
+    <isExposed>true</isExposed>
+    <masterLabel>SE FR — Record Redirect</masterLabel>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="recordId" type="String" label="Record Id" description="Id Salesforce du record cible (15 ou 18 chars)." />
+            <property name="objectApiName" type="String" label="Object API Name" description="Ex: Account, Contact, Opportunity, Case, Lead, Order, Visit__c" />
+            <property name="cardTitle" type="String" label="Titre carte" default="Ouverture de la fiche…" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

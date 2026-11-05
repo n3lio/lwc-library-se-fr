@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Metric Tile</masterLabel>
+    <masterLabel>CCO FR - Metric Tile</masterLabel>
     <description>B2B / B2C - Single KPI tile with inline trend chart. 4 chart styles (line, area, bar, mini-donut), optional comparison series, target line, currency formatting. Bilingual FR / EN.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -24,8 +24,8 @@
 
             <!-- Chart -->
             <property name="chartStyle" type="String" datasource="line,area,bar,mini-donut" default="line" label="Chart style" description="'line' (curve only), 'area' (curve + filled area below), 'bar' (vertical bars), 'mini-donut' (radial gauge from currentValue / targetValue)." />
-            <property name="seriesJson" type="String" label="Series points - JSON array" description="Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style." />
-            <property name="secondarySeriesJson" type="String" label="Secondary series - JSON array (optional)" description="Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style." />
+            <property name="seriesJson" type="String" label="Series points - JSON array" placeholder="[8200,8900,9500,10200,11000,11800,12400,13100,13900,14600,15300,16000]" description="Array of numbers. 12 points = one per month. Leave empty for a sample up-trend curve. Ignored by 'mini-donut' style." />
+            <property name="secondarySeriesJson" type="String" label="Secondary series - JSON array (optional)" placeholder="[9000,9500,10000,10500,11000,11500,12000,12500,13000,13500,14000,14500]" description="Optional comparison series (e.g. forecast, target run-rate). Drawn as a dashed line. Ignored by 'mini-donut' style." />
             <property name="secondarySeriesColor" type="String" default="#747474" label="Secondary series color (hex)" />
 
             <!-- Target line -->
@@ -39,7 +39,7 @@
             <property name="yMax" type="String" label="Y max (when scaling = fixed)" />
 
             <!-- Visual -->
-            <property name="accentColor" type="String" default="#0176d3" label="Accent color (hex)" description="Color of the primary chart series. Defaults to SE FR brand blue." />
+            <property name="accentColor" type="String" default="#0176d3" label="Accent color (hex)" description="Color of the primary chart series. Defaults to CCO FR brand blue." />
             <property name="donutTrack" type="String" default="#E5E5E5" label="Mini-donut track color (hex)" description="Background ring color. Used only when chartStyle = mini-donut." />
             <property name="height" type="Integer" default="70" label="Chart height (px)" description="Internal viewBox height. CSS scales the SVG to fit the column width." />
             <property name="width" type="Integer" default="0" label="Chart width override (px)" description="0 = auto (default ~600px viewBox). Set a fixed value for very narrow tiles." />
@@ -49,8 +49,6 @@
 
             <property name="enableTooltip" type="Boolean" default="false" label="Enable hover tooltip" description="Off by default. Turn ON to show value-on-point on hover (line / area / bar)." />
 
-            <!-- Deprecated: kept so existing FlexiPages don't break on upgrade. -->
-            <property name="trendPositive" type="Boolean" default="false" label="(deprecated) Trend is positive" description="No longer used - the color is auto-derived from the sign of trendDisplay." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

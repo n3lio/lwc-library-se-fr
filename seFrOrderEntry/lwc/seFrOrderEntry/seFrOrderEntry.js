@@ -4,6 +4,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ACCOUNT_NAME_FIELD from '@salesforce/schema/Account.Name';
 import CASE_ACCOUNT_ID_FIELD from '@salesforce/schema/Case.AccountId';
+import VISIT_ACCOUNT_ID_FIELD from '@salesforce/schema/Visit__c.Account__c';
 import getProductsList from '@salesforce/apex/SE_FR_OrderEntryController.getProductsListFull';
 import createOrderFromGrid from '@salesforce/apex/SE_FR_OrderEntryController.createOrderFromGridWithChannel';
 
@@ -14,7 +15,7 @@ const LABELS = {
         noAccountMessage: 'Link an account to this case before starting an order.',
         erpCheckbox: 'Send directly to ERP',
         fullScreen: 'Full screen',
-        reorder: 'Reorder', prefillAI: 'Pre-fill with AI', clearGrid: 'Clear grid',
+        reorder: 'Reorder', prefillAI: 'AI suggestions', clearGrid: 'Clear',
         hideDiscount: 'Hide discount columns', showDiscount: 'Show discount columns',
         filter: 'Filter', search: 'Search', searchPlaceholder: 'Search by name or code…',
         statusFilters: 'Status filters',
@@ -51,7 +52,7 @@ const LABELS = {
         noAccountMessage: 'Liez un compte à ce cas avant de démarrer une commande.',
         erpCheckbox: "Envoyer directement à l'ERP",
         fullScreen: 'Plein écran',
-        reorder: 'Réassort', prefillAI: "Pré-remplir avec l'IA", clearGrid: 'Vider la grille',
+        reorder: 'Réassort', prefillAI: 'Suggestions IA', clearGrid: 'Vider',
         hideDiscount: 'Masquer les colonnes remise', showDiscount: 'Afficher les colonnes remise',
         filter: 'Filtrer', search: 'Rechercher', searchPlaceholder: 'Rechercher par nom ou code…',
         statusFilters: 'Filtres par statut',
@@ -105,6 +106,16 @@ export default class SeFrOrderEntry extends NavigationMixin(LightningElement) {
     }
 
     get caseRecordId() { return this._objectApiName === 'Case' ? this._recordId : null; }
+    get visitRecordId() { return this._objectApiName === 'Visit__c' ? this._recordId : null; }
+
+    @wire(getRecord, { recordId: '$visitRecordId', fields: [VISIT_ACCOUNT_ID_FIELD] })
+    wiredVisit({ error, data }) {
+        if (data) {
+            this.targetAccountId = getFieldValue(data, VISIT_ACCOUNT_ID_FIELD);
+        } else if (error) {
+            console.error('Error loading Visit', error);
+        }
+    }
 
     @wire(getRecord, { recordId: '$caseRecordId', fields: [CASE_ACCOUNT_ID_FIELD] })
     wiredCase({ error, data }) {
@@ -127,7 +138,6 @@ export default class SeFrOrderEntry extends NavigationMixin(LightningElement) {
     @api localeTag = 'fr-FR';
     @api fullScreenTitleTemplate;
     @api noAccountMessage;
-    @api erpCheckboxLabel;
     @api salesChannelId;
     @api productImageFieldApiName = 'Image_URL__c';
     @api productImageFallbackUrl = '';
@@ -141,7 +151,7 @@ export default class SeFrOrderEntry extends NavigationMixin(LightningElement) {
     get resolvedCardTitle() { return this.cardTitle || this.labels.cardTitle; }
     get resolvedFullScreenTemplate() { return this.fullScreenTitleTemplate || this.labels.fullScreenTitleTemplate; }
     get resolvedNoAccountMessage() { return this.noAccountMessage || this.labels.noAccountMessage; }
-    get resolvedErpLabel() { return this.erpCheckboxLabel || this.labels.erpCheckbox; }
+    get resolvedErpLabel() { return this.labels.erpCheckbox; }
     get saveForTemplate() {
         return this.labels.saveFor
             .replace('{account}', this.accountName)
@@ -407,6 +417,19 @@ export default class SeFrOrderEntry extends NavigationMixin(LightningElement) {
     openSaveModal() { this.showSaveModal = true; }
     closeSaveModal() { this.showSaveModal = false; }
 
+    // Publish checklist progress to the shared Visit storage key read by seFrVisitPlan.
+    _publishVisitProgress(stepKey, done) {
+        if (!this._recordId) return;
+        try {
+            const key = 'sefr-visit-progress::' + this._recordId;
+            const raw = window.localStorage.getItem(key);
+            const obj = raw ? JSON.parse(raw) : {};
+            if (done) obj[stepKey] = { done: true, at: new Date().toISOString() };
+            else delete obj[stepKey];
+            window.localStorage.setItem(key, JSON.stringify(obj));
+        } catch (e) { /* ignore */ }
+    }
+
     processSaveOrder() {
         this.showSaveModal = false;
         const itemsToSave = this.allProducts.filter(row => row.qty > 0 && !row.hasError);
@@ -423,6 +446,10 @@ export default class SeFrOrderEntry extends NavigationMixin(LightningElement) {
                 this.dispatchEvent(new ShowToastEvent({
                     title: this.labels.toastSuccess, message: this.labels.toastSuccessMsg, variant: 'success'
                 }));
+                // When used on a Visit__c record page, publish checklist progress for seFrVisitPlan.
+                if (this._objectApiName === 'Visit__c') {
+                    this._publishVisitProgress('order', true);
+                }
                 this.handleClearAll();
                 this.searchTerm = '';
                 this.deliveryDate = null;

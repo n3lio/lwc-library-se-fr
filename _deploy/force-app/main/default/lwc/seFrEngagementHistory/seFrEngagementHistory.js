@@ -31,6 +31,23 @@ const DEFAULT_META = { icon: 'utility:notification', color: '#64748b' };
 
 const INITIAL_VISIBLE = 6;
 
+// Sample timeline used when no event* property is provided (a Lightning page that does not
+// set the properties passes empty strings — the meta-xml `default` only applies in App Builder).
+const SAMPLE = {
+    fr: {
+        types:  'Email ouvert|SMS envoye|Formulaire|Email clique|Page vue|Email rejete|Email envoye|SMS clique',
+        emails: 'promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr',
+        lists:  'Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend',
+        ages:   '2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j.'
+    },
+    en: {
+        types:  'Email Open|SMS Sent|Form Submit|Email Click|Page View|Email Bounce|Email Sent|SMS Click',
+        emails: 'summer-promo@acme.com|appointment-alert@acme.com|event-signup@acme.com|welcome@acme.com|pricing-page@acme.com|special-offer@acme.com|cart-reminder@acme.com|flash-offer@acme.com',
+        lists:  'Summer 2026 Campaign|SMS Auto Reminder|Product Webinar Q2|Web Nurturing|SEO Acquisition|June Flash Offer|Back-to-school|Weekend Promo',
+        ages:   '2 d.|4 d.|1 wk.|1 wk. 3 d.|2 wk.|3 wk.|1 mo.|1 mo. 5 d.'
+    }
+};
+
 const DICT = {
     fr: {
         cardTitle: 'Historique d\'engagement',
@@ -80,10 +97,13 @@ export default class SeFrEngagementHistory extends LightningElement {
     }
 
     get allRows() {
-        const types  = this._split(this.eventTypes);
-        const emails = this._split(this.eventEmails);
-        const lists  = this._split(this.eventLists);
-        const ages   = this._split(this.eventAges);
+        const hasInput = [this.eventTypes, this.eventEmails, this.eventLists, this.eventAges]
+            .some((v) => (v || '').trim().length > 0);
+        const sample = SAMPLE[this.language] || SAMPLE.fr;
+        const types  = this._split(hasInput ? this.eventTypes  : sample.types);
+        const emails = this._split(hasInput ? this.eventEmails : sample.emails);
+        const lists  = this._split(hasInput ? this.eventLists  : sample.lists);
+        const ages   = this._split(hasInput ? this.eventAges   : sample.ages);
         const term   = (this.searchTerm || '').toLowerCase();
         return types.map((type, i) => {
             const meta = TYPE_META[type] || DEFAULT_META;

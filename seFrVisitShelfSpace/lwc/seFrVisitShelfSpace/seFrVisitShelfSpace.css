@@ -1,0 +1,158 @@
+/* CCO FR - Visit Shelf Space. SLDS-first palette. */
+:host {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    --sefrvss-ink: #16325c;
+    --sefrvss-ink-soft: #54698d;
+    --sefrvss-ink-mute: #706e6b;
+    --sefrvss-line: #e5e5e5;
+    --sefrvss-line-strong: #c9c7c5;
+    --sefrvss-bg: #ffffff;
+    --sefrvss-bg-soft: #f8f8fb;
+    --sefrvss-main: #003da5;        /* brand = indigo SLDS */
+    --sefrvss-main-soft: #eaf1ff;
+    --sefrvss-competitor: #706e6b;
+    --sefrvss-competitor-soft: #f3f3f3;
+    --sefrvss-up: #2e844a;
+    --sefrvss-up-soft: #ecfdf5;
+    --sefrvss-down: #c23934;
+    --sefrvss-down-soft: #fef2f2;
+    --sefrvss-radius: 10px;
+}
+lightning-card {
+    --slds-c-card-radius-border: 12px;
+    --sds-c-card-radius-border: 12px;
+    border-radius: 12px;
+    display: block;
+}
+
+.sefrvss-wrap { padding: 0 1rem 1rem; }
+
+.sefrvss-actions {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* PDL Summary */
+.sefrvss-pdl {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--sefrvss-bg-soft);
+    border: 1px solid var(--sefrvss-line);
+    border-radius: var(--sefrvss-radius);
+}
+.sefrvss-pdl__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+.sefrvss-pdl__item--main .sefrvss-pdl__value--big {
+    font-size: 1.6rem;
+    color: var(--sefrvss-main);
+}
+.sefrvss-pdl__label {
+    font-size: 0.65rem;
+    color: var(--sefrvss-ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+}
+.sefrvss-pdl__value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--sefrvss-ink);
+    font-variant-numeric: tabular-nums;
+}
+.sefrvss-pdl__value--muted  { color: var(--sefrvss-ink-mute); font-weight: 600; }
+.sefrvss-pdl__value--up     { color: var(--sefrvss-up); }
+.sefrvss-pdl__value--down   { color: var(--sefrvss-down); }
+
+/* Categories */
+.sefrvss-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+.sefrvss-category__title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--sefrvss-ink);
+    margin: 0 0 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Tables */
+.sefrvss-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    border: 1px solid var(--sefrvss-line);
+    border-radius: var(--sefrvss-radius);
+    overflow: hidden;
+}
+.sefrvss-table thead {
+    background: var(--sefrvss-bg-soft);
+}
+.sefrvss-table th {
+    font-weight: 600;
+    color: var(--sefrvss-ink-soft);
+    padding: 0.4rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sefrvss-line);
+    vertical-align: top;
+}
+.sefrvss-table th small {
+    display: inline-block;
+    margin-top: 0.1rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--sefrvss-ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.sefrvss-table td {
+    padding: 0.35rem 0.5rem;
+    border-top: 1px solid var(--sefrvss-line);
+    color: var(--sefrvss-ink);
+    vertical-align: middle;
+}
+.sefrvss-col--num   { text-align: right; font-variant-numeric: tabular-nums; }
+.sefrvss-col--muted { color: var(--sefrvss-ink-mute); }
+
+.sefrvss-row--main td {
+    background: var(--sefrvss-main-soft);
+}
+.sefrvss-row--main .sefrvss-col--brand {
+    color: var(--sefrvss-main);
+    font-weight: 700;
+}
+.sefrvss-row--competitor td {
+    background: var(--sefrvss-bg);
+}
+.sefrvss-row--competitor .sefrvss-col--brand {
+    color: var(--sefrvss-competitor);
+    font-weight: 500;
+}
+
+.sefrvss-facing-input {
+    max-width: 70px;
+    display: inline-block;
+    margin-left: auto;
+}
+.sefrvss-facing-input .slds-input {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 48em) {
+    .sefrvss-col--hide-mobile { display: none; }
+    .sefrvss-pdl { grid-template-columns: 1fr 1fr; }
+    .sefrvss-pdl__item--main { grid-column: 1 / -1; }
+    .sefrvss-pdl__item--main .sefrvss-pdl__value--big { font-size: 1.3rem; }
+}

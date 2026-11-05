@@ -74,13 +74,6 @@ export default class SeFrSubscribersList extends NavigationMixin(LightningElemen
     @api roles = '';
     @api userIds = '';
 
-    // Legacy props — kept for backward compatibility with existing page configurations
-    @api avatarMode = 'initials';
-    @api channels = '';
-    @api subscribedAtRelative = '';
-    @api notificationCounts = '';
-    @api footerLabel = '';
-    @api showFooter = false;
 
     @track expanded = false;
     @track liveMembers = [];

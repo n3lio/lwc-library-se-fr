@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title={cardTitle} icon-name="utility:forward">
+        <template if:false={missingConfig}>
+            <div class="slds-p-around_large slds-text-align_center">
+                <lightning-spinner alternative-text="Ouverture de la fiche…" size="medium"></lightning-spinner>
+                <p class="slds-m-top_medium slds-text-color_weak">Ouverture de la fiche…</p>
+            </div>
+        </template>
+        <template if:true={missingConfig}>
+            <div class="slds-p-around_large slds-text-align_center slds-text-color_error">
+                <lightning-icon icon-name="utility:warning" size="small" variant="error"></lightning-icon>
+                <p class="slds-m-top_small">Configuration manquante : renseigner <strong>recordId</strong> et <strong>objectApiName</strong> dans App Builder.</p>
+            </div>
+        </template>
+    </lightning-card>
+</template>

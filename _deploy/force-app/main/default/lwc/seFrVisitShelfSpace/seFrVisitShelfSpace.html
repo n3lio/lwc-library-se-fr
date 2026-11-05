@@ -1,0 +1,85 @@
+<template>
+    <lightning-card title={effectiveTitle} icon-name={effectiveIcon}>
+        <div slot="actions" class="sefrvss-actions">
+            <template lwc:if={canCopyPrev}>
+                <lightning-button
+                    label={labels.copyPrevShort}
+                    title={labels.copyPrevBtn}
+                    icon-name="utility:refresh"
+                    variant="neutral"
+                    onclick={handleCopyPrev}>
+                </lightning-button>
+            </template>
+            <lightning-button
+                label={labels.saveBtn}
+                icon-name="utility:save"
+                variant="brand"
+                onclick={handleSave}
+                disabled={isSaved}>
+            </lightning-button>
+        </div>
+
+        <div class="sefrvss-wrap">
+            <!-- PDL Summary -->
+            <div class="sefrvss-pdl">
+                <div class="sefrvss-pdl__item sefrvss-pdl__item--main">
+                    <span class="sefrvss-pdl__label">{labels.pdlNow}</span>
+                    <span class="sefrvss-pdl__value sefrvss-pdl__value--big">{pdlGlobal}</span>
+                </div>
+                <div class="sefrvss-pdl__item">
+                    <span class="sefrvss-pdl__label">{labels.pdlPrev}</span>
+                    <span class="sefrvss-pdl__value sefrvss-pdl__value--muted">{pdlPrev}</span>
+                </div>
+                <div class="sefrvss-pdl__item">
+                    <span class="sefrvss-pdl__label">{labels.pdlEvo}</span>
+                    <span class={pdlEvolutionClass}>{pdlEvolution}</span>
+                </div>
+            </div>
+
+            <!-- Tables by category -->
+            <div class="sefrvss-categories">
+                <template for:each={categories} for:item="cat">
+                    <div key={cat.name} class="sefrvss-category">
+                        <h3 class="sefrvss-category__title">{cat.name}</h3>
+                        <table class="sefrvss-table">
+                            <thead>
+                                <tr>
+                                    <th class="sefrvss-col sefrvss-col--seg">{labels.headSegment}</th>
+                                    <th class="sefrvss-col sefrvss-col--brand">{labels.headBrand}</th>
+                                    <th class="sefrvss-col sefrvss-col--num">{labels.headFacingsNow}<br/><small>{labels.subNow}</small></th>
+                                    <th class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile">{labels.headFacingsPrev}<br/><small>{labels.subPrev}</small></th>
+                                    <th class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile">{labels.headFacingsA1}<br/><small>{labels.subA1}</small></th>
+                                    <th class="sefrvss-col sefrvss-col--num">{labels.headSegTotalNow}<br/><small>{labels.subNow}</small></th>
+                                    <th class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile">{labels.headSegTotalPrev}<br/><small>{labels.subPrev}</small></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={cat.rows} for:item="row">
+                                    <tr key={row.id} class={row.rowClass}>
+                                        <td class="sefrvss-col sefrvss-col--seg">{row.segment}</td>
+                                        <td class="sefrvss-col sefrvss-col--brand">{row.brandDisplay}</td>
+                                        <td class="sefrvss-col sefrvss-col--num">
+                                            <lightning-input
+                                                type="number"
+                                                variant="label-hidden"
+                                                value={row.facingsCurrent}
+                                                min="0"
+                                                data-rowid={row.id}
+                                                onchange={handleFacingsChange}
+                                                class="sefrvss-facing-input">
+                                            </lightning-input>
+                                        </td>
+                                        <td class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile sefrvss-col--muted">{row.prevDisplay}</td>
+                                        <td class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile sefrvss-col--muted">{row.a1Display}</td>
+                                        <td class="sefrvss-col sefrvss-col--num">{row.segNowDisplay}</td>
+                                        <td class="sefrvss-col sefrvss-col--num sefrvss-col--hide-mobile sefrvss-col--muted">{row.segPrevDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

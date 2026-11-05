@@ -1,0 +1,69 @@
+<template>
+    <lightning-card title={cardTitle} icon-name={cardIcon} class="sefrvk-card">
+        <div slot="actions">
+            <template if:true={showFlowButton}>
+                <lightning-button label={labels.newVisit} icon-name="utility:add" variant="neutral" size="small" onclick={handleLaunchFlow}></lightning-button>
+            </template>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <template if:true={isLoading}>
+                <div class="sefrvk-loading slds-is-relative">
+                    <lightning-spinner alternative-text={labels.loading} size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={hasVisits}>
+                <div class="sefrvk-grid">
+                    <template for:each={columns} for:item="col">
+                        <div key={col.key} class={col.cssClass} data-col={col.key} style={col.accentStyle}
+                             ondragover={handleDragOver} ondragleave={handleDragLeave} ondrop={handleDrop}>
+                            <div class="sefrvk-col-header">
+                                <strong class="sefrvk-col-title slds-truncate" title={col.label}>{col.label}</strong>
+                                <span class="sefrvk-col-count">{col.count}</span>
+                            </div>
+                            <ul class="sefrvk-items">
+                                <template for:each={col.items} for:item="v">
+                                    <li key={v.id} class="sefrvk-item" draggable="true" data-id={v.id}
+                                        ondragstart={handleDragStart} ondragend={handleDragEnd} onclick={handleCardClick}>
+                                        <div class="sefrvk-item-name">{v.name}</div>
+                                        <div class="sefrvk-item-date">{v.plannedDisplay}</div>
+                                        <template if:true={v.location}>
+                                            <div class="sefrvk-item-loc" title={v.locationFull}>{v.location}</div>
+                                        </template>
+                                        <span class={v.badgeClass}>{v.stateLabel}</span>
+                                    </li>
+                                </template>
+                            </ul>
+                            <template if:true={col.canToggle}>
+                                <div class="sefrvk-toggle">
+                                    <lightning-button-icon icon-name={col.toggleIcon} variant="border-filled" size="small"
+                                        alternative-text={col.toggleLabel} title={col.toggleLabel}
+                                        data-col={col.key} onclick={handleToggle}></lightning-button-icon>
+                                    <span class="sefrvk-toggle-label">{col.toggleLabel}</span>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:true={showEmpty}>
+                <div class="sefrvk-empty slds-text-align_center slds-p-vertical_large">
+                    <svg class="sefrvk-empty-art" viewBox="0 0 120 80" aria-hidden="true">
+                        <rect x="8" y="10" width="30" height="60" rx="5" fill="#eef4ff" stroke="#c9d6ea"></rect>
+                        <rect x="45" y="10" width="30" height="60" rx="5" fill="#eef4ff" stroke="#c9d6ea"></rect>
+                        <rect x="82" y="10" width="30" height="60" rx="5" fill="#eef4ff" stroke="#c9d6ea"></rect>
+                        <rect x="12" y="16" width="22" height="12" rx="3" fill="#0176d3" opacity="0.8"></rect>
+                        <rect x="49" y="16" width="22" height="12" rx="3" fill="#fe9339" opacity="0.8"></rect>
+                        <rect x="86" y="16" width="22" height="12" rx="3" fill="#2e844a" opacity="0.8"></rect>
+                    </svg>
+                    <p class="slds-text-color_weak slds-m-vertical_small">{labels.empty}</p>
+                    <template if:true={showFlowButton}>
+                        <lightning-button label={labels.firstVisit} variant="brand" onclick={handleLaunchFlow}></lightning-button>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -41,6 +41,9 @@ Configurable marketing engagement timeline showing Email Opens/Sends/Clicks/Boun
 
 None — this component operates in mock/configuration mode. All displayed data is injected via App Builder properties. No org data is queried.
 
+## Sample data
+With no `eventTypes` / `eventEmails` / `eventLists` / `eventAges` set, the timeline shows a built-in realistic sample (localised via `language`), so the card is never empty. Provide any of the four properties to override with your own events.
+
 ## Properties
 
 | Property | Type | Default | Description |

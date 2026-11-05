@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Lead First Touch</masterLabel>
+    <description>Mock of the First Touch Capture flow for Leads: simulated file dropzone and transcript, simulated AI meeting notes, then simulated Task/Event creation. No Apex, no custom field, no Agentforce dependency.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the dictionary default." />
+            <property name="cardIcon" type="String" default="standard:lead_insights" label="Card icon" description="SLDS standard icon, e.g. standard:lead_insights." />
+            <property name="mockTranscript" type="String" label="Initial transcript" description="Optional text pre-filled in the transcript box." />
+            <property name="simulatedDelayMs" type="Integer" default="1500" label="Simulated AI delay (ms)" description="Delay before the canned AI notes appear. Activity creation uses two thirds of this value." />
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Lead</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty for the dictionary default." />
+            <property name="cardIcon" type="String" default="standard:lead_insights" label="Card icon" description="SLDS standard icon, e.g. standard:lead_insights." />
+            <property name="mockTranscript" type="String" label="Initial transcript" description="Optional text pre-filled in the transcript box." />
+            <property name="simulatedDelayMs" type="Integer" default="1500" label="Simulated AI delay (ms)" description="Delay before the canned AI notes appear. Activity creation uses two thirds of this value." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -237,6 +237,17 @@ require('./admin').register(app);
 // Agent module — proxy /api/agent/* to Salesforce Einstein AI Agent API
 require('./agent').register(app);
 
+// Salesforce Paris 3D — démo interne multijoueur sous /paris3d (page + WebSocket, aucune dépendance)
+// Protégée par PARIS3D_PASSWORD si définie (sinon accès libre).
+// Garde : si le dossier paris3d/ est absent (ex. deploy depuis main, qui ne le contient pas), on ne monte rien.
+if (require('fs').existsSync(require('path').join(__dirname, 'paris3d', 'paris3d.js'))) {
+  const paris3d = require('./paris3d/paris3d.js')({ base: '/paris3d', password: process.env.PARIS3D_PASSWORD });
+  for (const url of ['/paris3d', '/paris3d/*']) {
+    app.route({ method: ['GET', 'HEAD'], url, handler: (req, reply) => { reply.hijack(); paris3d.handle(req.raw, reply.raw); } });
+  }
+  paris3d.attach(app.server);
+}
+
 // ───────────────────────────────────────────────────────────────────────────
 // OAuth — public config endpoint so the frontend knows the client_id + redirect_uri
 // without us hardcoding them in the bundled JS.

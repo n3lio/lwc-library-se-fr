@@ -1,0 +1,151 @@
+<template>
+    <lightning-card title={effectiveTitle} icon-name={cardIcon}>
+        <div class="sefrvp-card">
+
+            <!-- Header status / timer -->
+            <header class="sefrvp-header">
+                <template lwc:if={isInProgress}>
+                    <div class="sefrvp-timer" title={labels.timerAria}>
+                        <lightning-icon icon-name="utility:clock" size="xx-small" alternative-text={labels.timerAria}></lightning-icon>
+                        <span class="sefrvp-timer__value">{elapsedTime}</span>
+                    </div>
+                </template>
+                <template lwc:if={isCompleted}>
+                    <span class="sefrvp-status-pill sefrvp-status-pill--done">{labels.statusDone}</span>
+                </template>
+                <template lwc:if={isPlanned}>
+                    <span class="sefrvp-status-pill">{labels.statusPlanned}</span>
+                </template>
+            </header>
+
+            <!-- Action principale -->
+            <div class="sefrvp-action-zone">
+                <template lwc:if={isPlanned}>
+                    <div class="sefrvp-planned-actions">
+                        <button class="sefrvp-btn sefrvp-btn--primary sefrvp-planned-actions__start" onclick={handleStartVisit} disabled={isLoading} type="button">
+                            <lightning-icon icon-name="utility:play" size="xx-small" variant="inverse"></lightning-icon>
+                            <span>{labels.btnStart}</span>
+                        </button>
+                        <button class="sefrvp-btn sefrvp-btn--ghost sefrvp-planned-actions__cancel" onclick={handleCancelClick} disabled={isDeleting} title={labels.btnCancel} type="button">
+                            <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                            <span>{labels.btnCancel}</span>
+                        </button>
+                    </div>
+                </template>
+                <template lwc:if={isInProgress}>
+                    <button class="sefrvp-btn sefrvp-btn--primary" onclick={handleEndVisit} disabled={cannotEnd} type="button">
+                        <lightning-icon icon-name="utility:check" size="xx-small" variant="inverse"></lightning-icon>
+                        <span>{labels.btnEnd}</span>
+                    </button>
+                    <p class="sefrvp-help" lwc:if={cannotEnd}>{labels.helpCannotEnd}</p>
+                </template>
+                <template lwc:if={isCompleted}>
+                    <div class="sefrvp-completed">
+                        <lightning-icon icon-name="utility:success" size="small" variant="success"></lightning-icon>
+                        <div>
+                            <p class="sefrvp-completed__title">{labels.completedTitle}</p>
+                            <p class="sefrvp-completed__sub">{completedSummary}</p>
+                        </div>
+                    </div>
+                    <button class="sefrvp-btn sefrvp-btn--ghost sefrvp-reopen" onclick={handleReopenVisit} disabled={isLoading} type="button">
+                        <lightning-icon icon-name="utility:back" size="xx-small"></lightning-icon>
+                        <span>{labels.btnReopen}</span>
+                    </button>
+                </template>
+            </div>
+
+            <!-- Checklist -->
+            <div class="sefrvp-checklist">
+                <div class="sefrvp-checklist__header">
+                    <span class="sefrvp-checklist__title">{labels.checklistTitle}</span>
+                    <span class="sefrvp-checklist__count">{doneCount}/{totalCount}</span>
+                </div>
+                <div class="sefrvp-checklist__bar">
+                    <div class="sefrvp-checklist__bar-fill" style={progressStyle}></div>
+                </div>
+                <ul class="sefrvp-checklist__items" role="list">
+                    <template for:each={steps} for:item="step">
+                        <li key={step.key} class={step.itemClass}>
+                            <button class="sefrvp-step-row" onclick={handleStepClick} data-key={step.key} type="button">
+                                <span class="sefrvp-step-row__check">
+                                    <template lwc:if={step.done}>
+                                        <lightning-icon icon-name="utility:check" size="xx-small" variant="success"></lightning-icon>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="sefrvp-step-row__dot"></span>
+                                    </template>
+                                </span>
+                                <span class="sefrvp-step-row__label">
+                                    <span class="sefrvp-step-row__title">{step.title}</span>
+                                    <template lwc:if={step.done}>
+                                        <span class="sefrvp-step-row__meta">{step.doneAt}</span>
+                                    </template>
+                                    <template lwc:elseif={step.hint}>
+                                        <span class="sefrvp-step-row__hint">{step.hint}</span>
+                                    </template>
+                                </span>
+                                <span class="sefrvp-step-row__chevron" lwc:if={step.actionable}>
+                                    <lightning-icon icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                                </span>
+                            </button>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+        </div>
+    </lightning-card>
+
+    <!-- Modal confirmation annulation -->
+    <template lwc:if={showCancelDialog}>
+        <section class="sefrvp-modal" role="dialog" aria-modal="true">
+            <div class="sefrvp-modal__backdrop" onclick={handleCancelDismiss}></div>
+            <div class="sefrvp-modal__container sefrvp-modal__container--small">
+                <header class="sefrvp-modal__header">
+                    <h3 class="sefrvp-modal__title">{labels.modalCancelTitle}</h3>
+                </header>
+                <div class="sefrvp-modal__body">
+                    <p>
+                        <span>{labels.modalCancelBody1}</span>
+                        <strong>{labels.modalCancelBodyStrong}</strong>
+                        <span>{labels.modalCancelBody2}</span>
+                    </p>
+                </div>
+                <footer class="sefrvp-modal__footer">
+                    <button class="sefrvp-btn sefrvp-btn--ghost" onclick={handleCancelDismiss} type="button">{labels.modalCancelKeep}</button>
+                    <button class="sefrvp-btn sefrvp-btn--danger" onclick={handleCancelConfirm} type="button" disabled={isDeleting}>
+                        <template lwc:if={isDeleting}>
+                            <lightning-spinner alternative-text={labels.modalCancelDeleting} size="xx-small" variant="inverse"></lightning-spinner>
+                            <span>{labels.modalCancelDeleting}</span>
+                        </template>
+                        <template lwc:else>
+                            <span>{labels.modalCancelConfirm}</span>
+                        </template>
+                    </button>
+                </footer>
+            </div>
+        </section>
+    </template>
+
+    <!-- Modal Flow (compte-rendu de visite) -->
+    <template lwc:if={flowOpen}>
+        <section class="sefrvp-modal" role="dialog" aria-modal="true" aria-labelledby="sefrvp-modal-title">
+            <div class="sefrvp-modal__backdrop" onclick={handleCloseFlow}></div>
+            <div class="sefrvp-modal__container">
+                <header class="sefrvp-modal__header">
+                    <h3 id="sefrvp-modal-title" class="sefrvp-modal__title">{flowTitle}</h3>
+                    <button class="sefrvp-modal__close" onclick={handleCloseFlow} type="button" aria-label={labels.modalCloseAria}>
+                        <lightning-icon icon-name="utility:close" size="xx-small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="sefrvp-modal__body">
+                    <lightning-flow
+                        flow-api-name={flowApiName}
+                        flow-input-variables={flowInputs}
+                        onstatuschange={handleFlowStatusChange}>
+                    </lightning-flow>
+                </div>
+            </div>
+        </section>
+    </template>
+</template>

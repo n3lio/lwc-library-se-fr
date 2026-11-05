@@ -1,0 +1,71 @@
+.sebcs-drop {
+    min-height: 12rem;
+    border: 2px dashed var(--slds-g-color-border-base-3, #c9c9c9);
+    border-radius: var(--slds-g-radius-border-3, 0.5rem);
+    background: var(--slds-g-color-surface-container-1, #f3f3f3);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+.sebcs-drop:hover,
+.sebcs-drop:focus,
+.sebcs-drop_over {
+    border-color: var(--slds-g-color-accent-1, #0176d3);
+    background: var(--slds-g-color-accent-container-1, #eef4ff);
+    outline: none;
+}
+.sebcs-grid_over {
+    opacity: 0.7;
+}
+.sebcs-tile {
+    background: var(--slds-g-color-surface-container-1, #fff);
+    border-color: var(--slds-g-color-border-base-1, #e5e5e5);
+    height: 100%;
+}
+.sebcs-tile_error {
+    border-color: var(--slds-g-color-error-base-40, #ea001e);
+}
+.sebcs-tile_created {
+    border-color: var(--slds-g-color-success-base-40, #2e844a);
+    opacity: 0.75;
+}
+.sebcs-thumb {
+    width: 4.5rem;
+    height: 3rem;
+    flex: 0 0 4.5rem;
+    overflow: hidden;
+    border-radius: var(--slds-g-radius-border-2, 0.25rem);
+    background: var(--slds-g-color-surface-container-2, #f3f3f3);
+}
+.sebcs-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sebcs-skeleton-line {
+    height: 0.9rem;
+    margin-bottom: 0.6rem;
+    border-radius: var(--slds-g-radius-border-2, 0.25rem);
+    background: linear-gradient(90deg, var(--slds-g-color-surface-container-2, #ececec) 25%, var(--slds-g-color-surface-container-3, #f7f7f7) 50%, var(--slds-g-color-surface-container-2, #ececec) 75%);
+    background-size: 200% 100%;
+    animation: sebcs-shimmer 1.2s infinite linear;
+}
+.sebcs-skeleton-line_short {
+    width: 60%;
+}
+.sebcs-pulse {
+    display: inline-block;
+    border-radius: var(--slds-g-radius-border-2, 0.25rem);
+    animation: sebcs-pulse 1.4s infinite;
+}
+@keyframes sebcs-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+@keyframes sebcs-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(1, 118, 211, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(1, 118, 211, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(1, 118, 211, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sebcs-skeleton-line, .sebcs-pulse { animation: none; }
+}

@@ -3,7 +3,7 @@
     <apiVersion>62.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>CCO FR - Engagement History</masterLabel>
-    <description>Marketing and Data - Configurable marketing engagement timeline (Email, SMS, Form, Page View) with live search and typed colored icons. Mock data mode - no Apex, no SOQL. Bilingual EN / FR.</description>
+    <description>Marketing and Data - Configurable marketing engagement timeline (Email, SMS, Form, Page View) with live search and typed colored icons. Sample timeline shown by default; override with pipe-separated event properties. No Apex. Bilingual EN / FR.</description>
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>

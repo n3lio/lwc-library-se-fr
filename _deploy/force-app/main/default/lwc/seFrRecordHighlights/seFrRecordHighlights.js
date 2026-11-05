@@ -74,10 +74,6 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
     // Optional CSV of Quick Action API names that overrides the auto-loaded layout actions.
     // Example: 'Edit,Delete,SendEmail'. Leave empty (default) to follow the page layout.
     @api quickActionsCsv = '';
-    // Legacy props kept so existing FlexiPages don't break on deploy. No longer used by the
-    // rendering logic — the buttons now come from the active layout via getRecordActions.
-    @api disableRealButtons = false;
-    @api fakeButtonLabels;
     @api imageSize = 90;
     // When false (default), clicking the image opens a file picker to replace it inline. Turn ON
     // to go back to the legacy "open image full size" behavior.
@@ -91,8 +87,6 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
     //                         or the Parent Account when already on an Account page)
     @api recordSource = 'current';
 
-    // Legacy property kept for backwards compatibility with v1 pages.
-    @api fieldsList;
 
     @track imageUrlFromRecord;
     @track resolvedParentId;
@@ -164,7 +158,6 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
 
     get effectiveFieldsList() {
         if (this.isContact) return this.contactFieldsList;
-        if (this.fieldsList && this.accountFieldsList === ACCOUNT_DEFAULT_FIELDS) return this.fieldsList;
         return this.accountFieldsList;
     }
 

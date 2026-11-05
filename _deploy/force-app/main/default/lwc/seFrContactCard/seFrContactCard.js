@@ -64,9 +64,6 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     @api imageFieldApiName = 'SDO_Cust360_Contact_Picture_URL__c';
     @api disableImageReplace = false;
     get allowImageReplace() { return !this.disableImageReplace; }
-    // Legacy prop — kept so existing FlexiPages don't break. The component now reads the image
-    // from BOTH the URL field (priority) AND the File attached to the contact (fallback).
-    @api imageMode = 'field';
 
     // --- Customer ID --------------------------------------------------------------------------
     @api showCustomerId = false;
@@ -99,7 +96,6 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     // prop (default=false) is kept so existing FlexiPages don't break on deploy; when it's
     // explicitly toggled ON, it still turns waves on, but `hideWaves` wins when set.
     @api hideWaves = false;
-    @api showWaves = false;
     get wavesVisible() {
         if (this.hideWaves) return false;
         return true; // on by default; `hideWaves` is the only way to turn them off.
@@ -117,11 +113,10 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     // (default false). The legacy `enablePromptSummary` prop is kept (a deployed FlexiPage
     // references it) but no longer drives the rendering — we read `disablePromptSummary` only.
     @api disablePromptSummary = false;
-    @api enablePromptSummary = false;       // legacy — see comment above
     get isPromptSummaryEnabled() { return !this.disablePromptSummary; }
     @api promptButtonLabel;                          // defaults to dictionary "Summarize"
-    @api promptTemplateApiName = 'einstein_gpt__summarizeContact';
-    @api promptInputApiName = 'Input:Contact';
+    @api promptTemplateApiName = 'CCO_FR_SummarizeContact';
+    @api promptInputApiName = 'Input:objectToSummarize';
     @api autoPromptOnLoad = false;
 
     // --- Internal state -----------------------------------------------------------------------
@@ -153,13 +148,13 @@ export default class SeFrContactCard extends NavigationMixin(LightningElement) {
     }
 
     // Inject the prompt summary (HTML markup returned by the prompt template) directly into the
-    // DOM. Using `lightning-formatted-rich-text` doesn't work here because the response contains
-    // anchor / em / br tags that the component sanitises away or escapes back to literal text.
-    // `lwc:dom="manual"` + innerHTML is the only reliable way to render the raw markup.
+    // DOM. `lightning-formatted-rich-text` doesn't work here because the response contains tags
+    // the component sanitises / escapes back to literal text.
+    // The `lwc:dom="manual"` div is queried by class and we set its innerHTML once the value
+    // changes. Two divs exist (carded + headerless mode) but only one is rendered at a time.
     _renderPromptHtml() {
-        if (!this.refs) return;
         const html = this.promptText || '';
-        const target = this.refs.promptHtml || this.refs.promptHtmlHeaderless;
+        const target = this.template.querySelector('.can-prompt-html-target');
         if (target && target.innerHTML !== html) {
             target.innerHTML = html;
         }

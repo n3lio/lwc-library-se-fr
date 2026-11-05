@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Voice Note Taker</masterLabel>
+    <masterLabel>CCO FR - Voice Note Taker</masterLabel>
     <description>Dictate a voice note and save it as a completed Task linked to the current record. Bilingual EN / FR.</description>
     <targets>
         <target>lightning__RecordPage</target>
@@ -14,6 +14,7 @@
                 <object>Contact</object>
                 <object>Lead</object>
                 <object>Opportunity</object>
+                <object>Visit__c</object>
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls every visible string. Explicit values override per-field." />
             <property name="cardTitle" type="String" label="Card title (override)" />
@@ -28,6 +29,7 @@
             <property name="saveButtonLabel" type="String" label="Save button label (override)" />
             <property name="unsupportedBrowserMessage" type="String" label="Unsupported-browser message (override)" />
             <property name="successMessage" type="String" label="Success toast message (override)" />
+            <property name="progressStepKey" type="String" label="Visit plan step key to tick on save" description="If set (e.g. 'summary'), publishes stepKey:done in localStorage sefr-visit-progress::recordId after a successful save so seFrVisitPlan can tick the matching step." />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

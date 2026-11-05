@@ -56,11 +56,11 @@ const DEFAULT_CATALOG = [
         userInputs: []
     },
     {
-        apiName: 'einstein_gpt__summarizeContact',
+        apiName: 'CCO_FR_SummarizeContact',
         label: 'Contact summary',
         icon: 'utility:summarydetail',
         objects: ['Contact'],
-        recordInputName: 'Input:Contact',
+        recordInputName: 'Input:objectToSummarize',
         userInputs: []
     },
     {
@@ -135,20 +135,6 @@ export default class SeFrPromptLauncher extends NavigationMixin(LightningElement
      * to bound the vertical footprint regardless of the AI output size.
      */
     @api maxHeight = 0;
-    /** Legacy property — kept so existing FlexiPages don't break. No effect. */
-    @api height;
-
-    // Legacy properties kept so existing FlexiPages don't break on upgrade. The component used
-    // to be a chat surface for a real Agentforce agent — the refactor replaced it with a Prompt
-    // Launcher. None of these are read by the new code; they exist purely to satisfy the
-    // platform's "FlexiPage references this property" check.
-    @api mode;
-    @api agentRef;
-    @api agentDisplayName;
-    @api scriptedRepliesJson;
-    @api flowRulesCsv;
-    @api quickFlowsCsv;
-    @api inputPlaceholder;
 
     // ---- Tracked state ----------------------------------------------------------------------
     @track activePromptApiName;

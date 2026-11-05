@@ -202,7 +202,16 @@ export default class SeFrTimelinePhases extends LightningElement {
         if (!first || !last) return 'display: none;';
         const now = Date.now();
         if (now < first || now > last) return 'display: none;';
-        const pct = ((now - first) / (last - first)) * 100;
+        /* The dots are centered inside their flex cells (flex: 1 1 0, text-align: center) → the
+           x-centers of phase i (0..n-1) sit at ((i + 0.5) / n) × 100% of the wrapper width, NOT
+           at 0 / 33 / 66 / 100%. If we mapped [first, last] linearly to [0, 100] (what we did
+           previously), "today near the last date" rendered PAST the last dot — visually in the
+           future even though today < lastDate. Map instead to [dotFirst, dotLast] so the marker
+           lives in the same coordinate system as the dots. */
+        const n = phases.length;
+        const halfSlot = 50 / n;          // half-cell width in %
+        const range    = 100 - 2 * halfSlot;
+        const pct = halfSlot + ((now - first) / (last - first)) * range;
         return `left: ${pct}%;`;
     }
 

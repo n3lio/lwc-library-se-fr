@@ -1,0 +1,80 @@
+<template>
+    <lightning-card title={resolvedCardTitle} icon-name={resolvedCardIcon}>
+        <div class="sefrci-body">
+            <template lwc:if={loaded}>
+
+                <!-- PLANNED : CTA primaire centré, pas de pavé vide. -->
+                <template lwc:if={isPlanned}>
+                    <div class="sefrci-state sefrci-state--planned">
+                        <div class="sefrci-state__head">
+                            <lightning-icon icon-name="utility:date_time" size="small" class="sefrci-state__badge sefrci-state__badge--planned"></lightning-icon>
+                            <div class="sefrci-state__text">
+                                <p class="sefrci-state__title">{t.planned}</p>
+                                <p class="sefrci-state__hint">{t.plannedHint}</p>
+                            </div>
+                        </div>
+                        <lightning-button class="sefrci-cta" variant="brand" label={t.checkIn} icon-name="utility:location" disabled={isSaving} onclick={handleCheckIn}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- IN PROGRESS : chrono central, bouton checkout. -->
+                <template lwc:elseif={isInProgress}>
+                    <div class="sefrci-state sefrci-state--inprogress">
+                        <div class="sefrci-state__head">
+                            <lightning-icon icon-name="utility:clock" size="small" class="sefrci-state__badge sefrci-state__badge--inprogress"></lightning-icon>
+                            <div class="sefrci-state__text">
+                                <p class="sefrci-state__title">{t.inProgress}</p>
+                                <template lwc:if={hasCheckIn}>
+                                    <p class="sefrci-state__hint">{t.sinceLabel} {checkInText}</p>
+                                </template>
+                            </div>
+                        </div>
+                        <template lwc:if={hasCheckIn}>
+                            <div class="sefrci-clock">
+                                <span class="sefrci-clock__label">{t.elapsed}</span>
+                                <span class="sefrci-clock__value">{elapsedText}</span>
+                            </div>
+                        </template>
+                        <lightning-button class="sefrci-cta" variant="brand" label={t.checkOut} icon-name="utility:check" disabled={isSaving} onclick={handleCheckOut}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- COMPLETED : ligne compacte "durée · timestamp · bouton rouvrir". -->
+                <template lwc:elseif={isCompleted}>
+                    <div class="sefrci-state sefrci-state--completed">
+                        <lightning-icon icon-name="utility:success" size="small" class="sefrci-state__badge sefrci-state__badge--completed"></lightning-icon>
+                        <div class="sefrci-state__text">
+                            <p class="sefrci-state__title">{t.completed}</p>
+                            <p class="sefrci-state__hint">{t.closedOn} {closedOnText}</p>
+                        </div>
+                        <template lwc:if={hasDuration}>
+                            <span class="sefrci-chip" title={t.duration}>
+                                <lightning-icon icon-name="utility:clock" size="xx-small" class="sefrci-chip__icon"></lightning-icon>
+                                <span class="sefrci-chip__value">{durationText}</span>
+                            </span>
+                        </template>
+                        <lightning-button class="sefrci-action" variant="neutral" size="small" label={t.reopen} icon-name="utility:undo" disabled={isSaving} onclick={handleReopen}></lightning-button>
+                    </div>
+                </template>
+
+                <!-- CANCELLED : même ligne compacte en gris. -->
+                <template lwc:elseif={isCancelled}>
+                    <div class="sefrci-state sefrci-state--cancelled">
+                        <lightning-icon icon-name="utility:close" size="small" class="sefrci-state__badge sefrci-state__badge--cancelled"></lightning-icon>
+                        <div class="sefrci-state__text">
+                            <p class="sefrci-state__title">{t.cancelled}</p>
+                            <p class="sefrci-state__hint">{t.cancelledHint}</p>
+                        </div>
+                        <lightning-button class="sefrci-action" variant="neutral" size="small" label={t.reopenPlanned} icon-name="utility:undo" disabled={isSaving} onclick={handleReplan}></lightning-button>
+                    </div>
+                </template>
+
+            </template>
+            <template lwc:else>
+                <div class="sefrci-loading">
+                    <lightning-spinner alternative-text={t.loading} size="small"></lightning-spinner>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

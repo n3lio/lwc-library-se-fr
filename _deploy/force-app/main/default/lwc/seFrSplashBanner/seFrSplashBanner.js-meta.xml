@@ -2,8 +2,8 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - Splash Banner</masterLabel>
-    <description>Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).</description>
+    <masterLabel>CCO FR - Splash Banner</masterLabel>
+    <description>Bannière animée pur CSS/SVG, 8 styles (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid). Paramétrable (texte, couleurs, vitesse, hauteur). Titre + sous-titre : markdown inline (gras, italique, souligné, code, barré).</description>
     <targets>
         <target>lightning__HomePage</target>
         <target>lightning__AppPage</target>
@@ -11,8 +11,9 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage,lightning__AppPage,lightning__RecordPage">
-            <property name="title" type="String" default="Bonjour 👋" label="Titre" description="Le grand texte affiché au centre. Émojis acceptés." />
-            <property name="subtitle" type="String" label="Sous-titre (optionnel)" description="Texte plus petit affiché sous le titre." />
+            <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'." />
+            <property name="title" type="String" default="Bonjour 👋" label="Titre" description="Le grand texte affiché au centre. Émojis acceptés. Supporte le markdown inline : **gras**, *italique* ou _italique_, __souligné__, `code`, ~~barré~~." />
+            <property name="subtitle" type="String" label="Sous-titre (optionnel)" description="Texte plus petit affiché sous le titre. Supporte le markdown inline : **gras**, *italique* ou _italique_, __souligné__, `code`, ~~barré~~." />
             <property name="textSize" type="String" datasource="s,m,l,xl" default="l" label="Taille du texte" description="s = petit, m = moyen, l = grand (défaut), xl = très grand." />
             <property name="bgStyle" type="String" datasource="waves,aurora,mesh,orbs,conic,geometric,constellation,grid" default="waves" label="Style de fond" description="waves (vagues animées de Charly) | aurora (aurores boréales) | mesh (mesh gradient Stripe-like) | orbs (sphères flottantes) | conic (rotation conique Vercel-like) | geometric (low-poly animé) | constellation (étoiles reliées) | grid (blueprint scan-line)." />
             <property name="colorPrimary" type="String" default="#0176d3" label="Couleur principale" description="Couleur CSS (hex, rgb, named). Utilisée par tous les fonds." />

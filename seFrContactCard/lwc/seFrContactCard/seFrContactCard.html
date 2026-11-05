@@ -139,14 +139,27 @@
                 </div>
             </template>
 
-            <!-- Header: title + icon + open-record button (mimicking lightning-card chrome) -->
-            <div class="can-card-chrome">
-                <div class="can-card-chrome-title">
-                    <lightning-icon icon-name="standard:contact" size="small" class="slds-m-right_x-small"></lightning-icon>
-                    <span>{resolvedCardTitle}</span>
-                </div>
+            <!-- Header: title + icon + open-record button.
+                 Uses the exact SLDS classes that <lightning-card> renders internally
+                 (.slds-card__header + .slds-media + .slds-card__header-title) so the title
+                 inherits the platform typography — same font, size, weight, color as every
+                 other <lightning-card> on the page. The .can-card-chrome class remains to
+                 handle z-index above the waves and keep padding compact. -->
+            <div class="slds-card__header slds-grid can-card-chrome">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="standard:contact" size="small"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <span class="slds-truncate" title={resolvedCardTitle}>{resolvedCardTitle}</span>
+                        </h2>
+                    </div>
+                </header>
                 <template lwc:if={showOpenButton}>
-                    <lightning-button-icon icon-name="utility:new_window" alternative-text={labels.openContact} variant="border-filled" size="small" onclick={openContactRecord}></lightning-button-icon>
+                    <div class="slds-no-flex">
+                        <lightning-button-icon icon-name="utility:new_window" alternative-text={labels.openContact} variant="border-filled" size="small" onclick={openContactRecord}></lightning-button-icon>
+                    </div>
                 </template>
             </div>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Visit Kanban</masterLabel>
+    <description>Kanban des visites (Visit__c) d'un compte : 4 colonnes Planned / In Progress / Completed / Cancelled. Glisser-deposer pour changer l'etat de la visite. Bouton optionnel pour lancer le Flow CCO_FR_Start_Visit.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="Langue de l'interface (fr / en)" />
+            <property name="cardTitle" type="String" label="Titre de la carte (surcharge)" />
+            <property name="cardIcon" type="String" default="standard:kanban" label="Icone de la carte" />
+            <property name="limitPerColumn" type="Integer" default="5" label="Cartes visibles par colonne" description="Au-dela, un bouton chevron Voir plus affiche le reste." />
+            <property name="startVisitFlowApiName" type="String" default="CCO_FR_Start_Visit" label="Flow de nouvelle visite" description="API name du Screen Flow. Le bouton est masque si le Flow n'existe pas." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

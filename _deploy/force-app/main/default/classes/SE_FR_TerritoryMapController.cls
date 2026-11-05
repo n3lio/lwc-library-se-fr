@@ -41,13 +41,19 @@ public with sharing class SE_FR_TerritoryMapController {
 
         // Project the configurable filter fields if valid + present so we can return them in the
         // wrapper (and the SE can show them in the list).
+        // RecordType is only projected if the org actually has Account record types,
+        // otherwise `RecordType.*` is not addressable on Account and the dynamic query fails.
+        Boolean accountHasRecordType = accountFields.containsKey('recordtypeid');
         Set<String> projected = new Set<String>{
             'Id','Name','Industry','Type','Phone','Website',
             'BillingStreet','BillingCity','BillingPostalCode','BillingState','BillingCountry',
             'BillingLatitude','BillingLongitude','OwnerId','Owner.Name',
-            'AnnualRevenue','NumberOfEmployees',
-            'RecordType.DeveloperName','RecordType.Name'
+            'AnnualRevenue','NumberOfEmployees'
         };
+        if (accountHasRecordType) {
+            projected.add('RecordType.DeveloperName');
+            projected.add('RecordType.Name');
+        }
         if (filterAValid) projected.add(filterFieldAApiName);
         if (filterBValid) projected.add(filterFieldBApiName);
 
@@ -55,7 +61,7 @@ public with sharing class SE_FR_TerritoryMapController {
         String soql = 'SELECT ' + String.join(new List<String>(projected), ', ')
             + ' FROM Account '
             + 'WHERE BillingLatitude != null AND BillingLongitude != null ';
-        if (String.isNotBlank(recordTypeName)) {
+        if (String.isNotBlank(recordTypeName) && accountHasRecordType) {
             soql += ' AND RecordType.DeveloperName = :recordTypeName ';
         }
         if (ownedByMe) {
@@ -153,8 +159,10 @@ public with sharing class SE_FR_TerritoryMapController {
             t.numberOfEmployees = a.NumberOfEmployees;
             t.ownerId = a.OwnerId;
             t.ownerName = a.Owner != null ? a.Owner.Name : null;
-            t.recordTypeName = a.RecordType != null ? a.RecordType.Name : null;
-            t.recordTypeDeveloperName = a.RecordType != null ? a.RecordType.DeveloperName : null;
+            // Access RecordType dynamically — guarded for orgs with no Account record types.
+            SObject rt = a.getSObject('RecordType');
+            t.recordTypeName = rt != null ? (String) rt.get('Name') : null;
+            t.recordTypeDeveloperName = rt != null ? (String) rt.get('DeveloperName') : null;
             t.openOpportunityCount = r != null ? r.openCount : 0;
             t.openOpportunityAmount = r != null ? r.openAmount : 0;
             t.wonOpportunityCount = r != null ? r.wonCount : 0;

@@ -296,7 +296,10 @@ def build_component(
     # external contributor checks
     author = fm.get("originalAuthor") or ""
     if author and author != "Lionel Braun":
-        for k in ("originalAuthorEmail", "maintainedBy", "libraryIntegrationDate"):
+        # Must have a maintainer + integration date on file so we can trace the contribution back
+        # to someone who owns updates. Email is nice-to-have (we often don't track it) — the
+        # credit via `originalAuthor` is sufficient.
+        for k in ("maintainedBy", "libraryIntegrationDate"):
             if not fm.get(k):
                 errors.append(f"{api}: external contributor requires '{k}'")
 

@@ -93,28 +93,31 @@ public with sharing class SE_FR_PromptLauncherController {
 
         // Invocable Actions take an array of action invocations. We send one. Salesforce expects
         // the inputs as a flat map of name → value.
-        Map<String, Object> body = new Map<String, Object>{
-            'inputs' => new List<Object>{ inputs }
-        };
-
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:' + nc + '/services/data/' + API_VERSION
-            + '/actions/custom/generatePromptResponse/' + promptApiName);
-        req.setMethod('POST');
-        req.setHeader('Content-Type', 'application/json');
-        req.setHeader('Accept', 'application/json');
-        req.setBody(JSON.serialize(body));
-
+        // ConnectApi runs the template in-process: no Named Credential / callout needed.
         try {
-            HttpResponse res = new Http().send(req);
-            String responseBody = res.getBody();
-            Integer status = res.getStatusCode();
-            if (status >= 400) {
-                return wrapError('HTTP ' + status + ': ' + responseBody);
+            Map<String, ConnectApi.WrappedValue> params = new Map<String, ConnectApi.WrappedValue>();
+            for (String k : inputs.keySet()) {
+                Object v = inputs.get(k);
+                ConnectApi.WrappedValue wv = new ConnectApi.WrappedValue();
+                if (v instanceof Map<String, Object>) {
+                    Map<String, Object> m = (Map<String, Object>) v;
+                    Map<String, String> rec = new Map<String, String>();
+                    for (String mk : m.keySet()) rec.put(mk.toLowerCase() == 'id' ? 'id' : mk, String.valueOf(m.get(mk)));
+                    wv.value = rec;
+                } else {
+                    wv.value = v == null ? '' : String.valueOf(v);
+                }
+                params.put(k, wv);
             }
-            return responseBody;
-        } catch (System.CalloutException e) {
-            return wrapError(e.getMessage());
+            ConnectApi.EinsteinPromptTemplateGenerationsInput input = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
+            input.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
+            input.additionalConfig.applicationName = 'PromptBuilderPreview';
+            input.isPreview = false;
+            input.inputParams = params;
+            ConnectApi.EinsteinPromptTemplateGenerationsRepresentation out =
+                ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(promptApiName, input);
+            String text = (out != null && out.generations != null && !out.generations.isEmpty()) ? out.generations[0].text : '';
+            return JSON.serialize(new Map<String, Object>{ 'promptResponse' => text });
         } catch (Exception e) {
             return wrapError(e.getMessage());
         }
@@ -129,15 +132,21 @@ public with sharing class SE_FR_PromptLauncherController {
         if (recordId == null || String.isBlank(htmlContent)) {
             throw new AuraHandledException('recordId and htmlContent are required.');
         }
-        ContentNote note = new ContentNote();
-        note.Title = String.isNotBlank(title) ? title.abbreviate(200) : 'AI summary';
-        // ContentNote stores HTML in `Content` (Blob) — UTF-8 encoded markup.
-        note.Content = Blob.valueOf(htmlContent);
+        // Guarded against orgs where Enhanced Notes (ContentNote) isn't enabled.
+        // We stay compile-safe by using dynamic SObject + Database.insert.
+        Schema.SObjectType noteType = Schema.getGlobalDescribe().get('ContentNote');
+        if (noteType == null) {
+            throw new AuraHandledException('Enhanced Notes (ContentNote) is not enabled in this org. Enable it in Setup → Notes Settings.');
+        }
+        SObject note = noteType.newSObject();
+        note.put('Title', String.isNotBlank(title) ? title.abbreviate(200) : 'AI summary');
+        note.put('Content', Blob.valueOf(htmlContent));
         insert note;
 
         ContentDocumentLink link = new ContentDocumentLink();
         link.LinkedEntityId = recordId;
-        link.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :note.LatestPublishedVersionId LIMIT 1].ContentDocumentId;
+        Id versionId = (Id) note.get('LatestPublishedVersionId');
+        link.ContentDocumentId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :versionId LIMIT 1].ContentDocumentId;
         link.ShareType = 'V';
         link.Visibility = 'AllUsers';
         insert link;

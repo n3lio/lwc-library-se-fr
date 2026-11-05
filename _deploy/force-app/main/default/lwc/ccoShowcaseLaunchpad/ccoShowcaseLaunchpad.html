@@ -1,0 +1,34 @@
+<template>
+    <div class="lp">
+        <header class="lp-head">
+            <h2 class="lp-title">{title}</h2>
+            <p class="lp-intro">{intro}</p>
+        </header>
+        <template for:each={sections} for:item="sec">
+            <section key={sec.key} class="lp-section">
+                <div class="lp-sec-head">
+                    <h3 class="lp-sec-title">{sec.title}</h3>
+                    <template lwc:if={sec.subtitle}><span class="lp-sec-sub">{sec.subtitle}</span></template>
+                </div>
+                <div class="lp-grid">
+                    <template for:each={sec.tiles} for:item="t">
+                        <button key={t.key} type="button" class="lp-tile" style={t.style}
+                                data-tab={t.tab} data-url={t.url} onclick={handleOpen}>
+                            <span class="lp-icon">
+                                <lightning-icon icon-name={t.icon} size="medium" alternative-text={t.title}></lightning-icon>
+                            </span>
+                            <span class="lp-body">
+                                <span class="lp-name">{t.title}</span>
+                                <span class="lp-desc">{t.description}</span>
+                            </span>
+                            <span class="lp-go">
+                                {openLabel}
+                                <lightning-icon icon-name="utility:forward" size="xx-small" class="lp-go-icon"></lightning-icon>
+                            </span>
+                        </button>
+                    </template>
+                </div>
+            </section>
+        </template>
+    </div>
+</template>

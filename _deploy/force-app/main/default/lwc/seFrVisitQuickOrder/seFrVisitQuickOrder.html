@@ -1,0 +1,254 @@
+<template>
+    <lightning-card title={effectiveTitle} icon-name={effectiveIcon}>
+        <div slot="actions" class="sefrqo-head-actions">
+            <lightning-button-icon
+                icon-name={expandIcon}
+                alternative-text={expandLabel}
+                variant="bare"
+                onclick={handleToggleExpand}>
+            </lightning-button-icon>
+        </div>
+
+        <div class="sefrqo-wrap" lwc:if={isExpanded}>
+            <!-- Confirmation state -->
+            <template lwc:if={showConfirmation}>
+                <div class="sefrqo-confirm">
+                    <lightning-icon icon-name="utility:success" variant="success" size="medium"></lightning-icon>
+                    <div class="sefrqo-confirm__body">
+                        <strong class="sefrqo-confirm__title">{t.orderCreated}</strong>
+                        <span class="sefrqo-confirm__meta">
+                            {totalLines} {t.totalLines} · {totalUnits} {t.totalUnits} · {totalAmount}{currencySymbol}
+                        </span>
+                    </div>
+                    <lightning-button label={t.newOrder} variant="brand" onclick={handleNewOrder}></lightning-button>
+                </div>
+            </template>
+
+            <!-- Submitting state -->
+            <template lwc:if={isSubmitting}>
+                <div class="sefrqo-loading">
+                    <lightning-spinner size="small" alternative-text={t.validating}></lightning-spinner>
+                    <span>{t.validating}</span>
+                </div>
+            </template>
+
+            <template lwc:if={showOrderForm}>
+                <!-- Recommendations -->
+                <template lwc:if={hasRecommendations}>
+                    <section class="sefrqo-recos">
+                        <header class="sefrqo-recos__head">
+                            <div class="sefrqo-recos__title">
+                                <lightning-icon icon-name="utility:einstein" size="x-small"></lightning-icon>
+                                <strong>{t.recosTitle}</strong>
+                                <span class="sefrqo-recos__count">{recommendationCount} {t.recosToPush}</span>
+                            </div>
+                            <div class="sefrqo-recos__actions">
+                                <template lwc:if={canApplyAllRecommendations}>
+                                    <button type="button" class="sefrqo-link" onclick={handleAddAllRecommendations}>{t.addAllRecos}</button>
+                                </template>
+                                <lightning-button-icon
+                                    icon-name={recosToggleIcon}
+                                    variant="bare"
+                                    size="small"
+                                    onclick={handleToggleRecos}>
+                                </lightning-button-icon>
+                            </div>
+                        </header>
+                        <p class="sefrqo-recos__reason" lwc:if={recosOpen}>{t.recosReason}</p>
+                        <ul class="sefrqo-recos__list" lwc:if={recosOpen}>
+                            <template for:each={recommendations} for:item="r">
+                                <li key={r.productId} class="sefrqo-reco">
+                                    <div class="sefrqo-reco__media">
+                                        <img src={r.imageUrl} alt={r.name} loading="lazy" />
+                                    </div>
+                                    <div class="sefrqo-reco__body">
+                                        <span class={r.tagClass}>{r.tag}</span>
+                                        <strong class="sefrqo-reco__name">{r.name}</strong>
+                                        <span class="sefrqo-reco__qty">{r.suggestedQtyLabel}</span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="sefrqo-reco__add"
+                                        data-id={r.productId}
+                                        data-qty={r.suggestedQty}
+                                        onclick={handleAddRecommendation}
+                                        disabled={r.inCart}>
+                                        <lightning-icon icon-name="utility:add" size="xx-small"></lightning-icon>
+                                        <span lwc:if={r.inCart}>{t.added}</span>
+                                        <span lwc:else>{t.add}</span>
+                                    </button>
+                                </li>
+                            </template>
+                        </ul>
+                    </section>
+                </template>
+
+                <!-- Cart -->
+                <section class="sefrqo-cart">
+                    <header class="sefrqo-cart__head">
+                        <div class="sefrqo-cart__title">
+                            <lightning-icon icon-name="utility:cart" size="x-small"></lightning-icon>
+                            <strong>{t.cart}</strong>
+                        </div>
+                        <div class="sefrqo-cart__summary">
+                            <div class="sefrqo-stat">
+                                <span class="sefrqo-stat__num">{totalLines}</span>
+                                <span class="sefrqo-stat__lbl">{t.totalLines}</span>
+                            </div>
+                            <div class="sefrqo-stat">
+                                <span class="sefrqo-stat__num">{totalUnits}</span>
+                                <span class="sefrqo-stat__lbl">{t.totalUnits}</span>
+                            </div>
+                            <div class="sefrqo-stat sefrqo-stat--total">
+                                <span class="sefrqo-stat__num">{totalAmount}{currencySymbol}</span>
+                                <span class="sefrqo-stat__lbl">{t.totalAmount}</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <template lwc:if={hasOrderLines}>
+                        <ul class="sefrqo-lines">
+                            <template for:each={orderLinesDisplay} for:item="l">
+                                <li key={l.id} class="sefrqo-line">
+                                    <div class="sefrqo-line__media">
+                                        <img src={l.imageUrl} alt={l.name} loading="lazy" />
+                                    </div>
+                                    <div class="sefrqo-line__info">
+                                        <strong class="sefrqo-line__name">{l.name}</strong>
+                                        <span class="sefrqo-line__meta">{l.code} · {l.unitPriceLabel}{currencySymbol}</span>
+                                    </div>
+                                    <div class="sefrqo-line__ctrls">
+                                        <lightning-input
+                                            type="number"
+                                            label={t.headQty}
+                                            variant="label-hidden"
+                                            value={l.quantity}
+                                            min="1"
+                                            step="1"
+                                            data-lineid={l.id}
+                                            onchange={handleQuantityChange}
+                                            class="sefrqo-line__qty">
+                                        </lightning-input>
+                                        <lightning-input
+                                            type="number"
+                                            label={t.headDisc}
+                                            variant="label-hidden"
+                                            value={l.discountPct}
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                            data-lineid={l.id}
+                                            onchange={handleLineDiscountChange}
+                                            class="sefrqo-line__disc">
+                                        </lightning-input>
+                                        <span class="sefrqo-line__total">{l.lineTotal}{currencySymbol}</span>
+                                        <lightning-button-icon
+                                            icon-name="utility:delete"
+                                            variant="bare"
+                                            size="small"
+                                            alternative-text={t.remove}
+                                            data-lineid={l.id}
+                                            onclick={handleRemoveLine}>
+                                        </lightning-button-icon>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+
+                        <div class="sefrqo-cart__footer">
+                            <lightning-input
+                                type="number"
+                                label={t.globalDisc}
+                                value={globalDiscount}
+                                min="0"
+                                max="100"
+                                step="1"
+                                onchange={handleGlobalDiscountChange}
+                                class="sefrqo-global-disc">
+                            </lightning-input>
+                            <lightning-button
+                                label={t.validate}
+                                variant="brand"
+                                icon-name="utility:check"
+                                disabled={submitDisabled}
+                                onclick={handleSubmitOrder}>
+                            </lightning-button>
+                        </div>
+                    </template>
+
+                    <template lwc:else>
+                        <div class="sefrqo-empty">
+                            <lightning-icon icon-name="utility:cart" size="small"></lightning-icon>
+                            <span>{t.emptyCart}</span>
+                        </div>
+                    </template>
+                </section>
+
+                <!-- Catalog -->
+                <section class="sefrqo-catalog">
+                    <header class="sefrqo-catalog__head">
+                        <div class="sefrqo-catalog__title">
+                            <lightning-icon icon-name="utility:apps" size="x-small"></lightning-icon>
+                            <strong>{t.catalog}</strong>
+                        </div>
+                        <div class="sefrqo-catalog__filters">
+                            <lightning-combobox
+                                label={t.allCategories}
+                                variant="label-hidden"
+                                value={selectedFamily}
+                                options={families}
+                                onchange={handleFamilyChange}
+                                class="sefrqo-filter-combo">
+                            </lightning-combobox>
+                            <lightning-input
+                                type="search"
+                                label={t.search}
+                                variant="label-hidden"
+                                placeholder={t.search}
+                                value={searchTerm}
+                                onchange={handleSearch}
+                                class="sefrqo-filter-search">
+                            </lightning-input>
+                        </div>
+                    </header>
+
+                    <template lwc:if={filteredProducts.length}>
+                        <ul class="sefrqo-grid">
+                            <template for:each={filteredProducts} for:item="p">
+                                <li key={p.id} class="sefrqo-card">
+                                    <div class="sefrqo-card__media">
+                                        <img src={p.imageUrl} alt={p.name} loading="lazy" />
+                                        <template lwc:if={p.hasBadge}>
+                                            <span class={p.badgeClass}>{p.badgeLabel}</span>
+                                        </template>
+                                    </div>
+                                    <div class="sefrqo-card__body">
+                                        <strong class="sefrqo-card__name">{p.name}</strong>
+                                        <span class="sefrqo-card__code">{p.code}</span>
+                                        <div class="sefrqo-card__row">
+                                            <span class="sefrqo-card__price">{p.price}{currencySymbol}</span>
+                                            <span class={p.stockClass}>{p.stock}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="sefrqo-card__add"
+                                        data-id={p.id}
+                                        onclick={handleAddProduct}
+                                        disabled={p.inCart}>
+                                        <lightning-icon icon-name="utility:add" size="xx-small"></lightning-icon>
+                                        <span lwc:if={p.inCart}>{t.added}</span>
+                                        <span lwc:else>{t.add}</span>
+                                    </button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template lwc:else>
+                        <div class="sefrqo-empty">{t.emptyCatalog}</div>
+                    </template>
+                </section>
+            </template>
+        </div>
+    </lightning-card>
+</template>

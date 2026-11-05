@@ -53,6 +53,28 @@
     max-width: 60ch;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
 }
+
+/* --- Inline markdown ---------------------------------------------------------------------- */
+/* The title is already font-weight:700 — pushing bold spans to 900 so they stand out above
+   the base weight. Italics inherit color + size. Code renders monospace with subtle chip. */
+.sb-md             { font-style: inherit; font-weight: inherit; }
+.sb-md_bold        { font-weight: 900; letter-spacing: -0.01em; }
+.sb-md_italic      { font-style: italic; }
+.sb-md_underline   { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.sb-md_strike      { text-decoration: line-through; text-decoration-thickness: 2px; opacity: 0.7; }
+.sb-md_code {
+    font-family: 'SF Mono', 'Monaco', 'Menlo', ui-monospace, Consolas, monospace;
+    font-size: 0.88em;
+    padding: 0.08em 0.4em;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 0 0.1em;
+}
+.sb-text_dark .sb-md_code {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+}
 .sb-cta {
     margin-top: 14px;
     display: inline-block;

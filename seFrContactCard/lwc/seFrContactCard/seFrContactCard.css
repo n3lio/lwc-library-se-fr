@@ -10,13 +10,15 @@
 }
 
 /* Card root with overflow hidden so the waves stay clipped inside the rounded corners.
-   Border-radius uses the SLDS card token so the radius matches other library components
-   (ServiceContracts, SubscribersList, ActivityFeed...) which render via <lightning-card>.
-   Falls back to 0.5rem (SLDS2 default) when the token isn't resolved. */
+   IMPORTANT: --slds-c-card-radius-border is a component hook INTERNAL to <lightning-card>'s
+   shadow DOM — it does NOT cascade out of lightning-card into sibling custom components.
+   So this card can't read what SLDS2 sets inside lightning-card. Instead we hardcode the
+   same visual radius SLDS2 renders natively (1rem / 16px) so this custom-chrome card
+   matches every <lightning-card> on the same FlexiPage. */
 .can-root {
     position: relative;
     overflow: hidden;
-    border-radius: var(--slds-c-card-radius-border, 0.5rem);
+    border-radius: 1rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     background: #ffffff;
 }
@@ -31,31 +33,17 @@
     margin: 0;
 }
 
-/* Custom card chrome (replaces <lightning-card> header in carded mode) */
+/* Header wrapper — the SLDS classes (.slds-card__header + .slds-media + .slds-card__header-title)
+   on the children do the typography heavy lifting (identical to <lightning-card>). We only tweak
+   z-index so the header sits above the waves, and keep the native SLDS header padding. */
 .can-card-chrome {
     position: relative;
     z-index: 12;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 12px 14px 8px 14px;
     gap: 8px;
-}
-/* Match the typography rendered by <lightning-card> header title:
-   1rem font-size, 700 font-weight, dark text. SLDS hooks first, fallbacks last. */
-.can-card-chrome-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: var(--slds-c-card-heading-font-size, 1rem);
-    font-weight: var(--slds-c-card-heading-font-weight, 700);
-    color: var(--slds-c-card-heading-color, #181818);
-    min-width: 0;
-}
-.can-card-chrome-title span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /* Transparent background so the waves fill the card behind the header text. */
+    background: transparent;
+    border-bottom: none;
 }
 
 .card-inner {
@@ -222,7 +210,8 @@
 /* --- Dark mode ---------------------------------------------------------------------------- */
 .can-dark .can-name,
 .can-dark .can-strong,
-.can-dark .can-card-chrome-title { color: #ffffff; }
+.can-dark .slds-card__header-title,
+.can-dark .slds-card__header-title .slds-truncate { color: #ffffff; }
 .can-dark .can-field-name { color: rgba(255, 255, 255, 0.7); }
 .can-dark .can-field-value,
 .can-dark .can-gauge-value { color: #ffffff; }

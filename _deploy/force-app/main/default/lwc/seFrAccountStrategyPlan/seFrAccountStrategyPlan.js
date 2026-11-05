@@ -182,11 +182,6 @@ export default class SeFrAccountStrategyPlan extends LightningElement {
     // Strategic notes default (editable)
     @api strategyNotesDefault;
 
-    // Deprecated props — kept for backwards compat with pages still referencing them.
-    @api logisticOptionsCsv;
-    @api competitorOptionsCsv;
-    @api riskOptionsCsv;
-    @api leversOptionsCsv;
 
     // ------- Editable state (pre-filled from defaults, SE can edit for demo) -------
     @track annualTarget;

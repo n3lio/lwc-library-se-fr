@@ -1,0 +1,85 @@
+<template>
+    <article class="sefraa-card">
+        <!-- SLDS card header markup — identical to what <lightning-card> renders internally,
+             so the title inherits the exact platform typography regardless of SLDS1/SLDS2
+             version. See lightning-card source for the exact media/__header-title structure. -->
+        <header class="slds-card__header slds-grid sefraa-card__header">
+            <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:task" size="small" alternative-text="Actions"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-truncate" title={resolvedCardTitle}>{resolvedCardTitle}</span>
+                    </h2>
+                </div>
+            </div>
+        </header>
+
+        <div class="sefraa-actions">
+            <template lwc:if={showPrimary}>
+                <template lwc:if={isLaunchingPrimary}>
+                    <lightning-button
+                        variant="brand"
+                        label={primaryLoadingLabel}
+                        disabled
+                        class="sefraa-btn-stretch">
+                    </lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button
+                        variant="brand"
+                        label={resolvedPrimaryLabel}
+                        icon-name={primaryActionIcon}
+                        icon-position="left"
+                        onclick={handlePrimary}
+                        class="sefraa-btn-stretch">
+                    </lightning-button>
+                </template>
+            </template>
+
+            <template lwc:if={showAi}>
+                <template lwc:if={isSummarizing}>
+                    <lightning-button
+                        variant="neutral"
+                        label={aiLoadingLabel}
+                        disabled
+                        class="sefraa-btn-stretch">
+                    </lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button
+                        variant="neutral"
+                        label={resolvedAiLabel}
+                        icon-name="utility:einstein"
+                        icon-position="left"
+                        onclick={handleSummarize}
+                        class="sefraa-btn-stretch">
+                    </lightning-button>
+                </template>
+            </template>
+        </div>
+
+        <template lwc:if={summary}>
+            <div class="sefraa-summary">
+                <div class="sefraa-summary__head">
+                    <lightning-icon icon-name="utility:einstein" size="xx-small"></lightning-icon>
+                    <span class="sefraa-summary__title">{summaryHeaderLabel}</span>
+                    <lightning-button-icon
+                        icon-name="utility:close"
+                        variant="bare"
+                        size="small"
+                        alternative-text={closeLabel}
+                        onclick={handleCloseSummary}>
+                    </lightning-button-icon>
+                </div>
+                <!-- Manual innerHTML so our .sefraa-summary__body CSS reaches the <p>/<ul>/… tags
+                     (lightning-formatted-rich-text renders inside its own shadow DOM, which
+                     resets block margins → paragraphs collapse into a wall of text). The
+                     JS pre-sanitises code fences and the Apex side controls the prompt. -->
+                <div class="sefraa-summary__body" lwc:dom="manual"></div>
+            </div>
+        </template>
+
+    </article>
+</template>

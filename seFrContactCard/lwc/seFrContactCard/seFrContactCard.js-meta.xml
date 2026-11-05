@@ -23,8 +23,6 @@
 
             <property name="imageFieldApiName" type="String" default="SDO_Cust360_Contact_Picture_URL__c" label="Image URL field API name (optional)" description="Schema-safe: skipped if absent. When the contact has a value in this URL field, it wins over any uploaded file. Leave empty to rely solely on the click-to-upload File storage." />
             <property name="disableImageReplace" type="Boolean" default="false" label="Disable click-to-replace image" description="Off by default - clicking the avatar opens a file picker and uploads the new image as a File on the linked Contact (works on Contact, Case, Account etc. record pages). Turn ON to lock the avatar." />
-            <!-- Deprecated: replacement is now click-to-upload by default everywhere. -->
-            <property name="imageMode" type="String" label="(deprecated)" />
 
             <property name="showCustomerId" type="Boolean" default="false" label="Show customer ID line" />
             <property name="customerIdFieldApiName" type="String" default="SDO_Cust360_Id__c" label="Customer ID field API name" description="Schema-safe: the line is skipped if the field is absent or empty." />
@@ -48,8 +46,6 @@
             <property name="gauge3Direction" type="String" datasource="lower-better,higher-better" default="higher-better" label="Gauge 3 - semantics" />
 
             <property name="hideWaves" type="Boolean" default="false" label="Hide animated waves" description="Off by default - the card shows soft animated wave shapes tinted with the active Lightning theme accent. Turn ON to hide them." />
-            <!-- Kept for backwards compatibility with existing FlexiPages. The new control is `hideWaves`. -->
-            <property name="showWaves" type="Boolean" default="false" label="(deprecated) Show animated waves" description="No longer used. Use 'Hide animated waves' above." />
             <property name="isDarkBackground" type="Boolean" default="false" label="Dark background" description="Switches text color to white. Use in tandem with a dark background color / image." />
             <property name="backgroundColor" type="String" label="Background color (CSS)" description="Optional. Example: '#fff', 'rgb(30,30,60)'." />
             <property name="backgroundImageUrl" type="String" label="Background image URL" description="Optional. Add the external domain to Trusted Sites if needed." />
@@ -57,12 +53,9 @@
             <property name="waveColorTwo" type="String" label="Wave 2 color (override)" description="Optional CSS color. Leave empty to use a lighter tint of the theme accent." />
 
             <property name="disablePromptSummary" type="Boolean" default="false" label="Disable prompt summary (Einstein)" description="Off by default - the 'Résumer / Summarize' button is displayed and uses the prompt template below. Turn ON to hide the button entirely." />
-            <!-- Legacy property kept for backwards compatibility with FlexiPages built before
-                 the default flipped to ON. No longer drives rendering. -->
-            <property name="enablePromptSummary" type="Boolean" default="false" label="(deprecated)" description="Use 'Disable prompt summary' above. This property is kept for backwards compatibility only." />
             <property name="promptButtonLabel" type="String" label="Prompt button label (override)" description="Leave empty for the dictionary default ('Résumer' / 'Summarize')." />
-            <property name="promptTemplateApiName" type="String" default="einstein_gpt__summarizeContact" label="Prompt template API name" description="Developer name of the Einstein Prompt Template to run. Defaults to the SDO-standard contact summary template ('einstein_gpt__summarizeContact')." />
-            <property name="promptInputApiName" type="String" default="Input:Contact" label="Prompt template input API name" description="Typically 'Input:Contact'." />
+            <property name="promptTemplateApiName" type="String" default="CCO_FR_SummarizeContact" label="Prompt template API name" description="Developer name of the Einstein Prompt Template to run. Defaults to the SDO-standard contact summary template ('einstein_gpt__summarizeContact')." />
+            <property name="promptInputApiName" type="String" default="Input:objectToSummarize" label="Prompt template input API name" description="Typically 'Input:Contact'." />
             <property name="autoPromptOnLoad" type="Boolean" default="false" label="Run prompt automatically on load" description="When on and the prompt is enabled, the summary fires as soon as the component loads - no button click required." />
         </targetConfig>
     </targetConfigs>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Visit Product Check</masterLabel>
+    <description>Relevé produits terrain : liste depuis le Standard Pricebook, chaque produit Présent/Rupture + prix constaté + note. Publie la progression en localStorage → coche l'étape "products" du seFrVisitPlan.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Visit__c</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="Langue" description="'fr' ou 'en'." />
+            <property name="cardTitle" type="String" label="Titre de la carte (override)" />
+            <property name="cardIcon" type="String" label="Icône de la carte (override)" description="SLDS icon-name — défaut : standard:product_item." />
+            <property name="maxCount" type="Integer" default="12" label="Nombre de produits à afficher" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

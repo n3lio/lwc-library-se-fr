@@ -97,27 +97,34 @@ public with sharing class SE_FR_SubscribersListController {
         memberMap.put(queueId, dto);
     }
 
+    // Opportunity Team Selling may be disabled in some orgs — guard the SObject lookup.
+    private static Boolean oppTeamEnabled() {
+        return Schema.getGlobalDescribe().containsKey('OpportunityTeamMember');
+    }
+
     private static void addOppTeamForAccount(Id accountId, Map<Id, TeamMemberDTO> memberMap) {
-        for (OpportunityTeamMember otm : [
-            SELECT UserId, User.Name, User.UserRole.Name, User.SmallPhotoUrl
-            FROM OpportunityTeamMember
-            WHERE Opportunity.AccountId = :accountId
-            ORDER BY User.Name
-            LIMIT 50
-        ]) {
-            addUser(otm.UserId, otm.User, memberMap);
+        if (!oppTeamEnabled()) return;
+        String soql = 'SELECT UserId, User.Name, User.UserRole.Name, User.SmallPhotoUrl'
+            + ' FROM OpportunityTeamMember'
+            + ' WHERE Opportunity.AccountId = :accountId'
+            + ' ORDER BY User.Name LIMIT 50';
+        for (SObject otm : Database.query(soql)) {
+            Id uid = (Id) otm.get('UserId');
+            SObject usr = otm.getSObject('User');
+            addUser(uid, usr, memberMap);
         }
     }
 
     private static void addOppTeam(Id oppId, Map<Id, TeamMemberDTO> memberMap) {
-        for (OpportunityTeamMember otm : [
-            SELECT UserId, User.Name, User.UserRole.Name, User.SmallPhotoUrl
-            FROM OpportunityTeamMember
-            WHERE OpportunityId = :oppId
-            ORDER BY User.Name
-            LIMIT 20
-        ]) {
-            addUser(otm.UserId, otm.User, memberMap);
+        if (!oppTeamEnabled()) return;
+        String soql = 'SELECT UserId, User.Name, User.UserRole.Name, User.SmallPhotoUrl'
+            + ' FROM OpportunityTeamMember'
+            + ' WHERE OpportunityId = :oppId'
+            + ' ORDER BY User.Name LIMIT 20';
+        for (SObject otm : Database.query(soql)) {
+            Id uid = (Id) otm.get('UserId');
+            SObject usr = otm.getSObject('User');
+            addUser(uid, usr, memberMap);
         }
     }
 

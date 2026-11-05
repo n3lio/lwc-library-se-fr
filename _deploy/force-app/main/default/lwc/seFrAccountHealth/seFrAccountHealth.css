@@ -1,9 +1,18 @@
 .health-card {
     background: linear-gradient(135deg, var(--se-accent-soft, #eef4fb) 0%, #ffffff 70%);
     border: 1px solid #e5e5e5;
-    border-left: 4px solid var(--se-accent, #0176d3);
-    border-radius: 10px;
-    padding: 14px 16px;
+    /* Accent band on the left — rendered as an inset shadow instead of `border-left: 4px`
+       because an asymmetric border distorts the perceived corner radius on the thick side
+       (the arc looks "softer" on the left vs the other 3 edges). Inset shadow keeps the
+       border geometry uniform so the 4 corners match the other custom-chrome cards exactly. */
+    box-shadow: inset 4px 0 0 var(--se-accent, #0176d3);
+    /* IMPORTANT: --slds-c-card-radius-border is a component hook internal to <lightning-card>'s
+       shadow DOM and does NOT cascade out to this scope. Hardcode the SLDS2 native radius
+       (1rem / 16px) so this custom-chrome card matches native <lightning-card>s on the page. */
+    border-radius: 1rem;
+    /* +4px left padding to compensate for the inset accent band (so the gauge doesn't
+       touch the colored bar). */
+    padding: 14px 16px 14px 20px;
     margin-bottom: 0.75rem;
 }
 

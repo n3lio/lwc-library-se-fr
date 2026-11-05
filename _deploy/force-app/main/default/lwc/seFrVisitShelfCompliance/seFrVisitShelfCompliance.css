@@ -1,0 +1,219 @@
+/* CCO FR — Visit Shelf Compliance. 3-column layout (upload / gallery / AI analysis). */
+
+.shelf-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sefrsc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    padding: 0.75rem 1rem 1rem;
+}
+
+@media (max-width: 900px) {
+    .sefrsc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sefrsc-grid > :last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 560px) {
+    .sefrsc-grid {
+        grid-template-columns: 1fr;
+    }
+    .sefrsc-grid > :last-child {
+        grid-column: span 1;
+    }
+}
+
+.sefrsc-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #f8f8fb;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 0.875rem 0.875rem 1rem;
+    min-height: 11rem;
+}
+
+.sefrsc-col__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #16325c;
+    margin: 0;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.sefrsc-col__icon {
+    --sds-c-icon-color-foreground-default: #16325c;
+    --sds-c-icon-color-foreground: #16325c;
+}
+
+.sefrsc-col__icon-mute {
+    --sds-c-icon-color-foreground-default: #a8a8a8;
+    --sds-c-icon-color-foreground: #a8a8a8;
+}
+
+.sefrsc-col__hint {
+    font-size: 0.72rem;
+    color: #706e6b;
+    margin: 0.25rem 0 0;
+    text-align: center;
+}
+
+/* Upload — custom button (remplace lightning-file-upload, dont le label natif
+   « Charger des fichiers » wrap sur 2 lignes dès que la colonne est étroite). */
+.sefrsc-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+    margin-top: 0.1rem;
+    min-height: 0;
+}
+
+.sefrsc-upload__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: #ffffff;
+    border: 1px dashed #c9c9c9;
+    border-radius: 8px;
+    color: #0176d3;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+    user-select: none;
+    min-height: 2.25rem;
+}
+.sefrsc-upload__btn:hover,
+.sefrsc-upload__btn:focus-within {
+    background: #f3f8ff;
+    border-color: #0176d3;
+    color: #014486;
+    outline: none;
+}
+.sefrsc-upload__btn-icon {
+    --sds-c-icon-color-foreground-default: #0176d3;
+    flex: 0 0 auto;
+}
+.sefrsc-upload__btn-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Masque le vrai input file (toujours accessible via le label). */
+.sefrsc-upload__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.sefrsc-upload__progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: #706e6b;
+    justify-content: center;
+    min-height: 1.25rem;
+    position: relative;
+}
+.sefrsc-upload__progress-text {
+    position: relative;
+    padding-left: 1.1rem;
+}
+
+.sefrsc-grid-thumbs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 0.25rem;
+}
+
+.sefrsc-thumb {
+    display: block;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+}
+
+.sefrsc-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sefrsc-empty {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+}
+
+.sefrsc-empty__text {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #706e6b;
+}
+
+.sefrsc-analyze-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.25rem;
+}
+
+.sefrsc-analyze {
+    width: 100%;
+}
+
+.sefrsc-spinner-wrap {
+    position: relative;
+    min-height: 2.5rem;
+}
+
+.sefrsc-result {
+    margin-top: 0.5rem;
+    padding: 0.625rem 0.75rem;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    list-style: disc inside;
+    line-height: 1.5;
+    font-size: 0.8125rem;
+}
+
+.sefrsc-result li + li {
+    margin-top: 0.15rem;
+}

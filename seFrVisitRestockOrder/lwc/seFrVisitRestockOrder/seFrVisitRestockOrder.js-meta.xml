@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Réassort auto (ruptures relevé)</masterLabel>
+    <description>Convertit les ruptures identifiées pendant le Relevé produits en bon de commande de réassort. Lit la liste des produits en rupture (localStorage), suggère une quantité par ligne, et crée un Order Draft + OrderItems sur le compte de la visite.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Visit__c</object>
+            </objects>
+            <property name="language" type="String" default="fr" label="UI language (fr | en)" />
+            <property name="cardTitle" type="String" label="Card title (override)" />
+            <property name="cardIcon" type="String" default="standard:product_item" label="Card icon" />
+            <property name="defaultQuantity" type="Integer" default="6" label="Default quantity per rupture" description="Prefilled quantity for every detected out-of-stock line. The user can override per line." />
+            <property name="includePriceAlerts" type="Boolean" default="false" label="Include products flagged with a price alert" description="If checked, products with an abnormal observed price are also listed (greyed-out by default, user can tick them)." />
+            <property name="currencySymbol" type="String" default="€" label="Currency symbol" />
+            <property name="localeTag" type="String" default="fr-FR" label="Locale tag (number formatting)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

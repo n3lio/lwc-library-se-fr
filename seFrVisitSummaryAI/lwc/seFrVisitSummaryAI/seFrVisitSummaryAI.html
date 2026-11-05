@@ -1,0 +1,116 @@
+<template>
+    <lightning-card title={effectiveTitle} icon-name={effectiveIcon}>
+        <template lwc:if={hasContent}>
+            <span slot="actions" class="slds-text-body_small slds-text-color_weak">
+                {t.generatedOn} {generatedDate}
+            </span>
+        </template>
+
+        <div class="slds-card__body slds-card__body_inner sefrvs-body">
+            <!-- Empty state : CTA Générer -->
+            <template lwc:if={showEmptyState}>
+                <div class="slds-text-align_center slds-p-vertical_medium">
+                    <p class="slds-text-color_weak slds-m-bottom_small">{t.emptyText}</p>
+                    <template lwc:if={hasContextSignals}>
+                        <p class="slds-text-body_small slds-m-bottom_small sefrvs-context-signals">
+                            {contextSignalsLabel}
+                        </p>
+                    </template>
+                    <lightning-button
+                        variant="brand"
+                        label={t.generate}
+                        onclick={generateSummary}
+                        disabled={isLoading}
+                        icon-name="utility:einstein">
+                    </lightning-button>
+                </div>
+            </template>
+
+            <!-- Spinner -->
+            <template lwc:if={showSpinner}>
+                <div class="slds-is-relative slds-p-vertical_x-large">
+                    <lightning-spinner alternative-text={t.generating} size="medium" variant="brand"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Contenu généré -->
+            <template lwc:if={hasContent}>
+                <section class="sefrvs-section">
+                    <h3 class="slds-text-title_caps slds-m-bottom_x-small sefrvs-section__title">{t.sectionSummary}</h3>
+                    <p class="sefrvs-headline">{headlineText}</p>
+                    <template lwc:if={hasNarrativeLines}>
+                        <ul class="sefrvs-narrative">
+                            <template for:each={narrativeLines} for:item="line">
+                                <li key={line.key} class="sefrvs-narrative__item">{line.text}</li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template lwc:if={fullSummaryIfNoNarrative}>
+                        <p class="slds-text-body_regular sefrvs-summary-text">{fullSummaryIfNoNarrative}</p>
+                    </template>
+                </section>
+
+                <template lwc:if={hasKeyPoints}>
+                    <section class="sefrvs-section slds-m-top_medium">
+                        <h3 class="slds-text-title_caps slds-m-bottom_x-small sefrvs-section__title">{t.sectionKeyPoints}</h3>
+                        <dl class="sefrvs-kp">
+                            <template for:each={keyPoints} for:item="point">
+                                <div key={point.key} class="sefrvs-kp__row">
+                                    <dt class="sefrvs-kp__label">{point.label}</dt>
+                                    <dd class="sefrvs-kp__value">{point.value}</dd>
+                                </div>
+                            </template>
+                        </dl>
+                    </section>
+                </template>
+
+                <template lwc:if={hasActions}>
+                    <section class="sefrvs-section slds-m-top_medium">
+                        <h3 class="slds-text-title_caps slds-m-bottom_x-small sefrvs-section__title">{t.sectionActions}</h3>
+                        <ul class="sefrvs-actions">
+                            <template for:each={actions} for:item="action">
+                                <li key={action.key} class="sefrvs-actions__item">
+                                    <lightning-icon icon-name="utility:priority" size="xx-small" class="sefrvs-actions__icon"></lightning-icon>
+                                    <span>{action.text}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </section>
+                </template>
+
+                <div class="slds-grid slds-grid_align-end slds-m-top_medium">
+                    <lightning-button
+                        variant="neutral"
+                        label={t.regenerate}
+                        onclick={regenerate}
+                        disabled={isLoading}
+                        icon-name="utility:refresh"
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        variant="brand"
+                        label={t.sendToManager}
+                        onclick={sendToManager}
+                        icon-name="utility:send">
+                    </lightning-button>
+                </div>
+
+                <template lwc:if={sentConfirmation}>
+                    <div class="slds-notify slds-notify_toast slds-theme_success slds-m-top_small">
+                        <span class="slds-assistive-text">success</span>
+                        <lightning-icon icon-name="utility:success" size="small" variant="inverse"></lightning-icon>
+                        <span class="slds-m-left_x-small">{t.sentConfirmation}</span>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Erreur (non bloquante) -->
+            <template lwc:if={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-top_small" role="alert">
+                    <span class="slds-assistive-text">warning</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

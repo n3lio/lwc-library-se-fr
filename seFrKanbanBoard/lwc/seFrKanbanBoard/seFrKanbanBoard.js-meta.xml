@@ -15,7 +15,6 @@
             <property name="cardTitle" type="String" label="Card title (override)" />
             <property name="cardIcon" type="String" default="standard:kanban" label="Card icon" />
             <property name="sobjectApiName" type="String" default="Case" label="SObject to query" description="Whitelisted: Case | Opportunity | Lead | Order | Task | Account. On a Record Page this drives which object's records are listed (it does NOT follow the host page's object)." />
-            <property name="objectApiName" type="String" label="(deprecated) Object API name" description="Legacy alias - use 'SObject to query' above. Kept to avoid breaking existing FlexiPages." />
             <property name="groupByField" type="String" default="Status" label="Group-by field API name" description="Picklist field used to form the columns." />
             <property name="displayField" type="String" default="Subject" label="Display field API name" description="Field shown as the card title." />
             <property name="secondaryField" type="String" default="Priority" label="Secondary field (optional)" />
@@ -32,7 +31,6 @@
             <property name="cardTitle" type="String" label="Card title (override)" />
             <property name="cardIcon" type="String" default="standard:kanban" label="Card icon" />
             <property name="sobjectApiName" type="String" default="Case" label="SObject to query" description="Whitelisted: Case | Opportunity | Lead | Order | Task | Account. On a Record Page this drives which object's records are listed (it does NOT follow the host page's object)." />
-            <property name="objectApiName" type="String" label="(deprecated) Object API name" description="Legacy alias - use 'SObject to query' above. Kept to avoid breaking existing FlexiPages." />
             <property name="groupByField" type="String" default="Status" label="Group-by field API name" description="Picklist field used to form the columns." />
             <property name="displayField" type="String" default="Subject" label="Display field API name" description="Field shown as the card title." />
             <property name="secondaryField" type="String" default="Priority" label="Secondary field (optional)" />

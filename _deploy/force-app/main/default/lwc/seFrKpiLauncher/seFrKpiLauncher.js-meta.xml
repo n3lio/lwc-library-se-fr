@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>SE FR - KPI Launcher</masterLabel>
+    <masterLabel>CCO FR - KPI Launcher</masterLabel>
     <description>B2B / B2C - Configurable grid of 3 to 6 clickable KPI tiles. Pick a preset (Standard / Field Sales / Telesales / Custom) or override any tile individually. Bilingual EN / FR.</description>
     <targets>
         <target>lightning__HomePage</target>
@@ -58,23 +58,6 @@
             <property name="kpi6Color" type="String" label="KPI 6 - Color hex" />
             <property name="kpi6Link" type="String" label="KPI 6 - Link" />
 
-            <!-- Legacy properties kept for backwards compatibility with v1 pages. Not used. -->
-            <property name="userType" type="String" label="(deprecated) User type" />
-            <property name="fieldTile1Label" type="String" label="(deprecated)" />
-            <property name="fieldTile1Sub" type="String" label="(deprecated)" />
-            <property name="fieldTile1Value" type="Integer" label="(deprecated)" />
-            <property name="fieldTile2Label" type="String" label="(deprecated)" />
-            <property name="fieldTile2Sub" type="String" label="(deprecated)" />
-            <property name="fieldTile2Value" type="Integer" label="(deprecated)" />
-            <property name="insideTile1Label" type="String" label="(deprecated)" />
-            <property name="insideTile1Sub" type="String" label="(deprecated)" />
-            <property name="insideTile1Value" type="Integer" label="(deprecated)" />
-            <property name="insideTile2Label" type="String" label="(deprecated)" />
-            <property name="insideTile2Sub" type="String" label="(deprecated)" />
-            <property name="insideTile2Value" type="Integer" label="(deprecated)" />
-            <property name="perfTileLabel" type="String" label="(deprecated)" />
-            <property name="perfTileSub" type="String" label="(deprecated)" />
-            <property name="perfTileValue" type="String" label="(deprecated)" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

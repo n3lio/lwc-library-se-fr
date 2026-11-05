@@ -282,9 +282,10 @@ export default class SeFrMyEvents extends NavigationMixin(LightningElement) {
     }
 
     get nowLabel() {
+        // Keep just "HH:MM •" on the left timeline; the "en cours" badge already lives on the event block.
         const h = Math.floor(this.nowMinutes / 60);
         const m = this.nowMinutes % 60;
-        return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ' • ' + this.labels.nowLabel;
+        return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ' •';
     }
 
     get todayBounds() {

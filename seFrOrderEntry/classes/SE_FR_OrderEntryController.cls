@@ -290,8 +290,11 @@ public with sharing class SE_FR_OrderEntryController {
                 ShippingStreet = acc.ShippingStreet, ShippingCity = acc.ShippingCity, ShippingState = acc.ShippingState, ShippingPostalCode = acc.ShippingPostalCode, ShippingCountry = acc.ShippingCountry
             );
 
-            if (salesChannelId != null) {
-                newOrder.SalesChannelId = salesChannelId;
+            // SalesChannelId only exists on Order when Order Management / Sales Channel is enabled.
+            // Guard with dynamic field access so the class compiles in all orgs.
+            if (salesChannelId != null
+                && Order.sObjectType.getDescribe().fields.getMap().containsKey('saleschannelid')) {
+                newOrder.put('SalesChannelId', salesChannelId);
             }
 
             if (String.isNotBlank(deliveryDateString)) {

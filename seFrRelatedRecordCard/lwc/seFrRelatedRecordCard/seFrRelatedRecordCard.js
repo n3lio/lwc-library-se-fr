@@ -62,9 +62,7 @@ export default class SeFrRelatedRecordCard extends NavigationMixin(LightningElem
     @api accountImageFieldApiName = '';
     @api disableImageReplace = false;
     get allowImageReplace() { return !this.disableImageReplace; }
-    // Legacy props kept so deployed FlexiPages don't break on upgrade.
     @api imageFieldApiName = 'PhotoURL';
-    @api imageMode = 'field';
 
     // What the Apex `getRelatedRecord` should project as the image URL field. Resolved from the
     // chosen target (auto / contact / account). When `auto` is used, derive the target from the

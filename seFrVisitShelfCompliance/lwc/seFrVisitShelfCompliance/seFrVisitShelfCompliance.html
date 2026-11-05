@@ -1,0 +1,95 @@
+<template>
+    <lightning-card title={title} icon-name={icon} class="shelf-card">
+        <div class="sefrsc-grid">
+            <!-- Col 1 : Upload (custom, pour éviter le wrap "Charger des fichiers" sur 2 lignes
+                 que lightning-file-upload impose dès que la colonne est étroite). -->
+            <section class="sefrsc-col">
+                <h3 class="sefrsc-col__title">
+                    <lightning-icon icon-name="utility:upload" size="x-small" class="sefrsc-col__icon"></lightning-icon>
+                    <span>{t.uploadTitle}</span>
+                </h3>
+                <div class="sefrsc-upload">
+                    <label for="sefrsc-file-input" class="sefrsc-upload__btn" title={t.uploadBtn}>
+                        <lightning-icon icon-name="utility:upload" size="x-small" class="sefrsc-upload__btn-icon"></lightning-icon>
+                        <span class="sefrsc-upload__btn-label">{uploadBtnLabel}</span>
+                    </label>
+                    <input
+                        id="sefrsc-file-input"
+                        type="file"
+                        class="sefrsc-upload__input"
+                        accept={acceptString}
+                        multiple
+                        onchange={handleFileSelected} />
+                    <template lwc:if={isUploading}>
+                        <div class="sefrsc-upload__progress">
+                            <lightning-spinner alternative-text={t.uploading} size="x-small"></lightning-spinner>
+                            <span class="sefrsc-upload__progress-text">{uploadingText}</span>
+                        </div>
+                    </template>
+                </div>
+                <p class="sefrsc-col__hint">{t.uploadHint}</p>
+            </section>
+
+            <!-- Col 2 : Gallery -->
+            <section class="sefrsc-col">
+                <h3 class="sefrsc-col__title">
+                    <lightning-icon icon-name="utility:photo" size="x-small" class="sefrsc-col__icon"></lightning-icon>
+                    <span>{t.galleryTitle}</span>
+                </h3>
+                <template if:true={hasPhotos}>
+                    <div class="sefrsc-grid-thumbs">
+                        <template for:each={photos} for:item="p">
+                            <a key={p.key} class="sefrsc-thumb" href={p.previewUrl} target="_blank" title={p.title}>
+                                <img src={p.url} alt={p.title} loading="lazy" />
+                            </a>
+                        </template>
+                    </div>
+                </template>
+                <template if:true={noPhotos}>
+                    <div class="sefrsc-empty">
+                        <lightning-icon icon-name="utility:image" size="small" class="sefrsc-col__icon-mute" alternative-text=""></lightning-icon>
+                        <p class="sefrsc-empty__text">{t.empty}</p>
+                    </div>
+                </template>
+            </section>
+
+            <!-- Col 3 : Analysis -->
+            <section class="sefrsc-col">
+                <h3 class="sefrsc-col__title">
+                    <lightning-icon icon-name="utility:einstein" size="x-small" class="sefrsc-col__icon"></lightning-icon>
+                    <span>{t.analysisTitle}</span>
+                </h3>
+                <template if:true={hasPhotos}>
+                    <div class="sefrsc-analyze-wrap">
+                        <lightning-button
+                            variant="brand"
+                            label={analyzeLabel}
+                            icon-name="utility:einstein"
+                            disabled={analyzeDisabled}
+                            onclick={handleAnalyze}
+                            class="sefrsc-analyze">
+                        </lightning-button>
+                    </div>
+                </template>
+                <template if:false={hasPhotos}>
+                    <div class="sefrsc-empty">
+                        <lightning-icon icon-name="utility:einstein" size="small" class="sefrsc-col__icon-mute" alternative-text=""></lightning-icon>
+                        <p class="sefrsc-empty__text">{t.needPhoto}</p>
+                    </div>
+                </template>
+                <template if:true={isAnalyzing}>
+                    <div class="sefrsc-spinner-wrap">
+                        <lightning-spinner alternative-text={t.analyzing} size="small"></lightning-spinner>
+                    </div>
+                </template>
+                <template if:true={hasResult}>
+                    <ul class="sefrsc-result">
+                        <template for:each={resultLines} for:item="l">
+                            <li key={l.key}>{l.text}</li>
+                        </template>
+                    </ul>
+                </template>
+            </section>
+        </div>
+    </lightning-card>
+</template>

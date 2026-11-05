@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CCO FR - Record Actions</masterLabel>
+    <description>Record-page toolbar for Account, Contact, Lead, Opportunity and Case: one primary action (Screen Flow or standard New Task/Event/Case form with prefilled fields) + optional one-click Einstein AI summary.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Large"/>
+                <supportedFormFactor type="Small"/>
+            </supportedFormFactors>
+            <objects>
+                <object>Account</object>
+                <object>Contact</object>
+                <object>Opportunity</object>
+                <object>Case</object>
+                <object>Lead</object>
+            </objects>
+
+            <property name="language" type="String" default="fr" label="UI language" description="'fr' (default) or 'en'. Controls every visible label." />
+            <property name="cardTitle" type="String" label="Card title (override)" description="Leave empty to use the dictionary default ('Quick actions')." />
+            <property name="accentColor" type="String" label="Accent color (CSS)" description="Optional CSS color for the icon badge + primary button. Example: '#003DA5'. Leave empty for neutral theme." />
+
+            <!-- ============== PRIMARY ACTION (Flow-launched) ============== -->
+            <property name="disablePrimaryAction" type="Boolean" default="false" label="Disable primary action button" description="Turn ON to hide the primary action button entirely (keep only the AI summary)." />
+            <property name="primaryActionLabel" type="String" label="Primary action label (override)" description="Leave empty for dictionary default ('Start visit' / 'Démarrer une visite')." />
+            <property name="primaryActionIcon" type="String" default="utility:routing_offline" label="Primary action icon (SLDS)" description="Example: 'utility:routing_offline' for a field visit, 'utility:new' for a quick create." />
+            <property name="primaryActionType" type="String" datasource="flow,newRecord" default="flow" label="Primary action type" description="'flow' launches the Screen Flow below (Account: visit). 'newRecord' opens the standard New form of newRecordObjectApiName with the prefilled fields below (Contact / Lead / Opportunity / Case: Task, Event, Case, Opportunity…)." />
+            <property name="newRecordObjectApiName" type="String" label="[newRecord] Object to create" description="API name of the standard object, e.g. Task, Event, Case, Opportunity. Same targets as the standard quick actions NewTask / NewEvent / NewCase / NewOpportunity." />
+            <property name="newRecordDefaults" type="String" label="[newRecord] Prefilled fields" placeholder="WhoId={recordId}|Subject=Rappel client" description="Pipe-separated Field=Value pairs. Tokens: {recordId}, {objectApiName}. Example on a Contact: WhoId={recordId}|Subject=Rendez-vous." />
+            <property name="primaryActionFlowApiName" type="String" default="CCO_FR_Start_Visit" label="Primary action Flow API name" description="Developer name of the Screen Flow launched when the button is clicked. The current record Id is passed as 'recordId'. Default = 'CCO_FR_Start_Visit' (shipped with the component — creates a standard Event rattaché au record). Clear to display a 'Not configured' toast while wiring, or point at your own Screen Flow." />
+
+            <!-- ============== EINSTEIN AI SUMMARY ============== -->
+            <property name="disableAiSummary" type="Boolean" default="false" label="Disable AI summary button" description="Off by default — the AI summary button is shown. Turn ON to hide it." />
+            <property name="aiSummaryLabel" type="String" label="AI summary button label (override)" description="Leave empty for dictionary default ('AI summary' / 'Résumé IA')." />
+            <property name="promptTemplateApiName" type="String" default="einstein_gpt__summarizeAccountDefault" label="Prompt template API name" description="Developer name of the Einstein Prompt Template. Default: SDO-shipped Account summary." />
+            <property name="promptInputApiName" type="String" default="Input:Account" label="Prompt template input API name" description="Typically 'Input:Account'. Change to 'Input:Contact', 'Input:Opportunity' etc. depending on the host record page." />
+            <property name="autoRunOnLoad" type="Boolean" default="false" label="Run AI summary automatically on load" description="When ON (and AI summary enabled), the prompt fires as soon as the component mounts — no click needed." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -307,7 +307,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>storesIcon</name>
-                    <value>standard:store</value>
+                    <value>standard:merchandising</value>
                 </componentInstanceProperties>
                 <componentName>seFrCustomerSalesSummary</componentName>
                 <identifier>c_seFrCustomerSalesSummary</identifier>
