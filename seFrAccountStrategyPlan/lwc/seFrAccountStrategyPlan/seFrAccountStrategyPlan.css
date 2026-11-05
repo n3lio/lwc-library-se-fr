@@ -35,7 +35,8 @@
     margin-bottom: 4px;
 }
 .kpi-value {
-    font-size: 1.3rem;
+    white-space: nowrap;
+    font-size: clamp(1rem, 2.4vw, 1.3rem);
     font-weight: 700;
     color: #181818;
 }

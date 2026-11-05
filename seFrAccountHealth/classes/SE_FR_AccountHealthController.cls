@@ -32,7 +32,7 @@ public with sharing class SE_FR_AccountHealthController {
         // Pipeline & sales signals
         s.openOpportunities = [SELECT count() FROM Opportunity WHERE AccountId = :accountId AND IsClosed = false];
         s.openCases = [SELECT count() FROM Case WHERE AccountId = :accountId AND IsClosed = false];
-        s.recentOrders90d = [SELECT count() FROM Order WHERE AccountId = :accountId AND Status = 'Activated' AND EffectiveDate = LAST_N_DAYS:90];
+        s.recentOrders90d = [SELECT count() FROM Order WHERE AccountId = :accountId AND Status != 'Canceled' AND EffectiveDate = LAST_N_DAYS:90];
         s.totalContacts = [SELECT count() FROM Contact WHERE AccountId = :accountId];
 
         return s;
