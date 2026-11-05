@@ -132,7 +132,18 @@ export default class SeFrRelatedRecordCard extends NavigationMixin(LightningElem
             this.related = {
                 ...data,
                 initials: this._initials(data.name),
-                fields: (data.fields || []).map(f => ({
+                fields: (data.fields || []).map(f0 => {
+                    const f = { ...f0 };
+                    // Raw numerics (AnnualRevenue 85000000000...) -> readable FR format.
+                    if (f.type === 'text' && /^-?\d{4,}(\.\d+)?$/.test(String(f.value || ''))) {
+                        const n = Number(f.value);
+                        const isMoney = /revenue|amount|price/i.test(f.apiName || '');
+                        f.value = isMoney
+                            ? new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', notation: 'compact', maximumFractionDigits: 1 }).format(n)
+                            : new Intl.NumberFormat('fr-FR').format(n);
+                    }
+                    return f;
+                }).map(f => ({
                     ...f,
                     isPhone: f.type === 'phone',
                     isEmail: f.type === 'email',
