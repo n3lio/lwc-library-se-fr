@@ -6,7 +6,6 @@ chips:
   - Simulated file dropzone + transcript
   - Simulated AI meeting notes
   - Simulated Task / Event creation
-  - Bilingual FR/EN
   - Zero schema, zero Apex
 dataMode: mock
 requiresEinstein: optional

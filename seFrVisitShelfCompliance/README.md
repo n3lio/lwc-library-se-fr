@@ -1,9 +1,9 @@
 ---
 tagline: Photos de linéaire sur une visite, galerie et analyse Agentforce (mock en repli).
-categories: [Retail Execution, AI/Agentforce]
+categories: [Geo & Field, Sales]
 personas: [FieldSales]
-chips: [Visit, Shelf, Photo, Agentforce, Vision, Mock-fallback]
-dataMode: standard
+chips: [Visit, Shelf, Photo, Agentforce]
+dataMode: live
 mobileReady: true
 originalAuthor: Lionel Braun
 originalAuthorEmail: lionel.braun@salesforce.com

@@ -1,7 +1,7 @@
 ---
 tagline: Visual product catalogue with contextual recommendations (out-of-stock, missing products, low shelf share) and a cart with line + global discount.
 categories: [Sales]
-personas: [Sales, Field]
+personas: [Sales, FieldSales]
 chips:
   - Visual catalogue
   - Contextual recommendations

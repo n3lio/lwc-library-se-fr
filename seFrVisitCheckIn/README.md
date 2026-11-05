@@ -1,9 +1,9 @@
 ---
 tagline: Check-in / Check-out terrain en un clic sur la visite, avec chrono et récapitulatif de durée.
-categories: [Retail Execution]
+categories: [Geo & Field]
 personas: [FieldSales]
-chips: [Visit, Check-in, Check-out, Lifecycle, Mock-ready]
-dataMode: standard
+chips: [Visit, Check-in, Check-out, Lifecycle]
+dataMode: live
 mobileReady: true
 originalAuthor: Lionel Braun
 originalAuthorEmail: lionel.braun@salesforce.com

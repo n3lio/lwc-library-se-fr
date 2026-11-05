@@ -1,9 +1,9 @@
 ---
 tagline: Kanban des visites du compte - glisser-deposer pour faire avancer une visite de Planifiee a Terminee.
-categories: [Retail Execution]
+categories: [Geo & Field]
 personas: [FieldSales, Sales]
-chips: [Account, Visit, Kanban, Drag-drop, Lifecycle]
-dataMode: standard
+chips: [Account, Visit, Kanban, Lifecycle]
+dataMode: live
 mobileReady: false
 originalAuthor: Lionel Braun
 originalAuthorEmail: lionel.braun@salesforce.com

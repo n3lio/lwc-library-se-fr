@@ -1,3 +1,25 @@
+---
+tagline: Résumé IA (Agentforce / Einstein) d'une visite terrain — synthèse, points clés et actions recommandées.
+categories: [Geo & Field]
+personas: [FieldSales]
+chips: [Visit, Agentforce, Summary, Debrief]
+dataMode: live
+mobileReady: true
+originalAuthor: Lionel Braun
+originalAuthorEmail: lionel.braun@salesforce.com
+maintainedBy: SE FR team
+libraryIntegrationDate: 2026-11-05
+keyProps:
+  - language
+  - cardTitle
+  - cardIcon
+  - promptTemplateName
+seBenefit: Transforme les données captées pendant la visite (linéaire, ruptures, commande, notes) en compte-rendu structuré prêt à partager, avec un fallback déterministe si aucun Prompt Template n'est configuré.
+releaseStatus: beta
+status: active
+screenshots: []
+---
+
 # CCO FR — Visit Summary AI (`seFrVisitSummaryAI`)
 
 Résumé **Agentforce / Einstein** d'une visite terrain, à poser sur la page record d'un **`Visit__c`** (sObject shipped par `seFrRetailExecSchema`). Zero managed package.

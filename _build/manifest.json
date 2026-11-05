@@ -1,10 +1,9 @@
 {
   "generatedAt": "2026-11-05",
-  "componentCount": 46,
-  "skippedCount": 2,
+  "componentCount": 47,
+  "skippedCount": 1,
   "skipped": [
-    "seFrRetailExecSchema",
-    "seFrVisitSummaryAI"
+    "seFrRetailExecSchema"
   ],
   "components": [
     {
@@ -795,8 +794,7 @@
         "Drag and drop business cards",
         "Simulated OCR extraction",
         "Editable lead cards",
-        "Bulk lead creation",
-        "Bilingual FR/EN"
+        "Bulk lead creation"
       ],
       "keyProps": [
         "language - 'fr' (default) or 'en'",
@@ -2714,7 +2712,6 @@
         "Simulated file dropzone + transcript",
         "Simulated AI meeting notes",
         "Simulated Task / Event creation",
-        "Bilingual FR/EN",
         "Zero schema, zero Apex"
       ],
       "keyProps": [
@@ -3969,8 +3966,7 @@
         "Primary action = Screen Flow OR standard New record form",
         "Prefilled fields with {recordId} token",
         "Inline Einstein summary",
-        "Markdown rendering",
-        "Bilingual FR/EN"
+        "Markdown rendering"
       ],
       "keyProps": [
         "Primary action launches any Screen Flow (passes recordId as input)",
@@ -5779,7 +5775,7 @@
       "description": "Check-in / Check-out d'une visite (Visit__c) : horodate CheckIn/CheckOut et fait évoluer VisitState__c. Écritures via updateRecord, sans Apex. Bilingue FR / EN.",
       "tagline": "Check-in / Check-out terrain en un clic sur la visite, avec chrono et récapitulatif de durée.",
       "categories": [
-        "Retail Execution"
+        "Geo & Field"
       ],
       "personas": [
         "FieldSales"
@@ -5794,8 +5790,7 @@
         "Visit",
         "Check-in",
         "Check-out",
-        "Lifecycle",
-        "Mock-ready"
+        "Lifecycle"
       ],
       "keyProps": [
         "cardTitle",
@@ -5803,7 +5798,7 @@
         "language"
       ],
       "seBenefit": "Montrer en démo le cycle de vie d'une visite (Planned, In Progress, Completed) sans Apex ni Flow, uniquement avec updateRecord.",
-      "dataMode": "standard",
+      "dataMode": "live",
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
@@ -5852,7 +5847,7 @@
       "description": "Kanban des visites (Visit__c) d'un compte : 4 colonnes Planned / In Progress / Completed / Cancelled. Glisser-deposer pour changer l'etat de la visite. Bouton optionnel pour lancer le Flow CCO_FR_Start_Visit.",
       "tagline": "Kanban des visites du compte - glisser-deposer pour faire avancer une visite de Planifiee a Terminee.",
       "categories": [
-        "Retail Execution"
+        "Geo & Field"
       ],
       "personas": [
         "FieldSales",
@@ -5868,7 +5863,6 @@
         "Account",
         "Visit",
         "Kanban",
-        "Drag-drop",
         "Lifecycle"
       ],
       "keyProps": [
@@ -5878,7 +5872,7 @@
         "limitPerColumn"
       ],
       "seBenefit": "Montrez en un coup d'oeil le cycle de vie des visites terrain d'un compte et faites-le avancer d'un simple glisser-deposer, sans code.",
-      "dataMode": "standard",
+      "dataMode": "live",
       "mobileReady": false,
       "featured": false,
       "featuredRank": null,
@@ -5943,7 +5937,7 @@
       "description": "Checklist \"Plan d'action\" Visit__c : 5 étapes (check-in, relevé linéaire, produits, commande, CR). Démarre/clôture via updateRecord + Flow CCO_FR_End_Visit. Timer. Progression en localStorage.",
       "tagline": "Checklist \"Plan d'action\" sur une visite terrain — démarre, séquence, clôture.",
       "categories": [
-        "Retail Execution"
+        "Geo & Field"
       ],
       "personas": [
         "FieldSales"
@@ -5958,8 +5952,7 @@
         "Visit",
         "Checklist",
         "Lifecycle",
-        "Flow",
-        "Mock-ready"
+        "Flow"
       ],
       "keyProps": [
         "cardTitle",
@@ -5967,7 +5960,7 @@
         "language"
       ],
       "seBenefit": "Raconter l'ensemble d'une visite terrain en un seul composant — check-in horodaté, checklist (relevé linéaire, produits, commande), compte-rendu via Flow — avec progression visible et bouton \"Terminer\" bloqué tant que l'obligatoire n'est pas fait.",
-      "dataMode": "standard",
+      "dataMode": "live",
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
@@ -6016,7 +6009,7 @@
       "description": "Relevé produits terrain : liste depuis le Standard Pricebook, chaque produit Présent/Rupture + prix constaté + note. Publie la progression en localStorage → coche l'étape \"products\" du seFrVisitPlan.",
       "tagline": "Relevé produits terrain depuis le Standard Pricebook — Présent / Rupture / prix constaté par produit.",
       "categories": [
-        "Retail Execution"
+        "Geo & Field"
       ],
       "personas": [
         "FieldSales"
@@ -6031,8 +6024,7 @@
         "Visit",
         "Products",
         "Pricebook",
-        "Audit",
-        "Field-sales"
+        "Audit"
       ],
       "keyProps": [
         "cardTitle",
@@ -6041,7 +6033,7 @@
         "maxCount"
       ],
       "seBenefit": "Permet au commercial terrain de pointer en quelques secondes la présence rayon et le prix constaté de ses références catalogue, et coche automatiquement l'étape « Relevé produits » du plan de visite.",
-      "dataMode": "standard",
+      "dataMode": "live",
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
@@ -6103,7 +6095,7 @@
       ],
       "personas": [
         "Sales",
-        "Field"
+        "FieldSales"
       ],
       "surfaces": [
         "AppPage",
@@ -6198,7 +6190,7 @@
       ],
       "personas": [
         "Sales",
-        "Field"
+        "FieldSales"
       ],
       "surfaces": [
         "RecordPage"
@@ -6297,8 +6289,8 @@
       "description": "Retail Execution - Shelf photo compliance on a Visit. Upload photos, view the gallery and run an Agentforce shelf analysis (occupancy, missing facings, misplaced products). Mock-first: works without Agentforce.",
       "tagline": "Photos de linéaire sur une visite, galerie et analyse Agentforce (mock en repli).",
       "categories": [
-        "Retail Execution",
-        "AI/Agentforce"
+        "Geo & Field",
+        "Sales"
       ],
       "personas": [
         "FieldSales"
@@ -6313,9 +6305,7 @@
         "Visit",
         "Shelf",
         "Photo",
-        "Agentforce",
-        "Vision",
-        "Mock-fallback"
+        "Agentforce"
       ],
       "keyProps": [
         "cardTitle",
@@ -6324,7 +6314,7 @@
         "maxFiles"
       ],
       "seBenefit": "Démo prête à l'emploi de conformité linéaire par la photo, avec analyse Agentforce simulée si la vision n'est pas configurée.",
-      "dataMode": "standard",
+      "dataMode": "live",
       "mobileReady": true,
       "featured": false,
       "featuredRank": null,
@@ -6389,7 +6379,7 @@
       "description": "Relevé linéaire manuel : facings par catégorie/segment, Marque vs Concurrence, PDL calculée et évolution vs visite précédente. Publie en localStorage pour cocher l'étape shelf du seFrVisitPlan.",
       "tagline": "Relevé linéaire manuel — part de linéaire (PDL) marque vs concurrence par catégorie et segment, avec historique.",
       "categories": [
-        "Retail Execution"
+        "Geo & Field"
       ],
       "personas": [
         "FieldSales"
@@ -6404,8 +6394,7 @@
         "Visit",
         "Shelf",
         "PDL",
-        "Facings",
-        "Manual"
+        "Facings"
       ],
       "keyProps": [
         "language",
@@ -6477,6 +6466,91 @@
           "label": "Catalogue JSON (override)",
           "default": null,
           "description": "JSON Array des catégories/segments/marques pour remplacer le seed par défaut. Voir README."
+        }
+      ]
+    },
+    {
+      "apiName": "seFrVisitSummaryAI",
+      "masterLabel": "CCO FR - Resume de Visite IA",
+      "description": "Resume IA (Agentforce / Einstein) de la visite courante (Visit__c, pattern Retail Execution de la lib). Zero managed package.",
+      "tagline": "Résumé IA (Agentforce / Einstein) d'une visite terrain — synthèse, points clés et actions recommandées.",
+      "categories": [
+        "Geo & Field"
+      ],
+      "personas": [
+        "FieldSales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c",
+        "Account"
+      ],
+      "chips": [
+        "Visit",
+        "Agentforce",
+        "Summary",
+        "Debrief"
+      ],
+      "keyProps": [
+        "language",
+        "cardTitle",
+        "cardIcon",
+        "promptTemplateName"
+      ],
+      "seBenefit": "Transforme les données captées pendant la visite (linéaire, ruptures, commande, notes) en compte-rendu structuré prêt à partager, avec un fallback déterministe si aucun Prompt Template n'est configuré.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "beta",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-11-05",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_VisitSummaryController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Language (fr | en)",
+          "default": "fr",
+          "description": "UI language. Defaults to fr."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Overrides the default header title ('Compte-rendu de visite' / 'Visit debrief')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:document",
+          "description": "Lightning icon shown in the card header. Keep standard:* icons for homogeneity with the other sefr* cards."
+        },
+        {
+          "name": "promptTemplateApiName",
+          "type": "String",
+          "label": "Einstein Prompt Template API Name (optional)",
+          "default": "",
+          "description": "DeveloperName of a Flex Prompt Template taking Input:Visit__c + Input:ClientContext (string) and returning JSON { summary, keyPoints[], actions[] }. If blank or thin, the component falls back to a deterministic rich summary built from the sibling-captured context (shelf PDL, ruptures, order lines…)."
         }
       ]
     },
@@ -6635,12 +6709,17 @@
     }
   ],
   "byCategory": {
-    "Productivity": [
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrSmartRecommendations",
-      "seFrTimelinePhases"
+    "Geo & Field": [
+      "seFrNearbyAccountsMap",
+      "seFrTerritoryMap",
+      "seFrVisitCheckIn",
+      "seFrVisitKanban",
+      "seFrVisitPlan",
+      "seFrVisitProductCheck",
+      "seFrVisitShelfCompliance",
+      "seFrVisitShelfSpace",
+      "seFrVisitSummaryAI",
+      "seFrVoiceNoteTaker"
     ],
     "Dashboards & KPIs": [
       "seFrFieldRepHome",
@@ -6648,28 +6727,6 @@
       "seFrMetricTile",
       "seFrRevenueDashboard",
       "seFrTelesalesRepHome"
-    ],
-    "Marketing": [
-      "seFrActiveSegments",
-      "seFrConsentManager",
-      "seFrCustomerSalesSummary",
-      "seFrEngagementHistory"
-    ],
-    "Geo & Field": [
-      "seFrNearbyAccountsMap",
-      "seFrTerritoryMap",
-      "seFrVoiceNoteTaker"
-    ],
-    "Sales": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
-      "seFrBusinessCardScanner",
-      "seFrCustomerOrders",
-      "seFrLeadFirstTouch",
-      "seFrOrderEntry",
-      "seFrPipelineSnapshot",
-      "seFrVisitQuickOrder",
-      "seFrVisitRestockOrder"
     ],
     "Transverse": [
       "seFrActivityFeed",
@@ -6682,26 +6739,49 @@
       "seFrRelatedRecordCard",
       "seFrSplashBanner"
     ],
+    "Marketing": [
+      "seFrActiveSegments",
+      "seFrConsentManager",
+      "seFrCustomerSalesSummary",
+      "seFrEngagementHistory"
+    ],
+    "Productivity": [
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrSmartRecommendations",
+      "seFrTimelinePhases"
+    ],
+    "Sales": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
+      "seFrBusinessCardScanner",
+      "seFrCustomerOrders",
+      "seFrLeadFirstTouch",
+      "seFrOrderEntry",
+      "seFrPipelineSnapshot",
+      "seFrVisitQuickOrder",
+      "seFrVisitRestockOrder",
+      "seFrVisitShelfCompliance"
+    ],
     "Service": [
       "seFrAlertsRibbon",
       "seFrKanbanBoard",
       "seFrOrderSummary",
       "seFrServiceContracts",
       "seFrSubscribersList"
-    ],
-    "Retail Execution": [
-      "seFrVisitCheckIn",
-      "seFrVisitKanban",
-      "seFrVisitPlan",
-      "seFrVisitProductCheck",
-      "seFrVisitShelfCompliance",
-      "seFrVisitShelfSpace"
-    ],
-    "AI/Agentforce": [
-      "seFrVisitShelfCompliance"
     ]
   },
   "byPersona": {
+    "All": [
+      "seFrAgentforceHeader",
+      "seFrKpiLauncher",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrPromptLauncher",
+      "seFrRecordHighlights",
+      "seFrSplashBanner"
+    ],
     "Telesales": [
       "seFrActivityFeed",
       "seFrContactCard",
@@ -6718,6 +6798,38 @@
       "seFrSmartRecommendations",
       "seFrTelesalesRepHome"
     ],
+    "FieldSales": [
+      "seFrActivityFeed",
+      "seFrBusinessCardScanner",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFieldRepHome",
+      "seFrFilesGallery",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrNearbyAccountsMap",
+      "seFrRecordActions",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrServiceContracts",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList",
+      "seFrTerritoryMap",
+      "seFrVisitCheckIn",
+      "seFrVisitKanban",
+      "seFrVisitPlan",
+      "seFrVisitProductCheck",
+      "seFrVisitQuickOrder",
+      "seFrVisitRestockOrder",
+      "seFrVisitShelfCompliance",
+      "seFrVisitShelfSpace",
+      "seFrVisitSummaryAI",
+      "seFrVoiceNoteTaker"
+    ],
+    "Retail": [
+      "seFrBusinessCardScanner",
+      "seFrCustomerSalesSummary"
+    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrActivityFeed",
@@ -6731,31 +6843,6 @@
       "seFrMetricTile",
       "seFrRelatedRecordCard",
       "seFrSmartRecommendations"
-    ],
-    "Service": [
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderSummary",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrServiceContracts",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList"
-    ],
-    "All": [
-      "seFrAgentforceHeader",
-      "seFrKpiLauncher",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrPromptLauncher",
-      "seFrRecordHighlights",
-      "seFrSplashBanner"
     ],
     "Sales": [
       "seFrAccountHealth",
@@ -6782,62 +6869,24 @@
       "seFrVisitQuickOrder",
       "seFrVisitRestockOrder"
     ],
-    "FieldSales": [
+    "Service": [
       "seFrActivityFeed",
-      "seFrBusinessCardScanner",
+      "seFrAlertsRibbon",
+      "seFrConsentManager",
       "seFrContactCard",
       "seFrContactsCarousel",
-      "seFrFieldRepHome",
       "seFrFilesGallery",
-      "seFrLeadFirstTouch",
+      "seFrKanbanBoard",
       "seFrMetricTile",
-      "seFrNearbyAccountsMap",
+      "seFrOrderSummary",
       "seFrRecordActions",
       "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
       "seFrServiceContracts",
       "seFrSmartRecommendations",
-      "seFrSubscribersList",
-      "seFrTerritoryMap",
-      "seFrVisitCheckIn",
-      "seFrVisitKanban",
-      "seFrVisitPlan",
-      "seFrVisitProductCheck",
-      "seFrVisitShelfCompliance",
-      "seFrVisitShelfSpace",
-      "seFrVoiceNoteTaker"
-    ],
-    "Retail": [
-      "seFrBusinessCardScanner",
-      "seFrCustomerSalesSummary"
-    ],
-    "Field": [
-      "seFrVisitQuickOrder",
-      "seFrVisitRestockOrder"
+      "seFrSubscribersList"
     ]
   },
   "bySurface": {
-    "HomePage": [
-      "seFrActiveSegments",
-      "seFrAgentforceHeader",
-      "seFrAlertsRibbon",
-      "seFrBusinessCardScanner",
-      "seFrEngagementHistory",
-      "seFrFieldRepHome",
-      "seFrKanbanBoard",
-      "seFrKpiLauncher",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrNearbyAccountsMap",
-      "seFrPromptLauncher",
-      "seFrSplashBanner",
-      "seFrSubscribersList",
-      "seFrTelesalesRepHome",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases"
-    ],
     "RecordPage": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -6877,7 +6926,30 @@
       "seFrVisitRestockOrder",
       "seFrVisitShelfCompliance",
       "seFrVisitShelfSpace",
+      "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
+    ],
+    "HomePage": [
+      "seFrActiveSegments",
+      "seFrAgentforceHeader",
+      "seFrAlertsRibbon",
+      "seFrBusinessCardScanner",
+      "seFrEngagementHistory",
+      "seFrFieldRepHome",
+      "seFrKanbanBoard",
+      "seFrKpiLauncher",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrNearbyAccountsMap",
+      "seFrPromptLauncher",
+      "seFrSplashBanner",
+      "seFrSubscribersList",
+      "seFrTelesalesRepHome",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitSummaryAI"
     ],
     "AppPage": [
       "seFrActiveSegments",
@@ -6898,7 +6970,8 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases",
-      "seFrVisitQuickOrder"
+      "seFrVisitQuickOrder",
+      "seFrVisitSummaryAI"
     ]
   }
 }

@@ -1,7 +1,7 @@
 ---
 tagline: Turns out-of-stock products found during the shelf survey into a Draft restock Order in one click.
 categories: [Sales]
-personas: [Sales, Field]
+personas: [Sales, FieldSales]
 chips:
   - Ruptures → Draft Order
   - Suggested quantities
@@ -25,7 +25,7 @@ screenshots: []
 Reads the out-of-stock products flagged by `seFrVisitProductCheck`, suggests a quantity per line, and creates an Order (Draft) + OrderItems on the visit's Account.
 
 ## Where to drop it
-- **Target:** Lightning Record Page — `Visit__c`
+- **Target:** Lightning Record Page — `Visit__c` or `Account` (on an Account, reads the ruptures of the account's latest visit)
 - **App Builder label:** `CCO FR - Réassort auto (ruptures relevé)`
 
 ## Apex dependency

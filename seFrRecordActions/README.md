@@ -7,7 +7,6 @@ chips:
   - Prefilled fields with {recordId} token
   - Inline Einstein summary
   - Markdown rendering
-  - Bilingual FR/EN
 dataMode: hybrid
 requiresEinstein: optional
 mobileReady: true

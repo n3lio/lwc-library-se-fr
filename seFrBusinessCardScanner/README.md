@@ -7,7 +7,6 @@ chips:
   - Simulated OCR extraction
   - Editable lead cards
   - Bulk lead creation
-  - Bilingual FR/EN
 dataMode: mock
 requiresEinstein: optional
 mobileReady: true
