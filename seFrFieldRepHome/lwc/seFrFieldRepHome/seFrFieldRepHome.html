@@ -50,7 +50,7 @@
     <lightning-layout multiple-rows class="slds-m-bottom_medium" pull-to-boundary="small">
         <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
             <lightning-card title={labels.priorityAccounts} icon-name="standard:account">
-                <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToAccounts}></lightning-button>
+                <lightning-button-icon icon-name="utility:forward" variant="border-filled" alternative-text={labels.viewAll} title={labels.viewAll} slot="actions" onclick={navigateToAccounts}></lightning-button-icon>
                 <div class="slds-p-horizontal_medium slds-p-bottom_medium">
                     <template if:false={hasAccounts}>
                         <p class="slds-text-color_weak slds-text-align_center slds-m-vertical_medium">{labels.priorityEmpty}</p>
@@ -72,7 +72,7 @@
 
         <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
             <lightning-card title={labels.newLeads} icon-name="standard:lead">
-                <lightning-button label={labels.viewAll} slot="actions" onclick={navigateToLeads}></lightning-button>
+                <lightning-button-icon icon-name="utility:forward" variant="border-filled" alternative-text={labels.viewAll} title={labels.viewAll} slot="actions" onclick={navigateToLeads}></lightning-button-icon>
                 <div class="slds-p-horizontal_medium slds-p-bottom_medium">
                     <template if:false={hasLeads}>
                         <p class="slds-text-color_weak slds-text-align_center slds-m-vertical_medium">{labels.leadsEmpty}</p>

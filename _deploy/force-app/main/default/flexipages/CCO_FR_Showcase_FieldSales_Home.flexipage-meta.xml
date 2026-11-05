@@ -53,6 +53,22 @@
                     <name>leadLimit</name>
                     <value>4</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>accountRecordType</name>
+                    <value>any</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>accountOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>leadOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>leadRating</name>
+                    <value>Any</value>
+                </componentInstanceProperties>
                 <componentName>seFrFieldRepHome</componentName>
                 <identifier>c_seFrFieldRepHome_main</identifier>
             </componentInstance>

@@ -26,7 +26,7 @@ public with sharing class SE_FR_FieldSalesController {
             Id userId = UserInfo.getUserId();
             query += ' AND OwnerId = :userId ';
         }
-        if (String.isNotBlank(recordTypeName)) {
+        if (String.isNotBlank(recordTypeName) && recordTypeName.toLowerCase() != 'any') {
             query += ' AND RecordType.DeveloperName = :recordTypeName ';
         }
 

@@ -94,3 +94,8 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Lead : contacts miroir créés (carte contact OK), bandeau Hot=warning / Non contacté=info.
 - Order : flexipage `CCO_FR_Showcase_Order` mise à jour (parent + jauge « Activité récente ») et déployée, mais le rendu affiche encore « Last activity 0% » et un en-tête vide. Cause probable : assignation de page au niveau org/profil qui prend le dessus sur l'override de l'app. À vérifier dans Setup > Lightning App Builder > Activation. Non bloquant.
 - Restant : Visit (dates passées, placeholders facings), Field Sales home (cartes vides), Accueil (tuile sans icône), Territoire (filtres tronqués), Contact (titres tronqués), motifs d'onglets Marketing/Territoire.
+
+## 8e passe
+- Visit : visites « Planned » replanifiées dans le futur (org, hors repo) ; champ facings (ShelfSpace) avec placeholder + label.
+- Field Sales : `getPriorityAccounts` accepte recordType « any » ; flexipage passée en accountRecordType=any / owner all / leadRating Any ; boutons « Voir tout » remplacés par un bouton-icône (titres plus tronqués). Déployé, MAIS rendu navigateur inchangé après plusieurs rechargements (bundle/page en cache, même symptôme que Order) : à revérifier dans une session propre.
+- Piste commune Order/Field Sales : cache Lightning ou page active différente de celle déployée.
