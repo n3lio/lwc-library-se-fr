@@ -89,6 +89,10 @@ export default class SeFrConsentManager extends LightningElement {
     @api language = 'fr';
     @api cardTitle;
     @api cardIcon = 'standard:task2';
+    // 'mock' (default): sample toggles, local state only, no field needed. Labels can come from
+    // channelsCsv (first segment of each item). 'live': toggles bound to boolean fields by API name
+    // (channelsCsv = label|fieldApiName|inverted, or the standard opt-out fields on Contact/Lead).
+    @api sourceMode = 'mock';
     @api channelsCsv;
     @api toggleActiveLabel;
     @api toggleInactiveLabel;
@@ -106,7 +110,7 @@ export default class SeFrConsentManager extends LightningElement {
         return map[this.objectApiName] || '';
     }
     get isSample() {
-        return !this.channelsCsv && !(DEFAULTS_BY_OBJECT_EN[this.objectApiName]);
+        return String(this.sourceMode || 'mock').toLowerCase() !== 'live';
     }
     get needsMapping() { return false; }
     get needsMappingMessage() {
@@ -120,10 +124,16 @@ export default class SeFrConsentManager extends LightningElement {
 
     get channels() {
         if (this.isSample) {
-            const rows = SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr;
-            return rows.map((r, i) => ({ key: `ch${i}`, label: r[0], fieldApiName: `__sample${i}`, inverted: false }));
+            const defaults = SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr;
+            const custom = (this.channelsCsv || '').split(',')
+                .map(r => (r.split('|')[0] || '').trim()).filter(Boolean);
+            const labels = custom.length ? custom : defaults.map(r => r[0]);
+            return labels.map((label, i) => ({ key: `ch${i}`, label, fieldApiName: `__sample${i}`, inverted: false }));
         }
-        return parseChannels(this.resolvedChannelsCsv);
+        const live = parseChannels(this.resolvedChannelsCsv);
+        if (live.length) return live;
+        const map = this.language === 'fr' ? DEFAULTS_BY_OBJECT_FR : DEFAULTS_BY_OBJECT_EN;
+        return parseChannels(map[this.objectApiName] || '');
     }
 
     get channelFieldsForWire() {
@@ -136,9 +146,14 @@ export default class SeFrConsentManager extends LightningElement {
         return this.channels.map(c => ({
             ...c,
             checked: this.isSample && !(c.fieldApiName in this.channelStates)
-                ? !!(SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr)[Number(c.key.slice(2))][1]
+                ? this.sampleDefault(Number(c.key.slice(2)))
                 : !!this.channelStates[c.fieldApiName]
         }));
+    }
+
+    sampleDefault(i) {
+        const rows = SAMPLE_CHANNELS[this.language] || SAMPLE_CHANNELS.fr;
+        return rows[i] ? !!rows[i][1] : true;
     }
 
     get colClass() {

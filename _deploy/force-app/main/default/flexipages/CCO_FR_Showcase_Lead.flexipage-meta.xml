@@ -125,7 +125,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>channelsCsv</name>
-                    <value>Email,SMS,Phone</value>
+                    <value>E-mail,SMS,Téléphone</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>language</name>

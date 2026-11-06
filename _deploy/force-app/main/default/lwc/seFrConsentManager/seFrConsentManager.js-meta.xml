@@ -17,7 +17,8 @@
             <property name="language" type="String" default="fr" label="UI language" description="'en' or 'fr'. Controls card title, toggle labels, toast messages, and default channel labels (E-mail / Téléphone / WhatsApp)." />
             <property name="cardTitle" type="String" label="Card title (override)" />
             <property name="cardIcon" type="String" default="standard:task2" label="Card icon" />
-            <property name="channelsCsv" type="String" label="Channels CSV (override)" placeholder="Email|HasOptedOutOfEmail|true,Téléphone|DoNotCall|true,WhatsApp|SDO_WhatsApp_Opt_In__c|false" description="One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty: Contact/Lead use the standard opt-out fields, other objects show sample channels." />
+            <property name="sourceMode" type="String" default="mock" datasource="mock,live" label="Source mode" description="'mock' (default): sample toggles, no field needed, state kept locally. 'live': toggles bound to boolean fields by API name (see Channels CSV)." />
+            <property name="channelsCsv" type="String" label="Channels CSV (override)" placeholder="Email|HasOptedOutOfEmail|true,Téléphone|DoNotCall|true,WhatsApp|SDO_WhatsApp_Opt_In__c|false" description="Mock mode: comma-separated labels only (E-mail,SMS,WhatsApp). Live mode: one channel per item, format label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty: Contact/Lead use the standard opt-out fields, other objects show sample channels." />
             <property name="toggleActiveLabel" type="String" label="Toggle active label (override)" />
             <property name="toggleInactiveLabel" type="String" label="Toggle inactive label (override)" />
             <property name="successMessage" type="String" label="Success toast message (override)" />

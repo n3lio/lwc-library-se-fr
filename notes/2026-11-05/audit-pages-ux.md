@@ -106,3 +106,8 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Territoire : grille de filtres auto-fit + libellés sur plusieurs lignes.
 - Onglets : Marketing = Custom108 Megaphone, Territoire = Custom24 Map.
 - À revérifier en session propre (cache) : Order, Field Sales (comptes/leads).
+
+## 10e passe — seFrConsentManager
+- Cause du vide : `channelsCsv` sans champ (« Email,SMS,… ») → aucun canal exploitable.
+- Nouveau prop `sourceMode` (mock par défaut | live). Mock : interrupteurs d'exemple (état local), libellés pris dans `channelsCsv` (1er segment). Live : champs booléens par API name via `label|fieldApiName|inverted`, ou champs d'opt-out standards Contact/Lead si CSV vide.
+- Pages Contact / Lead (libellés FR) et Compte (défauts) OK en mock.
