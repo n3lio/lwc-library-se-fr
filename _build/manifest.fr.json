@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-13",
-  "componentCount": 32,
+  "generatedAt": "2026-11-06",
+  "componentCount": 47,
   "components": [
     {
       "apiName": "seFrAccountHealth",
@@ -792,12 +792,111 @@
       "_sourceHash": "f61f62aae452be04"
     },
     {
+      "apiName": "seFrBusinessCardScanner",
+      "masterLabel": "CCO FR - Business Card Scanner",
+      "description": "Déposez des images de cartes de visite, obtenez des fiches lead modifiables avec extraction OCR simulée, puis créez les leads en lot. Mode mock : pas d'Apex, pas de dépendance Einstein.",
+      "tagline": "Déposez des photos de cartes de visite, obtenez des fiches lead modifiables pré-remplies par un OCR simulé, puis créez les leads en lot.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Retail",
+        "Marketing"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Glisser-déposer de cartes de visite",
+        "Extraction OCR simulée",
+        "Fiches lead modifiables",
+        "Création de leads en lot"
+      ],
+      "keyProps": [
+        "language - 'fr' (par défaut) ou 'en'",
+        "cardTitle / cardIcon - surcharge du titre et de l'icône standard:*",
+        "simulatedDelayMs - latence OCR factice (1200 par défaut)",
+        "maxCards - nombre max de cartes dans la liste (10 par défaut)",
+        "autoCreate - fait pulser le bouton de création quand une carte est prête"
+      ],
+      "seBenefit": "Démontrez l'histoire « de la carte au lead » sur un salon ou en visite magasin, sur n'importe quelle org de dev, sans Apex, sans prompt template et sans configuration.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": true,
+      "featuredRank": 7,
+      "releaseStatus": "new",
+      "originalAuthor": "Yann Jourdain",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": "optional",
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": "",
+          "description": "Leave empty for the dictionary default ('Scanner de cartes de visite' / 'Business Card Scanner')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:lead",
+          "description": "A standard:* icon name, e.g. standard:lead, standard:person_account, standard:identity."
+        },
+        {
+          "name": "simulatedDelayMs",
+          "type": "Integer",
+          "label": "Simulated OCR delay (ms)",
+          "default": "1200",
+          "description": "Delay before the fake extracted data appears on each card."
+        },
+        {
+          "name": "maxCards",
+          "type": "Integer",
+          "label": "Maximum cards",
+          "default": "10",
+          "description": "Maximum number of cards in the list at once."
+        },
+        {
+          "name": "autoCreate",
+          "type": "Boolean",
+          "label": "Highlight create button",
+          "default": "false",
+          "description": "When ON, the create button pulses as soon as at least one card is ready."
+        }
+      ],
+      "_sourceHash": "f84a17cf1de061dd"
+    },
+    {
       "apiName": "seFrConsentManager",
       "masterLabel": "CCO FR - Consent Manager",
-      "description": "B2B / B2C - Panneau de toggles RGPD / préférences de contact. Lit/écrit les champs opt-in/opt-out sur le record. Bilingue EN / FR.",
-      "tagline": "Panneau de consentement RGPD par canal qui lie chaque canal à un champ booléen sur le record courant.",
+      "description": "B2B / B2C - Panneau de préférences de contact / consentement RGPD. Canaux d'exemple affichés par défaut ; renseignez channelsCsv avec les API names de champs pour lier de vrais champs. Bilingue EN / FR.",
+      "tagline": "Panneau de consentement RGPD par canal, chaque canal étant lié à un champ booléen de l'enregistrement courant.",
       "categories": [
-        "Marketing & Data"
+        "Marketing"
       ],
       "personas": [
         "Marketing",
@@ -812,16 +911,16 @@
         "Account"
       ],
       "chips": [
-        "Toggles par canal",
+        "Interrupteurs par canal",
         "Persistance LDS",
-        "Champs opt-out inversés"
+        "Champs d'opt-out inversés"
       ],
       "keyProps": [
-        "Channels CSV (override) · format `label|fieldApiName|inverted`",
-        "Override des labels toggle / success / error",
-        "Override du titre / icône de carte"
+        "CSV des canaux (surcharge) · format `label|fieldApiName|inverted`",
+        "Surcharge des libellés d'interrupteur / succès / erreur",
+        "Surcharge du titre / de l'icône de la carte"
       ],
-      "seBenefit": "Les canaux par défaut sont mappés sur des champs Salesforce standards : `HasOptedOutOfEmail`, `DoNotCall`, `HasOptedOutOfFax` (utilisé comme placeholder pour le opt-out WhatsApp). Posez sur Contact / Lead / Account → ça marche, aucun champ custom requis.",
+      "seBenefit": "Les canaux par défaut s'appuient sur des champs standard Salesforce : `HasOptedOutOfEmail`, `DoNotCall`, `HasOptedOutOfFax` (utilisé en substitut de l'opt-out WhatsApp). Posez-le sur Contact / Lead / Account → ça marche, sans champ personnalisé.",
       "dataMode": "live",
       "mobileReady": true,
       "featured": false,
@@ -840,6 +939,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -863,11 +963,18 @@
           "description": null
         },
         {
+          "name": "sourceMode",
+          "type": "String",
+          "label": "Source mode",
+          "default": "mock",
+          "description": "'mock' (default): sample toggles, no field needed, state kept locally. 'live': toggles bound to boolean fields by API name (see Channels CSV)."
+        },
+        {
           "name": "channelsCsv",
           "type": "String",
           "label": "Channels CSV (override)",
           "default": null,
-          "description": "One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty for the language dictionary default (maps Email / Phone / WhatsApp onto Contact standard opt-out fields)."
+          "description": "Mock mode: comma-separated labels only (E-mail,SMS,WhatsApp). Live mode: one channel per item, format label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty: Contact/Lead use the standard opt-out fields, other objects show sample channels."
         },
         {
           "name": "toggleActiveLabel",
@@ -898,7 +1005,7 @@
           "description": null
         }
       ],
-      "_sourceHash": "3ef794337f705911"
+      "_sourceHash": "9f2e85b4b3f7362e"
     },
     {
       "apiName": "seFrContactCard",
@@ -1335,10 +1442,10 @@
     {
       "apiName": "seFrCustomerOrders",
       "masterLabel": "CCO FR - Customer Orders",
-      "description": "B2B / B2C - Liste les orders liés à un Account ou Contact. Le bloc du haut affiche le dernier order avec ses lignes ; le bloc du bas est un historique compact avec recherche / tri / filtre statut / Voir tout. Bilingue EN / FR.",
-      "tagline": "Carte détail du dernier order plus historique des commandes recherchable, triable et filtrable pour un Account ou Contact.",
+      "description": "B2B / B2C - Liste les commandes liées à un compte, un contact ou une Visit__c. Le bloc du haut montre la dernière commande avec ses lignes ; le bloc du bas est un historique compact avec recherche / tri / filtre de statut / Voir tout. Bilingue EN / FR.",
+      "tagline": "Carte de détail de la dernière commande, plus historique de commandes avec recherche, tri et filtres pour un compte ou un contact.",
       "categories": [
-        "Account 360°"
+        "Sales"
       ],
       "personas": [
         "Sales",
@@ -1349,19 +1456,20 @@
       ],
       "objects": [
         "Account",
-        "Contact"
+        "Contact",
+        "Visit__c"
       ],
       "chips": [
-        "Carte détail dernier order",
-        "Recherchable + triable",
-        "Filtre statut + 'Voir tout'"
+        "Carte de la dernière commande",
+        "Recherche + tri",
+        "Filtre par statut + « Voir tout »"
       ],
       "keyProps": [
         "Nombre max de lignes",
-        "Filtre par statut / plage de dates",
+        "Filtre par statut / période",
         "`productImageFieldApiName` · `Image_URL__c` par défaut"
       ],
-      "seBenefit": "Affiche les images produit par ligne — transforme une liste plate en catalogue visuel qui rappelle un historique e-commerce. Compatible avec les champs image produit de la SDO prêt à l'emploi.",
+      "seBenefit": "Affiche l'image produit de chaque ligne — transforme une simple liste en catalogue visuel, façon historique de commandes e-commerce. Compatible d'office avec les champs image produit de la SDO.",
       "dataMode": "live",
       "mobileReady": false,
       "featured": false,
@@ -1382,6 +1490,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -1468,7 +1577,7 @@
           "description": null
         }
       ],
-      "_sourceHash": "c8f64c0aefaba2a8"
+      "_sourceHash": "7f0da59bc6c34487"
     },
     {
       "apiName": "seFrCustomerSalesSummary",
@@ -1653,6 +1762,126 @@
         }
       ],
       "_sourceHash": "81544a71d2913db4"
+    },
+    {
+      "apiName": "seFrEngagementHistory",
+      "masterLabel": "CCO FR - Engagement History",
+      "description": "Marketing et Data - Timeline d'engagement marketing configurable (Email, SMS, Formulaire, Page vue) avec recherche en direct et icônes colorées par type. Timeline d'exemple par défaut ; surchargeable avec des propriétés séparées par des pipes. Sans Apex. Bilingue EN / FR.",
+      "tagline": "Timeline d'engagement marketing configurable, avec icônes colorées par type et recherche intégrée.",
+      "categories": [
+        "Marketing"
+      ],
+      "personas": [
+        "Marketing",
+        "Sales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Lead",
+        "Contact",
+        "Account"
+      ],
+      "chips": [
+        "UI timeline",
+        "8 types d'événements",
+        "Recherche intégrée",
+        "Zéro Apex"
+      ],
+      "keyProps": [
+        "Types d'événements, emails, listes, âges (séparés par des pipes)",
+        "Afficher / masquer la recherche (icône bascule)",
+        "Surcharge du titre de la carte"
+      ],
+      "seBenefit": "Démontre un historique d'engagement façon Marketing Cloud sans installer MCAE. Idéal pour des démos sur scratch orgs ou SDO sans connexion Marketing Cloud.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title, search placeholder, event type labels and empty state text."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:activations",
+          "description": null
+        },
+        {
+          "name": "showSearch",
+          "type": "Boolean",
+          "label": "Show search bar",
+          "default": "true",
+          "description": null
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "String",
+          "label": "Search placeholder (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "eventTypes",
+          "type": "String",
+          "label": "Event types (pipe-separated)",
+          "default": "Email ouvert|SMS envoyé|Formulaire|Email cliqué|Page vue|Email rejeté|Email envoyé|SMS cliqué",
+          "description": "FR: Email ouvert, Email envoye, Email clique, Email rejete, SMS envoye, SMS clique, Formulaire, Page vue. EN: Email Open, Email Sent, Email Click, Email Bounce, SMS Sent, SMS Click, Form Submit, Page View."
+        },
+        {
+          "name": "eventEmails",
+          "type": "String",
+          "label": "Emails / subjects (pipe-separated)",
+          "default": "promo-ete@acme.fr|alerte-rdv@acme.fr|inscription-event@acme.fr|bienvenue@acme.fr|page-tarifs@acme.fr|offre-speciale@acme.fr|relance-panier@acme.fr|offre-flash@acme.fr",
+          "description": null
+        },
+        {
+          "name": "eventLists",
+          "type": "String",
+          "label": "Lists / campaigns (pipe-separated)",
+          "default": "Campagne Ete 2026|SMS Relance Auto|Webinaire Produit Q2|Nurturing Web|Acquisition SEO|Offre Flash Juin|Campagne Rentree|Promo Weekend",
+          "description": null
+        },
+        {
+          "name": "eventAges",
+          "type": "String",
+          "label": "Relative ages (pipe-separated)",
+          "default": "2 j.|4 j.|1 sem.|1 sem. 3 j.|2 sem.|3 sem.|1 mois|1 mois 5 j.",
+          "description": null
+        }
+      ],
+      "_sourceHash": "53a43e926cd2d016"
     },
     {
       "apiName": "seFrFieldRepHome",
@@ -2631,6 +2860,99 @@
         }
       ],
       "_sourceHash": "c47e933f328f54f8"
+    },
+    {
+      "apiName": "seFrLeadFirstTouch",
+      "masterLabel": "CCO FR - Lead First Touch",
+      "description": "Mock du parcours First Touch Capture pour les leads : zone de dépôt et transcription simulées, notes de réunion IA simulées, puis création simulée de Task / Event. Pas d'Apex, pas de champ personnalisé, pas de dépendance Agentforce.",
+      "tagline": "Mock de « First Touch Capture » pour les leads — déposez des notes, collez une transcription, obtenez des notes de réunion IA simulées, puis des Tasks et Events de suivi simulés.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Retail"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Lead"
+      ],
+      "chips": [
+        "Zone de dépôt + transcription simulées",
+        "Notes de réunion IA simulées",
+        "Création de Task / Event simulée",
+        "Zéro schéma, zéro Apex"
+      ],
+      "keyProps": [
+        "`language` · fr (par défaut) ou en",
+        "`cardTitle` · surcharge optionnelle · `cardIcon` · `standard:lead_insights` par défaut",
+        "`mockTranscript` · texte de transcription initial optionnel",
+        "`simulatedDelayMs` · 1500 par défaut (la création d'activités en utilise 2/3)"
+      ],
+      "seBenefit": "Montre en quelques secondes, sur n'importe quelle org de dev, toute l'histoire « capture sur le stand, l'IA rédige les notes, les suivis sont créés », sans champ personnalisé, sans classe Apex ni configuration Agentforce.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Yann Jourdain",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": "optional",
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:lead_insights",
+          "description": "SLDS standard icon, e.g. standard:lead_insights."
+        },
+        {
+          "name": "mockTranscript",
+          "type": "String",
+          "label": "Initial transcript",
+          "default": null,
+          "description": "Optional text pre-filled in the transcript box."
+        },
+        {
+          "name": "simulatedDelayMs",
+          "type": "Integer",
+          "label": "Simulated AI delay (ms)",
+          "default": "1500",
+          "description": "Delay before the canned AI notes appear. Activity creation uses two thirds of this value."
+        }
+      ],
+      "_sourceHash": "c5dbca7d005983ba"
     },
     {
       "apiName": "seFrMetricTile",
@@ -3871,6 +4193,177 @@
       "_sourceHash": "ae331973b7e34e0d"
     },
     {
+      "apiName": "seFrRecordActions",
+      "masterLabel": "CCO FR - Record Actions",
+      "description": "Barre d'outils pour pages Account, Contact, Lead, Opportunity et Case : une action principale (Screen Flow ou formulaire standard Nouvelle Task / Event / Case avec champs pré-remplis) + résumé IA Einstein optionnel en un clic.",
+      "tagline": "Barre d'outils compacte pour pages Account, Contact, Lead, Opportunity et Case — un bouton principal (Screen Flow ou formulaire standard Nouvelle Task / Event / Case / Opportunity) + un résumé IA Einstein en ligne.",
+      "categories": [
+        "Transverse"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Telesales",
+        "Service"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Contact",
+        "Opportunity",
+        "Case",
+        "Lead"
+      ],
+      "chips": [
+        "Action principale = Screen Flow OU formulaire standard",
+        "Champs pré-remplis via le token {recordId}",
+        "Résumé Einstein en ligne",
+        "Rendu Markdown"
+      ],
+      "keyProps": [
+        "L'action principale lance n'importe quel Screen Flow (passe recordId en entrée)",
+        "Livré avec un Flow par défaut `CCO_FR_Start_Visit` — crée un Event standard, sans dépendance à un package managé",
+        "Résumé via prompt Einstein — `einstein_gpt__summarizeAccountDefault` avec `Input:Account` par défaut",
+        "Détecte automatiquement une sortie Einstein HTML ou markdown",
+        "Entrée du prompt adaptée pour Contact / Opportunity / Case / Lead",
+        "Mini-parseur Markdown (titres, listes, gras / italique, code en ligne)",
+        "Boutons SLDS (`lightning-button variant=\"brand\"`) — reprend la couleur d'accent du thème",
+        "Icônes SLDS standard (`standard:task`, `utility:*`)"
+      ],
+      "seBenefit": "Posez-le sur n'importe quelle page d'enregistrement : vous obtenez un résumé IA en un clic (sans erreur si Einstein est désactivé) et une action principale configurable qui lance votre propre Screen Flow — aucun code pour relier un bouton Flow au contexte de l'enregistrement.",
+      "dataMode": "hybrid",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-10-15",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_AccountActionsController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": "optional",
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls every visible label."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty to use the dictionary default ('Quick actions')."
+        },
+        {
+          "name": "accentColor",
+          "type": "String",
+          "label": "Accent color (CSS)",
+          "default": null,
+          "description": "Optional CSS color for the icon badge + primary button. Example: '#003DA5'. Leave empty for neutral theme."
+        },
+        {
+          "name": "disablePrimaryAction",
+          "type": "Boolean",
+          "label": "Disable primary action button",
+          "default": "false",
+          "description": "Turn ON to hide the primary action button entirely (keep only the AI summary)."
+        },
+        {
+          "name": "primaryActionLabel",
+          "type": "String",
+          "label": "Primary action label (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default ('Start visit' / 'Démarrer une visite')."
+        },
+        {
+          "name": "primaryActionIcon",
+          "type": "String",
+          "label": "Primary action icon (SLDS)",
+          "default": "utility:routing_offline",
+          "description": "Example: 'utility:routing_offline' for a field visit, 'utility:new' for a quick create."
+        },
+        {
+          "name": "primaryActionType",
+          "type": "String",
+          "label": "Primary action type",
+          "default": "flow",
+          "description": "'flow' launches the Screen Flow below (Account: visit). 'newRecord' opens the standard New form of newRecordObjectApiName with the prefilled fields below (Contact / Lead / Opportunity / Case: Task, Event, Case, Opportunity…)."
+        },
+        {
+          "name": "newRecordObjectApiName",
+          "type": "String",
+          "label": "[newRecord] Object to create",
+          "default": null,
+          "description": "API name of the standard object, e.g. Task, Event, Case, Opportunity. Same targets as the standard quick actions NewTask / NewEvent / NewCase / NewOpportunity."
+        },
+        {
+          "name": "newRecordDefaults",
+          "type": "String",
+          "label": "[newRecord] Prefilled fields",
+          "default": null,
+          "description": "Pipe-separated Field=Value pairs. Tokens: {recordId}, {objectApiName}. Example on a Contact: WhoId={recordId}|Subject=Rendez-vous."
+        },
+        {
+          "name": "primaryActionFlowApiName",
+          "type": "String",
+          "label": "Primary action Flow API name",
+          "default": "CCO_FR_Start_Visit",
+          "description": "Developer name of the Screen Flow launched when the button is clicked. The current record Id is passed as 'recordId'. Default = 'CCO_FR_Start_Visit' (shipped with the component — creates a standard Event rattaché au record). Clear to display a 'Not configured' toast while wiring, or point at your own Screen Flow."
+        },
+        {
+          "name": "disableAiSummary",
+          "type": "Boolean",
+          "label": "Disable AI summary button",
+          "default": "false",
+          "description": "Off by default — the AI summary button is shown. Turn ON to hide it."
+        },
+        {
+          "name": "aiSummaryLabel",
+          "type": "String",
+          "label": "AI summary button label (override)",
+          "default": null,
+          "description": "Leave empty for dictionary default ('AI summary' / 'Résumé IA')."
+        },
+        {
+          "name": "promptTemplateApiName",
+          "type": "String",
+          "label": "Prompt template API name",
+          "default": "einstein_gpt__summarizeAccountDefault",
+          "description": "Developer name of the Einstein Prompt Template. Default: SDO-shipped Account summary."
+        },
+        {
+          "name": "promptInputApiName",
+          "type": "String",
+          "label": "Prompt template input API name",
+          "default": "Input:Account",
+          "description": "Typically 'Input:Account'. Change to 'Input:Contact', 'Input:Opportunity' etc. depending on the host record page."
+        },
+        {
+          "name": "autoRunOnLoad",
+          "type": "Boolean",
+          "label": "Run AI summary automatically on load",
+          "default": "false",
+          "description": "When ON (and AI summary enabled), the prompt fires as soon as the component mounts — no click needed."
+        }
+      ],
+      "_sourceHash": "c5c3208fd48b5dfc"
+    },
+    {
       "apiName": "seFrRecordHighlights",
       "masterLabel": "CCO FR - Record Highlights",
       "description": "B2B / B2C - Panneau highlights custom avec image ronde et champs / actions configurables. Fonctionne sur Account, Contact, Opportunity, Case, Lead, Order, Contract, Quote — peut afficher le record courant ou son parent Account (propriété recordSource).",
@@ -4330,6 +4823,86 @@
       "_sourceHash": "0c56362056ca61ad"
     },
     {
+      "apiName": "seFrServiceContracts",
+      "masterLabel": "CCO FR - Service Contracts",
+      "description": "Liste les contrats de service avec badge de métier, SLA, email du prestataire, périmètre et nombre d'OT ouverts. Remonte la chaîne de parents sur Account, Case, Contact, Opportunity, WorkOrder. Wire Apex en direct. EN / FR.",
+      "tagline": "Contrats de service actifs par compte avec compte à rebours d'échéance, badge de corps de métier, SLA et compteur d'ordres de travail ouverts.",
+      "categories": [
+        "Service"
+      ],
+      "personas": [
+        "Service",
+        "FieldSales"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account",
+        "Case",
+        "Contact",
+        "Opportunity",
+        "WorkOrder"
+      ],
+      "chips": [
+        "Wire Apex en direct",
+        "Compte à rebours d'échéance",
+        "Badges de catégorie",
+        "Compteur d'OT ouverts"
+      ],
+      "keyProps": [
+        "Langue (FR/EN)",
+        "Surcharge du titre de la carte",
+        "Surcharge de l'icône de la carte"
+      ],
+      "seBenefit": "Montre d'un coup d'œil tout le paysage des prestataires d'un compte — échéances, SLA, interventions ouvertes, emails de contact. Idéal pour des démos Field Service, gestion immobilière et services B2B.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ServiceContractsController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'. Controls card title, empty state and row labels."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for the language dictionary default."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:service_contract",
+          "description": null
+        }
+      ],
+      "_sourceHash": "e3b61f69fc6d9458"
+    },
+    {
       "apiName": "seFrSmartRecommendations",
       "masterLabel": "CCO FR - Smart Recommendations",
       "description": "Actions recommandées context-aware (Next Best Action).",
@@ -4661,8 +5234,8 @@
     {
       "apiName": "seFrSplashBanner",
       "masterLabel": "CCO FR - Splash Banner",
-      "description": "Bannière / splash screen avec fond animé pur CSS / SVG. 8 styles de fond au choix (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid) - aucune librairie externe, paramétrable à 100% (texte, taille, couleurs, vitesse, hauteur).",
-      "tagline": "Bannière d'accueil avec 8 styles de fond animés (waves, aurora, mesh, orbs, conic, geometric, constellation, grid) en pur CSS / SVG.",
+      "description": "Bannière animée pur CSS/SVG, 8 styles (Waves, Aurora, Mesh, Orbs, Conic, Geometric, Constellation, Grid). Paramétrable (texte, couleurs, vitesse, hauteur). Titre + sous-titre : markdown inline (gras, italique, souligné, code, barré).",
+      "tagline": "Bannière d'accueil avec 8 styles de fond animés (vagues, aurore, mesh, orbes, conique, géométrique, constellation, grille) en pur CSS / SVG.",
       "categories": [
         "Transverse"
       ],
@@ -4681,13 +5254,13 @@
         "Respecte reduced-motion"
       ],
       "keyProps": [
-        "Titre, sous-titre, taille de texte, alignement",
+        "Titre, sous-titre, taille du texte, alignement",
         "Style de fond (8 options)",
-        "3 couleurs (primary / secondary / tertiary)",
+        "3 couleurs (primaire / secondaire / tertiaire)",
         "Hauteur, vitesse d'animation",
         "Bouton CTA optionnel"
       ],
-      "seBenefit": "8 ambiances visuelles distinctes — choisissez « Constellation » ou « Conic » pour les démos IA, « Waves » pour un ton customer-success sobre, « Aurora » pour le premium / luxe. Aucune image / static resource à uploader.",
+      "seBenefit": "8 ambiances visuelles distinctes — « Constellation » ou « Conic » pour des démos IA, « Waves » pour un esprit sobre de customer success, « Aurora » pour du premium / luxe. Aucune image ni static resource à charger.",
       "dataMode": "mock",
       "mobileReady": true,
       "featured": false,
@@ -4706,20 +5279,28 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'en' (default) or 'fr'."
+        },
         {
           "name": "title",
           "type": "String",
           "label": "Titre",
           "default": "Bonjour 👋",
-          "description": "Le grand texte affiché au centre. Émojis acceptés."
+          "description": "Le grand texte affiché au centre. Émojis acceptés. Supporte le markdown inline : **gras**, *italique* ou _italique_, __souligné__, `code`, ~~barré~~."
         },
         {
           "name": "subtitle",
           "type": "String",
           "label": "Sous-titre (optionnel)",
           "default": null,
-          "description": "Texte plus petit affiché sous le titre."
+          "description": "Texte plus petit affiché sous le titre. Supporte le markdown inline : **gras**, *italique* ou _italique_, __souligné__, `code`, ~~barré~~."
         },
         {
           "name": "textSize",
@@ -4799,7 +5380,119 @@
           "description": "Lien activé par le bouton. URL relative Salesforce ('/lightning/...') ou absolue ('https://...')."
         }
       ],
-      "_sourceHash": "ade57c75cd73d2e8"
+      "_sourceHash": "8f5743833fc1e463"
+    },
+    {
+      "apiName": "seFrSubscribersList",
+      "masterLabel": "CCO FR - Subscribers List",
+      "description": "Service - Panneau d'équipe de compte montrant les Users liés à l'enregistrement courant (propriétaire, équipe d'opportunité) avec photos de profil, rôles et navigation. Apex en direct par défaut, repli mock via les props. Bilingue EN / FR.",
+      "tagline": "Panneau d'équipe de compte en direct avec photos de profil, rôles et navigation vers les enregistrements.",
+      "categories": [
+        "Service"
+      ],
+      "personas": [
+        "Service",
+        "FieldSales",
+        "Sales"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [],
+      "chips": [
+        "Wire Apex en direct",
+        "Photos de profil",
+        "Badges de rôle",
+        "Multi-objets"
+      ],
+      "keyProps": [
+        "Langue (FR/EN)",
+        "Mode source (live/mock)",
+        "Surcharge du titre de la carte"
+      ],
+      "seBenefit": "Affiche l'équipe qui travaille sur un enregistrement (propriétaire du compte, membres de l'équipe d'opportunité) en un clic — avec photos, rôles et navigation vers les profils User. Fonctionne d'office sur n'importe quelle SDO, sans configuration.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Thomas Plaindoux",
+      "originalAuthorEmail": null,
+      "maintainedBy": "Lionel Braun",
+      "libraryIntegrationDate": "2026-05-28",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_SubscribersListController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "'fr' (default) or 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Leave empty for auto (Equipe du compte / Account Team)."
+        },
+        {
+          "name": "cardSubtitle",
+          "type": "String",
+          "label": "Subtitle (override)",
+          "default": null,
+          "description": "Leave empty for auto count."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:team_member",
+          "description": null
+        },
+        {
+          "name": "sourceMode",
+          "type": "String",
+          "label": "Data mode",
+          "default": "live",
+          "description": "'live' (Apex, default) or 'mock' (pipe-separated props below)."
+        },
+        {
+          "name": "contactNames",
+          "type": "String",
+          "label": "[Mock] Names (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock."
+        },
+        {
+          "name": "roles",
+          "type": "String",
+          "label": "[Mock] Roles (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock."
+        },
+        {
+          "name": "userIds",
+          "type": "String",
+          "label": "[Mock] User IDs (pipe-separated)",
+          "default": null,
+          "description": "Only used when sourceMode=mock. Enables clickable names."
+        }
+      ],
+      "_sourceHash": "0a7e067c516f764c"
     },
     {
       "apiName": "seFrTelesalesRepHome",
@@ -5278,10 +5971,10 @@
     {
       "apiName": "seFrTimelinePhases",
       "masterLabel": "CCO FR - Timeline Phases",
-      "description": "B2B / B2C - Timeline horizontale multi-phases (parcours client / étapes projet). Les phases sont configurées en JSON avec labels, dates cibles et flags done. Un marqueur vertical « Today » indique la position actuelle.",
-      "tagline": "Timeline horizontale multi-phases avec axe de dates, marqueur « Today » et état done / pending par phase.",
+      "description": "Timeline horizontale multi-phases. Adapte automatiquement les phases par défaut à l'objet hôte (Case = résolution, WorkOrder = intervention, Account/Opp = cycle de vente, Home = exercice fiscal). Surcharge JSON personnalisée. Marqueur Aujourd'hui.",
+      "tagline": "Timeline horizontale multi-phases avec axe de dates, marqueur « Aujourd'hui » et état terminé / à venir par phase.",
       "categories": [
-        "Sales Productivity"
+        "Productivity"
       ],
       "personas": [
         "Sales"
@@ -5293,15 +5986,15 @@
       ],
       "objects": [],
       "chips": [
-        "Layout sur axe de dates",
-        "Marqueur « Today »",
-        "État done / pending"
+        "Disposition sur axe de dates",
+        "Marqueur « Aujourd'hui »",
+        "État terminé / à venir"
       ],
       "keyProps": [
-        "Jusqu'à 6 phases (label, date, statut)",
-        "Thème couleur"
+        "Jusqu'à 6 phases (libellé, date, statut)",
+        "Thème de couleur"
       ],
-      "seBenefit": "Visualise un parcours ou un état de processus sans nécessiter d'objets custom ni de flows — saisissez les phases directement dans App Builder.",
+      "seBenefit": "Visualise l'état d'un parcours ou d'un processus sans objet personnalisé ni flow — saisissez les phases directement dans App Builder.",
       "dataMode": "mock",
       "mobileReady": true,
       "featured": false,
@@ -5320,6 +6013,7 @@
       "staticResourceDeps": [],
       "customFieldsOptional": [],
       "customFieldsRequired": [],
+      "requiresEinstein": null,
       "properties": [
         {
           "name": "language",
@@ -5331,9 +6025,9 @@
         {
           "name": "scope",
           "type": "String",
-          "label": "Default phases scope",
-          "default": "record",
-          "description": "Seeds the default phases depending on where the component is used. 'record' = customer / deal cycle (Prospection → Découverte → Démo → Proposition → Closing). 'home' = global fiscal milestones (Q1/Q2/Q3/Q4 kick-off / ramp-up / expansion / year-end). Override with Phases JSON below to customise fully."
+          "label": "Phases scope (default phases preset)",
+          "default": "auto",
+          "description": "Picks which default phases preset is used when Phases JSON is empty. 'auto' (default) detects from the host object: Case → case resolution, WorkOrder/ServiceAppointment → field service, Account/Opportunity/Lead/Contact → sales cycle, Order/Contract → onboarding, Home/App → fiscal milestones. Override with a specific scope or paste your own JSON below."
         },
         {
           "name": "cardTitle",
@@ -5354,7 +6048,7 @@
           "type": "String",
           "label": "Phases - JSON array (override)",
           "default": null,
-          "description": "Array of objects. Each item: { label, date (YYYY-MM-DD), done (boolean) }. Leave empty for the scope + language default."
+          "description": "JSON array — copy the placeholder shown in this field as a starting point. Each item needs: label (text), date (YYYY-MM-DD), done (true/false). Leave empty for the scope default."
         },
         {
           "name": "localeTag",
@@ -5371,7 +6065,809 @@
           "description": "Off by default - the vertical dotted line showing today's position is displayed."
         }
       ],
-      "_sourceHash": "8174352aa9b99682"
+      "_sourceHash": "460d554f56681ec7"
+    },
+    {
+      "apiName": "seFrVisitCheckIn",
+      "masterLabel": "CCO FR - Visit Check-In",
+      "description": "Check-in / Check-out d'une visite (Visit__c) : horodate CheckIn/CheckOut et fait évoluer VisitState__c. Écritures via updateRecord, sans Apex. Bilingue FR / EN.",
+      "tagline": "Check-in / Check-out terrain en un clic sur la visite, avec chrono et récapitulatif de durée.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c"
+      ],
+      "chips": [
+        "Visit",
+        "Check-in",
+        "Check-out",
+        "Lifecycle"
+      ],
+      "keyProps": [
+        "cardTitle",
+        "cardIcon",
+        "language"
+      ],
+      "seBenefit": "Montrer en démo le cycle de vie d'une visite (Planned, In Progress, Completed) sans Apex ni Flow, uniquement avec updateRecord.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "GA",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Langue de l'interface",
+          "default": "fr",
+          "description": "'fr' (défaut) ou 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Titre de la carte (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Icône de la carte",
+          "default": "standard:activations",
+          "description": null
+        }
+      ],
+      "_sourceHash": "ee1076d6c24a9568"
+    },
+    {
+      "apiName": "seFrVisitKanban",
+      "masterLabel": "CCO FR - Visit Kanban",
+      "description": "Kanban des visites (Visit__c) d'un compte : 4 colonnes Planned / In Progress / Completed / Cancelled. Glisser-déposer pour changer l'état de la visite. Bouton optionnel pour lancer le Flow CCO_FR_Start_Visit.",
+      "tagline": "Kanban des visites du compte — glisser-déposer pour faire avancer une visite de Planifiée à Terminée.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Sales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Account"
+      ],
+      "chips": [
+        "Account",
+        "Visit",
+        "Kanban",
+        "Lifecycle"
+      ],
+      "keyProps": [
+        "cardTitle",
+        "cardIcon",
+        "language",
+        "limitPerColumn"
+      ],
+      "seBenefit": "Montrez d'un coup d'œil le cycle de vie des visites terrain d'un compte et faites-le avancer d'un simple glisser-déposer, sans code.",
+      "dataMode": "live",
+      "mobileReady": false,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "GA",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_VisitKanbanController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Langue de l'interface (fr / en)",
+          "default": "fr",
+          "description": null
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Titre de la carte (surcharge)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Icone de la carte",
+          "default": "standard:kanban",
+          "description": null
+        },
+        {
+          "name": "limitPerColumn",
+          "type": "Integer",
+          "label": "Cartes visibles par colonne",
+          "default": "5",
+          "description": "Au-dela, un bouton chevron Voir plus affiche le reste."
+        },
+        {
+          "name": "startVisitFlowApiName",
+          "type": "String",
+          "label": "Flow de nouvelle visite",
+          "default": "CCO_FR_Start_Visit",
+          "description": "API name du Screen Flow. Le bouton est masque si le Flow n'existe pas."
+        }
+      ],
+      "_sourceHash": "feff71736e0ac35b"
+    },
+    {
+      "apiName": "seFrVisitPlan",
+      "masterLabel": "CCO FR - Visit Plan",
+      "description": "Checklist \"Plan d'action\" Visit__c : 5 étapes (check-in, relevé linéaire, produits, commande, CR). Démarre/clôture via updateRecord + Flow CCO_FR_End_Visit. Timer. Progression en localStorage.",
+      "tagline": "Checklist \"Plan d'action\" sur une visite terrain — démarre, séquence, clôture.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c"
+      ],
+      "chips": [
+        "Visit",
+        "Checklist",
+        "Lifecycle",
+        "Flow"
+      ],
+      "keyProps": [
+        "cardTitle",
+        "cardIcon",
+        "language"
+      ],
+      "seBenefit": "Raconter l'ensemble d'une visite terrain en un seul composant — check-in horodaté, checklist (relevé linéaire, produits, commande), compte-rendu via Flow — avec progression visible et bouton \"Terminer\" bloqué tant que l'obligatoire n'est pas fait.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "GA",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Langue de l'interface",
+          "default": "fr",
+          "description": "'fr' (défaut) ou 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Titre de la carte (override)",
+          "default": null,
+          "description": "Override facultatif du titre par défaut (Visite / Visit)."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Icône de la carte",
+          "default": "standard:task",
+          "description": "SLDS icon-name (ex. standard:task, standard:activations, standard:planogram)."
+        }
+      ],
+      "_sourceHash": "0400a6a630dff797"
+    },
+    {
+      "apiName": "seFrVisitProductCheck",
+      "masterLabel": "CCO FR - Visit Product Check",
+      "description": "Relevé produits terrain : liste depuis le Standard Pricebook, chaque produit Présent/Rupture + prix constaté + note. Publie la progression en localStorage → coche l'étape \"products\" du seFrVisitPlan.",
+      "tagline": "Relevé produits terrain depuis le Standard Pricebook — Présent / Rupture / prix constaté par produit.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c"
+      ],
+      "chips": [
+        "Visit",
+        "Products",
+        "Pricebook",
+        "Audit"
+      ],
+      "keyProps": [
+        "cardTitle",
+        "cardIcon",
+        "language",
+        "maxCount"
+      ],
+      "seBenefit": "Permet au commercial terrain de pointer en quelques secondes la présence rayon et le prix constaté de ses références catalogue, et coche automatiquement l'étape « Relevé produits » du plan de visite.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "GA",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ProductCheckController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Langue",
+          "default": "fr",
+          "description": "'fr' ou 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Titre de la carte (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Icône de la carte (override)",
+          "default": null,
+          "description": "SLDS icon-name — défaut : standard:product_item."
+        },
+        {
+          "name": "maxCount",
+          "type": "Integer",
+          "label": "Nombre de produits à afficher",
+          "default": "12",
+          "description": null
+        }
+      ],
+      "_sourceHash": "5769798fec4417cb"
+    },
+    {
+      "apiName": "seFrVisitQuickOrder",
+      "masterLabel": "CCO FR - Commande rapide (catalogue visuel)",
+      "description": "Catalogue produit visuel avec recommandations contextualisées sur les relevés terrain. Panier avec remise ligne + globale, suggestions issues des ruptures / produits manquants / PDL basse. Alternative visuelle au cadencier.",
+      "tagline": "Catalogue produit visuel avec recommandations contextuelles (ruptures, produits manquants, faible part de linéaire) et un panier avec remise ligne + globale.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "AppPage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c",
+        "Account"
+      ],
+      "chips": [
+        "Catalogue visuel",
+        "Recommandations contextuelles",
+        "Panier avec remises"
+      ],
+      "keyProps": [
+        "Nom de la marque (badges et recos)",
+        "`seedProductsJson` · surcharge le catalogue CPG intégré",
+        "Symbole monétaire"
+      ],
+      "seBenefit": "Alternative visuelle au cadencier en saisie rapide — met en avant ce qu'il faut pousser pendant une visite magasin, à partir de ce que la visite vient de révéler.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language (fr | en)",
+          "default": "fr",
+          "description": null
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:order_item",
+          "description": null
+        },
+        {
+          "name": "brandName",
+          "type": "String",
+          "label": "Brand name (badges & recos)",
+          "default": "Ma marque",
+          "description": null
+        },
+        {
+          "name": "currencySymbol",
+          "type": "String",
+          "label": "Currency symbol",
+          "default": "€",
+          "description": null
+        },
+        {
+          "name": "seedProductsJson",
+          "type": "String",
+          "label": "Seed products JSON (override)",
+          "default": null,
+          "description": "Optional JSON array of products { id, code, name, family, price, imageUrl, stock, badge? }. Falls back to a generic CPG catalog if blank."
+        }
+      ],
+      "_sourceHash": "47a125cc5a584269"
+    },
+    {
+      "apiName": "seFrVisitRestockOrder",
+      "masterLabel": "CCO FR - Réassort auto (ruptures relevé)",
+      "description": "Convertit les ruptures identifiées pendant le Relevé produits en bon de commande de réassort. Lit la liste des produits en rupture (localStorage), suggère une quantité par ligne, et crée un Order Draft + OrderItems sur le compte de la visite.",
+      "tagline": "Transforme en un clic les ruptures constatées pendant le relevé linéaire en commande de réassort Draft.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "Sales",
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c",
+        "Account"
+      ],
+      "chips": [
+        "Ruptures → Order Draft",
+        "Quantités suggérées",
+        "Un seul clic"
+      ],
+      "keyProps": [
+        "Quantité par défaut par rupture",
+        "Inclure les produits en alerte prix",
+        "Devise / locale"
+      ],
+      "seBenefit": "Boucle la visite magasin — les ruptures repérées pendant le relevé produits deviennent une commande sur le compte de la visite, sans ressaisie.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "new",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": null,
+      "maintainedBy": null,
+      "libraryIntegrationDate": null,
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_VisitRestockOrderController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language (fr | en)",
+          "default": "fr",
+          "description": null
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:product_item",
+          "description": null
+        },
+        {
+          "name": "defaultQuantity",
+          "type": "Integer",
+          "label": "Default quantity per rupture",
+          "default": "6",
+          "description": "Prefilled quantity for every detected out-of-stock line. The user can override per line."
+        },
+        {
+          "name": "includePriceAlerts",
+          "type": "Boolean",
+          "label": "Include products flagged with a price alert",
+          "default": "false",
+          "description": "If checked, products with an abnormal observed price are also listed (greyed-out by default, user can tick them)."
+        },
+        {
+          "name": "currencySymbol",
+          "type": "String",
+          "label": "Currency symbol",
+          "default": "€",
+          "description": null
+        },
+        {
+          "name": "localeTag",
+          "type": "String",
+          "label": "Locale tag (number formatting)",
+          "default": "fr-FR",
+          "description": null
+        }
+      ],
+      "_sourceHash": "6626f3367ccf56bc"
+    },
+    {
+      "apiName": "seFrVisitShelfCompliance",
+      "masterLabel": "CCO FR - Visit Shelf Compliance",
+      "description": "Retail Execution - Conformité du linéaire par la photo sur une visite. Chargez des photos, consultez la galerie et lancez une analyse Agentforce du linéaire (taux d'occupation, facings manquants, produits mal placés). Mock d'abord : fonctionne sans Agentforce.",
+      "tagline": "Photos de linéaire sur une visite, galerie et analyse Agentforce (mock en repli).",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c"
+      ],
+      "chips": [
+        "Visit",
+        "Shelf",
+        "Photo",
+        "Agentforce"
+      ],
+      "keyProps": [
+        "cardTitle",
+        "cardIcon",
+        "language",
+        "maxFiles"
+      ],
+      "seBenefit": "Démo prête à l'emploi de conformité linéaire par la photo, avec analyse Agentforce simulée si la vision n'est pas configurée.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "GA",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-10-23",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_ShelfComplianceController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "UI language",
+          "default": "fr",
+          "description": "fr or en."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title",
+          "default": "Conformité du linéaire",
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:product_item",
+          "description": null
+        },
+        {
+          "name": "maxFiles",
+          "type": "Integer",
+          "label": "Max files per upload",
+          "default": "6",
+          "description": "1 to 6."
+        },
+        {
+          "name": "promptTemplateApiName",
+          "type": "String",
+          "label": "Prompt template API name (optional)",
+          "default": null,
+          "description": "Agentforce prompt template. Leave blank to use the mock result."
+        }
+      ],
+      "_sourceHash": "1461f6821f61ca1b"
+    },
+    {
+      "apiName": "seFrVisitShelfSpace",
+      "masterLabel": "CCO FR - Visit Shelf Space",
+      "description": "Relevé linéaire manuel : facings par catégorie/segment, Marque vs Concurrence, PDL calculée et évolution vs visite précédente. Publie en localStorage pour cocher l'étape shelf du seFrVisitPlan.",
+      "tagline": "Relevé linéaire manuel — part de linéaire (PDL) marque vs concurrence par catégorie et segment, avec historique.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c"
+      ],
+      "chips": [
+        "Visit",
+        "Shelf",
+        "PDL",
+        "Facings"
+      ],
+      "keyProps": [
+        "language",
+        "cardTitle",
+        "cardIcon",
+        "brandName",
+        "competitorLabel",
+        "seedJson"
+      ],
+      "seBenefit": "Pendant visuel du composant photo seFrVisitShelfCompliance — saisie manuelle de facings quand le vendeur n'a pas accès à la vision ou veut consolider l'évolution PDL vs mois précédent / A-1. Publie dans `sefr-visit-progress` : coche l'étape « Relevé linéaire » du plan de visite.",
+      "dataMode": "mock",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "beta",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-11-03",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Langue",
+          "default": "fr",
+          "description": "'fr' ou 'en'."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Titre de la carte (override)",
+          "default": null,
+          "description": null
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Icône SLDS (override)",
+          "default": null,
+          "description": "Défaut : standard:merchandising."
+        },
+        {
+          "name": "brandName",
+          "type": "String",
+          "label": "Nom de la marque principale",
+          "default": "Ma marque",
+          "description": "Libellé affiché pour les lignes 'main' (ex: Danone, LU, DIM)."
+        },
+        {
+          "name": "competitorLabel",
+          "type": "String",
+          "label": "Libellé concurrence (override)",
+          "default": null,
+          "description": "Défaut : 'Concurrence' / 'Competition'."
+        },
+        {
+          "name": "seedJson",
+          "type": "String",
+          "label": "Catalogue JSON (override)",
+          "default": null,
+          "description": "JSON Array des catégories/segments/marques pour remplacer le seed par défaut. Voir README."
+        }
+      ],
+      "_sourceHash": "f27278a85743a6fd"
+    },
+    {
+      "apiName": "seFrVisitSummaryAI",
+      "masterLabel": "CCO FR - Resume de Visite IA",
+      "description": "Résumé IA (Agentforce / Einstein) de la visite courante (Visit__c, pattern Retail Execution de la lib). Zéro package managé.",
+      "tagline": "Résumé IA (Agentforce / Einstein) d'une visite terrain — synthèse, points clés et actions recommandées.",
+      "categories": [
+        "Retail Execution"
+      ],
+      "personas": [
+        "FieldSales",
+        "Retail"
+      ],
+      "surfaces": [
+        "AppPage",
+        "HomePage",
+        "RecordPage"
+      ],
+      "objects": [
+        "Visit__c",
+        "Account"
+      ],
+      "chips": [
+        "Visit",
+        "Agentforce",
+        "Summary",
+        "Debrief"
+      ],
+      "keyProps": [
+        "language",
+        "cardTitle",
+        "cardIcon",
+        "promptTemplateName"
+      ],
+      "seBenefit": "Transforme les données captées pendant la visite (linéaire, ruptures, commande, notes) en compte-rendu structuré prêt à partager, avec un fallback déterministe si aucun Prompt Template n'est configuré.",
+      "dataMode": "live",
+      "mobileReady": true,
+      "featured": false,
+      "featuredRank": null,
+      "releaseStatus": "beta",
+      "originalAuthor": "Lionel Braun",
+      "originalAuthorEmail": "lionel.braun@salesforce.com",
+      "maintainedBy": "SE FR team",
+      "libraryIntegrationDate": "2026-11-05",
+      "status": "active",
+      "deprecatedNote": null,
+      "screenshots": [],
+      "gif": null,
+      "apexDeps": [
+        "SE_FR_VisitSummaryController"
+      ],
+      "sharedApexDeps": [],
+      "staticResourceDeps": [],
+      "customFieldsOptional": [],
+      "customFieldsRequired": [],
+      "requiresEinstein": null,
+      "properties": [
+        {
+          "name": "language",
+          "type": "String",
+          "label": "Language (fr | en)",
+          "default": "fr",
+          "description": "UI language. Defaults to fr."
+        },
+        {
+          "name": "cardTitle",
+          "type": "String",
+          "label": "Card title (override)",
+          "default": null,
+          "description": "Overrides the default header title ('Compte-rendu de visite' / 'Visit debrief')."
+        },
+        {
+          "name": "cardIcon",
+          "type": "String",
+          "label": "Card icon",
+          "default": "standard:document",
+          "description": "Lightning icon shown in the card header. Keep standard:* icons for homogeneity with the other sefr* cards."
+        },
+        {
+          "name": "promptTemplateApiName",
+          "type": "String",
+          "label": "Einstein Prompt Template API Name (optional)",
+          "default": "",
+          "description": "DeveloperName of a Flex Prompt Template taking Input:Visit__c + Input:ClientContext (string) and returning JSON { summary, keyPoints[], actions[] }. If blank or thin, the component falls back to a deterministic rich summary built from the sibling-captured context (shelf PDL, ruptures, order lines…)."
+        }
+      ],
+      "_sourceHash": "be01974d5aa8cafb"
     },
     {
       "apiName": "seFrVoiceNoteTaker",
