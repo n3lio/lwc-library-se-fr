@@ -125,3 +125,10 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Vérifié 06/11 (a11y tree, session reconnectée) : Case → Records Highlights OK (plus de nom de compte) ; Account (onglet Relation Client) → Consent Manager vertical E-mail/Téléphone/SMS OK ; Account (onglet Pilotage) → tuile « RUN RATE 3 200 € » complète. Heroku push OK (5ec2230).
 - Reste : previews PNG/GIF à régénérer (captures navigateur vides), suppression org de seFrAccountActions (Setup), Quick Order images et revenu Opportunity non contrôlés.
 - 06/11 : images Quick Order OK (SVG cpg_products servis par l'org), revenu Opportunity OK (« 15 000 € »), preview seFrConsentManager.png régénérée via Chrome headless (frontdoor URL, --screenshot) — technique réutilisable pour les autres previews. Suppression org de seFrAccountActions refusée par le classifieur : à faire dans Setup.
+
+## 2026-11-06 — « Voir en démo » réparé
+- `/api/showcase/url?component=<api>` → page d'atterrissage par composant (map dans `server.js`, override `SF_SHOWCASE_LANDINGS`).
+- Connected App « Showcase Visitor JWT » (cco-fr-de) + cert `~/.ssh/sf-showcase-visitor-jwt.*`; env Heroku SF_SHOWCASE_* basculées sur cco-fr-de.
+- Fix : permset `CCO_FR_Showcase_Visitor` + `LightningExperienceUser` (sinon « pas accès à Lightning Experience »).
+- Vérifié en visiteur (Playwright) : 20 composants trouvés sur la page cible (Opportunity, Visit, RetailExec, Telesales, Territory, Case).
+- Nouvelle catégorie « Retail Execution » (11 composants) + 4 recettes cookbook.
