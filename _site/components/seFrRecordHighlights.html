@@ -88,7 +88,7 @@ window.addEventListener('pageshow', function() {
 <li data-i18n-comp="seFrRecordHighlights.keyProps.0"><code>language</code> · en / fr</li><li data-i18n-comp="seFrRecordHighlights.keyProps.1"><code>recordSource</code> · current / parent</li><li data-i18n-comp="seFrRecordHighlights.keyProps.2"><code>accountFieldsList</code>, <code>contactFieldsList</code></li><li data-i18n-comp="seFrRecordHighlights.keyProps.3"><code>imageFieldApiName</code> · URL field on the record</li><li data-i18n-comp="seFrRecordHighlights.keyProps.4"><code>maxQuickActions</code> · loaded from layout</li>
       </ul>
 
-      <h2 class="section">All properties (10)</h2>
+      <h2 class="section">All properties (11)</h2>
       <div class="props-table-wrap">
       <table class="props-table">
         <colgroup>
@@ -100,6 +100,7 @@ window.addEventListener('pageshow', function() {
         <tbody>
       <tr><td class="api"><code>language</code></td><td class="type">String</td><td class="default">fr</td><td>&#x27;en&#x27; (default) or &#x27;fr&#x27;. Controls button labels (Edit / Modifier, View Account Hierarchy / Voir la hiérarchie) and empty-state messages.</td></tr>
       <tr><td class="api"><code>recordSource</code></td><td class="type">String</td><td class="default">current</td><td>current = show the record on the current page. parent = show the linked Account (Contact/Opportunity/Case/Order/Contract/Quote/Lead) or the Parent Account (when on an Account page).</td></tr>
+      <tr><td class="api"><code>otherFieldsList</code></td><td class="type">String</td><td class="default">—</td><td>Used for objects other than Account/Contact (Order, Opportunity, Case...). Empty = sensible defaults per object.</td></tr>
       <tr><td class="api"><code>accountFieldsList</code></td><td class="type">String</td><td class="default">AccountNumber, Industry, Type, Phone</td><td>Used when the displayed record is an Account.</td></tr>
       <tr><td class="api"><code>contactFieldsList</code></td><td class="type">String</td><td class="default">Title, Email, Phone, Department</td><td>Used when the displayed record is a Contact.</td></tr>
       <tr><td class="api"><code>customImageUrl</code></td><td class="type">String</td><td class="default">—</td><td>—</td></tr>
