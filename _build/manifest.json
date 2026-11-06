@@ -6707,26 +6707,19 @@
     }
   ],
   "byCategory": {
-    "Service": [
-      "seFrAlertsRibbon",
-      "seFrKanbanBoard",
-      "seFrOrderSummary",
-      "seFrServiceContracts",
-      "seFrSubscribersList"
-    ],
-    "Dashboards & KPIs": [
-      "seFrFieldRepHome",
-      "seFrKpiLauncher",
-      "seFrMetricTile",
-      "seFrRevenueDashboard",
-      "seFrTelesalesRepHome"
-    ],
     "Productivity": [
       "seFrMyEvents",
       "seFrMyTasks",
       "seFrPromptLauncher",
       "seFrSmartRecommendations",
       "seFrTimelinePhases"
+    ],
+    "Service": [
+      "seFrAlertsRibbon",
+      "seFrKanbanBoard",
+      "seFrOrderSummary",
+      "seFrServiceContracts",
+      "seFrSubscribersList"
     ],
     "Marketing": [
       "seFrActiveSegments",
@@ -6746,6 +6739,24 @@
       "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
     ],
+    "Transverse": [
+      "seFrActivityFeed",
+      "seFrAgentforceHeader",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrFilesGallery",
+      "seFrRecordActions",
+      "seFrRecordHighlights",
+      "seFrRelatedRecordCard",
+      "seFrSplashBanner"
+    ],
+    "Dashboards & KPIs": [
+      "seFrFieldRepHome",
+      "seFrKpiLauncher",
+      "seFrMetricTile",
+      "seFrRevenueDashboard",
+      "seFrTelesalesRepHome"
+    ],
     "Sales": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -6757,44 +6768,24 @@
       "seFrVisitQuickOrder",
       "seFrVisitRestockOrder",
       "seFrVisitShelfCompliance"
-    ],
-    "Transverse": [
-      "seFrActivityFeed",
-      "seFrAgentforceHeader",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrRecordActions",
-      "seFrRecordHighlights",
-      "seFrRelatedRecordCard",
-      "seFrSplashBanner"
     ]
   },
   "byPersona": {
-    "Sales": [
-      "seFrAccountHealth",
-      "seFrAccountStrategyPlan",
+    "Service": [
       "seFrActivityFeed",
       "seFrAlertsRibbon",
-      "seFrBusinessCardScanner",
+      "seFrConsentManager",
       "seFrContactCard",
       "seFrContactsCarousel",
-      "seFrCustomerOrders",
-      "seFrEngagementHistory",
       "seFrFilesGallery",
-      "seFrLeadFirstTouch",
+      "seFrKanbanBoard",
       "seFrMetricTile",
-      "seFrPipelineSnapshot",
+      "seFrOrderSummary",
       "seFrRecordActions",
       "seFrRelatedRecordCard",
-      "seFrRevenueDashboard",
+      "seFrServiceContracts",
       "seFrSmartRecommendations",
-      "seFrSubscribersList",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases",
-      "seFrVisitKanban",
-      "seFrVisitQuickOrder",
-      "seFrVisitRestockOrder"
+      "seFrSubscribersList"
     ],
     "FieldSales": [
       "seFrActivityFeed",
@@ -6824,22 +6815,6 @@
       "seFrVisitSummaryAI",
       "seFrVoiceNoteTaker"
     ],
-    "Service": [
-      "seFrActivityFeed",
-      "seFrAlertsRibbon",
-      "seFrConsentManager",
-      "seFrContactCard",
-      "seFrContactsCarousel",
-      "seFrFilesGallery",
-      "seFrKanbanBoard",
-      "seFrMetricTile",
-      "seFrOrderSummary",
-      "seFrRecordActions",
-      "seFrRelatedRecordCard",
-      "seFrServiceContracts",
-      "seFrSmartRecommendations",
-      "seFrSubscribersList"
-    ],
     "Marketing": [
       "seFrActiveSegments",
       "seFrActivityFeed",
@@ -6853,6 +6828,10 @@
       "seFrMetricTile",
       "seFrRelatedRecordCard",
       "seFrSmartRecommendations"
+    ],
+    "Retail": [
+      "seFrBusinessCardScanner",
+      "seFrCustomerSalesSummary"
     ],
     "Telesales": [
       "seFrActivityFeed",
@@ -6870,10 +6849,6 @@
       "seFrSmartRecommendations",
       "seFrTelesalesRepHome"
     ],
-    "Retail": [
-      "seFrBusinessCardScanner",
-      "seFrCustomerSalesSummary"
-    ],
     "All": [
       "seFrAgentforceHeader",
       "seFrKpiLauncher",
@@ -6882,9 +6857,56 @@
       "seFrPromptLauncher",
       "seFrRecordHighlights",
       "seFrSplashBanner"
+    ],
+    "Sales": [
+      "seFrAccountHealth",
+      "seFrAccountStrategyPlan",
+      "seFrActivityFeed",
+      "seFrAlertsRibbon",
+      "seFrBusinessCardScanner",
+      "seFrContactCard",
+      "seFrContactsCarousel",
+      "seFrCustomerOrders",
+      "seFrEngagementHistory",
+      "seFrFilesGallery",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrPipelineSnapshot",
+      "seFrRecordActions",
+      "seFrRelatedRecordCard",
+      "seFrRevenueDashboard",
+      "seFrSmartRecommendations",
+      "seFrSubscribersList",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitKanban",
+      "seFrVisitQuickOrder",
+      "seFrVisitRestockOrder"
     ]
   },
   "bySurface": {
+    "AppPage": [
+      "seFrActiveSegments",
+      "seFrAlertsRibbon",
+      "seFrBusinessCardScanner",
+      "seFrEngagementHistory",
+      "seFrFieldRepHome",
+      "seFrKanbanBoard",
+      "seFrKpiLauncher",
+      "seFrLeadFirstTouch",
+      "seFrMetricTile",
+      "seFrMyEvents",
+      "seFrMyTasks",
+      "seFrNearbyAccountsMap",
+      "seFrPromptLauncher",
+      "seFrSplashBanner",
+      "seFrSubscribersList",
+      "seFrTelesalesRepHome",
+      "seFrTerritoryMap",
+      "seFrTimelinePhases",
+      "seFrVisitQuickOrder",
+      "seFrVisitSummaryAI"
+    ],
     "RecordPage": [
       "seFrAccountHealth",
       "seFrAccountStrategyPlan",
@@ -6947,28 +6969,6 @@
       "seFrTelesalesRepHome",
       "seFrTerritoryMap",
       "seFrTimelinePhases",
-      "seFrVisitSummaryAI"
-    ],
-    "AppPage": [
-      "seFrActiveSegments",
-      "seFrAlertsRibbon",
-      "seFrBusinessCardScanner",
-      "seFrEngagementHistory",
-      "seFrFieldRepHome",
-      "seFrKanbanBoard",
-      "seFrKpiLauncher",
-      "seFrLeadFirstTouch",
-      "seFrMetricTile",
-      "seFrMyEvents",
-      "seFrMyTasks",
-      "seFrNearbyAccountsMap",
-      "seFrPromptLauncher",
-      "seFrSplashBanner",
-      "seFrSubscribersList",
-      "seFrTelesalesRepHome",
-      "seFrTerritoryMap",
-      "seFrTimelinePhases",
-      "seFrVisitQuickOrder",
       "seFrVisitSummaryAI"
     ]
   }
