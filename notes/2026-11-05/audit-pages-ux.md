@@ -99,3 +99,10 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Visit : visites « Planned » replanifiées dans le futur (org, hors repo) ; champ facings (ShelfSpace) avec placeholder + label.
 - Field Sales : `getPriorityAccounts` accepte recordType « any » ; flexipage passée en accountRecordType=any / owner all / leadRating Any ; boutons « Voir tout » remplacés par un bouton-icône (titres plus tronqués). Déployé, MAIS rendu navigateur inchangé après plusieurs rechargements (bundle/page en cache, même symptôme que Order) : à revérifier dans une session propre.
 - Piste commune Order/Field Sales : cache Lightning ou page active différente de celle déployée.
+
+## 9e passe
+- Contact : titres raccourcis (Segments, Consentements, Recommandations, bouton « Planifier un RDV »).
+- Accueil : icône Retail Execution `standard:merchandising` (inexistante) → `standard:product_item`.
+- Territoire : grille de filtres auto-fit + libellés sur plusieurs lignes.
+- Onglets : Marketing = Custom108 Megaphone, Territoire = Custom24 Map.
+- À revérifier en session propre (cache) : Order, Field Sales (comptes/leads).

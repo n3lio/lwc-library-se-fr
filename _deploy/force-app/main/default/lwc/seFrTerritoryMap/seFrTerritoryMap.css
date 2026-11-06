@@ -86,7 +86,7 @@
 }
 .filter-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px;
     margin-bottom: 12px;
 }
@@ -254,3 +254,5 @@
         height: 280px;
     }
 }
+
+.filter-grid label, .filter-grid .slds-form-element__label { white-space: normal; overflow: visible; text-overflow: clip; }

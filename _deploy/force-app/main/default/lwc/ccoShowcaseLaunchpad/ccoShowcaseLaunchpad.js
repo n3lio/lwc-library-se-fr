@@ -13,7 +13,7 @@ const SECTIONS = [
             { tab: 'CCO_FR_FieldSales_Home', icon: 'standard:location', color: '#0B827C',
               fr: 'Field Sales', en: 'Field Sales',
               dFr: 'Tournée du jour, carte des comptes, visites à venir.', dEn: 'Day route, account map, upcoming visits.' },
-            { tab: 'CCO_FR_RetailExec_Home', icon: 'standard:merchandising', color: '#0176D3',
+            { tab: 'CCO_FR_RetailExec_Home', icon: 'standard:product_item', color: '#0176D3',
               fr: 'Retail Execution', en: 'Retail Execution',
               dFr: 'Exécution en magasin : planogramme, relevé, commande.', dEn: 'In-store execution: planogram, shelf check, order.' },
             { tab: 'CCO_FR_Telesales_Home', icon: 'standard:call', color: '#7F5AB6',
