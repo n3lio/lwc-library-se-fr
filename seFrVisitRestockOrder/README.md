@@ -1,7 +1,7 @@
 ---
 tagline: Turns out-of-stock products found during the shelf survey into a Draft restock Order in one click.
-categories: [Sales]
-personas: [Sales, FieldSales]
+categories: [Retail Execution]
+personas: [Sales, FieldSales, Retail]
 chips:
   - Ruptures → Draft Order
   - Suggested quantities

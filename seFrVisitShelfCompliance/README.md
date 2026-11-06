@@ -1,7 +1,7 @@
 ---
 tagline: Photos de linéaire sur une visite, galerie et analyse Agentforce (mock en repli).
-categories: [Geo & Field, Sales]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Shelf, Photo, Agentforce]
 dataMode: live
 mobileReady: true

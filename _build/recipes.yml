@@ -23,11 +23,15 @@
     - seFrContactsCarousel
     - seFrRelatedRecordCard
     - seFrSmartRecommendations
+    - seFrAccountStrategyPlan
+    - seFrRevenueDashboard
+    - seFrCustomerOrders
+    - seFrRecordActions
 
 - id: field-sales-cockpit
   emoji: 🚗
   title: Field Sales cockpit
-  description: Mobile-first Home page for reps in the field — map, agenda, tasks, voice notes and KPIs.
+  description: Mobile-first Home page for reps in the field — priority accounts, map, agenda, tasks, voice notes and KPIs.
   primaryPersona: FieldSales
   components:
     - seFrFieldRepHome
@@ -74,6 +78,69 @@
     - seFrEngagementHistory
     - seFrActivityFeed
     - seFrCustomerSalesSummary
+    - seFrSubscribersList
+
+- id: retail-visit-workflow
+  emoji: 🏪
+  title: Retail Execution — Visit workflow
+  description: Full store-visit lifecycle on the Visit record page — check-in/out, action-plan checklist, product and shelf-space survey, shelf photo compliance with Agentforce analysis, restock order and AI visit summary.
+  primaryPersona: Retail
+  components:
+    - seFrVisitCheckIn
+    - seFrVisitPlan
+    - seFrVisitProductCheck
+    - seFrVisitShelfSpace
+    - seFrVisitShelfCompliance
+    - seFrVisitQuickOrder
+    - seFrVisitRestockOrder
+    - seFrVisitSummaryAI
+    - seFrVoiceNoteTaker
+    - seFrFilesGallery
+
+- id: retail-exec-home
+  emoji: 🛒
+  title: Retail Execution — Rep home & account
+  description: Retail rep's day — Home with agenda, tasks and nearby stores, business-card/lead capture, and the Account page with visit kanban, quick orders and key-account actions.
+  primaryPersona: Retail
+  components:
+    - seFrFieldRepHome
+    - seFrMyEvents
+    - seFrMyTasks
+    - seFrNearbyAccountsMap
+    - seFrBusinessCardScanner
+    - seFrLeadFirstTouch
+    - seFrVisitKanban
+    - seFrVisitQuickOrder
+    - seFrRecordActions
+
+- id: telesales-cockpit
+  emoji: ☎️
+  title: Telesales cockpit
+  description: Inside-sales Home and order desk — KPIs, live cases and orders, kanban, order entry and customer history.
+  primaryPersona: Telesales
+  components:
+    - seFrTelesalesRepHome
+    - seFrKpiLauncher
+    - seFrKanbanBoard
+    - seFrOrderEntry
+    - seFrCustomerOrders
+    - seFrMyTasks
+    - seFrMetricTile
+
+- id: opportunity-pipeline
+  emoji: 📈
+  title: Opportunity & pipeline
+  description: Opportunity record page — sales-cycle timeline, highlights, pipeline snapshot, contact and related-record cards, recommendations.
+  primaryPersona: Sales
+  components:
+    - seFrRecordHighlights
+    - seFrTimelinePhases
+    - seFrPipelineSnapshot
+    - seFrContactCard
+    - seFrRelatedRecordCard
+    - seFrRecordActions
+    - seFrSmartRecommendations
+    - seFrServiceContracts
 
 - id: full-pack
   emoji: 📦

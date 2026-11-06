@@ -1,7 +1,7 @@
 ---
 tagline: Checklist "Plan d'action" sur une visite terrain — démarre, séquence, clôture.
-categories: [Geo & Field]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Checklist, Lifecycle, Flow]
 dataMode: live
 mobileReady: true

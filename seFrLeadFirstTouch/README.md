@@ -1,7 +1,7 @@
 ---
 tagline: Lead "First Touch Capture" mock — drop notes, paste a transcript, get simulated AI meeting notes, then simulated follow-up Tasks and Events.
-categories: [Sales]
-personas: [Sales, FieldSales, Telesales]
+categories: [Retail Execution]
+personas: [Sales, FieldSales, Telesales, Retail]
 chips:
   - Simulated file dropzone + transcript
   - Simulated AI meeting notes

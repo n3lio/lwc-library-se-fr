@@ -39,6 +39,7 @@ ALLOWED_CATEGORIES = {
     "Dashboards & KPIs",
     "Marketing",
     "Geo & Field",
+    "Retail Execution",
     "Transverse",
 }
 ALLOWED_PERSONAS = {

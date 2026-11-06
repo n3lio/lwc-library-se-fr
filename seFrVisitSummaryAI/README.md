@@ -1,7 +1,7 @@
 ---
 tagline: Résumé IA (Agentforce / Einstein) d'une visite terrain — synthèse, points clés et actions recommandées.
-categories: [Geo & Field]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Agentforce, Summary, Debrief]
 dataMode: live
 mobileReady: true

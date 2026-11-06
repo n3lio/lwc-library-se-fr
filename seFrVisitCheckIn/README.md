@@ -1,7 +1,7 @@
 ---
 tagline: Check-in / Check-out terrain en un clic sur la visite, avec chrono et récapitulatif de durée.
-categories: [Geo & Field]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Check-in, Check-out, Lifecycle]
 dataMode: live
 mobileReady: true

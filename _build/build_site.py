@@ -67,6 +67,7 @@ CATEGORY_ORDER = [
     "Marketing",
     "Dashboards & KPIs",
     "Geo & Field",
+    "Retail Execution",
 ]
 
 CATEGORY_EMOJI = {
@@ -76,6 +77,7 @@ CATEGORY_EMOJI = {
     "Dashboards & KPIs": "📊",
     "Marketing": "🎯",
     "Geo & Field": "🚗",
+    "Retail Execution": "🏪",
     "Transverse": "✨",
 }
 

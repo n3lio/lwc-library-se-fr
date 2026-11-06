@@ -1,7 +1,7 @@
 ---
 tagline: Relevé linéaire manuel — part de linéaire (PDL) marque vs concurrence par catégorie et segment, avec historique.
-categories: [Geo & Field]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Shelf, PDL, Facings]
 dataMode: mock
 mobileReady: true

@@ -1,7 +1,7 @@
 ---
 tagline: Relevé produits terrain depuis le Standard Pricebook — Présent / Rupture / prix constaté par produit.
-categories: [Geo & Field]
-personas: [FieldSales]
+categories: [Retail Execution]
+personas: [FieldSales, Retail]
 chips: [Visit, Products, Pricebook, Audit]
 dataMode: live
 mobileReady: true

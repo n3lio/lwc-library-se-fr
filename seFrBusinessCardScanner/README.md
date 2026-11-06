@@ -1,6 +1,6 @@
 ---
 tagline: Drop business card photos, get editable lead cards pre-filled by a simulated OCR, then bulk-create the leads.
-categories: [Sales]
+categories: [Retail Execution]
 personas: [Sales, FieldSales, Retail, Marketing]
 chips:
   - Drag and drop business cards
