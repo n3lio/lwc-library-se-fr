@@ -111,3 +111,5 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Cause du vide : `channelsCsv` sans champ (« Email,SMS,… ») → aucun canal exploitable.
 - Nouveau prop `sourceMode` (mock par défaut | live). Mock : interrupteurs d'exemple (état local), libellés pris dans `channelsCsv` (1er segment). Live : champs booléens par API name via `label|fieldApiName|inverted`, ou champs d'opt-out standards Contact/Lead si CSV vide.
 - Pages Contact / Lead (libellés FR) et Compte (défauts) OK en mock.
+
+- 10e (suite) : seFrConsentManager relayouté en liste verticale (libellé à gauche, toggle à droite, une ligne par canal) — plus de chevauchement dans la colonne étroite de la page Contact. Vérifié dans l'org.

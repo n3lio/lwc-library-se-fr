@@ -5,16 +5,19 @@
             <lightning-spinner alternative-text={loadingText} size="small"></lightning-spinner>
         </template>
 
-        <div class="slds-p-around_medium">
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
             <template if:true={needsMapping}>
                 <p class="slds-text-align_center slds-text-color_weak slds-text-body_small">{needsMappingMessage}</p>
             </template>
             <template if:false={needsMapping}>
-                <div class="slds-grid slds-wrap slds-grid_align-center">
+                <ul class="cm-list">
                     <template for:each={displayChannels} for:item="ch">
-                        <div key={ch.key} class={colClass}>
+                        <li key={ch.key} class="cm-row">
+                            <span class="cm-label" title={ch.label}>{ch.label}</span>
                             <lightning-input
+                                class="cm-toggle"
                                 type="toggle"
+                                variant="label-hidden"
                                 label={ch.label}
                                 name={ch.key}
                                 data-field={ch.fieldApiName}
@@ -24,9 +27,9 @@
                                 message-toggle-inactive={resolvedToggleInactive}
                                 onchange={handleToggleChange}>
                             </lightning-input>
-                        </div>
+                        </li>
                     </template>
-                </div>
+                </ul>
             </template>
         </div>
     </lightning-card>
