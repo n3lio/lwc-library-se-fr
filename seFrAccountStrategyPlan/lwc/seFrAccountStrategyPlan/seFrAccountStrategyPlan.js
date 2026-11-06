@@ -271,6 +271,8 @@ export default class SeFrAccountStrategyPlan extends LightningElement {
     }
 
     get formattedPreviousYear() { return this.formatCurrency(this.kpiPreviousYearValue); }
+    get formattedRunRateAmount() { return this.formatCurrency(this.kpiRunRateValue); }
+    get runRateSuffix() { return this.labels.defaults.runRateSuffix; }
     get formattedRunRate() { return `${this.formatCurrency(this.kpiRunRateValue)} ${this.labels.defaults.runRateSuffix}`; }
     get formattedPotential() { return this.formatCurrency(this.kpiPotentialValue); }
 

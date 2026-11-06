@@ -38,6 +38,14 @@
                     <value>6</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>accountOwnerScope</name>
+                    <value>all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>accountRecordType</name>
+                    <value>any</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>greetingTemplate</name>
                     <value>Bonne tournée {name} 👋</value>
                 </componentInstanceProperties>
@@ -52,14 +60,6 @@
                 <componentInstanceProperties>
                     <name>leadLimit</name>
                     <value>4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>accountRecordType</name>
-                    <value>any</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>accountOwnerScope</name>
-                    <value>all</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>leadOwnerScope</name>
@@ -161,7 +161,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
-                    <value>À faire sur le terrain</value>
+                    <value>À faire</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>defaultFilter</name>
