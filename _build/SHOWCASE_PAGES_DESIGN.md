@@ -84,7 +84,7 @@ Template : `flexipage:recordHomeTemplateDesktop` (header + sidebar + main)
   - `seFrFilesGallery`
   - `seFrTimelinePhases`
 - **sidebar** :
-  - `seFrAccountActions`
+  - `seFrRecordActions`
   - `seFrAccountHealth`
   - `seFrMetricTile`
   - `seFrSmartRecommendations`
@@ -105,7 +105,7 @@ Template : `flexipage:recordHomeTemplateDesktop`
   - `seFrConsentManager`
   - `seFrFilesGallery`
 - **sidebar** :
-  - `seFrAccountActions`
+  - `seFrRecordActions`
   - `seFrRelatedRecordCard` (compte)
   - `seFrActiveSegments`
   - `seFrSmartRecommendations`
@@ -121,7 +121,7 @@ Template : `flexipage:recordHomeTemplateDesktop`
   - `seFrTimelinePhases` (auto = opp cycle)
   - `seFrServiceContracts`
 - **sidebar** :
-  - `seFrAccountActions`
+  - `seFrRecordActions`
   - `seFrRelatedRecordCard` (compte)
   - `seFrSubscribersList`
   - `seFrSmartRecommendations`
@@ -137,7 +137,7 @@ Template : `flexipage:recordHomeTemplateDesktop`
   - `seFrOrderEntry`
   - `seFrTimelinePhases` (auto = case)
 - **sidebar** :
-  - `seFrAccountActions`
+  - `seFrRecordActions`
   - `seFrRelatedRecordCard`
   - `seFrSmartRecommendations`
   - `seFrPromptLauncher`
@@ -151,7 +151,7 @@ Template : `flexipage:recordHomeTemplateDesktop`
   - `seFrConsentManager`
   - `seFrActiveSegments`
 - **sidebar** :
-  - `seFrAccountActions`
+  - `seFrRecordActions`
   - `seFrSmartRecommendations`
   - `seFrVoiceNoteTaker`
 
@@ -176,7 +176,7 @@ Template : `flexipage:recordHomeTemplateDesktop`
 
 | Composant | Page(s) |
 |---|---|
-| seFrAccountActions | Account, Contact, Opportunity, Case, Lead sidebar |
+| seFrRecordActions | Account, Contact, Opportunity, Case, Lead sidebar |
 | seFrAccountHealth | Account sidebar |
 | seFrAccountStrategyPlan | Account main |
 | seFrActiveSegments | Home main, Marketing main, Account header, Contact sidebar, Lead main |

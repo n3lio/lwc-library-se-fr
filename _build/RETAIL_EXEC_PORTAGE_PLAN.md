@@ -7,7 +7,7 @@
 
 | DIM composant | Lib existante | Décision |
 |---|---|---|
-| `dimAccountActions` | ✅ `seFrAccountActions` | déjà porté (10-15) |
+| `dimAccountActions` | ✅ `seFrRecordActions` | déjà porté (10-15) |
 | `dimStartVisit` | ✅ via Flow `CCO_FR_Start_Visit` | déjà couvert (10-16) |
 | `dimVoiceNote` | ≈ `seFrVoiceNoteTaker` | **à comparer** (dim fait du prompt action aussi — enrichir ?) |
 | `dimOrderHistory` | ≈ `seFrCustomerOrders` | déjà couvert |
@@ -44,7 +44,7 @@
    - Fallback : summary from State + Account + duration + check-in/out + notes
 
 3. ✅ **`CCO_FR_Start_Visit`** v5 (2026-10-21) — rebranché Visit__c
-   - Flow shipped par `seFrAccountActions`
+   - Flow shipped par `seFrRecordActions`
    - Crée un `Visit__c` (status Planned) depuis une page Account → navigate vers la Visit__c
    - inputAssignments : Account__c, VisitState__c=Planned, PlannedStart/EndDateTime__c, Location__c, Notes__c
 

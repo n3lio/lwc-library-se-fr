@@ -47,7 +47,7 @@ sf org assign permset -n "CCO_FR_Retail_Exec" -o <alias>
 - *(à venir)* `seFrVisitKanban` — vue lifecycle Planned → In Progress → Completed sur Account
 - *(à venir)* `seFrVisitShelfCompliance` — upload photo rayon + analyse IA (depuis page Visit__c)
 - *(à venir)* `seFrVisitQuickOrder` — prise de commande rapide (depuis page Visit__c)
-- Flow `CCO_FR_Start_Visit` (shipped par `seFrAccountActions`) — crée un `Visit__c` et navigue dessus
+- Flow `CCO_FR_Start_Visit` (shipped par `seFrRecordActions`) — crée un `Visit__c` et navigue dessus
 
 ## Lifecycle visité (convention)
 

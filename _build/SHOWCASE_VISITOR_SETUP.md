@@ -31,7 +31,7 @@ Les composants de la lib qui écrivent en DB (grep `insert | update` dans `class
 | Composant | Écrit sur | Raison |
 |---|---|---|
 | `seFrVoiceNoteTaker` | Task | `insert newTask` |
-| `seFrAccountActions` (Flow Start Visit) | Visit__c | Flow crée Visit Planned |
+| `seFrRecordActions` (Flow Start Visit) | Visit__c | Flow crée Visit Planned |
 | `seFrOrderEntry` | Order + OrderItem | Prise de commande |
 | `seFrOrderSummary` | Order | update status/dates |
 | `seFrKanbanBoard` | Account/Opp/Case | drag-and-drop stage |

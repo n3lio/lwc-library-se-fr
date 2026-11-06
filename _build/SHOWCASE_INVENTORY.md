@@ -4,7 +4,7 @@ Généré le 2026-10-21 depuis les `*.js-meta.xml` de `seFr*/lwc/seFr*/` (hors `
 
 Les defaults absents du XML sont omis (le composant applique alors son défaut JS, ex: `language` = fr). Persona/catégorie/idée = déductions.
 
-## seFrAccountActions
+## seFrRecordActions
 - **Label** : CCO FR - Account Actions
 - **Description** : Compact toolbar for a record page: one configurable primary action (launches a Flow) + optional one-click Einstein AI summary rendered as markdown. Original port from DBI retail-execution demo (dimAccountActions).
 - **Exposed** : true
@@ -820,10 +820,10 @@ Les defaults absents du XML sont omis (le composant applique alors son défaut J
 # Pivot par persona
 
 ## Sales
-`seFrAccountActions`, `seFrAccountHealth`, `seFrAccountStrategyPlan`, `seFrActiveSegments`, `seFrActivityFeed`, `seFrConsentManager`, `seFrContactCard`, `seFrContactsCarousel`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrKanbanBoard`, `seFrMyEvents`, `seFrOrderEntry`, `seFrPipelineSnapshot`, `seFrRelatedRecordCard`, `seFrRevenueDashboard`, `seFrSubscribersList`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrAccountHealth`, `seFrAccountStrategyPlan`, `seFrActiveSegments`, `seFrActivityFeed`, `seFrConsentManager`, `seFrContactCard`, `seFrContactsCarousel`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrKanbanBoard`, `seFrMyEvents`, `seFrOrderEntry`, `seFrPipelineSnapshot`, `seFrRelatedRecordCard`, `seFrRevenueDashboard`, `seFrSubscribersList`, `seFrVoiceNoteTaker`
 
 ## FieldSales
-`seFrAccountActions`, `seFrActivityFeed`, `seFrContactsCarousel`, `seFrFieldRepHome`, `seFrMyEvents`, `seFrNearbyAccountsMap`, `seFrTerritoryMap`, `seFrVisitSummaryAI`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrActivityFeed`, `seFrContactsCarousel`, `seFrFieldRepHome`, `seFrMyEvents`, `seFrNearbyAccountsMap`, `seFrTerritoryMap`, `seFrVisitSummaryAI`, `seFrVoiceNoteTaker`
 
 ## Telesales
 `seFrCustomerOrders`, `seFrKanbanBoard`, `seFrOrderEntry`, `seFrOrderSummary`, `seFrTelesalesRepHome`
@@ -848,19 +848,19 @@ Les defaults absents du XML sont omis (le composant applique alors son défaut J
 Ne prend en compte que les `<objects>` déclarés dans les targetConfigs RecordPage.
 
 ## Account
-`seFrAccountActions`, `seFrAccountHealth`, `seFrAccountStrategyPlan`, `seFrActivityFeed`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrContactsCarousel`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrEngagementHistory`, `seFrOrderEntry`, `seFrPipelineSnapshot`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrRevenueDashboard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVisitSummaryAI`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrAccountHealth`, `seFrAccountStrategyPlan`, `seFrActivityFeed`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrContactsCarousel`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrEngagementHistory`, `seFrOrderEntry`, `seFrPipelineSnapshot`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrRevenueDashboard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVisitSummaryAI`, `seFrVoiceNoteTaker`
 
 ## Opportunity
-`seFrAccountActions`, `seFrAlertsRibbon`, `seFrContactCard`, `seFrPipelineSnapshot`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrAlertsRibbon`, `seFrContactCard`, `seFrPipelineSnapshot`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
 
 ## Case
-`seFrAccountActions`, `seFrAlertsRibbon`, `seFrContactCard`, `seFrOrderEntry`, `seFrOrderSummary`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`
+`seFrRecordActions`, `seFrAlertsRibbon`, `seFrContactCard`, `seFrOrderEntry`, `seFrOrderSummary`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`
 
 ## Lead
-`seFrAccountActions`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrEngagementHistory`, `seFrRecordHighlights`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrEngagementHistory`, `seFrRecordHighlights`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
 
 ## Contact
-`seFrAccountActions`, `seFrActivityFeed`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrEngagementHistory`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
+`seFrRecordActions`, `seFrActivityFeed`, `seFrAlertsRibbon`, `seFrConsentManager`, `seFrContactCard`, `seFrCustomerOrders`, `seFrCustomerSalesSummary`, `seFrEngagementHistory`, `seFrRecordHighlights`, `seFrRelatedRecordCard`, `seFrServiceContracts`, `seFrSmartRecommendations`, `seFrVoiceNoteTaker`
 
 ## Visit__c
 `seFrVisitSummaryAI`
