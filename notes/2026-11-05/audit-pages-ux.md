@@ -122,3 +122,5 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Télévente : carte « Rappels » OK (filtre modifiable), titre conservé.
 - Non vérifié visuellement : Order/Case Record Highlights (cache Lightning), Run rate. Heroku push : relancer `heroku login` si échec d'auth.
 - Vérifié 06/11 après rechargement propre : page Commande → Record Highlights affiche « 00000103 » + Statut / Montant (le « Carrefour FR » venait du cache Lightning). « Secteur d'activité » restant = carte « Compte client » (autre composant).
+- Vérifié 06/11 (a11y tree, session reconnectée) : Case → Records Highlights OK (plus de nom de compte) ; Account (onglet Relation Client) → Consent Manager vertical E-mail/Téléphone/SMS OK ; Account (onglet Pilotage) → tuile « RUN RATE 3 200 € » complète. Heroku push OK (5ec2230).
+- Reste : previews PNG/GIF à régénérer (captures navigateur vides), suppression org de seFrAccountActions (Setup), Quick Order images et revenu Opportunity non contrôlés.
