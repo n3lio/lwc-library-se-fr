@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>63257119+n3lio@users.noreply.github.com</contactEmail>
+    <label>Showcase Visitor JWT</label>
+    <oauthConfig>
+        <callbackUrl>https://localhost/callback</callbackUrl>
+        <certificate>MIIC/DCCAeSgAwIBAgIUaJkDFVL9uKmyG/ISy2uwrC5a8F4wDQYJKoZIhvcNAQELBQAwHjEcMBoGA1UEAwwTY2NvLWZyLXNob3djYXNlLWp3dDAeFw0yNjExMDYxMjE5MTRaFw0zMTExMDUxMjE5MTRaMB4xHDAaBgNVBAMME2Njby1mci1zaG93Y2FzZS1qd3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCpG7F6Eln5W1lwM4rstdoTxhxMiEUC8t8OpmBjNB1zMatwKLFgTl1/f0b3PNFT+Z1x+hE1cHPbk/KQKDPOEDcSCYlfjRNqaueLxMCthTJSX26/N4TTAni5DTGqu9YkQDkHSHiO9OauebCE0SGndnfDRqK8guL0AboH8GbH0AK9/WgEmY4tqv/YeWfw96EGcYBqEiGypcxYSzP6A8Krg6fUw8pp8JWgXPMnnlYbqXJ6s+e+m59saoyGmxn2/1QsGcnTaG6aw9kE+RKFzPJzNK1optWaUHortU3VrZx/Vcs/40Kz2O4OoizD28kr4OnTDA6FmK7gTZRgGSKAUKpecVA5AgMBAAGjMjAwMB0GA1UdDgQWBBSgmqzDXuCWDyKDZIosLBplVMHoYTAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQBDMjy7AsRDp6RqnXdmw6vxa7q9+adjV/wYZyVWnmJAovjB2bqKBLji7c1hzQLh53NkAsXLCPl+ys2j+HVNKuDU5P72L3OqvCuyVBQdHggZDlOHjCerMpvNcZGfGhtJvdBAtBKRo0BrGNxujkxjJfIgI9VdfjPxfhUN+4Hgjlqsr6pu9aloKV2dkm0fCR9xMcGLhSVaJRtG5kpbzmrnUfj5YMC+Aj8oB7ojZQxPZmNvVU4UuAlBJQFmxEa2dsguOck0DnuvBIDbRa536gteGxv3uNuhigcSOYQWeoyvmevz5sUapKMFVBHeG4IDZ8c09S17BzQo3/vfRapV1LLN87yl</certificate>
+        <consumerKey>3MVG9rZjd7MXFdLjz_3Z7bd38dBBzpuEto_S6AZWRCC_ohv7.cOMgsAMc0a7coJW7Wgq3qzbbrDe7cFDUx4YY</consumerKey>
+        <isAdminApproved>true</isAdminApproved>
+        <isClientCredentialEnabled>false</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
+        <isConsumerSecretOptional>false</isConsumerSecretOptional>
+        <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isNamedUserJwtEnabled>false</isNamedUserJwtEnabled>
+        <isPkceRequired>true</isPkceRequired>
+        <isRefreshTokenRotationEnabled>true</isRefreshTokenRotationEnabled>
+        <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
+        <isSecretRequiredForTokenExchange>false</isSecretRequiredForTokenExchange>
+        <isTokenExchangeEnabled>false</isTokenExchangeEnabled>
+        <scopes>Api</scopes>
+        <scopes>Web</scopes>
+        <scopes>RefreshToken</scopes>
+    </oauthConfig>
+    <oauthPolicy>
+        <ipRelaxation>BYPASS</ipRelaxation>
+        <isTokenExchangeFlowEnabled>false</isTokenExchangeFlowEnabled>
+        <refreshTokenPolicy>infinite</refreshTokenPolicy>
+    </oauthPolicy>
+    <permissionSet>CCO_FR_Showcase_Visitor</permissionSet>
+</ConnectedApp>

@@ -1339,7 +1339,7 @@
         tab.document.body.appendChild(wrap);
       } catch (e) { /* same-origin restrictions are fine to ignore */ }
     }
-    fetch('/api/showcase/url').then(r => r.json().then(j => ({ ok: r.ok, j }))).then(({ ok, j }) => {
+    fetch('/api/showcase/url' + (target && target.dataset.componentApi ? '?component=' + encodeURIComponent(target.dataset.componentApi) : '')).then(r => r.json().then(j => ({ ok: r.ok, j }))).then(({ ok, j }) => {
       showcaseInFlight = false;
       if (!ok || !j.url) {
         if (tab) { try { tab.close(); } catch (e) {} }

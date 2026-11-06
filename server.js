@@ -54,6 +54,36 @@ const SF_SHOWCASE_PRIVATE_KEY = (process.env.SF_SHOWCASE_PRIVATE_KEY || '').repl
 // Where on the showcase org we drop the SE after frontdoor (default = LEX home).
 const SF_SHOWCASE_LANDING = process.env.SF_SHOWCASE_LANDING || '/lightning/page/home';
 
+// Per-component landing page on the showcase org (cco-fr-de). Record ids are the demo
+// records of that org; override the whole map with SF_SHOWCASE_LANDINGS (JSON) if they change.
+const SC = {
+  ACC: '/lightning/r/Account/001gK00001fydfuQAA/view',
+  VISIT: '/lightning/r/Visit__c/a00gK00001TYmc6QAD/view',
+  OPP: '/lightning/r/Opportunity/006gK00000QxdO9QAJ/view',
+  ORDER: '/lightning/r/Order/801gK00001jxrvVQAQ/view',
+  CASE: '/lightning/r/Case/500gK00001MNgPFQA1/view',
+  RETAIL: '/lightning/n/CCO_FR_RetailExec_Home',
+  TELE: '/lightning/n/CCO_FR_Telesales_Home',
+  TERR: '/lightning/n/CCO_FR_Territory_Pipeline',
+  HOME: '/lightning/page/home',
+};
+const SHOWCASE_LANDING_BY_COMPONENT = (() => {
+  const groups = {
+    ACC: 'AccountHealth AccountStrategyPlan ContactsCarousel RevenueDashboard ActiveSegments ActivityFeed ConsentManager CustomerOrders CustomerSalesSummary EngagementHistory FilesGallery OrderEntry PipelineSnapshot PromptLauncher RecordActions RecordHighlights ServiceContracts SmartRecommendations SubscribersList VisitKanban VisitQuickOrder VisitRestockOrder VoiceNoteTaker MetricTile AlertsRibbon',
+    VISIT: 'VisitCheckIn VisitPlan VisitProductCheck VisitShelfCompliance VisitShelfSpace VisitSummaryAI',
+    OPP: 'TimelinePhases ContactCard RelatedRecordCard',
+    CASE: 'OrderSummary',
+    RETAIL: 'BusinessCardScanner LeadFirstTouch FieldRepHome MyEvents MyTasks NearbyAccountsMap',
+    TELE: 'KanbanBoard TelesalesRepHome KpiLauncher',
+    TERR: 'TerritoryMap',
+    HOME: 'AgentforceHeader SplashBanner',
+  };
+  const m = {};
+  for (const [k, names] of Object.entries(groups)) for (const n of names.split(' ')) m['seFr' + n] = SC[k];
+  try { Object.assign(m, JSON.parse(process.env.SF_SHOWCASE_LANDINGS || '{}')); } catch { /* ignore */ }
+  return m;
+})();
+
 // Light in-memory click counter for the showcase button (resets on dyno restart;
 // good enough for a "is anyone using it" pulse — proper analytics live in Plausible
 // later). Map<dateString, count>.
@@ -445,7 +475,9 @@ app.get('/api/showcase/url', async (req, reply) => {
   const instance = (data.instance_url || '').replace(/\/+$/, '');
   if (!instance) return reply.code(502).send({ error: 'no_instance_url' });
   // frontdoor.jsp: drops the user directly into the org with a valid UI session
-  const url = `${instance}/secur/frontdoor.jsp?sid=${encodeURIComponent(data.access_token)}&retURL=${encodeURIComponent(SF_SHOWCASE_LANDING)}`;
+  const comp = String((req.query && req.query.component) || '');
+  const landing = SHOWCASE_LANDING_BY_COMPONENT[comp] || SF_SHOWCASE_LANDING;
+  const url = `${instance}/secur/frontdoor.jsp?sid=${encodeURIComponent(data.access_token)}&retURL=${encodeURIComponent(landing)}`;
   return reply.send({ url });
 });
 
