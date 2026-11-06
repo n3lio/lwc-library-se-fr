@@ -88,7 +88,7 @@ window.addEventListener('pageshow', function() {
 <li data-i18n-comp="seFrConsentManager.keyProps.0">Channels CSV (override) · format <code>label|fieldApiName|inverted</code></li><li data-i18n-comp="seFrConsentManager.keyProps.1">Toggle / success / error label overrides</li><li data-i18n-comp="seFrConsentManager.keyProps.2">Card title / icon override</li>
       </ul>
 
-      <h2 class="section">All properties (8)</h2>
+      <h2 class="section">All properties (9)</h2>
       <div class="props-table-wrap">
       <table class="props-table">
         <colgroup>
@@ -101,7 +101,8 @@ window.addEventListener('pageshow', function() {
       <tr><td class="api"><code>language</code></td><td class="type">String</td><td class="default">fr</td><td>&#x27;en&#x27; or &#x27;fr&#x27;. Controls card title, toggle labels, toast messages, and default channel labels (E-mail / Téléphone / WhatsApp).</td></tr>
       <tr><td class="api"><code>cardTitle</code></td><td class="type">String</td><td class="default">—</td><td>—</td></tr>
       <tr><td class="api"><code>cardIcon</code></td><td class="type">String</td><td class="default">standard:task2</td><td>—</td></tr>
-      <tr><td class="api"><code>channelsCsv</code></td><td class="type">String</td><td class="default">—</td><td>One channel per item. Format: label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty: Contact/Lead use the standard opt-out fields, other objects show sample channels.</td></tr>
+      <tr><td class="api"><code>sourceMode</code></td><td class="type">String</td><td class="default">mock</td><td>&#x27;mock&#x27; (default): sample toggles, no field needed, state kept locally. &#x27;live&#x27;: toggles bound to boolean fields by API name (see Channels CSV).</td></tr>
+      <tr><td class="api"><code>channelsCsv</code></td><td class="type">String</td><td class="default">—</td><td>Mock mode: comma-separated labels only (E-mail,SMS,WhatsApp). Live mode: one channel per item, format label|fieldApiName|inverted. Inverted=true when the field stores opt-OUT. Leave empty: Contact/Lead use the standard opt-out fields, other objects show sample channels.</td></tr>
       <tr><td class="api"><code>toggleActiveLabel</code></td><td class="type">String</td><td class="default">—</td><td>—</td></tr>
       <tr><td class="api"><code>toggleInactiveLabel</code></td><td class="type">String</td><td class="default">—</td><td>—</td></tr>
       <tr><td class="api"><code>successMessage</code></td><td class="type">String</td><td class="default">—</td><td>—</td></tr>
