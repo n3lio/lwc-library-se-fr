@@ -121,3 +121,4 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - seFrAccountStrategyPlan : tuile Run rate (montant + suffixe séparés, clamp font-size, overflow-wrap).
 - Télévente : carte « Rappels » OK (filtre modifiable), titre conservé.
 - Non vérifié visuellement : Order/Case Record Highlights (cache Lightning), Run rate. Heroku push : relancer `heroku login` si échec d'auth.
+- Vérifié 06/11 après rechargement propre : page Commande → Record Highlights affiche « 00000103 » + Statut / Montant (le « Carrefour FR » venait du cache Lightning). « Secteur d'activité » restant = carte « Compte client » (autre composant).
