@@ -20,6 +20,7 @@
             </objects>
             <property name="language" type="String" default="fr" label="UI language" description="'en' (default) or 'fr'. Controls button labels (Edit / Modifier, View Account Hierarchy / Voir la hiérarchie) and empty-state messages." />
             <property name="recordSource" type="String" datasource="current,parent" default="current" label="Record source" description="current = show the record on the current page. parent = show the linked Account (Contact/Opportunity/Case/Order/Contract/Quote/Lead) or the Parent Account (when on an Account page)." />
+            <property name="otherFieldsList" type="String" label="Other objects - fields to display (comma-separated)" description="Used for objects other than Account/Contact (Order, Opportunity, Case...). Empty = sensible defaults per object." />
             <property name="accountFieldsList" type="String" default="AccountNumber, Industry, Type, Phone" label="Account - fields to display (comma-separated)" description="Used when the displayed record is an Account." />
             <property name="contactFieldsList" type="String" default="Title, Email, Phone, Department" label="Contact - fields to display (comma-separated)" description="Used when the displayed record is a Contact." />
             <property name="customImageUrl" type="String" label="Image URL (overrides the record image)" />

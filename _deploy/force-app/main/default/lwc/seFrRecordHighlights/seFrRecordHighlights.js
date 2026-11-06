@@ -1,16 +1,24 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 import getQuickActionsForRecord from '@salesforce/apex/SE_FR_RecordHighlightsController.getQuickActionsForRecord';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import getRecordImageUrl from '@salesforce/apex/SE_FR_ImageFileController.getRecordImageUrl';
 import replaceRecordImage from '@salesforce/apex/SE_FR_ImageFileController.replaceRecordImage';
-import ACCOUNT_NAME from '@salesforce/schema/Account.Name';
-import CONTACT_NAME from '@salesforce/schema/Contact.Name';
 
 const ACCOUNT_DEFAULT_FIELDS = 'AccountNumber, Industry, Type, Phone';
 const CONTACT_DEFAULT_FIELDS = 'Title, Email, Phone, Department';
+
+// Other objects: the field holding the record's display name, default highlight fields, icon.
+const OBJECT_META = {
+    Order:       { name: 'OrderNumber',    fields: 'Status, EffectiveDate, TotalAmount, Type',          icon: 'standard:orders' },
+    Opportunity: { name: 'Name',           fields: 'StageName, Amount, CloseDate, Probability',         icon: 'standard:opportunity' },
+    Case:        { name: 'CaseNumber',     fields: 'Status, Priority, Origin, Type',                    icon: 'standard:case' },
+    Lead:        { name: 'Name',           fields: 'Company, Status, Email, Phone',                     icon: 'standard:lead' },
+    Contract:    { name: 'ContractNumber', fields: 'Status, StartDate, EndDate, ContractTerm',          icon: 'standard:contract' },
+    Quote:       { name: 'Name',           fields: 'Status, ExpirationDate, GrandTotal',                icon: 'standard:quotes' }
+};
 
 const LABELS = {
     en: {
@@ -74,6 +82,8 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
     // Optional CSV of Quick Action API names that overrides the auto-loaded layout actions.
     // Example: 'Edit,Delete,SendEmail'. Leave empty (default) to follow the page layout.
     @api quickActionsCsv = '';
+    // Highlight fields for objects other than Account/Contact (CSV). Empty = sensible default per object.
+    @api otherFieldsList;
     @api imageSize = 90;
     // When false (default), clicking the image opens a file picker to replace it inline. Turn ON
     // to go back to the legacy "open image full size" behavior.
@@ -158,27 +168,31 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
 
     get effectiveFieldsList() {
         if (this.isContact) return this.contactFieldsList;
-        return this.accountFieldsList;
+        if (this.isAccount) return this.accountFieldsList;
+        const meta = OBJECT_META[this.displayedObjectApiName];
+        return this.otherFieldsList || (meta ? meta.fields : '');
     }
 
     // ------------------------------------------------------------------
     // Name + image wires (for the displayed record)
     // ------------------------------------------------------------------
 
-    get nameField() {
-        return this.isContact ? CONTACT_NAME : ACCOUNT_NAME;
+    get nameFieldApiName() {
+        const meta = OBJECT_META[this.displayedObjectApiName];
+        return meta ? meta.name : 'Name';
     }
     get nameFields() {
-        return this.hasDisplayableRecord ? [this.nameField] : [];
+        return this.hasDisplayableRecord ? [`${this.displayedObjectApiName}.${this.nameFieldApiName}`] : [];
     }
 
     @wire(getRecord, { recordId: '$displayedRecordId', fields: '$nameFields' })
     wiredName;
 
     get recordName() {
-        return (this.wiredName && this.wiredName.data)
-            ? getFieldValue(this.wiredName.data, this.nameField)
-            : '';
+        const f = this.wiredName && this.wiredName.data && this.wiredName.data.fields
+            ? this.wiredName.data.fields[this.nameFieldApiName]
+            : null;
+        return f ? f.value : '';
     }
 
     get imageFields() { return []; }
@@ -336,7 +350,10 @@ export default class SeFrRecordHighlights extends NavigationMixin(LightningEleme
     }
 
     get fallbackIcon() {
-        return this.isContact ? 'standard:contact' : 'standard:account';
+        if (this.isContact) return 'standard:contact';
+        if (this.isAccount) return 'standard:account';
+        const meta = OBJECT_META[this.displayedObjectApiName];
+        return meta ? meta.icon : 'standard:record';
     }
 
     get imageSizeStyle() {

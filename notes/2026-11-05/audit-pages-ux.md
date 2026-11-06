@@ -113,3 +113,5 @@ Opportunity, Case, Order, Lead, Homes (FieldSales, RetailExec, Telesales), Terri
 - Pages Contact / Lead (libellés FR) et Compte (défauts) OK en mock.
 
 - 10e (suite) : seFrConsentManager relayouté en liste verticale (libellé à gauche, toggle à droite, une ligne par canal) — plus de chevauchement dans la colonne étroite de la page Contact. Vérifié dans l'org.
+
+- 11e : seFrRecordHighlights affichait le compte parent (Carrefour FR) sur Order/Case car recordSource=parent. Retiré des flexipages Order et Case ; le composant gère désormais les objets non Account/Contact (nom = OrderNumber / CaseNumber / Name, champs et icône par défaut par objet, prop otherFieldsList). Déployé ; rendu navigateur encore ancien (cache de définition de page ?), à revérifier en session neuve.

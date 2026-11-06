@@ -11,10 +11,6 @@
                     <name>maxQuickActions</name>
                     <value>3</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>recordSource</name>
-                    <value>parent</value>
-                </componentInstanceProperties>
                 <componentName>seFrRecordHighlights</componentName>
                 <identifier>c_seFrRecordHighlights_header</identifier>
             </componentInstance>
