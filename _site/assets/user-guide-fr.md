@@ -27,7 +27,7 @@ Tu es SE Salesforce, tu veux préparer une démo Lightning sans repartir de zér
 
 **Ce guide n'est PAS** :
 - une doc Salesforce générale (LWC, Apex, App Builder…) — on suppose ces fondamentaux acquis
-- un manuel de design — voir le deck commercial (`_deck/index.html`) pour la vue executive
+- un manuel de design
 - un guide de développement de nouveaux composants — voir [Contribuer](#contribuer)
 
 ---
@@ -44,7 +44,6 @@ SE_FR_Library/
 ├── _shared_apex/classes/      # Apex partagés entre plusieurs composants
 ├── _zips/                     # un zip par composant, prêt à partager
 ├── _deploy/                   # dossier sfdx pour déploiement direct
-├── _deck/                     # deck commercial HTML + Apps Script
 └── _doc/                      # ce guide
 ```
 
@@ -851,7 +850,7 @@ Le browser API `SpeechRecognition` n'est implémenté que dans Chrome (préfixé
 | `seFrNearbyAccountsMap` | `SE_FR_NearbyAccountsController` (shared) |
 | `seFrVoiceNoteTaker` | `SE_FR_VoiceNoteController` (shared) |
 
-Le dossier `_shared_apex/classes/` doit être déployé **une seule fois** par org. L'audit (`_deck/AUDIT.md`) liste les composants qui embarquent encore une copie locale (à dédupliquer dans le futur "clean export" dossier).
+Le dossier `_shared_apex/classes/` doit être déployé **une seule fois** par org. L'audit (`_doc/APEX_DEDUP_AUDIT.md`) liste les composants qui embarquent encore une copie locale (à dédupliquer dans le futur "clean export" dossier).
 
 ---
 

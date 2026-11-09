@@ -61,7 +61,7 @@ def main():
             comps = [x for x in comps if not wanted or x in wanted]
             if not comps:
                 continue
-            page = b.new_page(viewport={"width": 1600, "height": 1500})
+            page = b.new_page(viewport={"width": 1600, "height": 1500}, device_scale_factor=2)
             page.goto(frontdoor(path), wait_until="load", timeout=90000)
             time.sleep(14)
             pending = {x: kebab(x) for x in comps}

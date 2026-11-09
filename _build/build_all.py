@@ -18,8 +18,6 @@ STEPS = [
     ("build_zips.py", ["--yes"]),
     ("build_manifest.py", []),
     ("build_root_readme.py", []),
-    ("build_deck.py", []),
-    ("build_apps_script.py", []),
     # build_site.py MUST run before build_knowledge_pdf.py — the KB
     # extracts the EN content of About / Docs from the rendered _site/.
     ("build_site.py", []),
