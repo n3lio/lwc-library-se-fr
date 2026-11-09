@@ -110,10 +110,8 @@ variables:
         description: "Filters: persona (Sales / Field / Telesales / Service / Marketing / Agentforce / Transversal), target (HomePage / AppPage / RecordPage), data_mode (Live / Hybrid / Mock)."
 
 # Knowledge grounding:
-# The Data Library `LWC_Library_Data_Library` (RAG feature config ARFPC_1JDJ900000080jzOAE)
-# is attached to this agent via Feature Assignments in Setup → Data Libraries.
-# Agentforce automatically retrieves matching chunks when subagents respond — no custom
-# action is needed in this script.
+# The Data Library `SE_FR_Library_Knowledge` is queried through
+# the explicit standardInvocableAction streamKnowledgeSearch action search_library_docs in the search/explain subagents.
 
 start_agent agent_router:
     label: "Agent Router"
@@ -143,13 +141,47 @@ start_agent agent_router:
 subagent search_components:
     label: "Search Components"
     description: "Discover components by use case, persona, target, or data mode."
+    actions:
+        search_library_docs:
+            description: "Search the SE FR Component Library knowledge base (components, props, install, cookbooks)."
+            target: "standardInvocableAction://streamKnowledgeSearch"
+            source: "EmployeeCopilot__AnswerQuestionsWithKnowledge"
+            label: "Search library docs"
+            inputs:
+                query: string
+                    description: "Natural-language search query (component name, use case or question)."
+                    label: "Query"
+                    is_required: True
+                    is_user_input: True
+                citationsUrl: string = ""
+                    description: "The URL to use for citations for custom Agents."
+                    label: "Citations Url"
+                    is_required: False
+                    is_user_input: True
+                ragFeatureConfigId: string = "ARFPC_1JDgK000009Lm1FWAS"
+                    description: "RAG feature config of the SE FR library Data Library."
+                    label: "RAG Feature Config Id"
+                    is_required: False
+                    is_user_input: False
+                citationsEnabled: boolean = False
+                    description: "Whether citations are enabled."
+                    label: "Citations Enabled"
+                    is_required: False
+                    is_user_input: False
+            outputs:
+                knowledgeSummary: object
+                    description: "Summary of the retrieved documentation passages."
+                    label: "Knowledge Summary"
+                    complex_data_type_name: "lightning__richTextType"
+                    filter_from_agent: False
+                    is_displayable: True
     reasoning:
         instructions: ->
             if @variables.search_query is None:
                 set @variables.search_query = ""
             | Answer with a concise list of relevant components from the SE FR Component Library.
-              Ground every answer in the attached Data Library (LWC_Library_Data_Library) — never
-              invent component names. If you can't find a match in the docs, say so.
+              ALWAYS call {!@actions.search_library_docs} first with the user's request, and answer ONLY
+              from the returned passages — never invent component names. If you can't find a match in the docs, say so.
 
               Reply in this exact Markdown format (pick the persona emoji that fits):
 
@@ -159,8 +191,6 @@ subagent search_components:
               - **<component label>** (`<apiName>`) — one-liner: what it does + why it fits.
               - **<component label>** (`<apiName>`) — one-liner.
               - **<component label>** (`<apiName>`) — one-liner.
-
-              💡 *Pour tester live :* <Omega, Inc. / Lauren Bailey / etc. selon pertinence>.
 
               Tu veux que je détaille l'un d'eux ?
               ```
@@ -172,9 +202,10 @@ subagent search_components:
               - At most 5 components.
               - When the user picks one of the suggestions, set {!@actions.set_component_selection} with its
                 API name and transition to explain_component_usage.
-              - Suggest a record sample only when it's relevant (Account `001J900000Jz1FuIAJ`,
-                Contact `003J900000IRlytIAD`).
+              - Only cite components, props and install steps that appear in the retrieved passages.
         actions:
+            search_library_docs: @actions.search_library_docs
+                description: "Search the library knowledge base. Call this first for every question."
             set_component_selection: @utils.setVariables
                 description: "Store the API name of the component the user picked."
                 with component_name=...
@@ -184,13 +215,47 @@ subagent search_components:
 subagent explain_component_usage:
     label: "Explain Component Usage"
     description: "Detailed help for a specific component: props, install, configuration, troubleshooting, prerequisites."
+    actions:
+        search_library_docs:
+            description: "Search the SE FR Component Library knowledge base (components, props, install, cookbooks)."
+            target: "standardInvocableAction://streamKnowledgeSearch"
+            source: "EmployeeCopilot__AnswerQuestionsWithKnowledge"
+            label: "Search library docs"
+            inputs:
+                query: string
+                    description: "Natural-language search query (component name, use case or question)."
+                    label: "Query"
+                    is_required: True
+                    is_user_input: True
+                citationsUrl: string = ""
+                    description: "The URL to use for citations for custom Agents."
+                    label: "Citations Url"
+                    is_required: False
+                    is_user_input: True
+                ragFeatureConfigId: string = "ARFPC_1JDgK000009Lm1FWAS"
+                    description: "RAG feature config of the SE FR library Data Library."
+                    label: "RAG Feature Config Id"
+                    is_required: False
+                    is_user_input: False
+                citationsEnabled: boolean = False
+                    description: "Whether citations are enabled."
+                    label: "Citations Enabled"
+                    is_required: False
+                    is_user_input: False
+            outputs:
+                knowledgeSummary: object
+                    description: "Summary of the retrieved documentation passages."
+                    label: "Knowledge Summary"
+                    complex_data_type_name: "lightning__richTextType"
+                    filter_from_agent: False
+                    is_displayable: True
     reasoning:
         instructions: ->
             if @variables.component_name is None:
                 set @variables.component_name = ""
             | Provide a structured deep-dive on the selected component (or the one the user names).
-              Ground every answer in the attached Data Library (LWC_Library_Data_Library) — never
-              invent props, settings, or API endpoints. If the docs don't cover what's asked,
+              ALWAYS call {!@actions.search_library_docs} first with the user's request, and answer ONLY
+              from the returned passages — never invent props, settings, or API endpoints. If the docs don't cover what's asked,
               say so and offer to escalate.
 
               Reply in this exact Markdown format (skip a section if not applicable):
@@ -216,13 +281,16 @@ subagent explain_component_usage:
               ```
 
               **🔍 Where to test live**
-              - <record on SE_FR_SDO with Id>
+              - Bouton « Voir en démo » sur la page du composant du site.
 
               **⚠️ Common pitfalls**
               - <only if the docs flag any>
               ```
 
               If the user follow-ups with a config tweak, generate a small fenced JSON snippet.
+        actions:
+            search_library_docs: @actions.search_library_docs
+                description: "Search the library knowledge base. Call this first for every question."
 
 subagent find_component_sources:
     label: "Find Component Sources"

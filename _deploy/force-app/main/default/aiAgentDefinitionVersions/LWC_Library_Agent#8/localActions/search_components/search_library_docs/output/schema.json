@@ -1,0 +1,17 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "knowledgeSummary" : {
+      "title" : "Knowledge Summary",
+      "description" : "Summary of the retrieved documentation passages.",
+      "maxLength" : 100000,
+      "lightning:type" : "lightning__richTextType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true,
+      "copilotAction:useHydratedPrompt" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType",
+  "lightning:textIndexed" : true
+}
