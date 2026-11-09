@@ -104,5 +104,7 @@
       .catch(function(){w.textContent=T[lang()].err;})
       .then(function(){busy=false;m.scrollTop=m.scrollHeight;});
   };
-  labels();paint();if(ss.getItem('sfa.open')==='1')setOpen(true);
+  function boot(){labels();paint();if(ss.getItem('sfa.open')==='1')setOpen(true);}
+  // __SE_INDEX is defined by an inline script placed after this one: wait for the DOM.
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
