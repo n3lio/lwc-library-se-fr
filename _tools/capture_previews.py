@@ -62,8 +62,24 @@ def main():
             if not comps:
                 continue
             page = b.new_page(viewport={"width": 1600, "height": 1500}, device_scale_factor=2)
-            page.goto(frontdoor(path), wait_until="load", timeout=90000)
-            time.sleep(14)
+            # Pages are assigned to the CCO FR Showcase app: open the app first (note the c__
+            # prefix), otherwise Lightning renders the record in the last-used app (e.g. Agentforce
+            # Studio) and the showcase components are absent.
+            page.goto(frontdoor("/lightning/app/c__CCO_FR_Showcase"), wait_until="load", timeout=90000)
+            page.wait_for_url("**/lightning/**", timeout=60000)  # frontdoor redirects to the *.lightning.force.com domain
+            time.sleep(6)
+            base = page.url.split("/lightning")[0].split("/one/")[0]
+            first = kebab(comps[0])
+            for attempt in range(3):  # navigation inside the app is flaky: retry until the host renders
+                page.goto(base + path, wait_until="load", timeout=90000)
+                try:
+                    page.wait_for_selector(first, state="attached", timeout=30000)
+                    break
+                except Exception:
+                    # component may sit in a non-active tab: accept any tab being present
+                    if page.locator("[role=tab]").count() > 2:
+                        break
+            time.sleep(8)
             pending = {x: kebab(x) for x in comps}
             tabs = [None] + [t.inner_text().strip() for t in page.locator("[role=tab]").all()]
             seen = set()
