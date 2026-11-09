@@ -64,7 +64,7 @@
     if(!seen.length&&!recs.length)return '';
     var h='<div class="sfa-cards"><small>'+T[lang()].seeAlso+'</small>';
     seen.slice(0,4).forEach(function(a){var e=byApi[a];
-      h+='<a class="sfa-card" href="'+BASE+e.href+'"><img src="'+BASE+'assets/previews/'+a+'.png" alt="" onerror="this.style.display=\'none\'"><span><b>'+esc(e.name)+'</b><i>'+esc(e.tagline||'')+'</i></span></a>';});
+      h+='<a class="sfa-card" href="'+BASE+e.href+'">'+(e.thumb?'<img src="'+BASE+'assets/previews/'+e.thumb+'" alt="" onerror="this.style.display=\'none\'">':'')+'<span><b>'+esc(e.name)+'</b><i>'+esc(e.tagline||'')+'</i></span></a>';});
     recs.forEach(function(r){h+='<a class="sfa-card" href="'+BASE+r.href+'"><span><b>📖 '+esc(r.title)+'</b><i>'+esc(r.tagline||'')+'</i></span></a>';});
     return h+'</div>';
   }

@@ -4601,6 +4601,16 @@ def collect_previews(api_names: set[str], dest_dir: Path) -> dict[str, list[str]
 # ----------------------------------------------------------------------
 # Search index (Cmd+K)
 # ----------------------------------------------------------------------
+def _thumb_for(api: str) -> str:
+    """Preview filename for chat cards: prefer a static PNG over a GIF (a bare
+    `<api>.gif` is often the primary), fall back to whatever exists, else ''."""
+    files = _GLOBAL_PREVIEWS.get(api) or []
+    for f in files:
+        if f.lower().endswith(".png"):
+            return f
+    return files[0] if files else ""
+
+
 def build_search_index(components: list[dict], recipes: list[dict]) -> list[dict]:
     out: list[dict] = []
     for c in sorted(components, key=lambda x: x["apiName"]):
@@ -4618,6 +4628,7 @@ def build_search_index(components: list[dict], recipes: list[dict]) -> list[dict
             "tagline": c.get("tagline", ""),
             "href": f"components/{api}.html",
             "haystack": haystack,
+            "thumb": _thumb_for(api),
         })
     for r in recipes:
         out.append({
