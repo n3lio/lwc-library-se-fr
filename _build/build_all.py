@@ -25,6 +25,8 @@ STEPS = [
     ("build_site.py", []),
     ("build_knowledge_pdf.py", []),
     ("sync_zips_to_drive.py", []),
+    # Optional last step, NOT in STEPS (needs sf auth + network): refresh_agent_kb.py
+    # = PDF + Data Library re-upload + smoke test. See MAINTENANCE_RUNBOOK.md.
 ]
 
 

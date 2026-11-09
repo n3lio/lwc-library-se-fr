@@ -110,3 +110,10 @@ Run through **every item** before marking a component as "done".
 
 **Utility icons (always work):**
 - All `utility:*` icons work reliably inside components
+
+## 11. Agent & knowledge base (ajouté 2026-11-09)
+- [ ] Frontmatter README : `tagline`, `keyProps` (props configurables, ≥2), `seBenefit` renseignés — la KB de l'agent en dépend.
+- [ ] `_previews/<api>.png` présent (même si un GIF existe).
+- [ ] `python3 _build/build_all.py` puis `python3 _build/refresh_agent_kb.py --skip-build --check <api>` OK.
+- [ ] `_site/` commité et déployé sur Heroku.
+- Détails et pièges : `MAINTENANCE_RUNBOOK.md`.

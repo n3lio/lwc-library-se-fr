@@ -646,10 +646,21 @@ def render_component_section(readme: Path, manifest_by_api: dict) -> str:
         f'<strong>Apex:</strong> {apex_str}</p>'
     )
 
+    # Key props / tagline / SE benefit from the manifest (README frontmatter), so the agent
+    # can answer "quelles props ?" even when the README body is short.
+    extra = ""
+    if c.get("tagline"):
+        extra += f'<p><strong>Summary:</strong> {c["tagline"]}</p>'
+    if c.get("keyProps"):
+        items = "".join(f"<li>{p}</li>" for p in c["keyProps"])
+        extra += f'<p><strong>Key configurable props / settings of {api}:</strong></p><ul>{items}</ul>'
+    if c.get("seBenefit"):
+        extra += f'<p><strong>SE benefit:</strong> {c["seBenefit"]}</p>'
+
     return (
         f'<section id="{api}" class="component-section">\n'
         f'  <h1 class="section-title">Component · {name} (<code>{api}</code>)</h1>\n'
-        f'  <div class="section-body">{lead}{body}</div>\n'
+        f'  <div class="section-body">{lead}{extra}{body}</div>\n'
         "</section>"
     )
 

@@ -372,6 +372,8 @@ Options alternatives à évaluer pour la host org :
 5. **Compte de service dédié** créé par le CCO FR (compte partagé équipe avec email de fonction) → self-signup DE avec ce compte
 6. **Automatiser la re-provisioning** via un MCP tool : accepter que l'org expire et scripter la recréation d'org + Connected App + agent + Data Library en < 30 min (option ambitieuse, cible du serveur MCP à long terme)
 
+> ⚠️ **MAJ 2026-11-09** : les mentions `LWC_Library_Data_Library`, « Feature Assignment » et agents Service/Employee ci-dessous sont OBSOLÈTES. État actuel : Data Library `SE_FR_Library_Knowledge`, agent `LWC_Library_Agent` grounded par action `streamKnowledgeSearch` — voir `MAINTENANCE_RUNBOOK.md` (source de vérité).
+
 ### Specs exactes de la host org
 
 **Metadata / config requis** :
