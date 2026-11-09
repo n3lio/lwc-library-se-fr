@@ -3150,27 +3150,57 @@ def footer_html(component_count: int, base: str = "") -> str:
 
 
 def agent_html() -> str:
-    # Salesforce Embedded Messaging for Web — wires the in-org Service Agent
-    # (LWC Library Service Agent on storm-ea9bc09d78eb59) to a floating chat
-    # widget on every page of the site. The widget UI is provided by Salesforce
-    # (button + chat panel + history + send + branding), so we don't render any
-    # of our own chat HTML here.
-    return """<script type="text/javascript">
-function initEmbeddedMessaging() {
-  try {
-    embeddedservice_bootstrap.settings.language = (localStorage.getItem('sefr.lang') || 'fr');
-    embeddedservice_bootstrap.init(
-      '00DJ9000001uyAv',
-      'LWC_Library_Web_Channel',
-      'https://storm-ea9bc09d78eb59.my.site.com/ESWLWCLibraryWebChanne1778664304983',
-      { scrt2URL: 'https://storm-ea9bc09d78eb59.my.salesforce-scrt.com' }
-    );
-  } catch (err) {
-    console.error('Error loading Embedded Messaging: ', err);
+    # Floating chat widget wired to the Service Agent LWC_Library_Agent hosted in the
+    # Showcase org (cco-fr-de), through the server-side proxy /api/agent/* (agent.js ->
+    # Einstein Agent API). Self-contained: no third-party script, no CDN.
+    return """<script>
+(function(){
+  var lang=function(){return localStorage.getItem('sefr.lang')==='en'?'en':'fr';};
+  var T={fr:{title:'Assistant de la bibliothèque',ph:'Pose ta question sur un composant…',send:'Envoyer',hello:'Bonjour ! Je connais les composants de la bibliothèque : dis-moi ce que tu veux démontrer.',err:'Désolé, l’assistant est indisponible pour le moment.',wait:'…'},
+         en:{title:'Library assistant',ph:'Ask about a component…',send:'Send',hello:'Hi! I know the library components — tell me what you want to demo.',err:'Sorry, the assistant is unavailable right now.',wait:'…'}};
+  var css='#sfa-btn{position:fixed;right:20px;bottom:20px;z-index:9998;width:56px;height:56px;border-radius:50%;border:0;background:#0176d3;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}'
+  +'#sfa-box{position:fixed;right:20px;bottom:88px;z-index:9999;width:380px;max-width:calc(100vw - 24px);height:520px;max-height:calc(100vh - 110px);display:none;flex-direction:column;background:#fff;color:#181818;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.3);font:14px/1.45 system-ui,sans-serif;overflow:hidden}'
+  +'#sfa-box.open{display:flex}#sfa-h{background:#0176d3;color:#fff;padding:12px 14px;font-weight:600;display:flex;justify-content:space-between}#sfa-h span{cursor:pointer}'
+  +'#sfa-m{flex:1;overflow:auto;padding:12px;background:#f3f3f3}.sfa-b{margin:0 0 10px;padding:8px 11px;border-radius:10px;max-width:88%;word-wrap:break-word}.sfa-u{background:#0176d3;color:#fff;margin-left:auto;white-space:pre-wrap}.sfa-a{background:#fff;border:1px solid #ddd}'
+  +'.sfa-a h2,.sfa-a h3{font-size:14px;margin:6px 0 4px}.sfa-a ul{margin:4px 0;padding-left:18px}.sfa-a code{background:#eef;padding:1px 4px;border-radius:3px}.sfa-a pre{background:#181818;color:#eee;padding:8px;border-radius:6px;overflow:auto}'
+  +'#sfa-f{display:flex;border-top:1px solid #ddd}#sfa-i{flex:1;border:0;padding:12px;font:inherit;outline:0}#sfa-s{border:0;background:#fff;color:#0176d3;font-weight:600;padding:0 14px;cursor:pointer}';
+  var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function md(s){
+    var blocks=[];s=esc(s).replace(/```[a-z]*\\n?([\\s\\S]*?)```/g,function(_,c){blocks.push(c);return '\\u0000'+(blocks.length-1)+'\\u0000';});
+    var out=[],inUl=false;
+    s.split('\\n').forEach(function(l){
+      var li=l.match(/^\\s*[-*]\\s+(.*)/);
+      if(li){if(!inUl){out.push('<ul>');inUl=true;}out.push('<li>'+inl(li[1])+'</li>');return;}
+      if(inUl){out.push('</ul>');inUl=false;}
+      var h=l.match(/^#{1,3}\\s+(.*)/);
+      out.push(h?'<h3>'+inl(h[1])+'</h3>':(l.trim()?inl(l)+'<br>':''));
+    });
+    if(inUl)out.push('</ul>');
+    return out.join('').replace(/\\u0000(\\d+)\\u0000/g,function(_,i){return '<pre>'+blocks[i]+'</pre>';});
   }
-}
-</script>
-<script type="text/javascript" src="https://storm-ea9bc09d78eb59.my.site.com/ESWLWCLibraryWebChanne1778664304983/assets/js/bootstrap.min.js" onload="initEmbeddedMessaging()" defer></script>"""
+  function inl(t){return t.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\\*\\*([^*]+)\\*\\*/g,'<b>$1</b>');}
+  var btn=document.createElement('button');btn.id='sfa-btn';btn.setAttribute('aria-label','Chat');btn.textContent='💬';
+  var box=document.createElement('div');box.id='sfa-box';
+  box.innerHTML='<div id="sfa-h"><div id="sfa-t"></div><span id="sfa-x">✕</span></div><div id="sfa-m"></div><form id="sfa-f"><input id="sfa-i" autocomplete="off"><button id="sfa-s" type="submit"></button></form>';
+  document.body.appendChild(btn);document.body.appendChild(box);
+  var m=box.querySelector('#sfa-m'),inp=box.querySelector('#sfa-i'),sid='',busy=false,started=false;
+  function labels(){var t=T[lang()];box.querySelector('#sfa-t').textContent=t.title;inp.placeholder=t.ph;box.querySelector('#sfa-s').textContent=t.send;}
+  function add(cls,html){var d=document.createElement('div');d.className='sfa-b '+cls;d.innerHTML=html;m.appendChild(d);m.scrollTop=m.scrollHeight;return d;}
+  btn.onclick=function(){box.classList.toggle('open');labels();if(!started){started=true;add('sfa-a',md(T[lang()].hello));}if(box.classList.contains('open'))inp.focus();};
+  box.querySelector('#sfa-x').onclick=function(){box.classList.remove('open');};
+  box.querySelector('#sfa-f').onsubmit=function(e){
+    e.preventDefault();var q=inp.value.trim();if(!q||busy)return;inp.value='';busy=true;
+    var u=add('sfa-u','');u.textContent=q;var w=add('sfa-a',T[lang()].wait);
+    fetch('/api/agent/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:sid,message:q})})
+      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(function(j){sid=j.sessionId||sid;w.innerHTML=md(j.text||'');})
+      .catch(function(){w.textContent=T[lang()].err;})
+      .then(function(){busy=false;m.scrollTop=m.scrollHeight;});
+  };
+  window.addEventListener('beforeunload',function(){if(sid)navigator.sendBeacon('/api/agent/end',new Blob([JSON.stringify({sessionId:sid})],{type:'application/json'}));});
+})();
+</script>"""
 
 
 def back_to_top_html() -> str:
