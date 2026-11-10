@@ -186,7 +186,7 @@ function register(app) {
       reply.send({ sessionId });
     } catch (err) {
       req.log.error({ err: err.message, details: err.details }, 'agent session open failed');
-      reply.code(err.status || 502).send({ error: 'session_open_failed', details: err.details });
+      reply.code(502).send({ error: 'session_open_failed' });
     }
   });
 
@@ -210,8 +210,8 @@ function register(app) {
       reply.send({ sessionId, text: out.text });
     } catch (err) {
       req.log.error({ err: err.message, details: err.details, status: err.status }, 'agent message failed');
-      reply.code(err.status && err.status >= 400 && err.status < 600 ? err.status : 502)
-        .send({ error: 'message_failed', details: err.details });
+      reply.code(err.status === 429 ? 429 : 502)
+        .send({ error: 'message_failed' });
     }
   });
 

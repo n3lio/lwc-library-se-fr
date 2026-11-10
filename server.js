@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 const AdmZip = require('adm-zip');
 const fastify = require('fastify');
 const { query, hashIp, getPool } = require('./db');
+const sec = require('./security');
 
 // ───────────────────────────────────────────────────────────────────────────
 // Config
@@ -20,21 +21,6 @@ const ZIPS_DIR = path.join(__dirname, '_zips');
 // Used for the user-agent flow (SE connects to their own org for deploy).
 const SF_CLIENT_ID = process.env.SF_CLIENT_ID || '';
 const SF_CLIENT_SECRET = process.env.SF_CLIENT_SECRET || '';
-
-// HMAC secret used to sign submission-attachment download tokens. Falls back
-// to SF_CLIENT_SECRET (already random per Connected App) and finally to a
-// dev-only placeholder. In production, at least one of the two must be set.
-function resolveAttachmentSecret() {
-  const v = process.env.ATTACHMENT_TOKEN_SECRET || SF_CLIENT_SECRET;
-  if (v && v.length >= 16) return v;
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error(
-      'ATTACHMENT_TOKEN_SECRET (or SF_CLIENT_SECRET) env var is required in production (>= 16 chars).'
-    );
-  }
-  return 'dev-only-placeholder-set-ATTACHMENT_TOKEN_SECRET-in-prod';
-}
-const ATTACHMENT_SECRET = resolveAttachmentSecret();
 
 // Showcase Connected App — JWT Bearer Token Flow, runs as the Showcase Visitor bot
 // user on the SE FR showcase org. We need a UI-capable session (web scope) so
@@ -170,12 +156,7 @@ async function sendNotificationEmailWithAttachment({ subject, text, html, attach
   }
 }
 
-function escapeHtml(s) {
-  if (s == null) return '';
-  return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
+const escapeHtml = sec.escapeHtml;
 
 // Salesforce Metadata API version used for package.xml + deployRequest endpoint
 const SF_API_VERSION = '62.0';
@@ -186,25 +167,23 @@ const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL ||
   'https://lwc-library-se-fr-9ccd5bd44381.herokuapp.com';
 const REDIRECT_URI = `${PUBLIC_BASE_URL}/oauth/callback`;
 
-// Allowed login hosts. We only ever forward token exchange to one of these
-// (defense in depth: prevents an attacker from coercing us into hitting an
-// arbitrary host by passing a custom `instanceUrl`).
-const ALLOWED_LOGIN_HOSTS = new Set([
-  'login.salesforce.com',
-  'test.salesforce.com',
-]);
-
-function isAllowedSalesforceHost(hostname) {
-  if (!hostname) return false;
-  if (ALLOWED_LOGIN_HOSTS.has(hostname)) return true;
-  // My Domain hosts: anything ending in .my.salesforce.com or .force.com
-  return /\.(my\.salesforce\.com|force\.com)$/i.test(hostname);
-}
+// Salesforce host validation lives in security.js (strict hostname parse, no regex on a raw URL).
+const isAllowedSalesforceHost = sec.isAllowedSalesforceHost;
 
 // ───────────────────────────────────────────────────────────────────────────
 // App
 
-const app = fastify({ logger: true, trustProxy: true, bodyLimit: 5 * 1024 * 1024 });
+const app = fastify({ logger: true, trustProxy: 1, bodyLimit: 5 * 1024 * 1024 });
+
+// Security headers on every response + per-route rate limits + CSRF guard on writes.
+app.addHook('onSend', sec.securityHeadersHook());
+app.addHook('onRequest', sec.rateLimitHook(hashIp));
+app.addHook('onRequest', async (req, reply) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD' && req.method !== 'OPTIONS' && !sec.sameOriginOnly(req)) {
+    reply.code(403).send({ error: 'cross_site_request_blocked' });
+    return reply;
+  }
+});
 
 // Parse application/x-www-form-urlencoded bodies (used by the admin login form).
 app.addContentTypeParser('application/x-www-form-urlencoded', { parseAs: 'string' }, (req, body, done) => {
@@ -240,9 +219,9 @@ app.register(require('@fastify/static'), {
   index: ['index.html'],
   setHeaders(res, filePath) {
     if (filePath.endsWith('.html')) {
-      res.setHeader('Cache-Control', 'public, max-age=300');
+      res.header('Cache-Control', 'public, max-age=300');
     } else if (/\.(css|js|png|jpg|jpeg|gif|webp|svg|woff2?)$/i.test(filePath)) {
-      res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
+      res.header('Cache-Control', 'public, max-age=604800, immutable');
     }
   },
 });
@@ -253,8 +232,8 @@ app.register(require('@fastify/static'), {
   decorateReply: false,
   setHeaders(res, filePath) {
     if (filePath.endsWith('.zip')) {
-      res.setHeader('Cache-Control', 'public, max-age=3600');
-      res.setHeader('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
+      res.header('Cache-Control', 'public, max-age=3600');
+      res.header('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
     }
   },
 });
@@ -262,7 +241,7 @@ app.register(require('@fastify/static'), {
 app.get('/healthz', async () => ({ status: 'ok', time: new Date().toISOString() }));
 
 // Admin module — login + dashboard + /api/admin/* endpoints
-require('./admin').register(app);
+require('./admin').register(app, { showcaseClicks: SHOWCASE_CLICKS });
 
 // Agent module — proxy /api/agent/* to Salesforce Einstein AI Agent API
 require('./agent').register(app);
@@ -285,22 +264,32 @@ if (require('fs').existsSync(require('path').join(__dirname, 'paris3d', 'paris3d
 app.get('/api/oauth/config', async () => ({
   clientId: SF_CLIENT_ID,
   redirectUri: REDIRECT_URI,
-  scopes: 'api refresh_token web',
+  scopes: 'api',
 }));
 
 // OAuth callback — Salesforce redirects here after the user logs in.
 // The page is opened as a popup by the frontend; we postMessage the
 // authorization code back to the opener and close ourselves.
 app.get('/oauth/callback', async (req, reply) => {
-  const { code = '', state = '', error = '', error_description = '' } = req.query || {};
-  // Inline a tiny page that posts the result back to the opener.
-  const payload = JSON.stringify({ source: 'sefr-oauth', code, state, error, error_description });
-  reply.code(200).type('text/html').send(`<!doctype html>
+  const q = req.query || {};
+  const cap = (v, n) => (typeof v === 'string' ? v.slice(0, n) : '');
+  const code = cap(q.code, 512), state = cap(q.state, 128);
+  const error = cap(q.error, 100), error_description = cap(q.error_description, 300);
+  // Result goes to the opener as JSON inlined in a <script>: escape < > & so it can never break out.
+  const payload = sec.jsonForScript({ source: 'sefr-oauth', code, state, error, error_description });
+  // This page needs its own inline script: nonce-based CSP for this one response only.
+  const nonce = crypto.randomBytes(16).toString('base64');
+  reply
+    .header('Content-Security-Policy',
+      `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'`)
+    .header('Referrer-Policy', 'no-referrer')
+    .header('Cache-Control', 'no-store')
+    .code(200).type('text/html').send(`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Connecting…</title>
 <style>body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0e2a;color:#e6e9ff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}div{text-align:center}p{opacity:.7}</style>
 </head><body>
-<div><h2>${error ? 'Erreur de connexion' : 'Connexion en cours…'}</h2><p>${error ? error_description || error : 'Vous pouvez fermer cette fenêtre.'}</p></div>
-<script>
+<div><h2>${error ? 'Erreur de connexion' : 'Connexion en cours…'}</h2><p>${error ? escapeHtml(error_description || error) : 'Vous pouvez fermer cette fenêtre.'}</p></div>
+<script nonce="${nonce}">
   try {
     var msg = ${payload};
     if (window.opener && !window.opener.closed) {
@@ -312,20 +301,21 @@ app.get('/oauth/callback', async (req, reply) => {
 </body></html>`);
 });
 
-// Exchange authorization code for access_token + refresh_token.
-// The frontend POSTs { code, codeVerifier, loginHost } — we add the
-// client_secret server-side and forward to Salesforce.
+// Exchange authorization code for an access token (no refresh token is requested or kept).
+// The frontend POSTs { code, codeVerifier, loginHost } — we add the client_secret
+// server-side. loginHost is parsed strictly: only login/test.salesforce.com or a
+// *.my.salesforce.com My Domain is ever contacted, and the URL is rebuilt from the
+// validated hostname (never from the raw user string).
 app.post('/api/oauth/token', async (req, reply) => {
   if (!SF_CLIENT_ID || !SF_CLIENT_SECRET) {
-    return reply.code(503).send({ error: 'oauth_not_configured', message: 'Set SF_CLIENT_ID and SF_CLIENT_SECRET on the Heroku app.' });
+    return reply.code(503).send({ error: 'oauth_not_configured' });
   }
-  const { code, codeVerifier, loginHost } = req.body || {};
-  if (!code || !codeVerifier || !loginHost) {
+  const { code, codeVerifier } = req.body || {};
+  const host = sec.normalizeLoginHost((req.body || {}).loginHost);
+  if (typeof code !== 'string' || typeof codeVerifier !== 'string' || !code || !codeVerifier) {
     return reply.code(400).send({ error: 'missing_params' });
   }
-  if (!isAllowedSalesforceHost(loginHost)) {
-    return reply.code(400).send({ error: 'invalid_login_host' });
-  }
+  if (!host) return reply.code(400).send({ error: 'invalid_login_host' });
   const params = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
@@ -334,81 +324,61 @@ app.post('/api/oauth/token', async (req, reply) => {
     redirect_uri: REDIRECT_URI,
     code_verifier: codeVerifier,
   });
-  const resp = await fetch(`https://${loginHost}/services/oauth2/token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params,
-  });
-  const data = await resp.json().catch(() => ({}));
+  let resp, data;
+  try {
+    resp = await fetch(`https://${host}/services/oauth2/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params,
+      redirect: 'error',
+      signal: AbortSignal.timeout(15000),
+    });
+    data = await resp.json().catch(() => ({}));
+  } catch (err) {
+    req.log.error({ err: err.message }, 'oauth token exchange failed');
+    return reply.code(502).send({ error: 'token_exchange_failed' });
+  }
   if (!resp.ok) {
-    return reply.code(resp.status).send(data);
+    req.log.warn({ status: resp.status, sfError: data && data.error }, 'oauth token rejected');
+    return reply.code(400).send({ error: 'token_exchange_failed' });
   }
   return reply.send({
     accessToken: data.access_token,
-    refreshToken: data.refresh_token || null,
-    instanceUrl: data.instance_url,
+    instanceUrl: sec.sfOrigin(data.instance_url),
     issuedAt: data.issued_at,
-    id: data.id,
+    id: sec.sfOrigin(data.id) ? data.id : null,
     scope: data.scope,
     tokenType: data.token_type,
-  });
-});
-
-// Refresh an expired access token using the stored refresh_token.
-app.post('/api/oauth/refresh', async (req, reply) => {
-  if (!SF_CLIENT_ID || !SF_CLIENT_SECRET) {
-    return reply.code(503).send({ error: 'oauth_not_configured' });
-  }
-  const { refreshToken, loginHost } = req.body || {};
-  if (!refreshToken || !loginHost) {
-    return reply.code(400).send({ error: 'missing_params' });
-  }
-  if (!isAllowedSalesforceHost(loginHost)) {
-    return reply.code(400).send({ error: 'invalid_login_host' });
-  }
-  const params = new URLSearchParams({
-    grant_type: 'refresh_token',
-    refresh_token: refreshToken,
-    client_id: SF_CLIENT_ID,
-    client_secret: SF_CLIENT_SECRET,
-  });
-  const resp = await fetch(`https://${loginHost}/services/oauth2/token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params,
-  });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) return reply.code(resp.status).send(data);
-  return reply.send({
-    accessToken: data.access_token,
-    instanceUrl: data.instance_url,
-    issuedAt: data.issued_at,
-    scope: data.scope,
   });
 });
 
 // User identity (used to display "✓ <name> · <org>" in the connect button).
 app.post('/api/oauth/identity', async (req, reply) => {
   const { accessToken, idUrl } = req.body || {};
-  if (!accessToken || !idUrl) {
+  if (typeof accessToken !== 'string' || !accessToken || typeof idUrl !== 'string' || !idUrl) {
     return reply.code(400).send({ error: 'missing_params' });
   }
-  let url;
-  try { url = new URL(idUrl); } catch { return reply.code(400).send({ error: 'invalid_id_url' }); }
-  if (!isAllowedSalesforceHost(url.hostname)) {
-    return reply.code(400).send({ error: 'invalid_id_host' });
+  const origin = sec.sfOrigin(idUrl);
+  if (!origin) return reply.code(400).send({ error: 'invalid_id_host' });
+  const u = new URL(idUrl);
+  try {
+    const resp = await fetch(origin + u.pathname, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      redirect: 'error',
+      signal: AbortSignal.timeout(15000),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok) return reply.code(400).send({ error: 'identity_failed' });
+    return reply.send({
+      name: data.display_name || data.username,
+      username: data.username,
+      organizationId: data.organization_id,
+      userId: data.user_id,
+    });
+  } catch (err) {
+    req.log.error({ err: err.message }, 'identity failed');
+    return reply.code(502).send({ error: 'identity_failed' });
   }
-  const resp = await fetch(idUrl, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) return reply.code(resp.status).send(data);
-  return reply.send({
-    name: data.display_name || data.username,
-    username: data.username,
-    organizationId: data.organization_id,
-    userId: data.user_id,
-  });
 });
 
 // ───────────────────────────────────────────────────────────────────────────
@@ -454,7 +424,7 @@ app.get('/api/showcase/url', async (req, reply) => {
       .sign(key);
   } catch (err) {
     req.log.error({ err: String(err) }, 'jwt sign failed');
-    return reply.code(500).send({ error: 'jwt_sign_failed', message: String(err.message || err) });
+    return reply.code(500).send({ error: 'jwt_sign_failed' });
   }
 
   const tokenUrl = `https://${SF_SHOWCASE_LOGIN_HOST}/services/oauth2/token`;
@@ -466,27 +436,25 @@ app.get('/api/showcase/url', async (req, reply) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: params,
+    redirect: 'error',
+    signal: AbortSignal.timeout(15000),
   });
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok) {
     req.log.error({ status: resp.status, data }, 'showcase token exchange failed');
-    return reply.code(resp.status || 502).send({ error: 'token_failed', details: data });
+    return reply.code(502).send({ error: 'token_failed' });
   }
-  const instance = (data.instance_url || '').replace(/\/+$/, '');
+  const instance = sec.sfOrigin(data.instance_url) || '';
   if (!instance) return reply.code(502).send({ error: 'no_instance_url' });
   // frontdoor.jsp: drops the user directly into the org with a valid UI session
   const comp = String((req.query && req.query.component) || '');
   const landing = SHOWCASE_LANDING_BY_COMPONENT[comp] || SF_SHOWCASE_LANDING;
   const url = `${instance}/secur/frontdoor.jsp?sid=${encodeURIComponent(data.access_token)}&retURL=${encodeURIComponent(landing)}`;
+  reply.header('Cache-Control', 'no-store');
   return reply.send({ url });
 });
 
-app.get('/api/showcase/stats', async () => {
-  // Tiny stats endpoint — useful for debugging "is anyone clicking?".
-  const out = {};
-  for (const [d, n] of SHOWCASE_CLICKS) out[d] = n;
-  return { clicks: out };
-});
+// (/api/showcase/stats is now admin-only: GET /api/admin/showcase-stats)
 
 // ───────────────────────────────────────────────────────────────────────────
 // Deploy — merge selected component zips into one Metadata API package, POST
@@ -591,10 +559,10 @@ app.post('/api/deploy', async (req, reply) => {
   if (!accessToken || !instanceUrl || !Array.isArray(components) || !components.length) {
     return reply.code(400).send({ error: 'missing_params' });
   }
-  let inst;
-  try { inst = new URL(instanceUrl); } catch { return reply.code(400).send({ error: 'invalid_instance_url' }); }
-  if (!isAllowedSalesforceHost(inst.hostname)) {
-    return reply.code(400).send({ error: 'invalid_instance_host' });
+  const instOrigin = sec.sfOrigin(instanceUrl);
+  if (!instOrigin) return reply.code(400).send({ error: 'invalid_instance_host' });
+  if (typeof accessToken !== 'string' || components.some(c => typeof c !== 'string')) {
+    return reply.code(400).send({ error: 'invalid_params' });
   }
   if (components.length > 50) {
     return reply.code(400).send({ error: 'too_many_components', max: 50 });
@@ -604,10 +572,11 @@ app.post('/api/deploy', async (req, reply) => {
   try {
     zipBuf = await buildDeployZip(components);
   } catch (err) {
-    return reply.code(400).send({ error: 'zip_build_failed', message: String(err.message || err) });
+    req.log.warn({ err: String(err.message || err) }, 'zip build failed');
+    return reply.code(400).send({ error: 'zip_build_failed' });
   }
 
-  const url = `${instanceUrl.replace(/\/+$/, '')}/services/data/v${SF_API_VERSION}/metadata/deployRequest`;
+  const url = `${instOrigin}/services/data/v${SF_API_VERSION}/metadata/deployRequest`;
   // Send a multipart/form-data with two parts:
   //  - "json" with deploy options
   //  - "file" with the binary package zip
@@ -646,13 +615,17 @@ app.post('/api/deploy', async (req, reply) => {
       'Content-Type': `multipart/form-data; boundary=${boundary}`,
     },
     body,
+    redirect: 'error',
+    signal: AbortSignal.timeout(60000),
   });
   const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) return reply.code(resp.status).send(data);
+  if (!resp.ok) {
+    req.log.warn({ status: resp.status }, 'deploy request rejected');
+    return reply.code(resp.status === 401 ? 401 : 400).send({ error: 'deploy_rejected', status: resp.status });
+  }
   return reply.send({
     deployRequestId: data.id,
     state: data.deployResult ? data.deployResult.status : data.state,
-    raw: data,
   });
 });
 
@@ -663,20 +636,19 @@ app.get('/api/deploy/status/:id', async (req, reply) => {
   if (!accessToken || !instanceUrl) {
     return reply.code(401).send({ error: 'missing_auth' });
   }
-  let inst;
-  try { inst = new URL(instanceUrl); } catch { return reply.code(400).send({ error: 'invalid_instance_url' }); }
-  if (!isAllowedSalesforceHost(inst.hostname)) {
-    return reply.code(400).send({ error: 'invalid_instance_host' });
-  }
+  const instOrigin = sec.sfOrigin(instanceUrl);
+  if (!instOrigin) return reply.code(400).send({ error: 'invalid_instance_host' });
   if (!/^[A-Za-z0-9]{15,18}$/.test(id)) {
     return reply.code(400).send({ error: 'invalid_id' });
   }
-  const url = `${instanceUrl.replace(/\/+$/, '')}/services/data/v${SF_API_VERSION}/metadata/deployRequest/${id}?includeDetails=true`;
+  const url = `${instOrigin}/services/data/v${SF_API_VERSION}/metadata/deployRequest/${id}?includeDetails=true`;
   const resp = await fetch(url, {
     headers: { Authorization: `Bearer ${accessToken}` },
+    redirect: 'error',
+    signal: AbortSignal.timeout(30000),
   });
   const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) return reply.code(resp.status).send(data);
+  if (!resp.ok) return reply.code(resp.status === 401 ? 401 : 400).send({ error: 'status_failed', status: resp.status });
   const r = data.deployResult || {};
   return reply.send({
     id: data.id,
@@ -687,7 +659,6 @@ app.get('/api/deploy/status/:id', async (req, reply) => {
     numberComponentsTotal: r.numberComponentsTotal,
     numberComponentErrors: r.numberComponentErrors,
     componentFailures: (r.details && r.details.componentFailures) || [],
-    raw: data,
   });
 });
 
@@ -703,7 +674,7 @@ function safeApiName(s) {
 }
 
 function clientIp(req) {
-  // Heroku sets X-Forwarded-For; trustProxy=true on fastify already parses it.
+  // Heroku sets X-Forwarded-For; trustProxy=1 (Heroku router only) on fastify parses it.
   return req.ip || (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || null;
 }
 
@@ -821,7 +792,7 @@ app.post('/api/track/intent', async (req, reply) => {
 app.post('/api/track/like', async (req, reply) => {
   const b = req.body || {};
   const apiName = safeApiName(b.apiName);
-  const fp = typeof b.fingerprint === 'string' ? b.fingerprint.slice(0, 64) : null;
+  const fp = typeof b.fingerprint === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(b.fingerprint) ? b.fingerprint : null;
   if (!apiName || !fp) return reply.code(400).send({ error: 'missing_params' });
   if (!getPool()) return reply.send({ liked: false, count: 0 });
   try {
@@ -1031,13 +1002,8 @@ app.post('/api/submit-component', async (req, reply) => {
   // (espblock) even when the rest of the content is fine. The attachment
   // stays in the DB (BYTEA) and is fetched via /api/admin/submission/:id/file
   // by the admin or directly here via a token-protected URL for V1.
-  const downloadToken = attachmentBuf
-    ? crypto.createHmac('sha256', ATTACHMENT_SECRET)
-        .update(`submission:${submissionId}`)
-        .digest('hex').slice(0, 32)
-    : null;
   const downloadUrl = attachmentBuf
-    ? `${PUBLIC_BASE_URL}/api/submissions/${submissionId}/file?token=${downloadToken}`
+    ? `${PUBLIC_BASE_URL}/api/submissions/${submissionId}/file?${sec.attachmentUrlParams(submissionId, 7 * 24 * 3600 * 1000)}`
     : null;
   const subject = `[SE FR Lib] New component submission: ${componentName}`;
   const htmlParts = [
@@ -1078,12 +1044,9 @@ app.post('/api/submit-component', async (req, reply) => {
 // Phase D admin will reuse this endpoint with proper session auth.
 app.get('/api/submissions/:id/file', async (req, reply) => {
   const id = parseInt(req.params.id, 10);
-  const token = req.query && req.query.token;
-  if (!Number.isFinite(id) || !token) return reply.code(400).send({ error: 'invalid_request' });
-  const expected = crypto.createHmac('sha256', ATTACHMENT_SECRET)
-    .update(`submission:${id}`)
-    .digest('hex').slice(0, 32);
-  if (token !== expected) return reply.code(403).send({ error: 'invalid_token' });
+  const { token, exp } = req.query || {};
+  if (!Number.isFinite(id) || !token || !exp) return reply.code(400).send({ error: 'invalid_request' });
+  if (!sec.verifyAttachmentToken(id, exp, token)) return reply.code(403).send({ error: 'invalid_token' });
   if (!getPool()) return reply.code(503).send({ error: 'database_not_configured' });
   try {
     const r = await query(
@@ -1098,6 +1061,8 @@ app.get('/api/submissions/:id/file', async (req, reply) => {
     reply
       .type(row.attachment_mime || 'application/octet-stream')
       .header('Content-Disposition', `attachment; filename="${filename}"`)
+      .header('X-Content-Type-Options', 'nosniff')
+      .header('Content-Security-Policy', "default-src 'none'; sandbox")
       .header('Cache-Control', 'private, no-store')
       .send(row.attachment_blob);
   } catch (err) {

@@ -67,6 +67,10 @@ Automatisé : étapes 4, 5 (y compris test live). Manuel/à brancher dans le MCP
 | FlexiPages | retrieve avant deploy, toujours |
 | Commit | vérifier `git config user.email` (perso : `63257119+n3lio@users.noreply.github.com`) |
 
-## 8. Divers parqué
+## 8. Sécurité (audit 2026-11-10)
+
+Helpers dans `security.js` (headers/CSP, rate limits, lockout admin, tokens PJ expirants, validation hôtes SF). Env : `SESSION_SECRET` et `ATTACHMENT_TOKEN_SECRET` dédiés (sinon dérivés + warning). `@fastify/static` 10 : `setHeaders` reçoit un `reply` (`res.header(...)`, pas `setHeader`). Toute nouvelle sortie HTML dynamique = `escapeHtml`/`jsonForScript`. OAuth « Deploy to my org » : pas de refresh token, sessionStorage.
+
+## 9. Divers parqué
 
 Bundle orphelin `seFrAccountActions` (supprimé/à supprimer, non bloquant) ; rotation du secret OAuth non demandée.

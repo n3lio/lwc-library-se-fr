@@ -42,8 +42,19 @@ Heroku, GitHub), automated scanner output without a demonstrated impact.
 - The assistant runs as a dedicated low-privilege user and answers only from the library knowledge
   base; it has no write action.
 
+## Hardening in place (2026-11-10 audit)
+
+- Strict Salesforce host validation for OAuth/deploy (parsed hostname, allowlist, URL rebuilt, no redirects, timeouts).
+- All dynamic output escaped (OAuth callback, admin dashboard); CSP (nonce on the callback page), HSTS,
+  X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy on every response; SRI on third-party scripts.
+- "Deploy to my org": scope `api` only, no refresh token, access token kept in `sessionStorage` (tab only).
+- Per-route rate limits + global API limit (in memory, per hashed IP); admin login lockout (5 failures / 15 min).
+- Admin: constant-time compares, 12 h session, `HttpOnly; Secure; SameSite=Strict` cookie, JSON-only writes with
+  same-origin check. Attachment links are HMAC-signed and expire (7 days).
+- Upstream error bodies are never returned to clients; usage stats are admin-only.
+
 ## If you deploy this site yourself
 
-Set strong random values for `IP_HASH_SALT`, `SESSION_SECRET`, `OAUTH_HMAC_SECRET` and
+Also set a dedicated `ATTACHMENT_TOKEN_SECRET` (otherwise derived from another secret, with a warning). Set strong random values for `IP_HASH_SALT`, `SESSION_SECRET`, `OAUTH_HMAC_SECRET` and
 `ADMIN_PASSWORD` (e.g. `python3 -c "import secrets; print(secrets.token_urlsafe(48))"`). In
 production the server refuses to start without a strong `IP_HASH_SALT` / `SESSION_SECRET`.

@@ -8,29 +8,22 @@ const crypto = require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs');
 const { query, hashIp, getPool } = require('./db');
+const sec = require('./security');
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
-// SESSION_SECRET must be set in production (or fall back to IP_HASH_SALT
-// which is itself enforced in db.js). In dev, accept a placeholder so a
-// contributor can spin up the server locally.
-function resolveSessionSecret() {
-  const v = process.env.SESSION_SECRET || process.env.IP_HASH_SALT;
-  if (v && v.length >= 16) return v;
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error(
-      'SESSION_SECRET env var is required in production (>= 16 chars). ' +
-      'Generate one with: python3 -c "import secrets; print(secrets.token_urlsafe(48))"'
-    );
-  }
-  return 'dev-only-placeholder-set-SESSION_SECRET-in-prod';
+// SESSION_SECRET must be set in production (>= 16 chars) and is never reused raw:
+// a purpose-bound key is derived from it. IP_HASH_SALT is only a dev/legacy fallback.
+const _sess = sec.pickSecret(['SESSION_SECRET', 'IP_HASH_SALT'], 'admin-session');
+if (_sess.name !== 'SESSION_SECRET' && process.env.NODE_ENV === 'production') {
+  console.warn('[security] SESSION_SECRET not set — deriving the admin session key from IP_HASH_SALT. Set a dedicated SESSION_SECRET.');
 }
-const SESSION_SECRET = resolveSessionSecret();
+const SESSION_KEY = sec.deriveKey(_sess.value, 'admin-session');
 const SESSION_COOKIE = 'sefr_admin';
-const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const SESSION_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
 
 function signSession(payload) {
   const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
+  const sig = crypto.createHmac('sha256', SESSION_KEY).update(data).digest('base64url');
   return data + '.' + sig;
 }
 function verifySession(cookieVal) {
@@ -39,8 +32,8 @@ function verifySession(cookieVal) {
   if (i < 0) return null;
   const data = cookieVal.slice(0, i);
   const sig = cookieVal.slice(i + 1);
-  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(data).digest('base64url');
-  if (sig !== expected) return null;
+  const expected = crypto.createHmac('sha256', SESSION_KEY).update(data).digest('base64url');
+  if (!sec.safeEqual(sig, expected)) return null;
   try {
     const payload = JSON.parse(Buffer.from(data, 'base64url').toString('utf-8'));
     if (!payload || !payload.exp || payload.exp < Date.now()) return null;
@@ -60,15 +53,17 @@ function requireAuth(req, reply) {
     reply.code(401).send({ error: 'unauthorized' });
     return false;
   }
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    const ct = String(req.headers['content-type'] || '');
+    if (!ct.includes('application/json') || !sec.sameOriginOnly(req)) {
+      reply.code(403).send({ error: 'forbidden' });
+      return false;
+    }
+  }
   return true;
 }
 
-function escapeHtml(s) {
-  if (s == null) return '';
-  return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-}
+const escapeHtml = sec.escapeHtml;
 
 // ───────────────────────────────────────────────────────────────────────────
 // HTML pages — login + dashboard
@@ -110,7 +105,7 @@ function dashboardPage() {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:'Inter',sans-serif;background:#f6f8fb;color:#0f172a}
 header{background:linear-gradient(135deg,#0a0e2a,#1a1f4a);color:#e6e9ff;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
@@ -315,18 +310,18 @@ async function loadTop() {
   const t = await fetchJson('/api/admin/top-components');
   const tbody = document.querySelector('#topComponents tbody');
   if (!t.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">Pas encore de données.</td></tr>'; return; }
-  tbody.innerHTML = t.map((row, i) => '<tr><td>' + (i+1) + '</td><td><code>' + row.apiName + '</code></td><td>' + fmt(row.downloads) + '</td><td>' + fmt(row.likes) + '</td><td>' + fmt(row.deploys) + '</td></tr>').join('');
+  tbody.innerHTML = t.map((row, i) => '<tr><td>' + (i+1) + '</td><td><code>' + esc(row.apiName) + '</code></td><td>' + fmt(row.downloads) + '</td><td>' + fmt(row.likes) + '</td><td>' + fmt(row.deploys) + '</td></tr>').join('');
   const r = await fetchJson('/api/admin/top-recipes');
   const rbody = document.querySelector('#topRecipes tbody');
   if (!r.length) { rbody.innerHTML = '<tr><td colspan="3" class="empty">Pas encore de données.</td></tr>'; return; }
-  rbody.innerHTML = r.map((row, i) => '<tr><td>' + (i+1) + '</td><td><code>' + row.recipeId + '</code></td><td>' + fmt(row.downloads) + '</td></tr>').join('');
+  rbody.innerHTML = r.map((row, i) => '<tr><td>' + (i+1) + '</td><td><code>' + esc(row.recipeId) + '</code></td><td>' + fmt(row.downloads) + '</td></tr>').join('');
 }
 
 async function loadDeploysBySE() {
   const d = await fetchJson('/api/admin/deploys-by-se');
   const tbody = document.querySelector('#deploysBySE tbody');
   if (!d.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty">Pas encore de déploiements.</td></tr>'; return; }
-  tbody.innerHTML = d.map(row => '<tr><td>' + (row.username || '<span class="muted">—</span>') + '</td><td><code>' + (row.host || '—') + '</code></td><td>' + fmt(row.total) + '</td><td>' + fmt(row.success) + '</td><td>' + fmt(row.partial) + '</td><td>' + fmt(row.failed) + '</td><td>' + dt(row.last) + '</td></tr>').join('');
+  tbody.innerHTML = d.map(row => '<tr><td>' + (row.username ? esc(row.username) : '<span class="muted">—</span>') + '</td><td><code>' + esc(row.host || '—') + '</code></td><td>' + fmt(row.total) + '</td><td>' + fmt(row.success) + '</td><td>' + fmt(row.partial) + '</td><td>' + fmt(row.failed) + '</td><td>' + dt(row.last) + '</td></tr>').join('');
 }
 
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -347,19 +342,19 @@ async function loadIntents() {
 function renderFailures(failures) {
   if (!failures || !failures.length) return '<span class="muted">—</span>';
   return '<ul class="failure-list">' + failures.map(f =>
-    '<li><code>' + (f.componentName || '?') + '</code> — ' + (f.problem || '?') + '</li>'
+    '<li><code>' + esc(f.componentName || '?') + '</code> — ' + esc(f.problem || '?') + '</li>'
   ).join('') + '</ul>';
 }
 
 async function loadDeploys() {
   const d = await fetchJson('/api/admin/deploys');
-  const renderRow = (r) => '<tr><td>' + dt(r.ts) + '</td><td>' + (r.username || '—') + '</td><td><code>' + (r.host || '—') + '</code></td><td><span class="tag tag-' + r.status + '">' + r.status + '</span></td><td>' + r.components + '</td><td>' + r.numSuccess + '/' + r.numTotal + (r.failures && r.failures.length ? '<details style="margin-top:6px"><summary>' + r.failures.length + ' erreur(s)</summary>' + renderFailures(r.failures) + '</details>' : '') + '</td></tr>';
-  const renderRowFailed = (r) => '<tr><td>' + dt(r.ts) + '</td><td>' + (r.username || '—') + '</td><td><code>' + (r.host || '—') + '</code></td><td>' + r.components + '</td><td>' + renderFailures(r.failures) + '</td></tr>';
+  const renderRow = (r) => '<tr><td>' + dt(r.ts) + '</td><td>' + esc(r.username || '—') + '</td><td><code>' + esc(r.host || '—') + '</code></td><td><span class="tag tag-' + r.status + '">' + r.status + '</span></td><td>' + r.components + '</td><td>' + r.numSuccess + '/' + r.numTotal + (r.failures && r.failures.length ? '<details style="margin-top:6px"><summary>' + r.failures.length + ' erreur(s)</summary>' + renderFailures(r.failures) + '</details>' : '') + '</td></tr>';
+  const renderRowFailed = (r) => '<tr><td>' + dt(r.ts) + '</td><td>' + esc(r.username || '—') + '</td><td><code>' + esc(r.host || '—') + '</code></td><td>' + r.components + '</td><td>' + renderFailures(r.failures) + '</td></tr>';
   document.querySelector('#deploysAll tbody').innerHTML = d.length ? d.map(renderRow).join('') : '<tr><td colspan="6" class="empty">Pas encore de déploiements.</td></tr>';
   const failed = d.filter(r => r.status === 'failed');
   document.querySelector('#deploysFailed tbody').innerHTML = failed.length ? failed.map(renderRowFailed).join('') : '<tr><td colspan="5" class="empty">Aucun échec total. 🎉</td></tr>';
   const partial = d.filter(r => r.status === 'partial');
-  document.querySelector('#deploysPartial tbody').innerHTML = partial.length ? partial.map(r => '<tr><td>' + dt(r.ts) + '</td><td>' + (r.username || '—') + '</td><td><code>' + (r.host || '—') + '</code></td><td>' + r.numSuccess + '/' + r.numTotal + '</td><td>' + renderFailures(r.failures) + '</td></tr>').join('') : '<tr><td colspan="5" class="empty">Aucun déploiement partiel.</td></tr>';
+  document.querySelector('#deploysPartial tbody').innerHTML = partial.length ? partial.map(r => '<tr><td>' + dt(r.ts) + '</td><td>' + esc(r.username || '—') + '</td><td><code>' + esc(r.host || '—') + '</code></td><td>' + r.numSuccess + '/' + r.numTotal + '</td><td>' + renderFailures(r.failures) + '</td></tr>').join('') : '<tr><td colspan="5" class="empty">Aucun déploiement partiel.</td></tr>';
 }
 
 async function loadInbox() {
@@ -369,9 +364,9 @@ async function loadInbox() {
   const badge = document.getElementById('inboxBadge');
   if (unread > 0) { badge.innerHTML = '<span class="unread-badge">' + unread + ' new</span>'; }
   document.querySelector('#feedbacks tbody').innerHTML = fb.length ? fb.map(f =>
-    '<tr><td>' + dt(f.ts) + '</td><td><code>' + f.kind + (f.subkind ? ':' + f.subkind : '') + '</code></td><td>' + (f.email || '—') + '</td><td style="max-width:340px"><div style="white-space:pre-wrap;font-size:12.5px">' + (f.message || '').slice(0, 200) + ((f.message || '').length > 200 ? '…' : '') + '</div>' + (f.page ? '<div class="muted" style="font-size:11px;margin-top:3px">on ' + f.page + '</div>' : '') + '</td><td><span class="tag tag-' + f.status + '">' + f.status + '</span></td><td><div class="actions-cell">' + (f.status !== 'resolved' ? '<button class="btn-mini primary" onclick="setFbStatus(' + f.id + ', \\'resolved\\')">Resolved</button>' : '') + (f.status === 'new' ? '<button class="btn-mini" onclick="setFbStatus(' + f.id + ', \\'triaged\\')">Triage</button>' : '') + '</div></td></tr>').join('') : '<tr><td colspan="6" class="empty">No feedbacks yet.</td></tr>';
+    '<tr><td>' + dt(f.ts) + '</td><td><code>' + esc(f.kind) + (f.subkind ? ':' + esc(f.subkind) : '') + '</code></td><td>' + esc(f.email || '—') + '</td><td style="max-width:340px"><div style="white-space:pre-wrap;font-size:12.5px">' + esc((f.message || '').slice(0, 200)) + ((f.message || '').length > 200 ? '…' : '') + '</div>' + (f.page ? '<div class="muted" style="font-size:11px;margin-top:3px">on ' + esc(f.page) + '</div>' : '') + '</td><td><span class="tag tag-' + esc(f.status) + '">' + esc(f.status) + '</span></td><td><div class="actions-cell">' + (f.status !== 'resolved' ? '<button class="btn-mini primary" onclick="setFbStatus(' + f.id + ', \\'resolved\\')">Resolved</button>' : '') + (f.status === 'new' ? '<button class="btn-mini" onclick="setFbStatus(' + f.id + ', \\'triaged\\')">Triage</button>' : '') + '</div></td></tr>').join('') : '<tr><td colspan="6" class="empty">No feedbacks yet.</td></tr>';
   document.querySelector('#submissions tbody').innerHTML = sb.length ? sb.map(s =>
-    '<tr><td>' + dt(s.ts) + '</td><td>' + (s.authorName || '—') + '<div class="muted" style="font-size:11px">' + (s.authorEmail || '') + '</div></td><td><code>' + (s.componentName || '—') + '</code><div class="muted" style="font-size:11.5px;margin-top:3px">' + (s.description || '').slice(0, 120) + '</div></td><td>' + (s.attachmentFilename ? '<a href="/api/submissions/' + s.id + '/file?token=' + s.fileToken + '" class="btn-mini">' + s.attachmentFilename + '</a>' : '<span class="muted">—</span>') + '</td><td><span class="tag tag-' + s.status + '">' + s.status + '</span></td><td><div class="actions-cell">' + (s.status === 'pending' ? '<button class="btn-mini primary" onclick="setSbStatus(' + s.id + ', \\'approved\\')">Approve</button><button class="btn-mini danger" onclick="setSbStatus(' + s.id + ', \\'rejected\\')">Reject</button>' : '') + '</div></td></tr>').join('') : '<tr><td colspan="6" class="empty">No submissions yet.</td></tr>';
+    '<tr><td>' + dt(s.ts) + '</td><td>' + esc(s.authorName || '—') + '<div class="muted" style="font-size:11px">' + esc(s.authorEmail || '') + '</div></td><td><code>' + esc(s.componentName || '—') + '</code><div class="muted" style="font-size:11.5px;margin-top:3px">' + esc((s.description || '').slice(0, 120)) + '</div></td><td>' + (s.attachmentFilename ? '<a href="/api/admin/submissions/' + encodeURIComponent(s.id) + '/file" class="btn-mini">' + esc(s.attachmentFilename) + '</a>' : '<span class="muted">—</span>') + '</td><td><span class="tag tag-' + esc(s.status) + '">' + esc(s.status) + '</span></td><td><div class="actions-cell">' + (s.status === 'pending' ? '<button class="btn-mini primary" onclick="setSbStatus(' + s.id + ', \\'approved\\')">Approve</button><button class="btn-mini danger" onclick="setSbStatus(' + s.id + ', \\'rejected\\')">Reject</button>' : '') + '</div></td></tr>').join('') : '<tr><td colspan="6" class="empty">No submissions yet.</td></tr>';
 }
 async function setFbStatus(id, status) {
   await fetch('/api/admin/feedbacks/' + id + '/status', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({status}) });
@@ -390,7 +385,7 @@ async function loadFeatured() {
   const SLOTS = 4;
   const selected = (data.selected && data.selected.length) ? data.selected : [];
   const opts = ['<option value="">— vide —</option>'].concat(
-    data.available.map(a => '<option value="' + a + '">' + a + '</option>')
+    data.available.map(a => '<option value="' + esc(a) + '">' + esc(a) + '</option>')
   ).join('');
   let html = '<div class="featured-grid">';
   for (let i = 0; i < SLOTS; i++) {
@@ -440,69 +435,57 @@ async function loadFeatured() {
 }
 
 // ───────────────────────────────────────────────────────────────────────────
-// HMAC helper for submission file token (mirrors server.js)
-
-function submissionFileToken(id) {
-  // Mirror server.js — ATTACHMENT_TOKEN_SECRET wins, SF_CLIENT_SECRET fallback.
-  // This module is loaded after server.js so the same env-var resolution applies.
-  const secret = process.env.ATTACHMENT_TOKEN_SECRET
-    || process.env.SF_CLIENT_SECRET
-    || 'dev-only-placeholder-set-ATTACHMENT_TOKEN_SECRET-in-prod';
-  return crypto.createHmac('sha256', secret)
-    .update(`submission:${id}`)
-    .digest('hex').slice(0, 32);
-}
+// (attachment links are signed + expiring: see security.js)
 
 // ───────────────────────────────────────────────────────────────────────────
 // Wire up routes (call this from server.js)
 
-function register(app) {
+function register(app, ctx = {}) {
   // Login page (HTML, public)
   app.get('/admin/login', async (req, reply) => {
     if (isAuthed(req)) return reply.redirect('/admin');
     reply.type('text/html').send(loginPage());
   });
 
-  // Login submit (form-encoded)
+  // Login submit (form-encoded). Brute-force protection: 5 failures / 15 min per
+  // visitor (hashed IP) and 30 / 15 min overall; constant-time password compare.
   app.post('/api/admin/login', async (req, reply) => {
     if (!ADMIN_PASSWORD) return reply.code(503).type('text/html').send(loginPage({ error: 'ADMIN_PASSWORD not configured on the server' }));
-    let pwd;
-    if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
-      pwd = (req.body && req.body.password) || '';
-    } else {
-      // form-urlencoded
-      pwd = '';
-      const raw = typeof req.body === 'string' ? req.body : '';
-      if (raw) {
-        const m = raw.match(/(?:^|&)password=([^&]*)/);
-        if (m) pwd = decodeURIComponent(m[1].replace(/\+/g, ' '));
-      } else if (req.body && typeof req.body === 'object') {
-        pwd = req.body.password || '';
-      }
+    const ipKey = hashIp(req.ip) || 'anon';
+    if (sec.loginLocked(ipKey)) {
+      return reply.code(429).header('Retry-After', 900).type('text/html').send(loginPage({ error: 'Trop de tentatives. Réessayez dans quelques minutes.' }));
     }
-    if (!pwd || pwd !== ADMIN_PASSWORD) {
-      // Slight delay to slow down brute force
+    let pwd = '';
+    if (req.headers['content-type'] && req.headers['content-type'].includes('application/json')) {
+      pwd = (req.body && typeof req.body.password === 'string') ? req.body.password : '';
+    } else if (req.body && typeof req.body === 'object') {
+      pwd = typeof req.body.password === 'string' ? req.body.password : '';
+    }
+    if (!pwd || pwd.length > 512 || !sec.safeEqual(pwd, ADMIN_PASSWORD)) {
+      sec.loginFailed(ipKey);
       await new Promise(r => setTimeout(r, 600));
       return reply.code(401).type('text/html').send(loginPage({ error: 'Mot de passe invalide' }));
     }
     const cookie = signSession({ exp: Date.now() + SESSION_TTL_MS, ip: hashIp(req.ip) });
-    const secure = req.protocol === 'https' ? '; Secure' : '';
     reply
-      .header('Set-Cookie', `${SESSION_COOKIE}=${encodeURIComponent(cookie)}; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=${SESSION_TTL_MS / 1000}`)
+      .header('Set-Cookie', `${SESSION_COOKIE}=${encodeURIComponent(cookie)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_TTL_MS / 1000}`)
+      .header('Cache-Control', 'no-store')
       .redirect('/admin');
   });
 
   app.post('/api/admin/logout', async (req, reply) => {
-    const secure = req.protocol === 'https' ? '; Secure' : '';
     reply
-      .header('Set-Cookie', `${SESSION_COOKIE}=; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=0`)
+      .header('Set-Cookie', `${SESSION_COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`)
       .send({ ok: true });
   });
 
   // Dashboard (HTML, gated)
   app.get('/admin', async (req, reply) => {
     if (!isAuthed(req)) return reply.redirect('/admin/login');
-    reply.type('text/html').send(dashboardPage());
+    reply
+      .header('Cache-Control', 'no-store')
+      .header('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
+      .type('text/html').send(dashboardPage());
   });
 
   // ─── /api/admin/* (all gated) ──────────────────────────────────────────────
@@ -666,8 +649,32 @@ function register(app) {
       attachmentFilename: row.attachment_filename, attachmentMime: row.attachment_mime,
       validationStatus: row.validation_status,
       viewedAt: row.viewed_at,
-      fileToken: row.attachment_filename ? submissionFileToken(row.id) : null,
     })));
+  });
+
+  // Attachment download for the admin (session-gated, no URL token needed).
+  app.get('/api/admin/submissions/:id/file', async (req, reply) => {
+    if (!requireAuth(req, reply)) return;
+    const id = parseInt(req.params.id, 10);
+    if (!Number.isFinite(id) || !getPool()) return reply.code(400).send({ error: 'invalid_request' });
+    const r = await query(`SELECT attachment_blob, attachment_filename, attachment_mime FROM submissions WHERE id = $1`, [id]);
+    const row = r.rows[0];
+    if (!row || !row.attachment_blob) return reply.code(404).send({ error: 'not_found' });
+    const filename = (row.attachment_filename || `submission-${id}`).replace(/[^A-Za-z0-9._-]/g, '_');
+    reply
+      .type(row.attachment_mime || 'application/octet-stream')
+      .header('Content-Disposition', `attachment; filename="${filename}"`)
+      .header('X-Content-Type-Options', 'nosniff')
+      .header('Content-Security-Policy', "default-src 'none'; sandbox")
+      .header('Cache-Control', 'private, no-store')
+      .send(row.attachment_blob);
+  });
+
+  app.get('/api/admin/showcase-stats', async (req, reply) => {
+    if (!requireAuth(req, reply)) return;
+    const out = {};
+    if (ctx.showcaseClicks) for (const [d, n] of ctx.showcaseClicks) out[d] = n;
+    reply.send({ clicks: out });
   });
 
   // ─── Featured components (home page) ──────────────────────────────────────

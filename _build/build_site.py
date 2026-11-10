@@ -1162,6 +1162,8 @@ JS = r"""// CCO FR Library — client UX
   const STORAGE_LANG = 'sefr.lang';
   const STORAGE_TRACKED = 'sefr.tracked.v1';
   const STORAGE_AUTH = 'sefr.auth.v1';
+  // Legacy: tokens used to live in localStorage (refresh token included). Purge them on load.
+  try { localStorage.removeItem(STORAGE_AUTH); } catch (e) {}
   const STORAGE_FP = 'sefr.fp.v1';
   const PKCE_KEY = 'sefr.pkce.v1';
 
@@ -1846,16 +1848,15 @@ JS = r"""// CCO FR Library — client UX
   // flow that drops the SE directly into LEX as the Showcase Visitor bot.)
 
   // ── OAuth state machine (sefr.auth.v1)
-  // Stored in localStorage so the SE remains connected across browser sessions
-  // (refresh_token grant covers token expiry transparently).
-  // Shape: { accessToken, refreshToken, instanceUrl, loginHost, name, username, orgId, issuedAt }
+  // Stored in sessionStorage (this tab only, gone when it closes); no refresh token is requested.
+  // Shape: { accessToken, instanceUrl, loginHost, name, username, orgId, issuedAt }
   const auth = {
     get() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_AUTH) || 'null'); } catch { return null; }
+      try { return JSON.parse(sessionStorage.getItem(STORAGE_AUTH) || 'null'); } catch { return null; }
     },
     set(v) {
-      if (v) localStorage.setItem(STORAGE_AUTH, JSON.stringify(v));
-      else localStorage.removeItem(STORAGE_AUTH);
+      if (v) sessionStorage.setItem(STORAGE_AUTH, JSON.stringify(v));
+      else sessionStorage.removeItem(STORAGE_AUTH);
       renderConnectButtons();
     },
     isConnected() { return !!(auth.get() && auth.get().accessToken); },
@@ -1871,18 +1872,9 @@ JS = r"""// CCO FR Library — client UX
         }),
       }));
       let r = await doFetch(a.accessToken);
-      if (r.status !== 401 || !a.refreshToken) return r;
-      // Try refresh
-      const rr = await fetch('/api/oauth/refresh', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refreshToken: a.refreshToken, loginHost: a.loginHost }),
-      });
-      if (!rr.ok) { auth.set(null); throw new Error('refresh_failed'); }
-      const fresh = await rr.json();
-      const merged = Object.assign({}, a, { accessToken: fresh.accessToken, instanceUrl: fresh.instanceUrl || a.instanceUrl, issuedAt: fresh.issuedAt });
-      auth.set(merged);
-      return doFetch(merged.accessToken);
+      // No refresh token is kept: on 401 the session is over, ask the SE to reconnect.
+      if (r.status === 401) auth.set(null);
+      return r;
     },
   };
 
@@ -2047,15 +2039,16 @@ JS = r"""// CCO FR Library — client UX
     if (!popup) { toast(t('connect.popup.blocked'), 4000); return; }
 
     function handler(ev) {
-      const data = ev && ev.data;
+      if (!ev || ev.origin !== window.location.origin || ev.source !== popup) return;
+      const data = ev.data;
       if (!data || data.source !== 'sefr-oauth') return;
       window.removeEventListener('message', handler);
       try { popup.close(); } catch (e) {}
-      if (data.error) { toast(t('connect.toast.failed') + ' — ' + data.error_description, 4000); return; }
-      // Validate state
+      // Validate state first: nothing from the message is trusted before this.
       const pending = JSON.parse(sessionStorage.getItem(PKCE_KEY) || 'null');
       sessionStorage.removeItem(PKCE_KEY);
       if (!pending || data.state !== pending.state) { toast(t('connect.toast.failed'), 4000); return; }
+      if (data.error) { toast(t('connect.toast.failed') + ' — ' + String(data.error_description || data.error).slice(0, 200), 4000); return; }
       // Exchange code for tokens via our backend
       fetch('/api/oauth/token', {
         method: 'POST',
@@ -2074,7 +2067,6 @@ JS = r"""// CCO FR Library — client UX
         } catch (e) {}
         auth.set({
           accessToken: j.accessToken,
-          refreshToken: j.refreshToken,
           instanceUrl: j.instanceUrl,
           loginHost: pending.loginHost,
           name: ident.name || '',
