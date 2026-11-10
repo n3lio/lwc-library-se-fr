@@ -76,6 +76,25 @@ APEX_IMPORT_RE = re.compile(
     re.MULTILINE,
 )
 
+# Metadata (non-Apex) dependencies shipped inside the zips. Source of truth = _deploy/.
+DEPLOY_MD = ROOT / "_deploy" / "force-app" / "main" / "default"
+# key -> list of (relative path under DEPLOY_MD, is_glob)
+METADATA_DEPS = {
+    "Visit__c": {
+        "label": "Custom object Visit__c (+ 9 fields + tab)",
+        "files": ["objects/Visit__c/Visit__c.object-meta.xml", "objects/Visit__c/fields/*", "tabs/Visit__c.tab-meta.xml"],
+    },
+    "Product2.Image_URL__c": {
+        "label": "Product2.Image_URL__c (product image URL field)",
+        "files": ["objects/Product2/fields/Image_URL__c.field-meta.xml"],
+    },
+}
+# A dependency is triggered by: <object> in js-meta.xml, @salesforce/schema import in JS,
+# or a literal reference in the (comment-stripped) Apex of the bundle.
+DEP_PATTERNS = {
+    "Visit__c": re.compile(r"\bVisit__c\b"),
+}
+
 ANSI = {
     "reset": "\033[0m",
     "bold": "\033[1m",
@@ -117,6 +136,9 @@ class Component:
     detected_imports: set[str] = field(default_factory=set)
     bundled: list[ApexClass] = field(default_factory=list)
     unknown_refs: set[str] = field(default_factory=set)
+    md_deps: set[str] = field(default_factory=set)
+    detected_optional: set[str] = field(default_factory=set)
+    child_lwcs: dict = field(default_factory=dict)  # name -> folder (nested LWC dependencies)
     has_readme: bool = False
 
 
@@ -181,10 +203,60 @@ def discover_components() -> list[Component]:
 # ----------------------------------------------------------------------
 
 
+CHILD_IMPORT_RE = re.compile(r"""from\s+['"]c/([A-Za-z][A-Za-z0-9]*)['"]""")
+CHILD_TAG_RE = re.compile(r"<c-([a-z0-9]+(?:-[a-z0-9]+)*)")
+
+
+def _kebab_to_camel(k: str) -> str:
+    return re.sub(r"-([a-z0-9])", lambda m: m.group(1).upper(), k)
+
+
+def _find_lwc_folder(name: str) -> Optional[Path]:
+    """Locate a child LWC bundle: any <seFrX>/lwc/<name>/ in the repo."""
+    for folder in sorted(ROOT.iterdir()):
+        cand = folder / "lwc" / name
+        if folder.is_dir() and folder.name.startswith("seFr") and cand.is_dir():
+            return cand
+    return None
+
+
+def resolve_children(comp: Component) -> None:
+    """Find nested LWC dependencies (imports + <c-xxx> tags), recursively."""
+    queue = [comp.lwc_folder]
+    seen = {comp.name}
+    while queue:
+        folder = queue.pop()
+        for f in folder.rglob("*"):
+            if not f.is_file() or f.suffix not in (".js", ".html"):
+                continue
+            try:
+                t = f.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
+            names = set(CHILD_IMPORT_RE.findall(t))
+            if f.suffix == ".html":
+                names |= {_kebab_to_camel(k) for k in CHILD_TAG_RE.findall(t)}
+            for n in names:
+                if n in seen:
+                    continue
+                seen.add(n)
+                child = _find_lwc_folder(n)
+                if child is None:
+                    comp.unknown_refs.add(f"lwc:{n}")
+                    continue
+                comp.child_lwcs[n] = child
+                queue.append(child)
+
+
+def _all_lwc_folders(comp: Component) -> list:
+    return [comp.lwc_folder] + list(comp.child_lwcs.values())
+
+
 def detect_apex_imports(comp: Component) -> set[str]:
-    """Grep JS files in the LWC bundle for `@salesforce/apex/X.Y` imports."""
+    """Grep JS files in the LWC bundle (and nested child LWCs) for `@salesforce/apex/X.Y` imports."""
     found: set[str] = set()
-    for js_path in comp.lwc_folder.rglob("*.js"):
+    js_files = [p for fo in _all_lwc_folders(comp) for p in fo.rglob("*.js")]
+    for js_path in js_files:
         try:
             text = js_path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
@@ -247,6 +319,7 @@ def resolve_bundle(
     overrides: dict[str, dict[str, list[str]]],
 ) -> None:
     """Decide which classes go into this component's zip."""
+    resolve_children(comp)
     comp.detected_imports = detect_apex_imports(comp)
 
     bundled: dict[str, ApexClass] = {}
@@ -277,6 +350,43 @@ def resolve_bundle(
         bundled.pop(excluded, None)
 
     comp.bundled = sorted(bundled.values(), key=lambda c: c.name)
+    comp.md_deps = detect_metadata_deps(comp)
+    if comp.md_deps is not None:
+        _src = ''.join(c.cls_path.read_text(encoding='utf-8') for c in comp.bundled) + ''.join(p.read_text(encoding='utf-8', errors='ignore') for fo in _all_lwc_folders(comp) for p in fo.rglob('*.js'))
+        if 'Image_URL__c' in _src:
+            comp.detected_optional.add('Image_URL__c')
+
+
+def _strip_apex_comments(text: str) -> str:
+    text = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+    return re.sub(r"//[^\n]*", "", text)
+
+
+def detect_metadata_deps(comp: Component) -> set[str]:
+    """Which object/field dependencies does this component (LWC + bundled Apex) really use?"""
+    found: set[str] = set()
+    code = ""
+    for f in (p for fo in _all_lwc_folders(comp) for p in fo.rglob("*")):
+        if not f.is_file():
+            continue
+        try:
+            t = f.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        if f.suffix == ".js":
+            code += "\n".join(l for l in t.splitlines() if not l.lstrip().startswith("//"))
+        elif f.suffix == ".html":
+            code += t
+        elif f.name.endswith(".js-meta.xml"):
+            code += " ".join(re.findall(r"<object>([^<]+)</object>", t))
+    for cls in comp.bundled:
+        code += _strip_apex_comments(cls.cls_path.read_text(encoding="utf-8"))
+    # string literals in Apex count too (dynamic SOQL on Visit__c needs the object when
+    # present), but a mere mention in a property description does not (meta handled above).
+    for key, pat in DEP_PATTERNS.items():
+        if pat.search(code):
+            found.add(key)
+    return found
 
 
 # ----------------------------------------------------------------------
@@ -305,6 +415,8 @@ def render_install_md(comp: Component) -> str:
     lines.append("## What's inside")
     lines.append("")
     lines.append(f"- **LWC bundle** · `force-app/main/default/lwc/{comp.name}/`")
+    for child in sorted(comp.child_lwcs):
+        lines.append(f"- **Child LWC** · `force-app/main/default/lwc/{child}/` (used by this component)")
     if comp.bundled:
         lines.append("- **Apex classes** · `force-app/main/default/classes/`")
         for cls in comp.bundled:
@@ -312,6 +424,23 @@ def render_install_md(comp: Component) -> str:
             lines.append(f"  - `{cls.name}.cls` {tag}")
     else:
         lines.append("- No Apex required.")
+    for key in sorted(comp.md_deps):
+        lines.append(f"- **Metadata** · {METADATA_DEPS[key]['label']}")
+    if "Visit__c" in comp.md_deps:
+        lines.append("")
+        lines.append(
+            "> If your org already has the standard `Visit` object (Consumer Goods Cloud), do not "
+            "deploy `Visit__c`: remove `objects/Visit__c` and `tabs/Visit__c.tab-meta.xml` from this "
+            "bundle and point the component at `Visit`."
+        )
+    if any(k in comp.detected_optional for k in ("Image_URL__c",)):
+        lines.append("")
+        lines.append(
+            "> Optional: product images read `Product2.Image_URL__c` (URL field) when it exists in your org "
+            "(schema-safe: the component works without it). To enable images, create that field or set the "
+            "`productImageFieldApiName` property to your own image field. It is not bundled because many orgs "
+            "already have a field with this name and another type."
+        )
     lines.append("")
     lines.append("## Configure")
     lines.append("")
@@ -361,6 +490,8 @@ def build_zip(comp: Component, dry_run: bool) -> Optional[Path]:
         force_app = staging / "force-app" / "main" / "default"
         (force_app / "lwc").mkdir(parents=True)
         shutil.copytree(comp.lwc_folder, force_app / "lwc" / comp.name)
+        for child_name, child_folder in comp.child_lwcs.items():
+            shutil.copytree(child_folder, force_app / "lwc" / child_name, dirs_exist_ok=True)
 
         if comp.bundled:
             classes_dir = force_app / "classes"
@@ -376,6 +507,16 @@ def build_zip(comp: Component, dry_run: bool) -> Optional[Path]:
         if sr_src.is_dir():
             sr_dst = force_app / "staticresources"
             shutil.copytree(sr_src, sr_dst)
+
+        # Metadata dependencies (custom objects / fields / tabs) from _deploy/
+        for key in sorted(comp.md_deps):
+            for rel in METADATA_DEPS[key]["files"]:
+                for src in sorted(DEPLOY_MD.glob(rel)):
+                    if not src.is_file():
+                        continue
+                    dst = force_app / src.relative_to(DEPLOY_MD)
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy(src, dst)
 
         # Zip it
         with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -404,6 +545,10 @@ def print_plan(components: list[Component]) -> None:
             for cls in comp.bundled:
                 tag = color("local", "green") if cls.source == "local" else color("shared", "magenta")
                 print(f"    + {cls.name:<45} {tag}")
+        for child in sorted(comp.child_lwcs):
+            print(f"    + {child:<45} {color('child lwc', 'cyan')}")
+        for key in sorted(comp.md_deps):
+            print(f"    + {key:<45} {color('metadata', 'cyan')}")
         if comp.unknown_refs:
             for ref in sorted(comp.unknown_refs):
                 print(f"    {color('?', 'red')} {ref:<45} {color('not found', 'red')}")
@@ -433,6 +578,14 @@ def write_detected_manifest(components: list[Component]) -> None:
                 lines.append(f"    - {cls.name}  # {cls.source}")
         else:
             lines.append("  classes: []")
+        if comp.child_lwcs:
+            lines.append("  child_lwcs:")
+            for c in sorted(comp.child_lwcs):
+                lines.append(f"    - {c}")
+        if comp.md_deps:
+            lines.append("  metadata:")
+            for key in sorted(comp.md_deps):
+                lines.append(f"    - {key}")
         if comp.detected_imports:
             lines.append("  imports_detected:")
             for imp in sorted(comp.detected_imports):

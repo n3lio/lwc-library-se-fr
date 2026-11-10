@@ -483,7 +483,7 @@ async function loadComponentZip(apiName) {
     if (e.isDirectory) continue;
     const name = e.entryName;
     // Match LWC bundle, Apex class, and Static Resource files
-    const m = name.match(/^[^/]+\/force-app\/main\/default\/(lwc\/[^/]+\/[^/]+|classes\/[^/]+|staticresources\/[^/]+)$/);
+    const m = name.match(/^[^/]+\/force-app\/main\/default\/(lwc\/[^/]+\/[^/]+|classes\/[^/]+|staticresources\/[^/]+|objects\/[A-Za-z0-9_]+\/(?:[A-Za-z0-9_]+\.object-meta\.xml|fields\/[A-Za-z0-9_]+\.field-meta\.xml)|tabs\/[A-Za-z0-9_]+\.tab-meta\.xml)$/);
     if (!m) continue;
     entries.push({ relPath: m[1], data: e.getData() });
   }
@@ -491,7 +491,7 @@ async function loadComponentZip(apiName) {
   return entries;
 }
 
-function buildPackageXml(lwcNames, apexNames, staticResourceNames) {
+function buildPackageXml(lwcNames, apexNames, staticResourceNames, objectNames, fieldNames, tabNames) {
   const renderType = (members, name) => {
     const lines = [...new Set(members)].sort().map(n => `    <members>${n}</members>`).join('\n');
     return `  <types>\n${lines}\n    <name>${name}</name>\n  </types>`;
@@ -500,6 +500,9 @@ function buildPackageXml(lwcNames, apexNames, staticResourceNames) {
   if (lwcNames.length) types.push(renderType(lwcNames, 'LightningComponentBundle'));
   if (apexNames.length) types.push(renderType(apexNames, 'ApexClass'));
   if (staticResourceNames && staticResourceNames.length) types.push(renderType(staticResourceNames, 'StaticResource'));
+  if (objectNames && objectNames.length) types.push(renderType(objectNames, 'CustomObject'));
+  if (fieldNames && fieldNames.length) types.push(renderType(fieldNames, 'CustomField'));
+  if (tabNames && tabNames.length) types.push(renderType(tabNames, 'CustomTab'));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 ${types.join('\n')}
@@ -516,11 +519,28 @@ async function buildDeployZip(apiNames) {
   const lwcSet = new Set();
   const apexSet = new Set();
   const staticResourceSet = new Set();
+  // Custom objects / fields / tabs: sources are in SFDX format (separate field files, *.object-meta.xml);
+  // the Metadata REST API wants MDAPI format (fields inlined in objects/<Obj>.object, tabs/<Tab>.tab).
+  const objects = new Map(); // objName -> { meta: string|null, fields: Map(fieldName -> xml body) }
+  const tabs = new Map();    // tabName -> xml
+  const objOf = (n) => { if (!objects.has(n)) objects.set(n, { meta: null, fields: new Map() }); return objects.get(n); };
   for (const apiName of apiNames) {
     const entries = await loadComponentZip(apiName);
     for (const { relPath, data } of entries) {
       // Dedupe shared files (e.g. SE_FR_AgendaController appears in both
       // seFrMyTasks.zip and seFrMyEvents.zip — adm-zip would error).
+      if (relPath.startsWith('objects/') || relPath.startsWith('tabs/')) {
+        const parts = relPath.split('/');
+        const text = data.toString('utf-8');
+        if (parts[0] === 'tabs') {
+          tabs.set(parts[1].replace(/\.tab-meta\.xml$/, ''), text);
+        } else if (parts[2] === 'fields') {
+          objOf(parts[1]).fields.set(parts[3].replace(/\.field-meta\.xml$/, ''), text);
+        } else {
+          objOf(parts[1]).meta = text;
+        }
+        continue;
+      }
       if (relPath.startsWith('classes/')) {
         const file = relPath.split('/').pop();
         if (out.getEntry(relPath)) continue;
@@ -550,7 +570,31 @@ async function buildDeployZip(apiNames) {
       out.addFile(relPath, data);
     }
   }
-  out.addFile('package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet], [...staticResourceSet]), 'utf-8'));
+  const objectNames = [], fieldNames = [], tabNames = [];
+  const fieldBody = (xml) => {
+    const m = xml.match(/<CustomField[^>]*>([\s\S]*)<\/CustomField>/);
+    return m ? m[1].trim() : '';
+  };
+  for (const [objName, o] of objects) {
+    const fieldsXml = [...o.fields.entries()].sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([, x]) => `    <fields>\n        ${fieldBody(x).replace(/\n/g, '\n    ')}\n    </fields>`).join('\n');
+    let xml;
+    if (o.meta) {
+      // Full object shipped with the bundle: inline its fields before </CustomObject>.
+      xml = o.meta.replace(/<\/CustomObject>\s*$/, fieldsXml + '\n</CustomObject>\n');
+      objectNames.push(objName);
+    } else {
+      // Fields-only (e.g. a custom field on a standard object).
+      xml = `<?xml version="1.0" encoding="UTF-8"?>\n<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">\n${fieldsXml}\n</CustomObject>\n`;
+      for (const f of o.fields.keys()) fieldNames.push(`${objName}.${f}`);
+    }
+    out.addFile(`objects/${objName}.object`, Buffer.from(xml, 'utf-8'));
+  }
+  for (const [tabName, xml] of tabs) {
+    out.addFile(`tabs/${tabName}.tab`, Buffer.from(xml, 'utf-8'));
+    tabNames.push(tabName);
+  }
+  out.addFile('package.xml', Buffer.from(buildPackageXml([...lwcSet], [...apexSet], [...staticResourceSet], objectNames, fieldNames, tabNames), 'utf-8'));
   return out.toBuffer();
 }
 

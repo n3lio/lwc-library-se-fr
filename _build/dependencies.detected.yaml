@@ -49,6 +49,8 @@ seFrContactsCarousel:
 seFrCustomerOrders:
   classes:
     - SE_FR_CustomerOrdersController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_CustomerOrdersController
 
@@ -106,6 +108,8 @@ seFrNearbyAccountsMap:
 seFrOrderEntry:
   classes:
     - SE_FR_OrderEntryController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_OrderEntryController
 
@@ -130,6 +134,8 @@ seFrPromptLauncher:
 seFrRecordActions:
   classes:
     - SE_FR_AccountActionsController  # local
+  child_lwcs:
+    - seFrFlowModal
   imports_detected:
     - SE_FR_AccountActionsController
 
@@ -187,48 +193,70 @@ seFrTimelinePhases:
 
 seFrVisitCheckIn:
   classes: []
+  metadata:
+    - Visit__c
 
 seFrVisitKanban:
   classes:
     - SE_FR_VisitKanbanController  # local
+  child_lwcs:
+    - seFrFlowModal
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_VisitKanbanController
 
 seFrVisitPlan:
   classes: []
+  metadata:
+    - Visit__c
 
 seFrVisitProductCheck:
   classes:
     - SE_FR_ProductCheckController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_ProductCheckController
 
 seFrVisitQuickOrder:
   classes: []
+  metadata:
+    - Visit__c
 
 seFrVisitRestockOrder:
   classes:
     - SE_FR_VisitRestockOrderController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_VisitRestockOrderController
 
 seFrVisitShelfCompliance:
   classes:
     - SE_FR_ShelfComplianceController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_ShelfComplianceController
 
 seFrVisitShelfSpace:
   classes: []
+  metadata:
+    - Visit__c
 
 seFrVisitSummaryAI:
   classes:
     - SE_FR_VisitSummaryController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_VisitSummaryController
 
 seFrVoiceNoteTaker:
   classes:
     - SE_FR_VoiceNoteController  # local
+  metadata:
+    - Visit__c
   imports_detected:
     - SE_FR_VoiceNoteController
