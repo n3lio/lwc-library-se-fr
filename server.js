@@ -652,7 +652,9 @@ app.post('/api/deploy', async (req, reply) => {
     Buffer.from(tail, 'utf-8'),
   ]);
 
-  const resp = await fetch(url, {
+  let resp;
+  try {
+  resp = await fetch(url, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -662,6 +664,10 @@ app.post('/api/deploy', async (req, reply) => {
     redirect: 'error',
     signal: AbortSignal.timeout(60000),
   });
+  } catch (err) {
+    req.log.warn({ err: String(err.message || err) }, 'deploy upstream unreachable');
+    return reply.code(502).send({ error: 'upstream_unreachable' });
+  }
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok) {
     req.log.warn({ status: resp.status }, 'deploy request rejected');
@@ -686,11 +692,17 @@ app.get('/api/deploy/status/:id', async (req, reply) => {
     return reply.code(400).send({ error: 'invalid_id' });
   }
   const url = `${instOrigin}/services/data/v${SF_API_VERSION}/metadata/deployRequest/${id}?includeDetails=true`;
-  const resp = await fetch(url, {
+  let resp;
+  try {
+  resp = await fetch(url, {
     headers: { Authorization: `Bearer ${accessToken}` },
     redirect: 'error',
     signal: AbortSignal.timeout(30000),
   });
+  } catch (err) {
+    req.log.warn({ err: String(err.message || err) }, 'deploy status upstream unreachable');
+    return reply.code(502).send({ error: 'upstream_unreachable' });
+  }
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok) return reply.code(resp.status === 401 ? 401 : 400).send({ error: 'status_failed', status: resp.status });
   const r = data.deployResult || {};
